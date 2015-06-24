@@ -1,0 +1,218 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>.DS_Store 的由来（译） | SABlog</title>
+  <meta name="author" content="StoneArk">
+  
+  <meta name="description" content="方舟的技术博客">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content=".DS_Store 的由来（译）"/>
+  <meta property="og:site_name" content="SABlog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="SABlog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-57166172-1', 'auto');
+	ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">SABlog</a></h1>
+  <h2><a href="/">StoneArk&#39;s Blog</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+      <li><a href="/atom.xml">RSS</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-01-26T03:18:21.000Z"><a href="/2015/01/26/on-the-origins-of-ds-store-translation/">Jan 26 2015</a></time>
+      
+      
+  
+    <h1 class="title">.DS_Store 的由来（译）</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="前言">前言</h2><p>本文作者为原苹果工程师 Arno Gourdol，正是他主导了 Mac OS X 系统上 Finder 应用的开发。这篇文章为我们阐述了 .DS_Store 文件的由来，是个很不错的计算机历史小文章。原文链接：<a href="http://arno.org/arnotify/2006/10/on-the-origins-of-ds_store/" target="_blank" rel="external">http://arno.org/arnotify/2006/10/on-the-origins-of-ds_store/</a>。</p>
+<h2 id="译文">译文</h2><p><strong>如果你是一个 Mac 用户，或者你曾经从 Mac 向 Windows 传输过文件，你可能会对一个名为 <code>.DS_Store</code> 的文件很熟悉。但这个名字是从何而来呢？</strong></p>
+<p>时间回到 1999 年，我在苹果公司担任 Mac OS X 系统内 Finder 应用的技术主管。在那时，Finder 的代码已有 8 年的历史，代码已经很难以维护。做任何改变都需要做大量的工作，而且常常会影响到两三个看似跟它无关的功能。所以在 Mac OS X 上我们决定，从设计开始，重写 Finder。</p>
+<p>涉及到的工作之一，便是分离用户界面和核心功能，也就是后台代码。Finder 的后台会穷举文件、监视文件系统变化、处理元数据，包括图标的位置和文件夹设置。在内部，这两个部分被我们称作 Finder_FE 和 Finder_BE（Frontend 和 Backend）。</p>
+<p>但是，没过多久我们就意识到，Finder 以外的应用也很可能需要调用 Finder 后台的功能。所以我们计划在将来某一天，让它成为一个公共的 API。由于我之前曾负责命名了 Icon Services 和 Navigation Services，所以我们决定把它命名为 Desktop Services（在那时，我们还曾考虑过把 Finder 改名为 “Desktop”）。因此，<code>.DS_Store</code> 这个名字，就是 “Desktop Services Store”（桌面服务存储） 的意思。我们在文件名之前添加了一个句点，以保证在 Unix 操作系统上，包括 Mac OS 上，被识别为一个隐藏文件。</p>
+<p>个人认为这并不是一个好的名字，我曾希望找到一个描述性更好的名字，但已经太晚了 :)</p>
+<p>另外，还有一个至今仍未被修复的 bug，会导致过度创建 <code>.DS_Store</code> 文件。仅当用户更改了视图设置或改变了目录内图标的位置时，这些文件才应创建。可惜的是，事情并没有如此发生，而是当某个目录被访问时，<code>.DS_Store</code> 文件就会被创建。</p>
+<p>另外，Finder_BE，也就是 Desktop Services，不再只被 Finder 调用：Navigation Services（打开/保存对话框）现在也会调用它，在 Mac OS 的最初版本中并不是这样的。但现在，Desktop Services 的 API 依然没有完全开放出来。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/History/">History</a>, <a href="/tags/Mac-OS-X/">Mac OS X</a>, <a href="/tags/Translation/">Translation</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:blog.stoneark.org">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Apple/" style="font-size: 10px;">Apple</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 13.33px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16.67px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/TableView/" style="font-size: 10px;">TableView</a> <a href="/tags/Translation/" style="font-size: 13.33px;">Translation</a> <a href="/tags/UI/" style="font-size: 13.33px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 16.67px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 16.67px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 13.33px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 13.33px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+  </div>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2015/05/29/gem-install-failed-cannot-load-such-file-openssl/">“cannot load such file -- openssl” while “gem install”</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/22/baidumap-memory-not-be-freed/">百度地图 (iOS SDK) 内存不回收</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/19/pop-then-push-immediately-with-uinavigationcontroller-in-ios8/">Pop then push immediately with UINavigationController in iOS 8</a>
+      </li>
+    
+      <li>
+        <a href="/2015/02/11/branching-model-summary/">分支策略总结</a>
+      </li>
+    
+      <li>
+        <a href="/2015/02/05/noip-2014-rps-solution-in-python/">生活大爆炸版石头剪刀布</a>
+      </li>
+    
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 StoneArk
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'stoneark';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

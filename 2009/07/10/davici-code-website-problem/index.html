@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>达芬奇密码中文站的入口谜题解法 | SABlog</title>
+  <meta name="author" content="StoneArk">
+  
+  <meta name="description" content="方舟的技术博客">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="达芬奇密码中文站的入口谜题解法"/>
+  <meta property="og:site_name" content="SABlog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="SABlog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-57166172-1', 'auto');
+	ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">SABlog</a></h1>
+  <h2><a href="/">StoneArk&#39;s Blog</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+      <li><a href="/atom.xml">RSS</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-07-10T07:33:35.000Z"><a href="/2009/07/10/davici-code-website-problem/">Jul 10 2009</a></time>
+      
+      
+  
+    <h1 class="title">达芬奇密码中文站的入口谜题解法</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>（注：该文章成文于2009年，如今达芬奇密码中文网站已经无法访问）</p>
+<p>前几天从表姐那儿借到一本《达芬奇密码》，见其最后印着达芬奇密码中文版官方网站：<a href="http://www.davincicode.com.cn" title="官网地址" target="_blank" rel="external">http://www.davincicode.com.cn</a>，在电脑上敲入网址，却发现摆在面前的竟是一道谜题，想进入网站，须先把谜题破解。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/davici0.jpeg" alt="网站首页"></p>
+<p>进入网站的第三个方式就不用考虑了，我们完全可以自己解决。对于数学或信息学学得比较好的朋友们来说，这个谜题应该很简单。不过肯定也有很多朋友对这个谜题无从下手，感觉很困难，乱点一气也总是赢不了布朗。</p>
+<p>大家可以先自己尝试一下，两种方式都不是很难，第二种需要的方法更简单一些。如果不耐烦了或者不想费脑子了，可以往下看。<br><a id="more"></a><br>——————————–华丽的分割线—————————————-</p>
+<p>首先说第二种方式：寻找页面上的秘密入口。页面上的秘密入口有两个，找到它们的办法有两个，一个是笨办法，就是用鼠标耐心地在页面的各个地方停留，注意浏览器的状态栏，在两个很小的区域内鼠标停在上面会出现链接地址。</p>
+<p>另外一个办法是计算机方法，用记事本或其他编辑器查看网页的源文件，在源文件中搜索.aspx或.htm或.html，会发现很多搜索结果，其中Home.aspx比较可疑，直接猜想www.davincicode.com.cn/Home.aspx，把地址输入地址栏，成功进入。通过分析源文件也可以很轻松地得知，这两个秘密入口在页面上的位置是：最上面一行字的左边，最下面一行字“就在5上点击即可”的5上，我当时就是这么找的。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/davici1.jpeg" alt="秘密入口位置" title="秘密入口位置"></p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/davici2.jpeg" alt="查看源代码_1" title="查看源代码_1"></p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/davici3.jpeg" alt="查看源代码_2" title="查看源代码_2"></p>
+<p>说到查看网页的源文件让我想起了基本能力考试，曾经有朋友问过一道基本能力试题，题目是从四个选项中选出不能用来编辑网页的，其中一个选项是记事本，而答案没选它，朋友很不解。我说其实高手编辑网页一般都用记事本，这次解谜很好的证实了这一点^_^</p>
+<p>——————————–华丽的分割线—————————————-</p>
+<p>然后再说第一种方式：和布朗玩玩游戏。说白了这就是个递归问题。方法是：把目标数减1，把这个数计作A，然后你每一次选的数都是A-4*x（x为正整数），这样保证你能赢布朗。如：目标为11，减1得10，那你每次选的数可以是2,6,10</p>
+<p>为什么呢？我们可以这样想，你的目的是让布朗出11，那你就必须出10，才能让布朗不得不出11。想要让自己有机会出10，那你的备选数字必须是8、9、10，那就必须让布朗出7，那你就必须出6……这样不断地进行下去，一个完美的递归思想就出现了。</p>
+<p>我的手稿：<br><img src="http://stoneark.qiniudn.com/blogimg/davici4.jpeg" alt="我的手稿" title="我的手稿"></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/谜题/">谜题</a>, <a href="/tags/递归/">递归</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:blog.stoneark.org">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Apple/" style="font-size: 10px;">Apple</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 13.33px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16.67px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/TableView/" style="font-size: 10px;">TableView</a> <a href="/tags/Translation/" style="font-size: 13.33px;">Translation</a> <a href="/tags/UI/" style="font-size: 13.33px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 16.67px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 16.67px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 13.33px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 13.33px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+  </div>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2015/05/29/gem-install-failed-cannot-load-such-file-openssl/">“cannot load such file -- openssl” while “gem install”</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/22/baidumap-memory-not-be-freed/">百度地图 (iOS SDK) 内存不回收</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/19/pop-then-push-immediately-with-uinavigationcontroller-in-ios8/">Pop then push immediately with UINavigationController in iOS 8</a>
+      </li>
+    
+      <li>
+        <a href="/2015/02/11/branching-model-summary/">分支策略总结</a>
+      </li>
+    
+      <li>
+        <a href="/2015/02/05/noip-2014-rps-solution-in-python/">生活大爆炸版石头剪刀布</a>
+      </li>
+    
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 StoneArk
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'stoneark';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

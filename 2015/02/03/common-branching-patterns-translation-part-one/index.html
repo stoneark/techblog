@@ -1,0 +1,232 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>常见分支模式（译） | SABlog</title>
+  <meta name="author" content="StoneArk">
+  
+  <meta name="description" content="方舟的技术博客">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="常见分支模式（译）"/>
+  <meta property="og:site_name" content="SABlog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="SABlog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-57166172-1', 'auto');
+	ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">SABlog</a></h1>
+  <h2><a href="/">StoneArk&#39;s Blog</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+      <li><a href="/atom.xml">RSS</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-02-03T03:26:44.000Z"><a href="/2015/02/03/common-branching-patterns-translation-part-one/">Feb 3 2015</a></time>
+      
+      
+  
+    <h1 class="title">常见分支模式（译）</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="前言">前言</h2><p>今天在将分支合并回 trunk 的时候，发现之前采用的分支模式不太合适，于是去查阅了 SVN 的用户手册 <a href="http://svnbook.red-bean.com/en/1.7/svn-book.html#svn.branchmerge.commonpatterns" target="_blank" rel="external">Version Control With Subversion - Common Branching Patterns</a>，对分支管理有了更全面的认识。</p>
+<p>版权声明：本文翻译自 Ben Collins-Sussman, Brian W. Fitzpatrick, C. Michael Pilato 撰写的 <a href="http://svnbook.red-bean.com/en/1.7/svn-book.html" target="_blank" rel="external">Version Control With Subversion</a>。这是一本自由书籍，遵循 Creative Common Attribution License，<a href="http://svnbook.red-bean.com/en/1.7/svn.copyright.html" target="_blank" rel="external">这里是它的版权协议</a>，本译文同样遵循此协议。</p>
+<h2 id="译文">译文</h2><p>使用分支 (branch) 和合并 (merge) 的方式有很多，本节介绍了其中最常用的几种。</p>
+<p>版本控制是在软件开发中最常用到的概念，所以我们来看一下被开发团队们最常用到的分支/合并模式。如果你在软件开发中并没有用 Subversion 来做版本控制，直接略过这一节就好。如果你是第一次在软件开发中使用版本控制，那请格外注意，因为这些模式通常已被认为是最佳实践。这些模式并不是 Subversion 才独有的，而是适用于任意的版本控制系统。我们以 Subversion 来描述这些模式，让它更容易理解。</p>
+<h3 id="用于发布的分支_(Release_分支)">用于发布的分支 (Release 分支)</h3><p>大多数软件都遵循这样的生命周期：编码，测试，发布，如此循环往复。在这个过程中存在两个问题。第一，在质量保证团队测试稳定版本的同时，开发团队依然需要继续开发新的功能。当软件在接受测试时，新的开发工作不能停顿。第二，开发团队大多都需要支持较老的、已经发布出去的版本。如果在较老的代码中发现了 bug，这个 bug 很有可能也存在于已经释出的版本中。客户想要马上修复它，而不用等待下一个大版本发布时才能解决。</p>
+<p>这两个问题借助版本控制可以解决。以下是经典的过程：</p>
+<ol>
+<li><em>开发者将所有新工作提交到 trunk 上。</em> 每日的改变都被提交到 <em>/trunk</em> ：包括新功能、bug 修复等。</li>
+<li><em>复制 trunk 到一个 “release” 分支。</em> 当团队认为软件可以发布的时候（比如，发布 1.0 版本），<em>/trunk</em> 会被拷贝到 <em>/branches/1.0</em> 。</li>
+<li><em>团队继续并行工作。</em> 一个团队开始对 release 分支进行严格的测试，同时，另一个团队在 <em>/trunk</em> 继续新的工作（比如，开发 2.0 版本）。无论哪一个团队发现了 bug，在必要的时候，对于这个 bug 的修复都可以移植 (ported) 到另一个团队。这个过程在某个时间点会停止，然后这个分支将会被“冻结”，以供发布前进行最终测试。</li>
+<li><em>标记这个分支 (tagged) 并发布。</em> 当测试结束后，为 <em>/branches/1.0</em> 创建一个标记到 <em>/tags/1.0.0</em> ，作为一个引用快照。这个 tag 中的版本将会被打包并发布给用户。</li>
+<li><em>这个分支随着时间的推移进行适当的维护。</em> 2.0 版本的开发工作在 <em>/trunk</em> 中继续，修复的 bug 也陆续从 <em>/trunk</em> 中移植到 <em>/branches/1.0</em> 。当修复的 bug 数量累积到足够多的时候，管理层可能决定发布 1.0.1 版本，此时应把 <em>/branches/1.0</em> 创建标记到 <em>/tags/1.0.1</em> ，这个 1.0.1 的 tag 会被打包发布。</li>
+</ol>
+<p>这整个过程将随着软件的成熟而不断反复进行：当 2.0 的工作完成后，一个新的名为 2.0 的 release 分支会被创建、测试、标记，最终发布。几年后，整个 repository 将会是好多个处于“维护”模式的 release 分支，和好多个标志着最终发布给用户的 tag。</p>
+<h3 id="用于新特性的分支_(Feature_分支)">用于新特性的分支 (Feature 分支)</h3><p><em>用于新特性的分支 (feature branch)</em> 是在这一章最合适的例子（当 Sally 继续在 <em>/trunk</em> 工作时，你需要开发一个新功能）【译者注：请参见原文在本节之前创设的情境】。这时一种临时的分支，用于进行一些复杂的修改，而不会影响到 <em>/trunk</em> 的稳定。不像 release 分支（需要永久支持），feature 分支的生命历程是：创建，使用它来进行新特性的开发，合并回 trunk，然后被永久删除。它们的作用是有限的。</p>
+<p>另外，什么时候需要创建 feature 分支是不一定的，与不同工程的不同情况有关。有些工程从来不使用 feature 分支：所有人都可以自由地向 <em>/trunk</em> 提交。这种系统的好处是非常简单－－不需要有人懂得有关分支和合并的知识。缺点是 trunk 的代码经常是不稳定的甚至是不可用的。而有些工程将分支用到了极致：所有的修改都 <em>从不</em> 直接提交到 trunk。即使是最微不足道的修改，也需要专门创建一个短命的分支，仔细审查，然后合并回 trunk。然后这个短命的分支就被删除了。这样可以保证在任何时间 trunk 都绝对稳定并可用，但是导致了大量的流程开销。</p>
+<p>大多数工程采用了折中的方式。这种方式坚持 <em>trunk</em> 在任何时间都可以正常编译并通过回归测试。只有当某次修改包含大量提交，可能造成不稳定时，才需要创建 feature 分支。一个好的判断准则是：如果一个功能需要开发者独立工作好几天，然后一次性提交大量的修改（因为要保证 <em>trunk</em> 的稳定，所以要一次性），那这样的修改是不是大到需要进行代码审查了？如果对这个问题的回答是肯定的，那这些修改就应该在一个 feature 分支中进行。这样，开发者就能以递增的方式向 feature 分支中多次提交，而不必担心影响稳定，其他人也可以很容易地审阅到分支中这些代码的变化情况。</p>
+<p>最后还有一个问题，如何在工作的进程中保持 feature 分支和 trunk 的同步。正如我们之前所说，在一个分支上工作数周甚至数月是有很大风险的；trunk 上的修改越来越多，与 feature 分支中对应代码行的差距越来越大，从 branch 合并回 trunk 可能会变得噩梦一般。</p>
+<p>可以通过时常将 trunk 的变更合并到 branch 来避免这种状况【译者注：合并不是单向的，可以从 branch 合并回 trunk，也可以从 trunk 合并到 branch，后者也被称为“同步”】。制定一个原则：每周一次，将上周 trunk 上的变更合并到 branch 中。</p>
+<p>在某个时间点，你会准备将“已同步”的 feature 分支合并回 trunk 中。要做这件事，首先要进行最后一次同步，将 trunk 最新的修改同步到 feature 分支中。完成后，最新的 branch 和 trunk 除了你在 branch 上的修改之外，将是完全一致的。然后就可以通过 <code>reintegrate</code> 选项将分支合并回去了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd trunk-working-copy&#10;&#10;$ svn update&#10;At revision 1910.&#10;&#10;$ svn merge --reintegrate http://svn.example.com/repos/calc/branches/mybranch&#10;--- Merging differences between repository URLs into &#39;.&#39;:&#10;U    real.c&#10;U    integer.c&#10;A    newdirectory&#10;A    newdirectory/newfile&#10; U   .&#10;&#8230;</span><br></pre></td></tr></table></figure>
+<p>另外一种理解这种模式的方法是，每周从 trunk 向 branch 的同步可以看作是在 working copy 中执行了 <em>svn update</em> ，最后的合并操作可以看作是在 working copy 中执行了 <em>svn commit</em> 。既然这样，working copy 不就可以认为是一种非常浅的、私有的分支吗？它就是一种特别的分支，每次只有很少的变更。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/SVN/">SVN</a>, <a href="/tags/Translation/">Translation</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:blog.stoneark.org">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Apple/" style="font-size: 10px;">Apple</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 13.33px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16.67px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/TableView/" style="font-size: 10px;">TableView</a> <a href="/tags/Translation/" style="font-size: 13.33px;">Translation</a> <a href="/tags/UI/" style="font-size: 13.33px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 16.67px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 16.67px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 13.33px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 13.33px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+  </div>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2015/05/29/gem-install-failed-cannot-load-such-file-openssl/">“cannot load such file -- openssl” while “gem install”</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/22/baidumap-memory-not-be-freed/">百度地图 (iOS SDK) 内存不回收</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/19/pop-then-push-immediately-with-uinavigationcontroller-in-ios8/">Pop then push immediately with UINavigationController in iOS 8</a>
+      </li>
+    
+      <li>
+        <a href="/2015/02/11/branching-model-summary/">分支策略总结</a>
+      </li>
+    
+      <li>
+        <a href="/2015/02/05/noip-2014-rps-solution-in-python/">生活大爆炸版石头剪刀布</a>
+      </li>
+    
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 StoneArk
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'stoneark';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

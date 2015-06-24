@@ -1,0 +1,623 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 2 页 | SABlog</title>
+  <meta name="author" content="StoneArk">
+  
+  <meta name="description" content="方舟的技术博客">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="SABlog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="SABlog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-57166172-1', 'auto');
+	ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">SABlog</a></h1>
+  <h2><a href="/">StoneArk&#39;s Blog</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+      <li><a href="/atom.xml">RSS</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-01-13T07:15:25.000Z"><a href="/2015/01/13/ignore-the-warning-of-undeclared-selector/">Jan 13 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/01/13/ignore-the-warning-of-undeclared-selector/">忽略 &quot;Undeclared selector...&quot; 的 Warning</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if ([someObject respondsToSelector:@selector(someSelector)])&#10;&#123;&#10;    [someObject performSelector:@selector(someSelector)];&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>以上这句代码，除非你在 someObject 的头文件中显式地声明了 someSelector，否则在 Xcode 中会提示警告：</p>
+<pre><code><span class="title">Undeclared</span> selector <span class="string">'someSelector'</span>
+</code></pre><p>但很多情况下我们并不想去声明它，此时我们可以禁用编译器的此类警告：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#pragma GCC diagnostic ignored &#34;-Wundeclared-selector&#34;</span><br></pre></td></tr></table></figure>
+<p>这样将会在整个文件内禁用此类警告，也可只在部分代码处禁用，保证编译器依然会对文件内其他代码进行警告检测，避免出现预料之外的 bug：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#pragma clang diagnostic push&#10;#pragma clang diagnostic ignored &#34;-Wundeclared-selector&#34;&#10;// &#38656;&#35201;&#31105;&#29992;&#35686;&#21578;&#30340;&#20195;&#30721;&#10;#pragma clang diagnostic pop</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-01-04T13:36:17.000Z"><a href="/2015/01/04/no-wireless-network-scanned-in-windows-server-2008/">Jan 4 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/01/04/no-wireless-network-scanned-in-windows-server-2008/">Windows server 2008 搜寻不到任何无线网络</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在笔记本上安装了 Windows server 2008 R2，却发现搜索不到任何无线网络。3945ABG 无线网卡的驱动程序是正常的，右下角系统托盘里有显示无线信号图标，但点击无线图标后，网络列表里空空如也。</p>
+<p>原因很简单，因为系统默认没有打开无线功能，说来也是，服务器一般不需要无线网络。</p>
+<p>解决方法也就很清晰了，控制面板 -&gt; 程序与功能 -&gt; 打开或关闭 Windows 功能，在里面找到“无线LAN”功能，把它打开即可。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-12-30T07:27:55.000Z"><a href="/2014/12/30/tricks-about-circumflex-of pinyin-in-osx/">Dec 30 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/12/30/tricks-about-circumflex-of pinyin-in-osx/">OS X 中有关拼音声调的 tricks</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="输入“hǎo”">输入“hǎo”</h3><p>输入带声调的拼音字母，在 iOS 上是非常简单的，在拼音输入法里，长按一个韵母字母，即可弹出声调选择框。<br><img src="http://stoneark.qiniudn.com/blogimg/pinyin_circumflex_in_ios.png" alt="iOS上的拼音音调"></p>
+<p>但在 OS X 上，在拼音输入法下长按变成了连续输入，而不会弹出声调选择框。在英文输入法下长按虽然会弹出声调选择框，但不是汉语拼音标准的声调，最大的影响就是，里面找不到三声。<br><img src="http://stoneark.qiniudn.com/blogimg/pinyin_circumflex_in_osx.png" alt="英文输入法的音调"></p>
+<p>解决方法是，添加输入源“美国（扩展）”，选择这个输入源，然后：</p>
+<ul>
+<li>option + a，再按 a，可得到 ā。</li>
+<li>option + e，再按 a，可得到 á。</li>
+<li>option + v，再按 a，可得到 ǎ。</li>
+<li>option + `，再按 a，可得到 à。</li>
+</ul>
+<h3 id="拼音输入法按声调筛选">拼音输入法按声调筛选</h3><p>输入全拼后，按 option + tab，可按声调筛选。<br><img src="http://stoneark.qiniudn.com/blogimg/pinyin_circumflex_filter.png" alt="按声调筛选"></p>
+<h3 id="输入“犇”">输入“犇”</h3><p>复杂文字的输入可进行拆字输入，如犇，可输入 niuniuniu（三个牛），然后按 shift + space，还会贴心地告诉你这个字的读音。<br><img src="http://stoneark.qiniudn.com/blogimg/pinyin_circumflex_niuniuniu.png" alt="拆字输入"></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-12-29T03:24:08.000Z"><a href="/2014/12/29/gmail-be-blocked-entirely/">Dec 29 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/12/29/gmail-be-blocked-entirely/">gmail be blocked entirely</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><img src="http://stoneark.qiniudn.com/blogimg/gmail_blocked_entirely.png" alt="Google 流量统计"></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-12-16T13:35:16.000Z"><a href="/2014/12/16/transfer-from-evernote-international-to-yinxiang/">Dec 16 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/12/16/transfer-from-evernote-international-to-yinxiang/">从 Evernote 迁移到了印象笔记</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>一直用 <a href="https://evernote.com" target="_blank" rel="external">Evernote</a> 做笔记管理，其简单快捷、搜索功能强大、多平台同步方便。2012 年，Evernote 专门推出了中国版，取名<a href="https://www.yinxiang.com" target="_blank" rel="external">印象笔记</a>。值得注意的是，中国版印象笔记与 Evernote International 的账户是完全分离的，中国版的数据完全存储在中国境内的服务器上，访问速度比 Evernote 更快更稳定，你懂的。</p>
+<p>我一直没有迁移到中国版的印象笔记。虽然印象笔记团队声明会给中国用户一样的数据安全保证，虽然我只记录一些技术内容和平时的想法，但总觉得哪里怪怪的。</p>
+<p>但是最近，Evernote International 经常变得访问及其缓慢。尤其是在 Mac 版客户端上，经常出现笔记内容为空的情况，昨天甚至把之前一篇笔记的内容弄丢了。唉，迫于无奈决定迁移到印象笔记。</p>
+<p>迁移方法可参见<a href="https://www.yinxiang.com/contact/support/kb/#!/article/yx0036" target="_blank" rel="external">印象笔记知识库</a>。我采用了 <a href="https://app.yinxiang.com/shard/s10/sh/a2d0903c-f751-48fd-a5c0-68d7bcd0c450/ce188822309c0124ba328248e1bed420" target="_blank" rel="external">NoteDup</a> 工具，只要用 International 和印象笔记的账户分别授权就好了。不过图片比较多的笔记会非常慢，甚至卡在那儿无法继续进行，如果有这种情况发生建议直接跳过去，手动迁移这一条笔记（一个晚上都没复制过去啊亲）。迁移完检查笔记数量，发现少了一条，找了好久终于找到了那条没被复制过去的笔记，我唯一能想到的原因就是笔记里有 g 和 f 和 w 这三个字母的组合了…</p>
+<p>迁移之后速度大大提升。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-12-15T07:54:29.000Z"><a href="/2014/12/15/my-new-computer-mac-mini/">Dec 15 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/12/15/my-new-computer-mac-mini/">My new computer - Mac mini</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>前些日子买了 2014 版的 Mac mini，这也是我自己的第一台 Mac，之前都是用黑苹果和办公室里公司配的 iMac。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/my_mac_mini.png" alt="My Mac mini"></p>
+<p>回想一下，自 2000 年爹妈给买了第一台电脑至今，也算见证了计算机和互联网在中国的发展历程。写下用过的三台电脑的配置，也足以看到计算机技术在这十几年来的发展了。</p>
+<table>
+<thead>
+<tr>
+<th>*</th>
+<th style="text-align:center">DIY PC(Oct, 2000)</th>
+<th>Lenovo F31 Laptop(Oct, 2007)</th>
+<th>Mac mini(Dec, 2014)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CPU</strong></td>
+<td style="text-align:center">Intel Celeron 2 600MHz</td>
+<td>Intel Core 2 Duo T5250 (1.5GHz)</td>
+<td>Intel Core i5-4288U (2.6GHz)</td>
+</tr>
+<tr>
+<td><strong>RAM</strong></td>
+<td style="text-align:center">SDRAM 64MB</td>
+<td>2GB (1GB*2) DDR2 667MHz</td>
+<td>8GB LPDDR3 1600MHz</td>
+</tr>
+<tr>
+<td><strong>Harddisk</strong></td>
+<td style="text-align:center">Quantum 20GB PATA 5400rpm</td>
+<td>WD 160GB SATA 5400rpm</td>
+<td>Apple 256GB PCIe SSD</td>
+</tr>
+<tr>
+<td><strong>Video Card</strong></td>
+<td style="text-align:center">nVidia TNT2(8MB,AGP)</td>
+<td>nVidia Geforce 8400M GS(128MB,PCIe x16)</td>
+<td>Intel Iris Graphics(Built-in)</td>
+</tr>
+<tr>
+<td><strong>Sound Card</strong></td>
+<td style="text-align:center">Creative Vibra 128</td>
+<td>Built-in Realtek HDA</td>
+<td>Built-in Intel HDA</td>
+</tr>
+<tr>
+<td><strong>Modem</strong></td>
+<td style="text-align:center">Motorola 56kbps</td>
+<td>Motorola 56kbps</td>
+<td>None</td>
+</tr>
+<tr>
+<td><strong>NIC</strong></td>
+<td style="text-align:center">None</td>
+<td>BCM5906 10M/100M</td>
+<td>BCM5701 10/100/1000BASE-T</td>
+</tr>
+<tr>
+<td><strong>WLAN</strong></td>
+<td style="text-align:center">None</td>
+<td>Intel 3945ABG</td>
+<td>Broadcom 802.11a/b/g/n</td>
+</tr>
+<tr>
+<td><strong>Bluetooth</strong></td>
+<td style="text-align:center">None</td>
+<td>Bluetooth 2.0</td>
+<td>Bluetooth 4.0</td>
+</tr>
+<tr>
+<td><strong>Monitor</strong></td>
+<td style="text-align:center">Samsung SyncMaster 550s 15’CRT</td>
+<td>Built-in 13.3’ LCD</td>
+<td>None</td>
+</tr>
+<tr>
+<td><strong>ODD</strong></td>
+<td style="text-align:center">CD-ROM 48X</td>
+<td>DVD±RW</td>
+<td>None</td>
+</tr>
+<tr>
+<td><strong>Sound box</strong></td>
+<td style="text-align:center">Ranbow M2</td>
+<td>Built-in</td>
+<td>Built-in</td>
+</tr>
+<tr>
+<td><strong>OS</strong></td>
+<td style="text-align:center">Windows 98 SE</td>
+<td>Windows Vista Home Premium</td>
+<td>Mac OS X Yosemite</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-12-11T08:59:26.000Z"><a href="/2014/12/11/monitor-connected-to-mac-mini-fuzzily-displayed/">Dec 11 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/12/11/monitor-connected-to-mac-mini-fuzzily-displayed/">Mac mini 外接显示器显示模糊的解决</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>之前看到过有好多人遇到了 Mac 外接显示器显示不清晰的问题，一直以为是 HDMI 输出只支持某几种特定分辨率的原因。如今我也遇到了这个问题，收到 Mac mini 欣喜地接上电源、显示器、键盘鼠标，发现…好虚啊！</p>
+<p>可是我显然没有用 HDMI 输出…</p>
+<p>用了 CE-LINK 的 Mini DP to VGA 转接线接到了一个之前闲置不用的显示器上（BenQ FP756-12ms），惨不忍睹。在系统偏好的通用里，已经选择了“使用 LCD 平滑字体（可用时）”。</p>
+<p>Google 找到了解决的方法，原因是系统把显示器识别成了 CRT，所以没有采用 LCD 平滑。</p>
+<p>OS X 有五种字体平滑选项：关闭、自动、轻、中、重。但在偏好设置里有关字体平滑选项只有一个复选框，不选即为关闭，选上即为自动。可惜这个“自动”识别错了。</p>
+<p>所以我们需要强制指定字体平滑，方法是更改 globalDomain 中的 AppleFontSmoothing 参数。</p>
+<figure class="highlight bash"><figcaption><span>Terminal</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults -currentHost write -globalDomain AppleFontSmoothing -int <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>其中，最后的参数 1 为轻度，还可选择 2 为中度，3 为重度。</p>
+<p>另外，查看该值可通过：<br><figure class="highlight bash"><figcaption><span>Terminal</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults -currentHost <span class="built_in">read</span> -globalDomain AppleFontSmoothing</span><br></pre></td></tr></table></figure></p>
+<p>若提示</p>
+<pre><code><span class="type">The</span> domain/<span class="default"><span class="keyword">default</span> pair of <span class="container">(<span class="title">kCFPreferencesAnyApplication</span>, <span class="type">AppleFontSmoothing</span>)</span> does not exist</span>
+</code></pre><p>则意味着当前选择了关闭或自动。</p>
+<p>删除对该值的设置：<br><figure class="highlight bash"><figcaption><span>Terminal</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults -currentHost delete -globalDomain AppleFontSmoothing</span><br></pre></td></tr></table></figure></p>
+<p>经测，BenQ FP756-12ms 对于我来说最合适的值为 3。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-11-25T08:58:35.000Z"><a href="/2014/11/25/not-show-subviews-of-an-uilabel-on-ios8/">Nov 25 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/11/25/not-show-subviews-of-an-uilabel-on-ios8/">iOS8 中 UILabel 不显示 subview 的问题</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在 iOS8 中，如果在一个 UILabel 对象上添加 subview，同时给这个 label 设置了背景色 (backgroundColor)，则会发现这些 subview 都不显示出来，但可以响应事件（如一个按钮作为 subview，按钮不显示但可以正常响应点击）。如果不给这个 label 设置背景色，则可以正常显示。</p>
+<p>在 iOS7 上不存在此问题。</p>
+<p>有些开发者为了方便，在自定义 NavigationBar 时用 UILabel 做父容器，然后在其上添加按钮，导致了在 iOS8 上运行时，导航栏上的按钮都不显示。</p>
+<p>避免采用 UILabel 等做父容器，它们本来就不适合做父容器。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-11-24T09:08:23.000Z"><a href="/2014/11/24/cannot-locate-compiling-with-xcode6/">Nov 24 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/11/24/cannot-locate-compiling-with-xcode6/">Cannot locate compiling with Xcode6</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>正式推出的 iOS8 中，定位服务分为了 <em>使用应用程序期间</em> 和 <em>始终</em> 两种权限，这导致了一些变化。之前的工程若用 Xcode5 编译，并在 iOS8 上运行，会向用户请求始终获取位置的权限。若用 Xcode6 编译，会发现程序不会向用户请求权限，同时导致无法定位。</p>
+<p>解决方法并不复杂，只需在 <code>Info.plist</code> 中加入请求定位权限时显示给用户的提示信息即可：</p>
+<figure class="highlight plist"><figcaption><span>-Info.plist</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">key</span>&gt;</span>NSLocationWhenInUseUsageDescription<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">string</span>&gt;</span>写上为什么要在程序运行时获取位置<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>或<br><figure class="highlight plist"><figcaption><span>-Info.plist</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">key</span>&gt;</span>NSLocationAlwaysUsageDescription<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">string</span>&gt;</span>写上为什么要始终获取位置<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-11-24T08:04:44.000Z"><a href="/2014/11/24/caution-fontname-of-bold-fonts/">Nov 24 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/11/24/caution-fontname-of-bold-fonts/">Caution！粗体的字体名</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>程序在 iOS7+ 上运行正常，但在 iOS6 上会直接崩溃，且没有任何崩溃信息。<br>经单步调试，发现问题出现在这一句上：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSMutableAttributedString</span> *attributedType = [[<span class="built_in">NSMutableAttributedString</span> alloc] initWithString:<span class="string">@"hello"</span> attributes:@&#123;<span class="built_in">NSFontAttributeName</span>: [<span class="built_in">UIFont</span> fontWithName:<span class="string">@"Verdana-bold"</span> size:<span class="number">14.0</span>],<span class="built_in">NSForegroundColorAttributeName</span>:[<span class="built_in">UIColor</span> redColor]&#125;];</span><br></pre></td></tr></table></figure></p>
+<p>所需实现的是将一个 NSAttributedString 显示在一个 UILabel 上，我的印象中 iOS6 是支持在 UILabel 上显示 AttributedString 的，实际证明也是这样，所以排除了 iOS6 不支持。</p>
+<p>经过猜测和尝试，发现是这个 <code>-bold</code> 的缘故，改为 <code>-Bold</code> 就正常了，而且在 iOS7+ 上也是正常的。</p>
+<p>晕…好吧。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/" class="alignleft prev">上一页</a>
+  
+  
+    <a href="/page/3/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:blog.stoneark.org">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Apple/" style="font-size: 10px;">Apple</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 13.33px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16.67px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/TableView/" style="font-size: 10px;">TableView</a> <a href="/tags/Translation/" style="font-size: 13.33px;">Translation</a> <a href="/tags/UI/" style="font-size: 13.33px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 16.67px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 16.67px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 13.33px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 13.33px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+  </div>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2015/05/29/gem-install-failed-cannot-load-such-file-openssl/">“cannot load such file -- openssl” while “gem install”</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/22/baidumap-memory-not-be-freed/">百度地图 (iOS SDK) 内存不回收</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/19/pop-then-push-immediately-with-uinavigationcontroller-in-ios8/">Pop then push immediately with UINavigationController in iOS 8</a>
+      </li>
+    
+      <li>
+        <a href="/2015/02/11/branching-model-summary/">分支策略总结</a>
+      </li>
+    
+      <li>
+        <a href="/2015/02/05/noip-2014-rps-solution-in-python/">生活大爆炸版石头剪刀布</a>
+      </li>
+    
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 StoneArk
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'stoneark';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

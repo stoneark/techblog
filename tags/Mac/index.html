@@ -1,0 +1,243 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Mac | SABlog</title>
+  <meta name="author" content="StoneArk">
+  
+  <meta name="description" content="方舟的技术博客">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="SABlog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="SABlog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-57166172-1', 'auto');
+	ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">SABlog</a></h1>
+  <h2><a href="/">StoneArk&#39;s Blog</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+      <li><a href="/atom.xml">RSS</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title tag">Mac</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-01-26T09:10:30.000Z"><a href="/2015/01/26/mac-mini-not-responding-frequently/">Jan 26 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/01/26/mac-mini-not-responding-frequently/">最近 Mac mini 经常死机</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>最近刚买不久的 Mac mini 经常死机，刚买了不到两个月，已经死机至少三次了，而且有两次是死到不得不长按电源按钮强制关机的地步。这让我着实有些郁闷，办公室的 iMac 用了一年半了，印象中只死过一次机。</p>
+<p>回忆了一下死机的情形，有两次都是从 Launchpad 打开应用导致的。具体表现是：在 Launchpad 里单击一个应用的图标，Launchpad 本应该打开这个应用并且让自己消失，但此时却没有任何反应，应用没有被打开，Launchpad 也没有消失，继续点击依然是这样的，无论点击什么应用都是这样。</p>
+<p>有一次是过了一会儿就死了，鼠标变为旋转的风火轮，等了好久好久都没反应，只能强制关机。</p>
+<p>另一次是等了好久后，点击的应用被打开，由于刚才狂点了好多次，所以同时还弹出了好多对话框，提示你这个应用已经被打开了，不能再次打开。但问题还没完，这个好不容易被打开的应用再也关不掉了。Dock 里和强制退出程序列表里，一直有这个程序，强制退出也没用。但是在 Activitiy Monitor 里已经没有这个进程了。于是，如果想关机，系统会不断尝试把这个程序关闭，但是一直关闭不了，只能长按电源…</p>
+<p>系统是 Yosemite 10.10.1，难道是 Yosemite 的众多 bug 之一吗？也想不到会是什么原因，唯一能想到可以做的就是修复磁盘权限。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/fix_disk_authority.png" alt="Fix disk authority"></p>
+<p><strong>Applications/.DS_Store！</strong>难道就是因为它的权限出了问题？看上去是很个靠谱的解释。如果过一段时间我没在下面续写新内容，那就是这个原因了，如果有受相同问题困扰的朋友，可以参考。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-12-11T08:59:26.000Z"><a href="/2014/12/11/monitor-connected-to-mac-mini-fuzzily-displayed/">Dec 11 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/12/11/monitor-connected-to-mac-mini-fuzzily-displayed/">Mac mini 外接显示器显示模糊的解决</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>之前看到过有好多人遇到了 Mac 外接显示器显示不清晰的问题，一直以为是 HDMI 输出只支持某几种特定分辨率的原因。如今我也遇到了这个问题，收到 Mac mini 欣喜地接上电源、显示器、键盘鼠标，发现…好虚啊！</p>
+<p>可是我显然没有用 HDMI 输出…</p>
+<p>用了 CE-LINK 的 Mini DP to VGA 转接线接到了一个之前闲置不用的显示器上（BenQ FP756-12ms），惨不忍睹。在系统偏好的通用里，已经选择了“使用 LCD 平滑字体（可用时）”。</p>
+<p>Google 找到了解决的方法，原因是系统把显示器识别成了 CRT，所以没有采用 LCD 平滑。</p>
+<p>OS X 有五种字体平滑选项：关闭、自动、轻、中、重。但在偏好设置里有关字体平滑选项只有一个复选框，不选即为关闭，选上即为自动。可惜这个“自动”识别错了。</p>
+<p>所以我们需要强制指定字体平滑，方法是更改 globalDomain 中的 AppleFontSmoothing 参数。</p>
+<figure class="highlight bash"><figcaption><span>Terminal</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults -currentHost write -globalDomain AppleFontSmoothing -int <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>其中，最后的参数 1 为轻度，还可选择 2 为中度，3 为重度。</p>
+<p>另外，查看该值可通过：<br><figure class="highlight bash"><figcaption><span>Terminal</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults -currentHost <span class="built_in">read</span> -globalDomain AppleFontSmoothing</span><br></pre></td></tr></table></figure></p>
+<p>若提示</p>
+<pre><code><span class="type">The</span> domain/<span class="default"><span class="keyword">default</span> pair of <span class="container">(<span class="title">kCFPreferencesAnyApplication</span>, <span class="type">AppleFontSmoothing</span>)</span> does not exist</span>
+</code></pre><p>则意味着当前选择了关闭或自动。</p>
+<p>删除对该值的设置：<br><figure class="highlight bash"><figcaption><span>Terminal</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults -currentHost delete -globalDomain AppleFontSmoothing</span><br></pre></td></tr></table></figure></p>
+<p>经测，BenQ FP756-12ms 对于我来说最合适的值为 3。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:blog.stoneark.org">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Apple/" style="font-size: 10px;">Apple</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 13.33px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16.67px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/TableView/" style="font-size: 10px;">TableView</a> <a href="/tags/Translation/" style="font-size: 13.33px;">Translation</a> <a href="/tags/UI/" style="font-size: 13.33px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 16.67px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 16.67px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 13.33px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 13.33px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+  </div>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2015/05/29/gem-install-failed-cannot-load-such-file-openssl/">“cannot load such file -- openssl” while “gem install”</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/22/baidumap-memory-not-be-freed/">百度地图 (iOS SDK) 内存不回收</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/19/pop-then-push-immediately-with-uinavigationcontroller-in-ios8/">Pop then push immediately with UINavigationController in iOS 8</a>
+      </li>
+    
+      <li>
+        <a href="/2015/02/11/branching-model-summary/">分支策略总结</a>
+      </li>
+    
+      <li>
+        <a href="/2015/02/05/noip-2014-rps-solution-in-python/">生活大爆炸版石头剪刀布</a>
+      </li>
+    
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 StoneArk
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'stoneark';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

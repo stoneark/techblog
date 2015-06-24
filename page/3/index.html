@@ -1,0 +1,651 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 3 页 | SABlog</title>
+  <meta name="author" content="StoneArk">
+  
+  <meta name="description" content="方舟的技术博客">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="SABlog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="SABlog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-57166172-1', 'auto');
+	ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">SABlog</a></h1>
+  <h2><a href="/">StoneArk&#39;s Blog</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+      <li><a href="/atom.xml">RSS</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-11-08T08:39:21.000Z"><a href="/2014/11/08/OMG-WireLurker/">Nov 8 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/11/08/OMG-WireLurker/">OMG, WireLurker</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>前几日，美国著名网络安全公司 Palo Alto Networks 发布了<a href="http://researchcenter.paloaltonetworks.com/2014/11/wirelurker-new-era-os-x-ios-malware/" target="_blank" rel="external">一则消息</a>，监测到一个新型病毒 WireLurker。让它区别于众多病毒的地方在于，它运行于一直及其安全的 Mac OS X，并能感染与其连接的 iOS 设备，而且并不要求 iOS 设备被越狱。这也是第一个可以感染 iOS 程序的病毒。</p>
+<p>病毒来源为中国著名的苹果技(dào)术(bǎn)论坛－麦芽地，论坛中很多二次打包的盗版软件、游戏中加入了 WireLurker，国内非常多的 Mac 用户被感染。</p>
+<p>简单地判断自己有没有中招，可查看 <code>/usr/local</code> 中有没有一个名叫 <code>machook</code> 的目录，如果有，恭喜中招！</p>
+<p>machook 目录中的内容：</p>
+<figure class="highlight bash"><figcaption><span>Terminal</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ tree /usr/<span class="built_in">local</span>/machook/</span><br><span class="line">machook</span><br><span class="line">├── com.apple.globalupdate.plist</span><br><span class="line">├── com.apple.machook_damon.plist</span><br><span class="line">├── dylib</span><br><span class="line">│   ├── libcrypto.<span class="number">1.0</span>.<span class="number">0</span>.dylib</span><br><span class="line">│   ├── libiconv.<span class="number">2</span>.dylib</span><br><span class="line">│   ├── libimobiledevice.<span class="number">4</span>.dylib</span><br><span class="line">│   ├── liblzma.<span class="number">5</span>.dylib</span><br><span class="line">│   ├── libplist.<span class="number">2</span>.dylib</span><br><span class="line">│   ├── libssl.<span class="number">1.0</span>.<span class="number">0</span>.dylib</span><br><span class="line">│   ├── libusbmuxd.<span class="number">2</span>.dylib</span><br><span class="line">│   ├── libxml2.<span class="number">2</span>.dylib</span><br><span class="line">│   └── libz.<span class="number">1</span>.dylib</span><br><span class="line">├── globalupdate</span><br><span class="line">├── machook</span><br><span class="line">└── watch.sh</span><br></pre></td></tr></table></figure>
+<p>Palo Alto 为我们提供了一个查杀 WireLurker 的 <a href="https://github.com/PaloAltoNetworks-BD/WireLurkerDetector" target="_blank" rel="external">python 脚本</a>（暴露了，曾经在麦芽地下过一个游戏..）。</p>
+<figure class="highlight bash"><figcaption><span>Terminal</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">$ python WireLurkerDetectorOSX.py</span><br><span class="line">WireLurker Detector (version <span class="number">1.2</span>.<span class="number">0</span>)</span><br><span class="line">Copyright (c) <span class="number">2014</span>, Palo Alto Networks, Inc.</span><br><span class="line"></span><br><span class="line">[+] Scanning <span class="keyword">for</span> known malicious files ...</span><br><span class="line">[!] Found malicious file: /Library/LaunchDaemons/com.apple.machook_damon.plist</span><br><span class="line">[!] Found malicious file: /Library/LaunchDaemons/com.apple.globalupdate.plist</span><br><span class="line">[!] Found malicious file: /usr/<span class="built_in">local</span>/machook/</span><br><span class="line">[!] Found malicious file: /System/Library/LaunchDaemons/com.apple.appstore.plughelper.plist</span><br><span class="line">[!] Found malicious file: /System/Library/LaunchDaemons/com.apple.MailServiceAgentHelper.plist</span><br><span class="line">[!] Found malicious file: /System/Library/LaunchDaemons/com.apple.systemkeychain-helper.plist</span><br><span class="line">[!] Found malicious file: /System/Library/LaunchDaemons/com.apple.periodic-dd-mm-yy.plist</span><br><span class="line">[!] Found malicious file: /usr/bin/com.apple.MailServiceAgentHelper</span><br><span class="line">[!] Found malicious file: /usr/bin/com.apple.appstore.PluginHelper</span><br><span class="line">[!] Found malicious file: /usr/bin/periodicdate</span><br><span class="line">[!] Found malicious file: /usr/bin/systemkeychain-helper</span><br><span class="line">[!] Found malicious file: /usr/bin/stty5.<span class="number">11</span>.pl</span><br><span class="line">[+] Scanning <span class="keyword">for</span> known suspicious files ...</span><br><span class="line">[!] Found suspicious file: /etc/manpath.d/</span><br><span class="line">[+] Scanning <span class="keyword">for</span> infected applications ... (may take minutes)</span><br><span class="line">[!] Found infected application: /Applications/Sim City <span class="number">4</span> Deluxe Edition.app</span><br><span class="line">[!] WARNING: Your OS X system is highly suspicious of being infected by the WireLurker.</span><br><span class="line">[!] You may need to delete all malicious or suspicious files and/or applications above.</span><br><span class="line">[!] For more information about the WireLurker, please refer:</span><br><span class="line">[!] http://researchcenter.paloaltonetworks.com/<span class="number">2014</span>/<span class="number">11</span>/wirelurker-new-era-os-x-ios-malware/</span><br></pre></td></tr></table></figure>
+<p>Mac 平台也被恶人盯上了，据说与数字公司有关。远离盗版，MAS 里有的尽量在 MAS 里下载，保证安全。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-10-24T08:47:04.000Z"><a href="/2014/10/24/avoid-use-description-as-a-property-name-since-xcode6/">Oct 24 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/10/24/avoid-use-description-as-a-property-name-since-xcode6/">避免使用 description 等作为属性名</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>自 Xcode 6 起，继承于 NSObject 的类一定要避免使用 description 等作为属性的名字，否则会被认为是 NSObject 中的 description 属性。</p>
+<p>警告内容：</p>
+<pre><code>Auto <span class="keyword">property</span> synthesis will <span class="keyword">not</span> synthesize <span class="keyword">property</span> 'description' because <span class="keyword">it</span> <span class="keyword">is</span> 'readwrite' <span class="keyword">but</span> <span class="keyword">it</span> will be synthesized 'readonly' via another <span class="keyword">property</span>.
+</code></pre><p>如果在代码中执行了 setDescription，则程序会崩溃，错误信息：</p>
+<pre><code>*** Terminating app due to uncaught exception 'NSInvalidArgumentException', reason: '-<span class="keyword">[</span>AnObject setDescription:]: unrecognized selector sent to<span class="instruction"> instance </span>0x79e8b260'
+</code></pre><p>如果在代码中试图取 description 的值，则会得到 NSObject 的 description 属性，即该对象的指针，如 <code>&lt;AnObject: 0x7c97f870&gt;</code>。</p>
+<p>其实本就该避免，只不过之前不会出问题而已。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-10-23T08:54:21.000Z"><a href="/2014/10/23/changes-in-new-baidumap-250/">Oct 23 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/10/23/changes-in-new-baidumap-250/">百度地图 iOS SDK 2.5.0版的变化</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在 <a href="../../../../2014/11/24/cannot-locate-compiling-with-xcode6">这篇博客</a> 中，介绍了 iOS8 中定位的变化，百度地图等第三方地图 SDK 在 Xcode6 下均出现水土不服。在广大人民群众的热切期待和漫长等待后，百度地图终于释出了新版 iOS SDK，版本号 2.5.0。在官方的 Change Log 中，看到主要增加了对 arm64、iPhone6、iPhone 6P Plus、iOS8 的支持。解决了一些bug。</p>
+<p>在工程中替换为新版 SDK 并 Build 后，满眼都是 Error。研究下去，发现变动相当多（之前使用的 SDK 版本号为 2.2.1），完全不管向下兼容性。</p>
+<h3 id="地图搜索">地图搜索</h3><p>(1) <code>BMKSearch</code> 分拆为 <code>BMKRouteSearch</code> 和 <code>BMKGeoCodeSearch</code>。</p>
+<p>(2) <code>BMKSearchDelegate</code> 分拆为 <code>BMKRouteSearchDelegate</code> 和 <code>BMKGeoCodeSearchDelegate</code>。</p>
+<p>(3) 新增类 <code>BMKTransitRoutePlanOption</code>、<code>BMKWalkingRoutePlanOption</code>、<code>BMKDrivingRoutePlanOption</code>，且 BMKRouteSearch（原 BMKSearch） 的方法 drivingSearch、transitSearch、walkingSearch 所需的参数变更为一个与之对应的 BMK…RoutePlanOption 类型的对象。</p>
+<p>原方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)transitSearch:(NSString*)city startNode:(BMKPlanNode*)start endNode:(BMKPlanNode*)end;&#10;- (BOOL)drivingSearch:(NSString*)startCity startNode:(BMKPlanNode*)start endCity:(NSString*)endCity endNode:(BMKPlanNode*)end;&#10;- (BOOL)drivingSearch:(NSString*)startCity startNode:(BMKPlanNode*)start endCity:(NSString*)endCity endNode:(BMKPlanNode*)end throughWayPoints:(NSArray*)wayPointsArray;&#10;- (BOOL)walkingSearch:(NSString*)startCity startNode:(BMKPlanNode*)start endCity:(NSString*)endCity endNode:(BMKPlanNode*)end;</span><br></pre></td></tr></table></figure>
+<p>新方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)transitSearch:(BMKTransitRoutePlanOption*)transitRoutePlanOption;&#10;- (BOOL)drivingSearch:(BMKDrivingRoutePlanOption*)drivingRoutePlanOption;&#10;- (BOOL)walkingSearch:(BMKWalkingRoutePlanOption*)walkingRoutePlanOption;</span><br></pre></td></tr></table></figure>
+<p>同时须注意，相比其他两种路径搜索，公交搜索必须指定城市名称，否则会直接不予检索，transitSearch 方法返回 NO。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">transitRouteSearchOption<span class="variable">.city</span> = <span class="string">@"济南市"</span>;</span><br></pre></td></tr></table></figure></p>
+<p>(4) <code>BMKPlanResult</code> 分拆为 <code>BMKWalkingRouteResult</code>、<code>BMKTransitRouteResult</code>、<code>BMKDrivingRouteResult</code>，同时 BMKRouteSearchDelegate（原 BMKSearchDelegate） 的代理方法变更，由：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)onGetWalkingRouteResult:(B<span class="built_in">MKSearch</span> *)searcher result:(B<span class="built_in">MKPlanResult</span> *)result errorCode:(<span class="keyword">int</span>)error;</span><br><span class="line">- (<span class="keyword">void</span>)onGetTransitRouteResult:(B<span class="built_in">MKSearch</span> *)searcher result:(B<span class="built_in">MKPlanResult</span> *)result errorCode:(<span class="keyword">int</span>)error;</span><br><span class="line">- (<span class="keyword">void</span>)onGetDrivingRouteResult:(B<span class="built_in">MKSearch</span> *)searcher result:(B<span class="built_in">MKPlanResult</span> *)result errorCode:(<span class="keyword">int</span>)error;</span><br></pre></td></tr></table></figure></p>
+<p>变更为：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)onGetWalkingRouteResult:(B<span class="built_in">MKRouteSearch</span>*)searcher result:(B<span class="built_in">MKWalkingRouteResult</span>*)result errorCode:(B<span class="built_in">MKSearchErrorCode</span>)error;</span><br><span class="line">- (<span class="keyword">void</span>)onGetTransitRouteResult:(B<span class="built_in">MKRouteSearch</span>*)searcher result:(B<span class="built_in">MKTransitRouteResult</span>*)result errorCode:(B<span class="built_in">MKSearchErrorCode</span>)error;</span><br><span class="line">- (<span class="keyword">void</span>)onGetDrivingRouteResult:(B<span class="built_in">MKRouteSearch</span>*)searcher result:(B<span class="built_in">MKDrivingRouteResult</span>*)result errorCode:(B<span class="built_in">MKSearchErrorCode</span>)error;</span><br></pre></td></tr></table></figure></p>
+<h3 id="地图定位">地图定位</h3><p>(1) 新增类 <code>BMKLocationService</code> 及代理 <code>BMKLocationServiceDelegate</code>。BMKMapView 不再管理定位功能，其属性 <code>location</code>，和代理方法：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)mapView:(B<span class="built_in">MKMapView</span> *)mapView didUpdateUserLocation:(B<span class="built_in">MKUserLocation</span> *)userLocation;</span><br></pre></td></tr></table></figure></p>
+<p>都不再存在，定位功能全部剥离到 BMKLocationService。</p>
+<p>(2) 如果地图需要定位，需要单独创建一个 BMKLocationService 对象，并实现代理 BMKLocationServiceDelegate，在代理方法中执行 mapView 新增的 <code>updateLocationData</code> 方法，大致如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)didUpdateUserLocation:(B<span class="built_in">MKUserLocation</span> *)userLocation</span><br><span class="line">&#123;</span><br><span class="line">  [_bMapView updateLocationData:userLocation];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(3) 含有定位的地图界面，pop 回上一层 ViewController ，再 push 到这个界面，会崩溃的问题。<br>如果你遇到这个问题，请<strong>用真机运行</strong>，如果依然崩溃，确保以下两条：</p>
+<ul>
+<li><code>viewWillDisappear</code> 中写了 <code>[_locService stopUserLocationService];</code>。</li>
+<li><code>[_locService startUserLocationService];</code> 在 <code>viewWillAppear</code> 中，而不是在 <code>viewDidLoad</code> 中。</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-09-16T08:50:29.000Z"><a href="/2014/09/16/standard-of-ios-programming/">Sep 16 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/09/16/standard-of-ios-programming/">iOS 代码规范</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>这是我为团队制定的 iOS 代码规范，供大家参考。</p>
+<h2 id="文档说明">文档说明</h2><table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Time</th>
+<th>Author</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.1 Alpha</td>
+<td>2014-08-21</td>
+<td>StoneArk</td>
+</tr>
+<tr>
+<td>0.2 Beta</td>
+<td>2014-09-02</td>
+<td>StoneArk</td>
+</tr>
+<tr>
+<td>0.3 Beta</td>
+<td>2014-09-15</td>
+<td>StoneArk</td>
+</tr>
+<tr>
+<td>1.0</td>
+<td>2014-09-16</td>
+<td>StoneArk</td>
+</tr>
+</tbody>
+</table>
+<h2 id="基本原则">基本原则</h2><p>求同存异。</p>
+<p>合理的编码风格不只一个，尊重每位开发人员的编码习惯。但不合理的编码习惯必须避免。</p>
+<h2 id="命名规则">命名规则</h2><ul>
+<li>命名规则</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>范围</th>
+<th>命名规则</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>变量名、方法名</td>
+<td><a href="http://zh.wikipedia.org/wiki/%E9%A7%9D%E5%B3%B0%E5%BC%8F%E5%A4%A7%E5%B0%8F%E5%AF%AB">驼峰式命名</a> (小驼峰式命名)</td>
+<td><code>onlineCount</code> <br /> <code>- (void)viewDidLoad</code></td>
+</tr>
+<tr>
+<td>类名、枚举类型名</td>
+<td><a href="http://zh.wikipedia.org/wiki/%E5%B8%95%E6%96%AF%E5%8D%A1%E5%91%BD%E5%90%8D%E6%B3%95">Pascal 命名</a></td>
+<td><code>MainViewController</code> <br /> <code>FruitType</code></td>
+</tr>
+<tr>
+<td>常量</td>
+<td>全部大写或k开头的驼峰式命名</td>
+<td><code>FONTNAME</code> <br /> <code>kFontName</code></td>
+</tr>
+<tr>
+<td>宏定义</td>
+<td>全部大写</td>
+<td><code>LOCALDEBUG</code></td>
+</tr>
+<tr>
+<td>枚举值</td>
+<td>要有枚举类型前缀</td>
+<td><code>FruitType</code> 枚举类型的枚举值应为 <code>FruitTypeApple</code>, <code>FruitTypeBanana</code> 等</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>命名约定</li>
+</ul>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2014/09/16/standard-of-ios-programming/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-09-13T09:34:40.000Z"><a href="/2014/09/13/new-itunes-connect-bug-when-submitting-for-review/">Sep 13 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/09/13/new-itunes-connect-bug-when-submitting-for-review/">新版 iTunes Connect 提交流程有变有 bug</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在 <a href="itunes-connect-website-updated.html">上一篇博客</a> 中，对 iTunes Connect 的改版从界面上进行了了解。今天进行了一次新版本的提交，发现提交的流程也有变化，并且貌似存在一个 bug。</p>
+<p>以往的流程中，在填写完版本信息上传程序之前，是”Prepare for Upload”状态，需要在 iTunes Connect 网站点击”Ready to Upload Binary”按钮，才会进入”Waiting for Upload”状态，允许通过 Xcode 或 Application Loader 上传程序。成功上传程序后，无需进行其他操作，在 iTunes Connect 中就会自动变为”Upload Received”状态，经过几分钟的处理后，再自动变为”Waiting for Review”状态，等待审核。</p>
+<p>而现在的流程是，一个程序版本一旦建立，即进入”Prepare for Submission”状态，在这个状态就可以上传程序，而不再有”Ready to Upload Binary”按钮，也不再有”Prepare for Upload”和”Waiting for Upload”两个状态。但上传后不会自动开始审核，需要在 iTunes Conect 中选择上传的 Build，然后点击”Submit for Review”按钮，才会提交审核，进入”Waiting for Review”状态。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fnew_itunes_connect_bug_step1.jpg" alt=""><br><img src="http://stoneark.qiniudn.com/blogimg%2Fnew_itunes_connect_bug_step2.jpg" alt=""><br><img src="http://stoneark.qiniudn.com/blogimg%2Fnew_itunes_connect_bug_step3.jpg" alt=""></p>
+<p>但问题是，明明已经选择了 Build，但是点击提交后，依然提示没有选择 Build：<br><img src="http://stoneark.qiniudn.com/blogimg%2Fnew_itunes_connect_bug_error.jpg" alt=""></p>
+<p>尝试着删掉重新选择、重新上传一个 Build、换浏览器等都不奏效，推测是新版 iTunes Connect 的一个 bug 吧。</p>
+<p>不过这次的流程变动我认为还是非常合理的，上传程序并不代表提交审核，只有点击了提交按钮才意味着提交审核。这样也就允许我们可以提前将程序上传，待测试结果出来后，点击按钮提交即可。同时，这样也允许了多次上传程序（只要 Build Version 不同）。</p>
+<p>PS. 9 月 15 日早上重新点了一次 “Submit for Review” 按钮，什么都没改动，已经可以成功提交了。证明的确是新版 iTunes Connect 的问题。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-09-12T11:37:46.000Z"><a href="/2014/09/12/ios-8-glance/">Sep 12 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/09/12/ios-8-glance/">iOS 8 Glance</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>把自己的 4S 升级到了 iOS 8 GM Seed。第一次恢复了 iOS 7 上做的备份，结果卡得要命。然后重新刷了一遍，并设置为全新的 iPhone，流畅了许多，流畅度跟 iOS 7 差距不大。</p>
+<p>Home Screen，多了个健康：<br><img src="http://stoneark.qiniudn.com/blogimg%2Fios8_home_screen.jpg" alt=""></p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2014/09/12/ios-8-glance/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-09-10T01:24:29.000Z"><a href="/2014/09/10/itunes-connect-website-updated/">Sep 10 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/09/10/itunes-connect-website-updated/">iTunes Connect 更新了</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="https://itunesconnect.apple.com" target="_blank" rel="external">iTunes Connect</a> 更新了，最直观的感受就是网站界面换成了扁平风格，与 iCloud 风格一致。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fnew_itunes_connect_login.jpg" alt="login page"><br><img src="http://stoneark.qiniudn.com/blogimg%2Fnew_itunes_connect_main.jpg" alt="main page"></p>
+<p>不过依然可以看到，还是有很多页面没有完成风格的切换。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fnew_itunes_connect_rights.jpg" alt="rights page"></p>
+<p>增加了 4.7-inch 和 5.5-inch，以及 Video Preview。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fnew_itunes_connect_video.jpg" alt="video and screenshot"></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-08-27T08:50:29.000Z"><a href="/2014/08/27/become-a-ddos-attacker-unluckily/">Aug 27 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/27/become-a-ddos-attacker-unluckily/">Become a DDOS attacker unluckily</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>下午客户反馈后台管理系统打不开，经排查发现服务器停机了，原因是防火墙发现我们的服务器对外发起了 DDOS 攻击。</p>
+<p>重新启动服务器后，打开任务管理器发现了一大堆可疑进程：<br><img src="http://stoneark.qiniudn.com/blogimg%2Fddos_attacker_tasklist.png" alt="Task list"></p>
+<p>其中的 hrlFFFF.tmp, hrl1C83.tmp, hrlAAC1.tmp, Bf.exe, svchobst.exe, WinHogb32.exe, bbyo.exe, jqs.exe, bytbac.exe, hrl11.tmp, 还有开机自启的两个 iexplorer.exe，都是十分可疑的进程。</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2014/08/27/become-a-ddos-attacker-unluckily/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-08-03T09:07:49.000Z"><a href="/2014/08/03/replace-google-fonts-to-local/">Aug 3 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/03/replace-google-fonts-to-local/">将 Google Fonts 替换到本地读取</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>由于 Google Fonts 服务在国内被屏蔽了，所以导致很多引用了谷歌字体的网页在加载时打开十分缓慢。</p>
+<p>解决方法也很简单，把网页中需要的字体下载到本地，并从本地加载字体文件即可。</p>
+<p>不过有个小前提：需要先翻出去才能下载到所需要的谷歌字体文件哦。</p>
+<ol>
+<li>翻出去</li>
+<li><p>在网页的 html 源代码（假设为 <code>index.html</code> ）中，找到引用了谷歌字体的部分，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;link href=&#34;http://fonts.googleapis.com/css?family=Open+Sans:300,800&#34; rel=&#34;stylesheet&#34; type=&#34;text/css&#34; /&#62;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在网页浏览器中访问上面的地址 <a href="http://fonts.googleapis.com/css?family=Open+Sans:300,800" target="_blank" rel="external">http://fonts.googleapis.com/css?family=Open+Sans:300,800</a> ，可以得到一个 css 文件，文件内容为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@font-face &#123;&#10;  font-family: &#39;Open Sans&#39;;&#10;  font-style: normal;&#10;  font-weight: 300;&#10;  src: local(&#39;Open Sans Light&#39;), local(&#39;OpenSans-Light&#39;), url(https://themes.googleusercontent.com/static/fonts/opensans/v8/DXI1ORHCpsQm3Vp6mXoaTaRDOzjiPcYnFooOUGCOsRk.woff) format(&#39;woff&#39;);&#10;&#125;&#10;@font-face &#123;&#10;  font-family: &#39;Open Sans&#39;;&#10;  font-style: normal;&#10;  font-weight: 800;&#10;  src: local(&#39;Open Sans Extrabold&#39;), local(&#39;OpenSans-Extrabold&#39;), url(https://themes.googleusercontent.com/static/fonts/opensans/v8/EInbV5DfGHOiMmvb1Xr-hqRDOzjiPcYnFooOUGCOsRk.woff) format(&#39;woff&#39;);&#10;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>把它保存到本地，可命名为 <code>OpenSans.css</code> 。在 index.html 所在的位置新建一个目录，命名为 <code>googlefonts</code> ，将刚才得到的 OpenSans.css 文件放置在这个目录下。</p>
+<ol>
+<li>在上面的 <code>OpenSans.css</code> 文件中，可以找到字体文件的地址，即：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://themes.googleusercontent.com/static/fonts/opensans/v8/DXI1ORHCpsQm3Vp6mXoaTaRDOzjiPcYnFooOUGCOsRk.woff]]]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>和<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://themes.googleusercontent.com/static/fonts/opensans/v8/EInbV5DfGHOiMmvb1Xr-hqRDOzjiPcYnFooOUGCOsRk.woff</span><br></pre></td></tr></table></figure></p>
+<p>将这两个文件下载到本地（不需修改文件名。以下的步骤假设保存时未修改文件名，若修改了文件名请自行修改以下步骤中的内容），并放置在 googlefonts 目录下。</p>
+<ol>
+<li>修改 <code>OpenSans.css</code> 文件，将字体的地址改为本地地址，即将：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://themes.googleusercontent.com/static/fonts/opensans/v8/DXI1ORHCpsQm3Vp6mXoaTaRDOzjiPcYnFooOUGCOsRk.woff</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>修改为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DXI1ORHCpsQm3Vp6mXoaTaRDOzjiPcYnFooOUGCOsRk.woff</span><br></pre></td></tr></table></figure></p>
+<p>对另一个 woff 文件链接同样地做处理，即将：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://themes.googleusercontent.com/static/fonts/opensans/v8/EInbV5DfGHOiMmvb1Xr-hqRDOzjiPcYnFooOUGCOsRk.woff</span><br></pre></td></tr></table></figure></p>
+<p>修改为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DXI1ORHCpsQm3Vp6mXoaTaRDOzjiPcYnFooOUGCOsRk.woff</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>修改 <code>index.html</code> ，将 css 的地址改为本地地址，即将：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;link href=&#34;http://fonts.googleapis.com/css?family=Open+Sans:300,800&#34; rel=&#34;stylesheet&#34; type=&#34;text/css&#34; /&#62;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>修改为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;link href=&#34;googlefonts/OpenSans.css&#34; rel=&#34;stylesheet&#34; type=&#34;text/css&#34; /&#62;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-02-17T03:29:30.000Z"><a href="/2014/02/17/jailbreak-my-ios7/">Feb 17 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/02/17/jailbreak-my-ios7/">Jailbreak my iOS 7</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>iOS 7 的越狱已经发布好久了，不过我一直没越。iOS 7 已经有了许多不错的改变，比如增加了快捷开关、增加了中文的九宫格输入法等，让越狱需求已经不那么强烈。起码我越狱最大的目的无非就是，快捷开关、输入法、用手势替代 Home 按键。</p>
+<p>但 Apple 做得还是有些不够。</p>
+<p>快捷开关只是有限定的五个：飞行模式、WIFI、蓝牙、勿扰模式、屏幕旋转锁定，但飞行模式和蓝牙我几乎不会碰它，我更希望有的是蜂窝数据开关和铃声开关。</p>
+<p>中文九宫格输入法限定只能中国大陆行货才有这个功能，可惜我的 iPhone 不是大陆的。</p>
+<p>AssistiveTouch 虽然能解放 Home 按键，但实在是感觉既碍眼又不好用，还是用 Activator 的手势更舒服。</p>
+<p>所以…我今天还是越狱了。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/jailbreak_ios7_evasi0n.jpg" alt="evasi0n7"></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/2/" class="alignleft prev">上一页</a>
+  
+  
+    <a href="/page/4/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:blog.stoneark.org">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Apple/" style="font-size: 10px;">Apple</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 13.33px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16.67px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/TableView/" style="font-size: 10px;">TableView</a> <a href="/tags/Translation/" style="font-size: 13.33px;">Translation</a> <a href="/tags/UI/" style="font-size: 13.33px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 16.67px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 16.67px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 13.33px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 13.33px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+  </div>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2015/05/29/gem-install-failed-cannot-load-such-file-openssl/">“cannot load such file -- openssl” while “gem install”</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/22/baidumap-memory-not-be-freed/">百度地图 (iOS SDK) 内存不回收</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/19/pop-then-push-immediately-with-uinavigationcontroller-in-ios8/">Pop then push immediately with UINavigationController in iOS 8</a>
+      </li>
+    
+      <li>
+        <a href="/2015/02/11/branching-model-summary/">分支策略总结</a>
+      </li>
+    
+      <li>
+        <a href="/2015/02/05/noip-2014-rps-solution-in-python/">生活大爆炸版石头剪刀布</a>
+      </li>
+    
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 StoneArk
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'stoneark';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>用Visual Studio 2010创建集成.Net Framework3.5 SP1的安装包 | SABlog</title>
+  <meta name="author" content="StoneArk">
+  
+  <meta name="description" content="方舟的技术博客">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="用Visual Studio 2010创建集成.Net Framework3.5 SP1的安装包"/>
+  <meta property="og:site_name" content="SABlog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="SABlog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-57166172-1', 'auto');
+	ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">SABlog</a></h1>
+  <h2><a href="/">StoneArk&#39;s Blog</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+      <li><a href="/atom.xml">RSS</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-04-19T08:09:29.000Z"><a href="/2012/04/19/create-d-setup-package-with-dot-net-framework-35-using-vs2010/">Apr 19 2012</a></time>
+      
+      
+  
+    <h1 class="title">用Visual Studio 2010创建集成.Net Framework3.5 SP1的安装包</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>由于windows7集成的是.Net Framework3.5SP1，还没有集成.Net Framework4，所以我在给别人做东西的时候还是更倾向于基于3.5 SP1。而又要考虑到目前还仍有不少的XP用户，所以即使是采用3.5 SP1，也需要考虑客户机上是不是安装了.Net Framework。</p>
+<p>所以在制作安装包的时候，需要将.Net的安装包也集成进去。而Visual Studio2010默认只包含了.Net 4的安装包，所以在生成集成有3.5SP1的安装包时，遇到了一些麻烦。</p>
+<p>首先，想要制作一个带有.Net Framework的安装包，需要如下：<br><a id="more"></a></p>
+<ol>
+<li><p>新建一个安装项目</p>
+</li>
+<li><p>查看项目属性，点击“系统必备”按钮</p>
+</li>
+<li><p>在弹出的系统必备对话框中，选中“创建用于安装系统必备组件的安装程序”</p>
+</li>
+<li><p>在下方的安装位置处，选择“与从我的应用程序相同的位置下载系统必备组件”，则为将必备组件的安装程序集成到安装包中，选择“从组件供应商的网站上下载系统必备组件”，则为不集成到安装包里，而是引导用户在微软网站下载。所以在此选择“与从我的应用程序相同的位置下载系统必备组件”</p>
+</li>
+<li><p>若需要.Net Framework3.5SP1，则在必备组件中选择.NET Framework 3.5 SP1，取消选择Microsoft .Net Framework 4(x86和x64)即可。</p>
+</li>
+<li><p>若生成项目，可以发现出现一大堆找不到文件的错误。解决的主要思想是：自己将.Net Framework 3.5 SP1的安装文件和简体中文语言包的x86和x64版安装文件拷贝到如下文件夹内：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Program Files\Microsoft SDKs\Windows\v7.0A\Bootstrapper\Packages</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>可以看到，默认Packages文件夹下已有DotNetFX35SP1子文件夹，不过其内只有以下几个配置文件：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\&#62;tree &#34;C:\Program Files\Microsoft SDKs\Windows\v7.0A\Bootstrapper\Packages\dotNetFX35SP1&#34; /f&#10;&#21367; WIN7 &#30340;&#25991;&#20214;&#22841; PATH &#21015;&#34920;&#10;&#21367;&#24207;&#21015;&#21495;&#20026; 00000031 BA5C:BB7D&#10;C:\PROGRAM FILES\MICROSOFT SDKS\WINDOWS\V7.0A\BOOTSTRAPPER\PACKAGES\DOTNETFX35SP1&#10;&#9474;  product.xml&#10;&#9474;&#10;&#9492;&#9472;zh-Hans&#10;      eula.rtf&#10;      package.xml</span><br></pre></td></tr></table></figure></p>
+<p>我们需要下载dotnetfx35.exe（<a href="http://www.microsoft.com/downloads/zh-cn/details.aspx?FamilyID=d0e5dea7-ac26-4ad7-b68c-fe5076bba986&amp;DisplayLang=zh-cn" target="_blank" rel="external">http://www.microsoft.com/downloads/zh-cn/details.aspx?FamilyID=d0e5dea7-ac26-4ad7-b68c-fe5076bba986&amp;DisplayLang=zh-cn</a>）后解压，将解压所得的wcu\dotNetFramework\下的所有文件及目录都拷贝到Packages\DotNetFX35SP1\目录下。</p>
+<ol>
+<li>这时如果马上进行生成安装包的尝试，会发现还剩两个错误：简体中文语言包的x86和x64版两个安装文件没有找到：</li>
+</ol>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#31995;&#32479;&#24517;&#22791;&#32452;&#20214;&#30340;&#23433;&#35013;&#20301;&#32622;&#26410;&#35774;&#32622;&#20026;&#8220;&#32452;&#20214;&#20379;&#24212;&#21830;&#30340;&#32593;&#31449;&#8221;&#65292;&#24182;&#19988;&#26080;&#27861;&#22312;&#30913;&#30424;&#19978;&#25214;&#21040;&#39033;&#8220;.NET Framework 3.5 SP1&#8221;&#20013;&#30340;&#25991;&#20214;&#8220;DotNetFX35SP1\DotNetFX35\x64\dotnetfx35langpack_x64zh-CHS.exe&#8221;&#12290;&#26377;&#20851;&#35814;&#32454;&#20449;&#24687;&#65292;&#35831;&#21442;&#35265;&#24110;&#21161;&#12290;&#10;&#31995;&#32479;&#24517;&#22791;&#32452;&#20214;&#30340;&#23433;&#35013;&#20301;&#32622;&#26410;&#35774;&#32622;&#20026;&#8220;&#32452;&#20214;&#20379;&#24212;&#21830;&#30340;&#32593;&#31449;&#8221;&#65292;&#24182;&#19988;&#26080;&#27861;&#22312;&#30913;&#30424;&#19978;&#25214;&#21040;&#39033;&#8220;.NET Framework 3.5 SP1&#8221;&#20013;&#30340;&#25991;&#20214;&#8220;DotNetFX35SP1\DotNetFX35\x86\dotnetfx35langpack_x86zh-CHS.exe&#8221;&#12290;&#26377;&#20851;&#35814;&#32454;&#20449;&#24687;&#65292;&#35831;&#21442;&#35265;&#24110;&#21161;&#12290;</span><br></pre></td></tr></table></figure>
+<p>首先下载dotnetfx35langpack_x64zh-CHS.exe和dotnetfx35langpack_x86zh-CHS.exe。</p>
+<p>注意！虽然提示的错误是找不到DotNetFX35SP1\dotNetFX35\x64\dotnetfx35langpack_x64zh-CHS.exe和DotNetFX35SP1\dotNetFX35\x86\dotnetfx35langpack_x86zh-CHS.exe，但将文件拷贝到这里，你会发现照样是找不到文件的错误！</p>
+<p>应该将两个文件分别拷贝到Packages\DotNetFX35SP1\zh-Hans\DotNetFX35\x64和Packages\DotNetFX35SP1\zh-Hans\DotNetFX35\x86下，复制过去之后再生成，成功</p>
+<p>原因：微软把语言包独立出来了，如果你查看Packages\DotNetFX35SP1\product.xml，你会发现里面没有DotNetFX35\x86\dotnetfx35langpack_x86zh-CHS.exe这个PackageFile，而在Packages\DotNetFX35SP1\zh-Hans\product.xml里，你可以发现有两个PackageFile是我们需要的。所以，错误信息里提示的缺少文件，其实是PackageFile的Name值，而不是在磁盘上的存储路径。</p>
+<p>所以，根本不需要修改product.xml！</p>
+<p>最终的目录结构应该如下：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\&#62;tree &#34;C:\Program Files\Microsoft SDKs\Windows\v7.0A\Bootstrapper\Packages\dotNetFX35SP1&#34; /f&#10;&#21367; WIN7 &#30340;&#25991;&#20214;&#22841; PATH &#21015;&#34920;&#10;&#21367;&#24207;&#21015;&#21495;&#20026; 00000031 BA5C:BB7D&#10;C:\PROGRAM FILES\MICROSOFT SDKS\WINDOWS\V7.0A\BOOTSTRAPPER\PACKAGES\DOTNETFX35SP1&#10;&#9474;  dotNetFx35setup.exe&#10;&#9474;  product.xml&#10;&#9474;&#10;&#9500;&#9472;dotNetFX20&#10;&#9474;      ASPNET.msp&#10;&#9474;      ASPNET_64.msp&#10;&#9474;      clr.msp&#10;&#9474;      clr_64.msp&#10;&#9474;      crt.msp&#10;&#9474;      crt_64.msp&#10;&#9474;      dw.msp&#10;&#9474;      dw_64.msp&#10;&#9474;      Netfx20a_x64.msi&#10;&#9474;      Netfx20a_x86.msi&#10;&#9474;      NetFX_CA.msp&#10;&#9474;      NetFX_Core.msp&#10;&#9474;      NetFX_Core_64.msp&#10;&#9474;      NetFX_Other.msp&#10;&#9474;      NetFX_Other_64.msp&#10;&#9474;      prexp.msp&#10;&#9474;      winforms.msp&#10;&#9474;      winforms_64.msp&#10;&#9474;&#10;&#9500;&#9472;dotNetFX30&#10;&#9474;  &#9474;  Netfx30a_x64.msi&#10;&#9474;  &#9474;  Netfx30a_x86.msi&#10;&#9474;  &#9474;  RGB9RAST_x64.msi&#10;&#9474;  &#9474;  RGB9RAST_x86.msi&#10;&#9474;  &#9474;  WCF.msp&#10;&#9474;  &#9474;  WCF_64.msp&#10;&#9474;  &#9474;  WCS.msp&#10;&#9474;  &#9474;  WCS_64.msp&#10;&#9474;  &#9474;  WF.msp&#10;&#9474;  &#9474;  WF_32.msp&#10;&#9474;  &#9474;  WF_64.msp&#10;&#9474;  &#9474;  WIC_x64_enu.exe&#10;&#9474;  &#9474;  WIC_x86_enu.exe&#10;&#9474;  &#9474;  WPF1.msp&#10;&#9474;  &#9474;  WPF1_64.msp&#10;&#9474;  &#9474;  WPF2.msp&#10;&#9474;  &#9474;  WPF2_32.msp&#10;&#9474;  &#9474;  WPF2_64.msp&#10;&#9474;  &#9474;  WPF_Other.msp&#10;&#9474;  &#9474;  WPF_Other_32.msp&#10;&#9474;  &#9474;  WPF_Other_64.msp&#10;&#9474;  &#9474;  XPS.msp&#10;&#9474;  &#9474;  XPSEPSC-amd64-en-US.exe&#10;&#9474;  &#9474;  XPSEPSC-x86-en-US.exe&#10;&#9474;  &#9474;&#10;&#9474;  &#9500;&#9472;x64&#10;&#9474;  &#9474;      msxml6.msi&#10;&#9474;  &#9474;&#10;&#9474;  &#9492;&#9472;x86&#10;&#9474;          msxml6.msi&#10;&#9474;&#10;&#9500;&#9472;dotNetFX35&#10;&#9474;  &#9500;&#9472;ia64&#10;&#9474;  &#9474;      netfx35_ia64.exe&#10;&#9474;  &#9474;&#10;&#9474;  &#9500;&#9472;x64&#10;&#9474;  &#9474;      netfx35_x64.exe&#10;&#9474;  &#9474;&#10;&#9474;  &#9492;&#9472;x86&#10;&#9474;          netfx35_x86.exe&#10;&#9474;&#10;&#9500;&#9472;dotNetMSP&#10;&#9474;  &#9474;  NetFx_20_SP1_ENU_License.rtf&#10;&#9474;  &#9474;  NetFx_30_SP1_ENU_License.rtf&#10;&#9474;  &#9474;&#10;&#9474;  &#9500;&#9472;ia64&#10;&#9474;  &#9474;      NetFX2.0-KB948609-v6001-ia64.msu&#10;&#9474;  &#9474;      NetFX3.0-KB948610-v6001-ia64.msu&#10;&#9474;  &#9474;&#10;&#9474;  &#9500;&#9472;x64&#10;&#9474;  &#9474;      NetFX2.0-KB936704-v6000-x64_RTM_en.msu&#10;&#9474;  &#9474;      NetFX2.0-KB948609-v6001-x64.msu&#10;&#9474;  &#9474;      NetFX3.0-KB936705-v6000-x64_RTM_en.msu&#10;&#9474;  &#9474;      NetFX3.0-KB948610-v6001-x64.msu&#10;&#9474;  &#9474;&#10;&#9474;  &#9492;&#9472;x86&#10;&#9474;          NetFX2.0-KB936704-v6000-x86_RTM_en.msu&#10;&#9474;          NetFX2.0-KB948609-v6001-x86.msu&#10;&#9474;          NetFX3.0-KB936705-v6000-x86_RTM_en.msu&#10;&#9474;          NetFX3.0-KB948610-v6001-x86.msu&#10;&#9474;&#10;&#9500;&#9472;Tools&#10;&#9474;      clwireg.exe&#10;&#9474;      clwireg_ia64.exe&#10;&#9474;      clwireg_x64.exe&#10;&#9474;&#10;&#9492;&#9472;zh-Hans&#10;    &#9474;  eula.rtf&#10;    &#9474;  package.xml&#10;    &#9474;&#10;    &#9492;&#9472;DotNetFX35&#10;        &#9500;&#9472;x64&#10;        &#9474;      dotnetfx35langpack_x64zh-CHS.exe&#10;        &#9474;&#10;        &#9492;&#9472;x86&#10;                dotnetfx35langpack_x86zh-CHS.exe</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/Net/">.Net</a>, <a href="/tags/Visual-Studio/">Visual Studio</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:blog.stoneark.org">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Apple/" style="font-size: 10px;">Apple</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 13.33px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16.67px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/TableView/" style="font-size: 10px;">TableView</a> <a href="/tags/Translation/" style="font-size: 13.33px;">Translation</a> <a href="/tags/UI/" style="font-size: 13.33px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 16.67px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 16.67px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 13.33px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 13.33px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+  </div>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2015/05/29/gem-install-failed-cannot-load-such-file-openssl/">“cannot load such file -- openssl” while “gem install”</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/22/baidumap-memory-not-be-freed/">百度地图 (iOS SDK) 内存不回收</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/19/pop-then-push-immediately-with-uinavigationcontroller-in-ios8/">Pop then push immediately with UINavigationController in iOS 8</a>
+      </li>
+    
+      <li>
+        <a href="/2015/02/11/branching-model-summary/">分支策略总结</a>
+      </li>
+    
+      <li>
+        <a href="/2015/02/05/noip-2014-rps-solution-in-python/">生活大爆炸版石头剪刀布</a>
+      </li>
+    
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 StoneArk
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'stoneark';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
