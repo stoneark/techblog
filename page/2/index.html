@@ -66,6 +66,125 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-01-26T09:10:30.000Z"><a href="/2015/01/26/mac-mini-not-responding-frequently/">Jan 26 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/01/26/mac-mini-not-responding-frequently/">最近 Mac mini 经常死机</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>最近刚买不久的 Mac mini 经常死机，刚买了不到两个月，已经死机至少三次了，而且有两次是死到不得不长按电源按钮强制关机的地步。这让我着实有些郁闷，办公室的 iMac 用了一年半了，印象中只死过一次机。</p>
+<p>回忆了一下死机的情形，有两次都是从 Launchpad 打开应用导致的。具体表现是：在 Launchpad 里单击一个应用的图标，Launchpad 本应该打开这个应用并且让自己消失，但此时却没有任何反应，应用没有被打开，Launchpad 也没有消失，继续点击依然是这样的，无论点击什么应用都是这样。</p>
+<p>有一次是过了一会儿就死了，鼠标变为旋转的风火轮，等了好久好久都没反应，只能强制关机。</p>
+<p>另一次是等了好久后，点击的应用被打开，由于刚才狂点了好多次，所以同时还弹出了好多对话框，提示你这个应用已经被打开了，不能再次打开。但问题还没完，这个好不容易被打开的应用再也关不掉了。Dock 里和强制退出程序列表里，一直有这个程序，强制退出也没用。但是在 Activitiy Monitor 里已经没有这个进程了。于是，如果想关机，系统会不断尝试把这个程序关闭，但是一直关闭不了，只能长按电源…</p>
+<p>系统是 Yosemite 10.10.1，难道是 Yosemite 的众多 bug 之一吗？也想不到会是什么原因，唯一能想到可以做的就是修复磁盘权限。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/fix_disk_authority.png" alt="Fix disk authority"></p>
+<p><strong>Applications/.DS_Store！</strong>难道就是因为它的权限出了问题？看上去是很个靠谱的解释。如果过一段时间我没在下面续写新内容，那就是这个原因了，如果有受相同问题困扰的朋友，可以参考。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-01-26T03:18:21.000Z"><a href="/2015/01/26/on-the-origins-of-ds-store-translation/">Jan 26 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/01/26/on-the-origins-of-ds-store-translation/">.DS_Store 的由来（译）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="前言">前言</h2><p>本文作者为原苹果工程师 Arno Gourdol，正是他主导了 Mac OS X 系统上 Finder 应用的开发。这篇文章为我们阐述了 .DS_Store 文件的由来，是个很不错的计算机历史小文章。原文链接：<a href="http://arno.org/arnotify/2006/10/on-the-origins-of-ds_store/" target="_blank" rel="external">http://arno.org/arnotify/2006/10/on-the-origins-of-ds_store/</a>。</p>
+<h2 id="译文">译文</h2><p><strong>如果你是一个 Mac 用户，或者你曾经从 Mac 向 Windows 传输过文件，你可能会对一个名为 <code>.DS_Store</code> 的文件很熟悉。但这个名字是从何而来呢？</strong></p>
+<p>时间回到 1999 年，我在苹果公司担任 Mac OS X 系统内 Finder 应用的技术主管。在那时，Finder 的代码已有 8 年的历史，代码已经很难以维护。做任何改变都需要做大量的工作，而且常常会影响到两三个看似跟它无关的功能。所以在 Mac OS X 上我们决定，从设计开始，重写 Finder。</p>
+<p>涉及到的工作之一，便是分离用户界面和核心功能，也就是后台代码。Finder 的后台会穷举文件、监视文件系统变化、处理元数据，包括图标的位置和文件夹设置。在内部，这两个部分被我们称作 Finder_FE 和 Finder_BE（Frontend 和 Backend）。</p>
+<p>但是，没过多久我们就意识到，Finder 以外的应用也很可能需要调用 Finder 后台的功能。所以我们计划在将来某一天，让它成为一个公共的 API。由于我之前曾负责命名了 Icon Services 和 Navigation Services，所以我们决定把它命名为 Desktop Services（在那时，我们还曾考虑过把 Finder 改名为 “Desktop”）。因此，<code>.DS_Store</code> 这个名字，就是 “Desktop Services Store”（桌面服务存储） 的意思。我们在文件名之前添加了一个句点，以保证在 Unix 操作系统上，包括 Mac OS 上，被识别为一个隐藏文件。</p>
+<p>个人认为这并不是一个好的名字，我曾希望找到一个描述性更好的名字，但已经太晚了 :)</p>
+<p>另外，还有一个至今仍未被修复的 bug，会导致过度创建 <code>.DS_Store</code> 文件。仅当用户更改了视图设置或改变了目录内图标的位置时，这些文件才应创建。可惜的是，事情并没有如此发生，而是当某个目录被访问时，<code>.DS_Store</code> 文件就会被创建。</p>
+<p>另外，Finder_BE，也就是 Desktop Services，不再只被 Finder 调用：Navigation Services（打开/保存对话框）现在也会调用它，在 Mac OS 的最初版本中并不是这样的。但现在，Desktop Services 的 API 依然没有完全开放出来。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-01-19T03:13:41.000Z"><a href="/2015/01/19/use-xcode6-debug-view-hierarchy-and-forget-reveal/">Jan 19 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/01/19/use-xcode6-debug-view-hierarchy-and-forget-reveal/">忘掉 Reveal，使用 Xcode6 来进行视图层次调试</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Xcode 6 提供了许多新特性，视图层次调试（Debug View Hierarchy）便是其中很便捷的特性之一。之前调试视图层次，我们需要借助 Reveal、Spark Inspector 等商业软件，如今 Xcode 引入了这一功能，着实令人兴奋。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/Xcode_Debug_View_Hierarchy.png" alt="Debug View Hierarchy"></p>
+<p>使用也很简单，在 Xcode 中以调试模式运行程序（模拟器、真机均可），然后就可以在 Xcode 底部调试区域找到 Debug View Hierarchy 的按钮（在跳出和模拟位置中间）：</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/Xcode_Debug_View_Hierarchy2.png" alt="Debug View Hierarchy button"></p>
+<p>或者，也可以在菜单中找到：Debug -&gt; View Debugging -&gt; Capture View Hierarchy。</p>
+<p>点击后稍等就会生成视图层次，同时进程会暂停。用鼠标拖动探索一下吧</p>
+<p>视图左下方的滑块可以调整层次间的距离，右下角的滑块可以调整显示的层数，下方的按钮可以控制是否显示 clipped 的内容、是否显示 constraints、放大缩小还原等。当然，如果需要诸如 live 修改等高级功能，还是需要借助 Reveal，但 Xcode 中提供的这些基本功能，大多数情况下也足够了。</p>
+<p>PS. 如果你在调试区域找不到那个按钮，菜单中的“Capture View Hierarchy” 也是灰色的，可能是你使用的调试设备为 64 位设备（iPhone 5 以上的模拟器或真机），但你的工程属性中并不支持 64 位的原因。可以尝试使用 iPhone 4S 模拟器，那个按钮应该就会出现了。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-01-13T07:15:25.000Z"><a href="/2015/01/13/ignore-the-warning-of-undeclared-selector/">Jan 13 2015</a></time>
       
       
@@ -418,114 +537,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-11-25T08:58:35.000Z"><a href="/2014/11/25/not-show-subviews-of-an-uilabel-on-ios8/">Nov 25 2014</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/11/25/not-show-subviews-of-an-uilabel-on-ios8/">iOS8 中 UILabel 不显示 subview 的问题</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>在 iOS8 中，如果在一个 UILabel 对象上添加 subview，同时给这个 label 设置了背景色 (backgroundColor)，则会发现这些 subview 都不显示出来，但可以响应事件（如一个按钮作为 subview，按钮不显示但可以正常响应点击）。如果不给这个 label 设置背景色，则可以正常显示。</p>
-<p>在 iOS7 上不存在此问题。</p>
-<p>有些开发者为了方便，在自定义 NavigationBar 时用 UILabel 做父容器，然后在其上添加按钮，导致了在 iOS8 上运行时，导航栏上的按钮都不显示。</p>
-<p>避免采用 UILabel 等做父容器，它们本来就不适合做父容器。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-11-24T09:08:23.000Z"><a href="/2014/11/24/cannot-locate-compiling-with-xcode6/">Nov 24 2014</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/11/24/cannot-locate-compiling-with-xcode6/">Cannot locate compiling with Xcode6</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>正式推出的 iOS8 中，定位服务分为了 <em>使用应用程序期间</em> 和 <em>始终</em> 两种权限，这导致了一些变化。之前的工程若用 Xcode5 编译，并在 iOS8 上运行，会向用户请求始终获取位置的权限。若用 Xcode6 编译，会发现程序不会向用户请求权限，同时导致无法定位。</p>
-<p>解决方法并不复杂，只需在 <code>Info.plist</code> 中加入请求定位权限时显示给用户的提示信息即可：</p>
-<figure class="highlight plist"><figcaption><span>-Info.plist</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">key</span>&gt;</span>NSLocationWhenInUseUsageDescription<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">string</span>&gt;</span>写上为什么要在程序运行时获取位置<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>或<br><figure class="highlight plist"><figcaption><span>-Info.plist</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">key</span>&gt;</span>NSLocationAlwaysUsageDescription<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">string</span>&gt;</span>写上为什么要始终获取位置<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-11-24T08:04:44.000Z"><a href="/2014/11/24/caution-fontname-of-bold-fonts/">Nov 24 2014</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/11/24/caution-fontname-of-bold-fonts/">Caution！粗体的字体名</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>程序在 iOS7+ 上运行正常，但在 iOS6 上会直接崩溃，且没有任何崩溃信息。<br>经单步调试，发现问题出现在这一句上：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSMutableAttributedString</span> *attributedType = [[<span class="built_in">NSMutableAttributedString</span> alloc] initWithString:<span class="string">@"hello"</span> attributes:@&#123;<span class="built_in">NSFontAttributeName</span>: [<span class="built_in">UIFont</span> fontWithName:<span class="string">@"Verdana-bold"</span> size:<span class="number">14.0</span>],<span class="built_in">NSForegroundColorAttributeName</span>:[<span class="built_in">UIColor</span> redColor]&#125;];</span><br></pre></td></tr></table></figure></p>
-<p>所需实现的是将一个 NSAttributedString 显示在一个 UILabel 上，我的印象中 iOS6 是支持在 UILabel 上显示 AttributedString 的，实际证明也是这样，所以排除了 iOS6 不支持。</p>
-<p>经过猜测和尝试，发现是这个 <code>-bold</code> 的缘故，改为 <code>-Bold</code> 就正常了，而且在 iOS7+ 上也是正常的。</p>
-<p>晕…好吧。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -550,7 +561,7 @@
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Apple/" style="font-size: 10px;">Apple</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 13.33px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16.67px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/TableView/" style="font-size: 10px;">TableView</a> <a href="/tags/Translation/" style="font-size: 13.33px;">Translation</a> <a href="/tags/UI/" style="font-size: 13.33px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 16.67px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 16.67px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 13.33px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 13.33px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Apple/" style="font-size: 10px;">Apple</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 13.33px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16.67px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/TableView/" style="font-size: 10px;">TableView</a> <a href="/tags/Translation/" style="font-size: 13.33px;">Translation</a> <a href="/tags/UI/" style="font-size: 13.33px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 16.67px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16.67px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 16.67px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 13.33px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 13.33px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
   </div>
 </div>
 
@@ -561,23 +572,23 @@
   <ul class="entry">
     
       <li>
+        <a href="/2015/06/24/updated-to-hexo-3-from-2/">Updated to Hexo 3 from 2</a>
+      </li>
+    
+      <li>
+        <a href="/2015/06/10/WWDC-2015/">WWDC 2015</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/30/Google-I-O-2015/">Google I/O 2015</a>
+      </li>
+    
+      <li>
         <a href="/2015/05/29/gem-install-failed-cannot-load-such-file-openssl/">“cannot load such file -- openssl” while “gem install”</a>
       </li>
     
       <li>
         <a href="/2015/05/22/baidumap-memory-not-be-freed/">百度地图 (iOS SDK) 内存不回收</a>
-      </li>
-    
-      <li>
-        <a href="/2015/05/19/pop-then-push-immediately-with-uinavigationcontroller-in-ios8/">Pop then push immediately with UINavigationController in iOS 8</a>
-      </li>
-    
-      <li>
-        <a href="/2015/02/11/branching-model-summary/">分支策略总结</a>
-      </li>
-    
-      <li>
-        <a href="/2015/02/05/noip-2014-rps-solution-in-python/">生活大爆炸版石头剪刀布</a>
       </li>
     
   </ul>

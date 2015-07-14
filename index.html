@@ -66,6 +66,126 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-06-24T07:41:21.000Z"><a href="/2015/06/24/updated-to-hexo-3-from-2/">Jun 24 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/06/24/updated-to-hexo-3-from-2/">Updated to Hexo 3 from 2</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>我一直在用的静态博客框架 Hexo，在今年 3 月份大版本<a href="https://hexo.io/news/2015/03/05/hexo-3-0-released/" target="_blank" rel="external">升级到了 3.0 版</a>。一直没有从 2.x 升级到 3.x，今天升级并迁移到了最新的 3.1.1，了解了一下 3.x 的变化。<br>官方提供了<a href="https://github.com/hexojs/hexo/wiki/Migrating-from-2.x-to-3.0" target="_blank" rel="external">迁移文档</a>，升级过程很顺畅，安装 hexo-cli 时果然如文档所说 “error occurred”，把老版本的 hexo 先删掉就好。</p>
+<p>有一个地方文档中并未提及，需要格外注意：除了安装 hexo-cli 之外的步骤，都应该在你的 blog 根目录下进行。这也反映出了新版本最大的变化：模块分离。</p>
+<p>首先可以看到，新版本多了一个 <code>hexo-cli</code>，也就是 Hexo command line interface，这也是新版本中唯一需要安装到系统全局的模块。把 CLI 从主模块中分离，可以让 CLI 加载更快，同时能够允许你在不同的目录下维护着不同版本的 hexo blog。</p>
+<p>而其他所有模块，包括 hexo, hexo-server, hexo-deployer, hexo-generator, hexo-renderer 等，都被安装在某一个 blog 的 node_modules 目录下，仅应用于这一个 blog。</p>
+<p>模块分离有利有弊，但大多数情形下是利大于弊的。对于 hexo 来讲，带来最大的利就是，blog 目录下包含着所有需要的内容和程序，受系统环境的限制就能做到尽可能的小。而先前版本的 hexo，blog 目录中仅包含所有的内容，而并不包含程序 — 程序需要调用系统中安装的。设想一下，Alice 在 Bob 家度假，突然想用 Bob 的个人电脑写个博客（假设 Alice 没有带自己的笔记本）。Alice 平常用的是 2.x 版本的 hexo，并把 blog 目录同步到了 Dropbox。而 Bob 用的是 2.y 版本的 hexo，2.x 和 2.y 版本是不完全兼容的。于是，当 Alice 在自己的 blog 目录下执行 hexo 的命令时，可能会出现一些意想不到的错误 — 内容是 2.x 版本的，而程序是 2.y 版本的。</p>
+<p>而如果它们都用了现在模块分离程度更高的版本，那么在 Alice 的 blog 目录中，就同时包含了 3.x 版本的内容和 3.x 版本的程序，虽然 Bob 的电脑上是 3.y 版本，但这并不影响什么 — 因为唯一需要依赖系统的是 hexo-cli，而这个 hexo-cli 只是一个 driver，具体的功能实现都将由 blog 目录中的程序接管。而由于这个 hexo-cli 功能非常简单，所以可以做到非常稳定，不同的版本基本上可以完全兼容。</p>
+<p>这样的大版本更新也是有些副作用的，比如由于 hexo-deployer-git 模块也改变了，之前的 git 提交历史都没有了…</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-06-10T08:27:02.000Z"><a href="/2015/06/10/WWDC-2015/">Jun 10 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/06/10/WWDC-2015/">WWDC 2015</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今年的 WWDC 没有什么让人兴奋的看点，没有硬件新品，没有突破性改变的软件新品，所带来的都是些稳定性的提高、细节的完善、功能的增强。但其实这也正是苹果目前最应该做的，步子大容易扯着蛋，这句话在 OS X Yosemite 和 iOS 8 上得到了验证。</p>
+<h3 id="New_OS">New OS</h3><p>iOS 9，OS X EI Capitan, watch OS 2.</p>
+<p>iOS 9，最让人没想到的是，它竟然还支持 iPhone 4s 和 iPad 2。按照以往的规则，iPhone 4s 和 iPad 2 今年应该被最新版的系统抛弃了。据说苹果对 iOS 9 从底层进行了大量的改造，大幅提高了系统的流畅度和稳定性，所以可以让老设备焕发第二春。可能是因为老设备运行 iOS 8 实在是太不堪入目，苹果想挽回一点儿面子？我迫不及待地把手中已经卡成翔的 iPhone 4s 升级到了 iOS 9 Developer Preview，用了两天，果断降回来了—频繁死机、卡顿，完全没法用，现阶段大家就不要尝试了。放张图给大家看看吧。<br><img src="http://7ktrjm.com1.z0.glb.clouddn.com/blogimg/ios9_devprev_scrshot.jpg" alt="iOS 9 Developer Preview"></p>
+<p>iOS 9 在功能上最大的革新，是 iPad 上支持了多任务分屏，有 Slide Over、Split View、画中画三种模式。再就是 Siri 的搜索更加智能，会根据使用习惯给出建议。其他的都是些小变化了，比如地图支持公交、备忘录变成了个富文本编辑器、Passbook 变成了 Wallet。增加了两个新应用：News 和 Apple Music，估计在国内也没什么用。</p>
+<p>对了，观感上的变化就是换了新的默认字体，英文新字体 San Francisco，中文新字体苹方，看上去还蛮不适应。</p>
+<p>EI Capitan 没给我留下什么印象，还是好好改 bug 吧，把 bug 改好就挺好了…watch OS 2 也没啥说的，好好支持原生应用吧…</p>
+<h3 id="New_tools">New tools</h3><p>Xcode 7, Swift 2, New developer program.</p>
+<p>Xcode 7，竟然对在设备上调试不再做限制了，不再需要开发者身份就能直接将程序在任意设备上运行。这着实降低了开发者的入门门槛，但我比较担心这样会不会有空子可钻，毕竟 iOS 平台的应用安全就是靠着层层限制所保证的，一旦 Xcode 这种毫无限制的 Adhoc 被钻了空子，还是很棘手的。</p>
+<p><img src="http://7ktrjm.com1.z0.glb.clouddn.com/blogimg/xcode7_run_on_device.jpg" alt="Xcode 7 run on device"></p>
+<p>Swift 发布了 2.0 版，已经日臻成熟了。</p>
+<p>一个令人兴奋的消息是，Developer Program 以后不再区分 iOS 和 Mac，之前购买的也将升级为新的 Apple Developer Program。以后只需要一个 99 美金就可以同时上架 iOS App Store 和 Mac App Store 了。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/new_apple_developer_program.jpg" alt="New Apple Developer Program"></p>
+<h3 id="后记">后记</h3><p>今天看到篇文章，抨击之前 OS X 的中文默认字体，看着还有点意思：<a href="https://qdan.me/list/VXl0z-WpwObF_83e" target="_blank" rel="external">OS X / iOS 六年字体战争</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-05-30T01:26:28.000Z"><a href="/2015/05/30/Google-I-O-2015/">May 30 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/30/Google-I-O-2015/">Google I/O 2015</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Google I/O 2015 召开了，虽说今年的 Google I/O 没有像去年一样带来很多新东西，但这次大会不乏让人眼前一亮的内容。</p>
+<p>首先是 Android M，终于把之前粗放的权限管理进行了重新设计，不再像之前那样只是在安装应用的时候通知你一下，而是借鉴了 iOS 更为科学的权限管理方式。Android 最大的问题之一就是权限，希望这次可以真正得到解决。Android M 原生支持了指纹识别，支持了 64 位架构，别的好像也没什么。</p>
+<p>新推出的 Google Photos 看起来蛮不错，自然语言搜索貌似很强大。可以存储无限容量的照片，重要的是免费。当然有些人说之所以免费，是为了要搜集更大量的信息，以提高数据分析的能力。</p>
+<p>还有个很有意思的东西，Cardboard，一个很接地气的 VR 装置，不得不佩服 Google 工程师们在 20% 时间里发挥出的聪明才智。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-05-29T07:05:11.000Z"><a href="/2015/05/29/gem-install-failed-cannot-load-such-file-openssl/">May 29 2015</a></time>
       
       
@@ -372,125 +492,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-01-26T09:10:30.000Z"><a href="/2015/01/26/mac-mini-not-responding-frequently/">Jan 26 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/01/26/mac-mini-not-responding-frequently/">最近 Mac mini 经常死机</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>最近刚买不久的 Mac mini 经常死机，刚买了不到两个月，已经死机至少三次了，而且有两次是死到不得不长按电源按钮强制关机的地步。这让我着实有些郁闷，办公室的 iMac 用了一年半了，印象中只死过一次机。</p>
-<p>回忆了一下死机的情形，有两次都是从 Launchpad 打开应用导致的。具体表现是：在 Launchpad 里单击一个应用的图标，Launchpad 本应该打开这个应用并且让自己消失，但此时却没有任何反应，应用没有被打开，Launchpad 也没有消失，继续点击依然是这样的，无论点击什么应用都是这样。</p>
-<p>有一次是过了一会儿就死了，鼠标变为旋转的风火轮，等了好久好久都没反应，只能强制关机。</p>
-<p>另一次是等了好久后，点击的应用被打开，由于刚才狂点了好多次，所以同时还弹出了好多对话框，提示你这个应用已经被打开了，不能再次打开。但问题还没完，这个好不容易被打开的应用再也关不掉了。Dock 里和强制退出程序列表里，一直有这个程序，强制退出也没用。但是在 Activitiy Monitor 里已经没有这个进程了。于是，如果想关机，系统会不断尝试把这个程序关闭，但是一直关闭不了，只能长按电源…</p>
-<p>系统是 Yosemite 10.10.1，难道是 Yosemite 的众多 bug 之一吗？也想不到会是什么原因，唯一能想到可以做的就是修复磁盘权限。</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/fix_disk_authority.png" alt="Fix disk authority"></p>
-<p><strong>Applications/.DS_Store！</strong>难道就是因为它的权限出了问题？看上去是很个靠谱的解释。如果过一段时间我没在下面续写新内容，那就是这个原因了，如果有受相同问题困扰的朋友，可以参考。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-01-26T03:18:21.000Z"><a href="/2015/01/26/on-the-origins-of-ds-store-translation/">Jan 26 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/01/26/on-the-origins-of-ds-store-translation/">.DS_Store 的由来（译）</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="前言">前言</h2><p>本文作者为原苹果工程师 Arno Gourdol，正是他主导了 Mac OS X 系统上 Finder 应用的开发。这篇文章为我们阐述了 .DS_Store 文件的由来，是个很不错的计算机历史小文章。原文链接：<a href="http://arno.org/arnotify/2006/10/on-the-origins-of-ds_store/" target="_blank" rel="external">http://arno.org/arnotify/2006/10/on-the-origins-of-ds_store/</a>。</p>
-<h2 id="译文">译文</h2><p><strong>如果你是一个 Mac 用户，或者你曾经从 Mac 向 Windows 传输过文件，你可能会对一个名为 <code>.DS_Store</code> 的文件很熟悉。但这个名字是从何而来呢？</strong></p>
-<p>时间回到 1999 年，我在苹果公司担任 Mac OS X 系统内 Finder 应用的技术主管。在那时，Finder 的代码已有 8 年的历史，代码已经很难以维护。做任何改变都需要做大量的工作，而且常常会影响到两三个看似跟它无关的功能。所以在 Mac OS X 上我们决定，从设计开始，重写 Finder。</p>
-<p>涉及到的工作之一，便是分离用户界面和核心功能，也就是后台代码。Finder 的后台会穷举文件、监视文件系统变化、处理元数据，包括图标的位置和文件夹设置。在内部，这两个部分被我们称作 Finder_FE 和 Finder_BE（Frontend 和 Backend）。</p>
-<p>但是，没过多久我们就意识到，Finder 以外的应用也很可能需要调用 Finder 后台的功能。所以我们计划在将来某一天，让它成为一个公共的 API。由于我之前曾负责命名了 Icon Services 和 Navigation Services，所以我们决定把它命名为 Desktop Services（在那时，我们还曾考虑过把 Finder 改名为 “Desktop”）。因此，<code>.DS_Store</code> 这个名字，就是 “Desktop Services Store”（桌面服务存储） 的意思。我们在文件名之前添加了一个句点，以保证在 Unix 操作系统上，包括 Mac OS 上，被识别为一个隐藏文件。</p>
-<p>个人认为这并不是一个好的名字，我曾希望找到一个描述性更好的名字，但已经太晚了 :)</p>
-<p>另外，还有一个至今仍未被修复的 bug，会导致过度创建 <code>.DS_Store</code> 文件。仅当用户更改了视图设置或改变了目录内图标的位置时，这些文件才应创建。可惜的是，事情并没有如此发生，而是当某个目录被访问时，<code>.DS_Store</code> 文件就会被创建。</p>
-<p>另外，Finder_BE，也就是 Desktop Services，不再只被 Finder 调用：Navigation Services（打开/保存对话框）现在也会调用它，在 Mac OS 的最初版本中并不是这样的。但现在，Desktop Services 的 API 依然没有完全开放出来。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-01-19T03:13:41.000Z"><a href="/2015/01/19/use-xcode6-debug-view-hierarchy-and-forget-reveal/">Jan 19 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/01/19/use-xcode6-debug-view-hierarchy-and-forget-reveal/">忘掉 Reveal，使用 Xcode6 来进行视图层次调试</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>Xcode 6 提供了许多新特性，视图层次调试（Debug View Hierarchy）便是其中很便捷的特性之一。之前调试视图层次，我们需要借助 Reveal、Spark Inspector 等商业软件，如今 Xcode 引入了这一功能，着实令人兴奋。</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/Xcode_Debug_View_Hierarchy.png" alt="Debug View Hierarchy"></p>
-<p>使用也很简单，在 Xcode 中以调试模式运行程序（模拟器、真机均可），然后就可以在 Xcode 底部调试区域找到 Debug View Hierarchy 的按钮（在跳出和模拟位置中间）：</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/Xcode_Debug_View_Hierarchy2.png" alt="Debug View Hierarchy button"></p>
-<p>或者，也可以在菜单中找到：Debug -&gt; View Debugging -&gt; Capture View Hierarchy。</p>
-<p>点击后稍等就会生成视图层次，同时进程会暂停。用鼠标拖动探索一下吧</p>
-<p>视图左下方的滑块可以调整层次间的距离，右下角的滑块可以调整显示的层数，下方的按钮可以控制是否显示 clipped 的内容、是否显示 constraints、放大缩小还原等。当然，如果需要诸如 live 修改等高级功能，还是需要借助 Reveal，但 Xcode 中提供的这些基本功能，大多数情况下也足够了。</p>
-<p>PS. 如果你在调试区域找不到那个按钮，菜单中的“Capture View Hierarchy” 也是灰色的，可能是你使用的调试设备为 64 位设备（iPhone 5 以上的模拟器或真机），但你的工程属性中并不支持 64 位的原因。可以尝试使用 iPhone 4S 模拟器，那个按钮应该就会出现了。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -513,7 +514,7 @@
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Apple/" style="font-size: 10px;">Apple</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 13.33px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16.67px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/TableView/" style="font-size: 10px;">TableView</a> <a href="/tags/Translation/" style="font-size: 13.33px;">Translation</a> <a href="/tags/UI/" style="font-size: 13.33px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 16.67px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 16.67px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 13.33px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 13.33px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Apple/" style="font-size: 10px;">Apple</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 13.33px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16.67px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/TableView/" style="font-size: 10px;">TableView</a> <a href="/tags/Translation/" style="font-size: 13.33px;">Translation</a> <a href="/tags/UI/" style="font-size: 13.33px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 16.67px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16.67px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 16.67px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 13.33px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 13.33px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
   </div>
 </div>
 
@@ -524,23 +525,23 @@
   <ul class="entry">
     
       <li>
+        <a href="/2015/06/24/updated-to-hexo-3-from-2/">Updated to Hexo 3 from 2</a>
+      </li>
+    
+      <li>
+        <a href="/2015/06/10/WWDC-2015/">WWDC 2015</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/30/Google-I-O-2015/">Google I/O 2015</a>
+      </li>
+    
+      <li>
         <a href="/2015/05/29/gem-install-failed-cannot-load-such-file-openssl/">“cannot load such file -- openssl” while “gem install”</a>
       </li>
     
       <li>
         <a href="/2015/05/22/baidumap-memory-not-be-freed/">百度地图 (iOS SDK) 内存不回收</a>
-      </li>
-    
-      <li>
-        <a href="/2015/05/19/pop-then-push-immediately-with-uinavigationcontroller-in-ios8/">Pop then push immediately with UINavigationController in iOS 8</a>
-      </li>
-    
-      <li>
-        <a href="/2015/02/11/branching-model-summary/">分支策略总结</a>
-      </li>
-    
-      <li>
-        <a href="/2015/02/05/noip-2014-rps-solution-in-python/">生活大爆炸版石头剪刀布</a>
       </li>
     
   </ul>

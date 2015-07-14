@@ -5,7 +5,7 @@
   <subtitle><![CDATA[StoneArk's Blog]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.stoneark.org//"/>
-  <updated>2015-05-29T09:30:04.000Z</updated>
+  <updated>2015-07-06T06:42:58.000Z</updated>
   <id>http://blog.stoneark.org//</id>
   
   <author>
@@ -14,6 +14,77 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Updated to Hexo 3 from 2]]></title>
+    <link href="http://blog.stoneark.org/2015/06/24/updated-to-hexo-3-from-2/"/>
+    <id>http://blog.stoneark.org/2015/06/24/updated-to-hexo-3-from-2/</id>
+    <published>2015-06-24T07:41:21.000Z</published>
+    <updated>2015-07-06T06:42:58.000Z</updated>
+    <content type="html"><![CDATA[<p>我一直在用的静态博客框架 Hexo，在今年 3 月份大版本<a href="https://hexo.io/news/2015/03/05/hexo-3-0-released/" target="_blank" rel="external">升级到了 3.0 版</a>。一直没有从 2.x 升级到 3.x，今天升级并迁移到了最新的 3.1.1，了解了一下 3.x 的变化。<br>官方提供了<a href="https://github.com/hexojs/hexo/wiki/Migrating-from-2.x-to-3.0" target="_blank" rel="external">迁移文档</a>，升级过程很顺畅，安装 hexo-cli 时果然如文档所说 “error occurred”，把老版本的 hexo 先删掉就好。</p>
+<p>有一个地方文档中并未提及，需要格外注意：除了安装 hexo-cli 之外的步骤，都应该在你的 blog 根目录下进行。这也反映出了新版本最大的变化：模块分离。</p>
+<p>首先可以看到，新版本多了一个 <code>hexo-cli</code>，也就是 Hexo command line interface，这也是新版本中唯一需要安装到系统全局的模块。把 CLI 从主模块中分离，可以让 CLI 加载更快，同时能够允许你在不同的目录下维护着不同版本的 hexo blog。</p>
+<p>而其他所有模块，包括 hexo, hexo-server, hexo-deployer, hexo-generator, hexo-renderer 等，都被安装在某一个 blog 的 node_modules 目录下，仅应用于这一个 blog。</p>
+<p>模块分离有利有弊，但大多数情形下是利大于弊的。对于 hexo 来讲，带来最大的利就是，blog 目录下包含着所有需要的内容和程序，受系统环境的限制就能做到尽可能的小。而先前版本的 hexo，blog 目录中仅包含所有的内容，而并不包含程序 — 程序需要调用系统中安装的。设想一下，Alice 在 Bob 家度假，突然想用 Bob 的个人电脑写个博客（假设 Alice 没有带自己的笔记本）。Alice 平常用的是 2.x 版本的 hexo，并把 blog 目录同步到了 Dropbox。而 Bob 用的是 2.y 版本的 hexo，2.x 和 2.y 版本是不完全兼容的。于是，当 Alice 在自己的 blog 目录下执行 hexo 的命令时，可能会出现一些意想不到的错误 — 内容是 2.x 版本的，而程序是 2.y 版本的。</p>
+<p>而如果它们都用了现在模块分离程度更高的版本，那么在 Alice 的 blog 目录中，就同时包含了 3.x 版本的内容和 3.x 版本的程序，虽然 Bob 的电脑上是 3.y 版本，但这并不影响什么 — 因为唯一需要依赖系统的是 hexo-cli，而这个 hexo-cli 只是一个 driver，具体的功能实现都将由 blog 目录中的程序接管。而由于这个 hexo-cli 功能非常简单，所以可以做到非常稳定，不同的版本基本上可以完全兼容。</p>
+<p>这样的大版本更新也是有些副作用的，比如由于 hexo-deployer-git 模块也改变了，之前的 git 提交历史都没有了…</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>我一直在用的静态博客框架 Hexo，在今年 3 月份大版本<a href="https://hexo.io/news/2015/03/05/hexo-3-0-released/" target="_blank" rel="external">升级到了 3.0 版</a>。一]]>
+    </summary>
+    
+      <category term="hexo" scheme="http://blog.stoneark.org/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[WWDC 2015]]></title>
+    <link href="http://blog.stoneark.org/2015/06/10/WWDC-2015/"/>
+    <id>http://blog.stoneark.org/2015/06/10/WWDC-2015/</id>
+    <published>2015-06-10T08:27:02.000Z</published>
+    <updated>2015-07-14T08:28:29.000Z</updated>
+    <content type="html"><![CDATA[<p>今年的 WWDC 没有什么让人兴奋的看点，没有硬件新品，没有突破性改变的软件新品，所带来的都是些稳定性的提高、细节的完善、功能的增强。但其实这也正是苹果目前最应该做的，步子大容易扯着蛋，这句话在 OS X Yosemite 和 iOS 8 上得到了验证。</p>
+<h3 id="New_OS">New OS</h3><p>iOS 9，OS X EI Capitan, watch OS 2.</p>
+<p>iOS 9，最让人没想到的是，它竟然还支持 iPhone 4s 和 iPad 2。按照以往的规则，iPhone 4s 和 iPad 2 今年应该被最新版的系统抛弃了。据说苹果对 iOS 9 从底层进行了大量的改造，大幅提高了系统的流畅度和稳定性，所以可以让老设备焕发第二春。可能是因为老设备运行 iOS 8 实在是太不堪入目，苹果想挽回一点儿面子？我迫不及待地把手中已经卡成翔的 iPhone 4s 升级到了 iOS 9 Developer Preview，用了两天，果断降回来了—频繁死机、卡顿，完全没法用，现阶段大家就不要尝试了。放张图给大家看看吧。<br><img src="http://7ktrjm.com1.z0.glb.clouddn.com/blogimg/ios9_devprev_scrshot.jpg" alt="iOS 9 Developer Preview"></p>
+<p>iOS 9 在功能上最大的革新，是 iPad 上支持了多任务分屏，有 Slide Over、Split View、画中画三种模式。再就是 Siri 的搜索更加智能，会根据使用习惯给出建议。其他的都是些小变化了，比如地图支持公交、备忘录变成了个富文本编辑器、Passbook 变成了 Wallet。增加了两个新应用：News 和 Apple Music，估计在国内也没什么用。</p>
+<p>对了，观感上的变化就是换了新的默认字体，英文新字体 San Francisco，中文新字体苹方，看上去还蛮不适应。</p>
+<p>EI Capitan 没给我留下什么印象，还是好好改 bug 吧，把 bug 改好就挺好了…watch OS 2 也没啥说的，好好支持原生应用吧…</p>
+<h3 id="New_tools">New tools</h3><p>Xcode 7, Swift 2, New developer program.</p>
+<p>Xcode 7，竟然对在设备上调试不再做限制了，不再需要开发者身份就能直接将程序在任意设备上运行。这着实降低了开发者的入门门槛，但我比较担心这样会不会有空子可钻，毕竟 iOS 平台的应用安全就是靠着层层限制所保证的，一旦 Xcode 这种毫无限制的 Adhoc 被钻了空子，还是很棘手的。</p>
+<p><img src="http://7ktrjm.com1.z0.glb.clouddn.com/blogimg/xcode7_run_on_device.jpg" alt="Xcode 7 run on device"></p>
+<p>Swift 发布了 2.0 版，已经日臻成熟了。</p>
+<p>一个令人兴奋的消息是，Developer Program 以后不再区分 iOS 和 Mac，之前购买的也将升级为新的 Apple Developer Program。以后只需要一个 99 美金就可以同时上架 iOS App Store 和 Mac App Store 了。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/new_apple_developer_program.jpg" alt="New Apple Developer Program"></p>
+<h3 id="后记">后记</h3><p>今天看到篇文章，抨击之前 OS X 的中文默认字体，看着还有点意思：<a href="https://qdan.me/list/VXl0z-WpwObF_83e" target="_blank" rel="external">OS X / iOS 六年字体战争</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>今年的 WWDC 没有什么让人兴奋的看点，没有硬件新品，没有突破性改变的软件新品，所带来的都是些稳定性的提高、细节的完善、功能的增强。但其实这也正是苹果目前最应该做的，步子大容易扯着蛋，这句话在 OS X Yosemite 和 iOS 8 上得到了验证。</p>
+<h3 i]]>
+    </summary>
+    
+      <category term="WWDC" scheme="http://blog.stoneark.org/tags/WWDC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Google I/O 2015]]></title>
+    <link href="http://blog.stoneark.org/2015/05/30/Google-I-O-2015/"/>
+    <id>http://blog.stoneark.org/2015/05/30/Google-I-O-2015/</id>
+    <published>2015-05-30T01:26:28.000Z</published>
+    <updated>2015-07-14T08:25:57.000Z</updated>
+    <content type="html"><![CDATA[<p>Google I/O 2015 召开了，虽说今年的 Google I/O 没有像去年一样带来很多新东西，但这次大会不乏让人眼前一亮的内容。</p>
+<p>首先是 Android M，终于把之前粗放的权限管理进行了重新设计，不再像之前那样只是在安装应用的时候通知你一下，而是借鉴了 iOS 更为科学的权限管理方式。Android 最大的问题之一就是权限，希望这次可以真正得到解决。Android M 原生支持了指纹识别，支持了 64 位架构，别的好像也没什么。</p>
+<p>新推出的 Google Photos 看起来蛮不错，自然语言搜索貌似很强大。可以存储无限容量的照片，重要的是免费。当然有些人说之所以免费，是为了要搜集更大量的信息，以提高数据分析的能力。</p>
+<p>还有个很有意思的东西，Cardboard，一个很接地气的 VR 装置，不得不佩服 Google 工程师们在 20% 时间里发挥出的聪明才智。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Google I/O 2015 召开了，虽说今年的 Google I/O 没有像去年一样带来很多新东西，但这次大会不乏让人眼前一亮的内容。</p>
+<p>首先是 Android M，终于把之前粗放的权限管理进行了重新设计，不再像之前那样只是在安装应用的时候通知你一下，而是借]]>
+    </summary>
+    
+      <category term="Google" scheme="http://blog.stoneark.org/tags/Google/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[“cannot load such file -- openssl” while “gem install”]]></title>
@@ -580,67 +651,6 @@
       <category term="Mac" scheme="http://blog.stoneark.org/tags/Mac/"/>
     
       <category term="Monitor" scheme="http://blog.stoneark.org/tags/Monitor/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[iOS8 中 UILabel 不显示 subview 的问题]]></title>
-    <link href="http://blog.stoneark.org/2014/11/25/not-show-subviews-of-an-uilabel-on-ios8/"/>
-    <id>http://blog.stoneark.org/2014/11/25/not-show-subviews-of-an-uilabel-on-ios8/</id>
-    <published>2014-11-25T08:58:35.000Z</published>
-    <updated>2014-11-25T09:05:48.000Z</updated>
-    <content type="html"><![CDATA[<p>在 iOS8 中，如果在一个 UILabel 对象上添加 subview，同时给这个 label 设置了背景色 (backgroundColor)，则会发现这些 subview 都不显示出来，但可以响应事件（如一个按钮作为 subview，按钮不显示但可以正常响应点击）。如果不给这个 label 设置背景色，则可以正常显示。</p>
-<p>在 iOS7 上不存在此问题。</p>
-<p>有些开发者为了方便，在自定义 NavigationBar 时用 UILabel 做父容器，然后在其上添加按钮，导致了在 iOS8 上运行时，导航栏上的按钮都不显示。</p>
-<p>避免采用 UILabel 等做父容器，它们本来就不适合做父容器。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>在 iOS8 中，如果在一个 UILabel 对象上添加 subview，同时给这个 label 设置了背景色 (backgroundColor)，则会发现这些 subview 都不显示出来，但可以响应事件（如一个按钮作为 subview，按钮不显示但可以正常响应点击）。如]]>
-    </summary>
-    
-      <category term="iOS8" scheme="http://blog.stoneark.org/tags/iOS8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Cannot locate compiling with Xcode6]]></title>
-    <link href="http://blog.stoneark.org/2014/11/24/cannot-locate-compiling-with-xcode6/"/>
-    <id>http://blog.stoneark.org/2014/11/24/cannot-locate-compiling-with-xcode6/</id>
-    <published>2014-11-24T09:08:23.000Z</published>
-    <updated>2014-12-29T08:19:58.000Z</updated>
-    <content type="html"><![CDATA[<p>正式推出的 iOS8 中，定位服务分为了 <em>使用应用程序期间</em> 和 <em>始终</em> 两种权限，这导致了一些变化。之前的工程若用 Xcode5 编译，并在 iOS8 上运行，会向用户请求始终获取位置的权限。若用 Xcode6 编译，会发现程序不会向用户请求权限，同时导致无法定位。</p>
-<p>解决方法并不复杂，只需在 <code>Info.plist</code> 中加入请求定位权限时显示给用户的提示信息即可：</p>
-<figure class="highlight plist"><figcaption><span>-Info.plist</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">key</span>&gt;</span>NSLocationWhenInUseUsageDescription<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">string</span>&gt;</span>写上为什么要在程序运行时获取位置<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>或<br><figure class="highlight plist"><figcaption><span>-Info.plist</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">key</span>&gt;</span>NSLocationAlwaysUsageDescription<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">string</span>&gt;</span>写上为什么要始终获取位置<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>正式推出的 iOS8 中，定位服务分为了 <em>使用应用程序期间</em> 和 <em>始终</em> 两种权限，这导致了一些变化。之前的工程若用 Xcode5 编译，并在 iOS8 上运行，会向用户请求始终获取位置的权限。若用 Xcode6 编译，会发现程序不会向用户请]]>
-    </summary>
-    
-      <category term="CoreLocation" scheme="http://blog.stoneark.org/tags/CoreLocation/"/>
-    
-      <category term="Xcode6" scheme="http://blog.stoneark.org/tags/Xcode6/"/>
-    
-      <category term="iOS8" scheme="http://blog.stoneark.org/tags/iOS8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Caution！粗体的字体名]]></title>
-    <link href="http://blog.stoneark.org/2014/11/24/caution-fontname-of-bold-fonts/"/>
-    <id>http://blog.stoneark.org/2014/11/24/caution-fontname-of-bold-fonts/</id>
-    <published>2014-11-24T08:04:44.000Z</published>
-    <updated>2014-11-28T07:18:59.000Z</updated>
-    <content type="html"><![CDATA[<p>程序在 iOS7+ 上运行正常，但在 iOS6 上会直接崩溃，且没有任何崩溃信息。<br>经单步调试，发现问题出现在这一句上：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSMutableAttributedString</span> *attributedType = [[<span class="built_in">NSMutableAttributedString</span> alloc] initWithString:<span class="string">@"hello"</span> attributes:@&#123;<span class="built_in">NSFontAttributeName</span>: [<span class="built_in">UIFont</span> fontWithName:<span class="string">@"Verdana-bold"</span> size:<span class="number">14.0</span>],<span class="built_in">NSForegroundColorAttributeName</span>:[<span class="built_in">UIColor</span> redColor]&#125;];</span><br></pre></td></tr></table></figure></p>
-<p>所需实现的是将一个 NSAttributedString 显示在一个 UILabel 上，我的印象中 iOS6 是支持在 UILabel 上显示 AttributedString 的，实际证明也是这样，所以排除了 iOS6 不支持。</p>
-<p>经过猜测和尝试，发现是这个 <code>-bold</code> 的缘故，改为 <code>-Bold</code> 就正常了，而且在 iOS7+ 上也是正常的。</p>
-<p>晕…好吧。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>程序在 iOS7+ 上运行正常，但在 iOS6 上会直接崩溃，且没有任何崩溃信息。<br>经单步调试，发现问题出现在这一句上：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><spa]]>
-    </summary>
-    
-      <category term="UIFont" scheme="http://blog.stoneark.org/tags/UIFont/"/>
     
   </entry>
   

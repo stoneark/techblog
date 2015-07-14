@@ -2,6 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.stoneark.org/2015/06/10/WWDC-2015/</loc>
+    <lastmod>2015-07-14T08:28:29.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2015/05/30/Google-I-O-2015/</loc>
+    <lastmod>2015-07-14T08:25:57.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2013/11/06/migrate-to-hexo/</loc>
+    <lastmod>2015-07-08T09:18:14.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2015/06/24/updated-to-hexo-3-from-2/</loc>
+    <lastmod>2015-07-06T06:42:58.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.stoneark.org/2015/05/29/gem-install-failed-cannot-load-such-file-openssl/</loc>
     <lastmod>2015-05-29T09:30:04.000Z</lastmod>
   </url>
