@@ -2,6 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.stoneark.org/2015/09/18/UIAlertView-without-title/</loc>
+    <lastmod>2015-10-28T09:29:31.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2015/07/06/MBProgressHUD-and-UITableView-section-header/</loc>
+    <lastmod>2015-10-28T08:57:34.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2015/06/29/limit-max-input-length-of-uitextview/</loc>
+    <lastmod>2015-10-27T08:11:08.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2015/06/25/ios-8-2-tableview-cell-height-bug/</loc>
+    <lastmod>2015-10-27T07:01:24.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.stoneark.org/2015/06/10/WWDC-2015/</loc>
     <lastmod>2015-07-14T08:28:29.000Z</lastmod>
   </url>
@@ -18,7 +38,7 @@
   
   <url>
     <loc>http://blog.stoneark.org/2015/06/24/updated-to-hexo-3-from-2/</loc>
-    <lastmod>2015-07-06T06:42:58.000Z</lastmod>
+    <lastmod>2015-07-06T06:39:03.000Z</lastmod>
   </url>
   
   <url>
@@ -28,12 +48,12 @@
   
   <url>
     <loc>http://blog.stoneark.org/2015/05/22/baidumap-memory-not-be-freed/</loc>
-    <lastmod>2015-05-29T09:28:13.000Z</lastmod>
+    <lastmod>2015-05-29T09:26:08.000Z</lastmod>
   </url>
   
   <url>
     <loc>http://blog.stoneark.org/2015/05/19/pop-then-push-immediately-with-uinavigationcontroller-in-ios8/</loc>
-    <lastmod>2015-05-29T08:37:14.000Z</lastmod>
+    <lastmod>2015-05-29T08:36:55.000Z</lastmod>
   </url>
   
   <url>
@@ -58,12 +78,12 @@
   
   <url>
     <loc>http://blog.stoneark.org/2014/12/15/my-new-computer-mac-mini/</loc>
-    <lastmod>2015-02-03T08:08:12.000Z</lastmod>
+    <lastmod>2015-02-03T08:08:05.000Z</lastmod>
   </url>
   
   <url>
     <loc>http://blog.stoneark.org/2015/01/26/mac-mini-not-responding-frequently/</loc>
-    <lastmod>2015-01-27T09:17:46.000Z</lastmod>
+    <lastmod>2015-01-27T09:17:32.000Z</lastmod>
   </url>
   
   <url>
@@ -83,7 +103,7 @@
   
   <url>
     <loc>http://blog.stoneark.org/2015/01/13/ignore-the-warning-of-undeclared-selector/</loc>
-    <lastmod>2015-01-15T07:44:20.000Z</lastmod>
+    <lastmod>2015-01-15T07:44:12.000Z</lastmod>
   </url>
   
   <url>

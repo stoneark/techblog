@@ -5,7 +5,7 @@
   <subtitle><![CDATA[StoneArk's Blog]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.stoneark.org//"/>
-  <updated>2015-07-06T06:42:58.000Z</updated>
+  <updated>2015-10-28T09:29:31.000Z</updated>
   <id>http://blog.stoneark.org//</id>
   
   <author>
@@ -16,11 +16,108 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[UIAlertView without title]]></title>
+    <link href="http://blog.stoneark.org/2015/09/18/UIAlertView-without-title/"/>
+    <id>http://blog.stoneark.org/2015/09/18/UIAlertView-without-title/</id>
+    <published>2015-09-18T06:02:09.000Z</published>
+    <updated>2015-10-28T09:29:31.000Z</updated>
+    <content type="html"><![CDATA[<p>UIAlertView 是支持无标题的。如果传空字符串，即为没有标题，只显示内容；如果传 nil，则会把内容放到标题上。</p>
+<p>1、title 传空字符串，即：<br>UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@”” message:@”您确定要退出此帐号吗？” delegate:self cancelButtonTitle:@”取消” otherButtonTitles:@”确认”, nil];</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/uialertview_without_title_1.png" alt=""></p>
+<p>2、title 传 nil，即：<br>UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@”您确定要退出此帐号吗？” delegate:self cancelButtonTitle:@”取消” otherButtonTitles:@”确认”, nil];</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/uialertview_without_title_2.png" alt=""></p>
+<p>另外，如果需要自定义 AlertView 的样式，可以采用开源的 <a href="https://github.com/Friend-LGA/LGAlertView" target="_blank" rel="external">LGAlertView</a>。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>UIAlertView 是支持无标题的。如果传空字符串，即为没有标题，只显示内容；如果传 nil，则会把内容放到标题上。</p>
+<p>1、title 传空字符串，即：<br>UIAlertView *alert = [[UIAlertView alloc]initWith]]>
+    </summary>
+    
+      <category term="iOS" scheme="http://blog.stoneark.org/tags/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[MBProgressHUD and UITableView section header]]></title>
+    <link href="http://blog.stoneark.org/2015/07/06/MBProgressHUD-and-UITableView-section-header/"/>
+    <id>http://blog.stoneark.org/2015/07/06/MBProgressHUD-and-UITableView-section-header/</id>
+    <published>2015-07-06T02:42:42.000Z</published>
+    <updated>2015-10-28T08:57:34.000Z</updated>
+    <content type="html"><![CDATA[<p>在一个 UITableView 上添加一个 MBProgressHUD，很有可能会遇到这种情况，HUD 被 TableView 的 section header 挡住了：</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/hud_and_tableview_section_header.jpg" alt=""></p>
+<p>同样的，如果你用了 UITableViewController，则 self.view 就是一个 UITableView，则当向 self.view 添加一个 HUD 为 subview 时，就会遇到这个问题。</p>
+<p>在 github 上的 issue：<br><a href="https://github.com/jdg/MBProgressHUD/issues/242" target="_blank" rel="external">https://github.com/jdg/MBProgressHUD/issues/242</a></p>
+<p>在 stackoverflow 上的讨论：<br><a href="http://stackoverflow.com/questions/7199700/uitableview-headings-shown-on-top-of-mbprogresshud" target="_blank" rel="external">http://stackoverflow.com/questions/7199700/uitableview-headings-shown-on-top-of-mbprogresshud</a></p>
+<p>可以根据情况考虑，选择下面的方法：</p>
+<ol>
+<li>不用 UITableViewController，改用 UIViewController + TableView，并把 hud 添加到 self.view 上。</li>
+<li>把 hud 添加到 self.navigationController.view 上，这样会带来一个副作用，hud 显示的时候不能点击返回按钮，不推荐。</li>
+<li>调整 hud 的 z 值，hud.layer.zPosition = MAXFLOAT; （z 值越大越在上方），推荐采用。</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>在一个 UITableView 上添加一个 MBProgressHUD，很有可能会遇到这种情况，HUD 被 TableView 的 section header 挡住了：</p>
+<p><img src="http://stoneark.qiniudn.com/blogim]]>
+    </summary>
+    
+      <category term="iOS" scheme="http://blog.stoneark.org/tags/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[限制 UITextView 最大输入字符数]]></title>
+    <link href="http://blog.stoneark.org/2015/06/29/limit-max-input-length-of-uitextview/"/>
+    <id>http://blog.stoneark.org/2015/06/29/limit-max-input-length-of-uitextview/</id>
+    <published>2015-06-29T07:47:49.000Z</published>
+    <updated>2015-10-27T08:11:08.000Z</updated>
+    <content type="html"><![CDATA[<p>实现以下两个 UITextView 的代理方法即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#define LENGTH_LIMIT 10&#10;- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text &#123;&#10;    if (textView.text.length &#62;= LENGTH_LIMIT &#38;&#38; text.length &#62; 0) &#123;&#10;        return NO;&#10;    &#125;&#10;    return YES;&#10;&#125;&#10;&#10;-(void)textViewDidChange:(UITextView *)textView &#123;&#10;    if (textView.text.length &#62; LENGTH_LIMIT) &#123;&#10;        textView.text = [textView.text substringToIndex:LENGTH_LIMIT];&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，这两个代理方法必须都实现。</p>
+<p>如果只实现第一个代理方法，则会出现一个问题：到达字数限制时，用键盘的确已无法输入进去，但可以通过点击键盘上方的联想字词继续输入进去，导致超过限制。通过实现第二个代理方法，可把通过联想或其他方式输入进去的多余字符截掉。这也是之前我没有注意到的一点。</p>
+<p>如果只实现第二个代理方法，虽然长度不会超过限制，但实际相当于先输入进去，后再截掉，导致按下键盘后虽然没有输入进去字符，但键盘上方的联想字词在不断地根据你的按键而联想。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>实现以下两个 UITextView 的代理方法即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></]]>
+    </summary>
+    
+      <category term="iOS" scheme="http://blog.stoneark.org/tags/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[iOS 8.2 UITableView 的默认行高 bug]]></title>
+    <link href="http://blog.stoneark.org/2015/06/25/ios-8-2-tableview-cell-height-bug/"/>
+    <id>http://blog.stoneark.org/2015/06/25/ios-8-2-tableview-cell-height-bug/</id>
+    <published>2015-06-25T02:37:27.000Z</published>
+    <updated>2015-10-27T07:01:24.000Z</updated>
+    <content type="html"><![CDATA[<p><img src="http://stoneark.qiniudn.com/blogimg/ios82_tableview_cell_height_bug.png" alt="Cell高度错误"></p>
+<p>很简单的一个登录页面，用 Storyboard 的 Static Cell 来实现。开发时没有发现任何问题，交予测试时反馈输入框太小了，就是上面截图的样子，现象 100% 出现。而且发现，从该页面 Push 到下一层页面再 Pop 回该页面后，高度即可恢复正常。</p>
+<p>检查程序没发现任何问题，Cell Height 都采用了默认高度。在我的模拟器上和其他测试设备上也无法重现这个问题。</p>
+<p>检查那台出问题的测试机，发现系统版本为 iOS 8.2，而我的模拟器和测试机上都运行着 iOS 8.3 或 iOS 7.1。于是安装 iOS 8.2 模拟器，问题在 8.2 版本的模拟器上重现了！</p>
+<p>经研究，推测为 iOS 8.2 的系统 bug，只要是采用了 TableView 的默认行高，就会出现行高不正确的问题。这个 bug 已经在 iOS 8.3 上得到修复。若要确保 iOS 8.2 系统下也不会出现显示异常，可以采用以下任意一种方式：</p>
+<ol>
+<li>把 TableView 的 Row Height 属性设置为不是默认 44 的值。</li>
+<li>把 TableView 中的 TableViewCell 的 Row Height 属性，选中 Custom。</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><img src="http://stoneark.qiniudn.com/blogimg/ios82_tableview_cell_height_bug.png" alt="Cell高度错误"></p>
+<p>很简单的一个登录页面，用 Storyboard 的 Stati]]>
+    </summary>
+    
+      <category term="TableView" scheme="http://blog.stoneark.org/tags/TableView/"/>
+    
+      <category term="iOS" scheme="http://blog.stoneark.org/tags/iOS/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[Updated to Hexo 3 from 2]]></title>
     <link href="http://blog.stoneark.org/2015/06/24/updated-to-hexo-3-from-2/"/>
     <id>http://blog.stoneark.org/2015/06/24/updated-to-hexo-3-from-2/</id>
     <published>2015-06-24T07:41:21.000Z</published>
-    <updated>2015-07-06T06:42:58.000Z</updated>
+    <updated>2015-07-06T06:39:03.000Z</updated>
     <content type="html"><![CDATA[<p>我一直在用的静态博客框架 Hexo，在今年 3 月份大版本<a href="https://hexo.io/news/2015/03/05/hexo-3-0-released/" target="_blank" rel="external">升级到了 3.0 版</a>。一直没有从 2.x 升级到 3.x，今天升级并迁移到了最新的 3.1.1，了解了一下 3.x 的变化。<br>官方提供了<a href="https://github.com/hexojs/hexo/wiki/Migrating-from-2.x-to-3.0" target="_blank" rel="external">迁移文档</a>，升级过程很顺畅，安装 hexo-cli 时果然如文档所说 “error occurred”，把老版本的 hexo 先删掉就好。</p>
 <p>有一个地方文档中并未提及，需要格外注意：除了安装 hexo-cli 之外的步骤，都应该在你的 blog 根目录下进行。这也反映出了新版本最大的变化：模块分离。</p>
 <p>首先可以看到，新版本多了一个 <code>hexo-cli</code>，也就是 Hexo command line interface，这也是新版本中唯一需要安装到系统全局的模块。把 CLI 从主模块中分离，可以让 CLI 加载更快，同时能够允许你在不同的目录下维护着不同版本的 hexo blog。</p>
@@ -118,7 +215,7 @@
     <link href="http://blog.stoneark.org/2015/05/22/baidumap-memory-not-be-freed/"/>
     <id>http://blog.stoneark.org/2015/05/22/baidumap-memory-not-be-freed/</id>
     <published>2015-05-22T08:40:57.000Z</published>
-    <updated>2015-05-29T09:28:13.000Z</updated>
+    <updated>2015-05-29T09:26:08.000Z</updated>
     <content type="html"><![CDATA[<p>情景：有一个列表，点击列表中的某一条目后，进入详情页面，详情页面是一个地图。</p>
 <p>环境：百度地图 iOS SDK v2.7.0</p>
 <p>测试人员发现，从列表反复多次进入详情（push, pop, push, pop, …），五六次后程序崩溃。查看日志，发现是 Received Memory Warning。</p>
@@ -148,7 +245,7 @@
     <link href="http://blog.stoneark.org/2015/05/19/pop-then-push-immediately-with-uinavigationcontroller-in-ios8/"/>
     <id>http://blog.stoneark.org/2015/05/19/pop-then-push-immediately-with-uinavigationcontroller-in-ios8/</id>
     <published>2015-05-19T08:29:12.000Z</published>
-    <updated>2015-05-29T08:37:14.000Z</updated>
+    <updated>2015-05-29T08:36:55.000Z</updated>
     <content type="html"><![CDATA[<p>在某些业务场景下，需要将一个 ViewController 从 NavigationController 里 pop 后，立即 push 进另一个 ViewController。在 iOS8 之前这不是什么问题，用以下代码即可轻松实现：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[navigationController popViewControllerAnimated:NO];&#10;[navigationController pushViewController:newViewController animated:YES];</span><br></pre></td></tr></table></figure>
 <p>但在 iOS8 上这样无法实现，pop 后不会 push 另一个 ViewController。可以用以下方法实现，思路是直接修改 navigationController 里栈的数据（暂时没有找到其他更好的方法）：</p>
@@ -333,7 +430,7 @@
     <link href="http://blog.stoneark.org/2015/01/26/mac-mini-not-responding-frequently/"/>
     <id>http://blog.stoneark.org/2015/01/26/mac-mini-not-responding-frequently/</id>
     <published>2015-01-26T09:10:30.000Z</published>
-    <updated>2015-01-27T09:17:46.000Z</updated>
+    <updated>2015-01-27T09:17:32.000Z</updated>
     <content type="html"><![CDATA[<p>最近刚买不久的 Mac mini 经常死机，刚买了不到两个月，已经死机至少三次了，而且有两次是死到不得不长按电源按钮强制关机的地步。这让我着实有些郁闷，办公室的 iMac 用了一年半了，印象中只死过一次机。</p>
 <p>回忆了一下死机的情形，有两次都是从 Launchpad 打开应用导致的。具体表现是：在 Launchpad 里单击一个应用的图标，Launchpad 本应该打开这个应用并且让自己消失，但此时却没有任何反应，应用没有被打开，Launchpad 也没有消失，继续点击依然是这样的，无论点击什么应用都是这样。</p>
 <p>有一次是过了一会儿就死了，鼠标变为旋转的风火轮，等了好久好久都没反应，只能强制关机。</p>
@@ -411,7 +508,7 @@
     <link href="http://blog.stoneark.org/2015/01/13/ignore-the-warning-of-undeclared-selector/"/>
     <id>http://blog.stoneark.org/2015/01/13/ignore-the-warning-of-undeclared-selector/</id>
     <published>2015-01-13T07:15:25.000Z</published>
-    <updated>2015-01-15T07:44:20.000Z</updated>
+    <updated>2015-01-15T07:44:12.000Z</updated>
     <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if ([someObject respondsToSelector:@selector(someSelector)])&#10;&#123;&#10;    [someObject performSelector:@selector(someSelector)];&#10;&#125;</span><br></pre></td></tr></table></figure>
 <p>以上这句代码，除非你在 someObject 的头文件中显式地声明了 someSelector，否则在 Xcode 中会提示警告：</p>
 <pre><code><span class="title">Undeclared</span> selector <span class="string">'someSelector'</span>
@@ -472,185 +569,6 @@
     </summary>
     
       <category term="Mac OS X" scheme="http://blog.stoneark.org/tags/Mac-OS-X/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[gmail be blocked entirely]]></title>
-    <link href="http://blog.stoneark.org/2014/12/29/gmail-be-blocked-entirely/"/>
-    <id>http://blog.stoneark.org/2014/12/29/gmail-be-blocked-entirely/</id>
-    <published>2014-12-29T03:24:08.000Z</published>
-    <updated>2014-12-30T09:22:56.000Z</updated>
-    <content type="html"><![CDATA[<p><img src="http://stoneark.qiniudn.com/blogimg/gmail_blocked_entirely.png" alt="Google 流量统计"></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p><img src="http://stoneark.qiniudn.com/blogimg/gmail_blocked_entirely.png" alt="Google 流量统计"></p>
-]]>
-    </summary>
-    
-      <category term="gmail" scheme="http://blog.stoneark.org/tags/gmail/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[从 Evernote 迁移到了印象笔记]]></title>
-    <link href="http://blog.stoneark.org/2014/12/16/transfer-from-evernote-international-to-yinxiang/"/>
-    <id>http://blog.stoneark.org/2014/12/16/transfer-from-evernote-international-to-yinxiang/</id>
-    <published>2014-12-16T13:35:16.000Z</published>
-    <updated>2014-12-23T08:28:00.000Z</updated>
-    <content type="html"><![CDATA[<p>一直用 <a href="https://evernote.com" target="_blank" rel="external">Evernote</a> 做笔记管理，其简单快捷、搜索功能强大、多平台同步方便。2012 年，Evernote 专门推出了中国版，取名<a href="https://www.yinxiang.com" target="_blank" rel="external">印象笔记</a>。值得注意的是，中国版印象笔记与 Evernote International 的账户是完全分离的，中国版的数据完全存储在中国境内的服务器上，访问速度比 Evernote 更快更稳定，你懂的。</p>
-<p>我一直没有迁移到中国版的印象笔记。虽然印象笔记团队声明会给中国用户一样的数据安全保证，虽然我只记录一些技术内容和平时的想法，但总觉得哪里怪怪的。</p>
-<p>但是最近，Evernote International 经常变得访问及其缓慢。尤其是在 Mac 版客户端上，经常出现笔记内容为空的情况，昨天甚至把之前一篇笔记的内容弄丢了。唉，迫于无奈决定迁移到印象笔记。</p>
-<p>迁移方法可参见<a href="https://www.yinxiang.com/contact/support/kb/#!/article/yx0036" target="_blank" rel="external">印象笔记知识库</a>。我采用了 <a href="https://app.yinxiang.com/shard/s10/sh/a2d0903c-f751-48fd-a5c0-68d7bcd0c450/ce188822309c0124ba328248e1bed420" target="_blank" rel="external">NoteDup</a> 工具，只要用 International 和印象笔记的账户分别授权就好了。不过图片比较多的笔记会非常慢，甚至卡在那儿无法继续进行，如果有这种情况发生建议直接跳过去，手动迁移这一条笔记（一个晚上都没复制过去啊亲）。迁移完检查笔记数量，发现少了一条，找了好久终于找到了那条没被复制过去的笔记，我唯一能想到的原因就是笔记里有 g 和 f 和 w 这三个字母的组合了…</p>
-<p>迁移之后速度大大提升。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>一直用 <a href="https://evernote.com" target="_blank" rel="external">Evernote</a> 做笔记管理，其简单快捷、搜索功能强大、多平台同步方便。2012 年，Evernote 专门推出了中国版，取名<a h]]>
-    </summary>
-    
-      <category term="Evernote" scheme="http://blog.stoneark.org/tags/Evernote/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[My new computer - Mac mini]]></title>
-    <link href="http://blog.stoneark.org/2014/12/15/my-new-computer-mac-mini/"/>
-    <id>http://blog.stoneark.org/2014/12/15/my-new-computer-mac-mini/</id>
-    <published>2014-12-15T07:54:29.000Z</published>
-    <updated>2015-02-03T08:08:12.000Z</updated>
-    <content type="html"><![CDATA[<p>前些日子买了 2014 版的 Mac mini，这也是我自己的第一台 Mac，之前都是用黑苹果和办公室里公司配的 iMac。</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/my_mac_mini.png" alt="My Mac mini"></p>
-<p>回想一下，自 2000 年爹妈给买了第一台电脑至今，也算见证了计算机和互联网在中国的发展历程。写下用过的三台电脑的配置，也足以看到计算机技术在这十几年来的发展了。</p>
-<table>
-<thead>
-<tr>
-<th>*</th>
-<th style="text-align:center">DIY PC(Oct, 2000)</th>
-<th>Lenovo F31 Laptop(Oct, 2007)</th>
-<th>Mac mini(Dec, 2014)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>CPU</strong></td>
-<td style="text-align:center">Intel Celeron 2 600MHz</td>
-<td>Intel Core 2 Duo T5250 (1.5GHz)</td>
-<td>Intel Core i5-4288U (2.6GHz)</td>
-</tr>
-<tr>
-<td><strong>RAM</strong></td>
-<td style="text-align:center">SDRAM 64MB</td>
-<td>2GB (1GB*2) DDR2 667MHz</td>
-<td>8GB LPDDR3 1600MHz</td>
-</tr>
-<tr>
-<td><strong>Harddisk</strong></td>
-<td style="text-align:center">Quantum 20GB PATA 5400rpm</td>
-<td>WD 160GB SATA 5400rpm</td>
-<td>Apple 256GB PCIe SSD</td>
-</tr>
-<tr>
-<td><strong>Video Card</strong></td>
-<td style="text-align:center">nVidia TNT2(8MB,AGP)</td>
-<td>nVidia Geforce 8400M GS(128MB,PCIe x16)</td>
-<td>Intel Iris Graphics(Built-in)</td>
-</tr>
-<tr>
-<td><strong>Sound Card</strong></td>
-<td style="text-align:center">Creative Vibra 128</td>
-<td>Built-in Realtek HDA</td>
-<td>Built-in Intel HDA</td>
-</tr>
-<tr>
-<td><strong>Modem</strong></td>
-<td style="text-align:center">Motorola 56kbps</td>
-<td>Motorola 56kbps</td>
-<td>None</td>
-</tr>
-<tr>
-<td><strong>NIC</strong></td>
-<td style="text-align:center">None</td>
-<td>BCM5906 10M/100M</td>
-<td>BCM5701 10/100/1000BASE-T</td>
-</tr>
-<tr>
-<td><strong>WLAN</strong></td>
-<td style="text-align:center">None</td>
-<td>Intel 3945ABG</td>
-<td>Broadcom 802.11a/b/g/n</td>
-</tr>
-<tr>
-<td><strong>Bluetooth</strong></td>
-<td style="text-align:center">None</td>
-<td>Bluetooth 2.0</td>
-<td>Bluetooth 4.0</td>
-</tr>
-<tr>
-<td><strong>Monitor</strong></td>
-<td style="text-align:center">Samsung SyncMaster 550s 15’CRT</td>
-<td>Built-in 13.3’ LCD</td>
-<td>None</td>
-</tr>
-<tr>
-<td><strong>ODD</strong></td>
-<td style="text-align:center">CD-ROM 48X</td>
-<td>DVD±RW</td>
-<td>None</td>
-</tr>
-<tr>
-<td><strong>Sound box</strong></td>
-<td style="text-align:center">Ranbow M2</td>
-<td>Built-in</td>
-<td>Built-in</td>
-</tr>
-<tr>
-<td><strong>OS</strong></td>
-<td style="text-align:center">Windows 98 SE</td>
-<td>Windows Vista Home Premium</td>
-<td>Mac OS X Yosemite</td>
-</tr>
-</tbody>
-</table>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>前些日子买了 2014 版的 Mac mini，这也是我自己的第一台 Mac，之前都是用黑苹果和办公室里公司配的 iMac。</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/my_mac_mini.png" alt=]]>
-    </summary>
-    
-      <category term="computer" scheme="http://blog.stoneark.org/tags/computer/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Mac mini 外接显示器显示模糊的解决]]></title>
-    <link href="http://blog.stoneark.org/2014/12/11/monitor-connected-to-mac-mini-fuzzily-displayed/"/>
-    <id>http://blog.stoneark.org/2014/12/11/monitor-connected-to-mac-mini-fuzzily-displayed/</id>
-    <published>2014-12-11T08:59:26.000Z</published>
-    <updated>2014-12-29T08:19:04.000Z</updated>
-    <content type="html"><![CDATA[<p>之前看到过有好多人遇到了 Mac 外接显示器显示不清晰的问题，一直以为是 HDMI 输出只支持某几种特定分辨率的原因。如今我也遇到了这个问题，收到 Mac mini 欣喜地接上电源、显示器、键盘鼠标，发现…好虚啊！</p>
-<p>可是我显然没有用 HDMI 输出…</p>
-<p>用了 CE-LINK 的 Mini DP to VGA 转接线接到了一个之前闲置不用的显示器上（BenQ FP756-12ms），惨不忍睹。在系统偏好的通用里，已经选择了“使用 LCD 平滑字体（可用时）”。</p>
-<p>Google 找到了解决的方法，原因是系统把显示器识别成了 CRT，所以没有采用 LCD 平滑。</p>
-<p>OS X 有五种字体平滑选项：关闭、自动、轻、中、重。但在偏好设置里有关字体平滑选项只有一个复选框，不选即为关闭，选上即为自动。可惜这个“自动”识别错了。</p>
-<p>所以我们需要强制指定字体平滑，方法是更改 globalDomain 中的 AppleFontSmoothing 参数。</p>
-<figure class="highlight bash"><figcaption><span>Terminal</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults -currentHost write -globalDomain AppleFontSmoothing -int <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>其中，最后的参数 1 为轻度，还可选择 2 为中度，3 为重度。</p>
-<p>另外，查看该值可通过：<br><figure class="highlight bash"><figcaption><span>Terminal</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults -currentHost <span class="built_in">read</span> -globalDomain AppleFontSmoothing</span><br></pre></td></tr></table></figure></p>
-<p>若提示</p>
-<pre><code><span class="type">The</span> domain/<span class="default"><span class="keyword">default</span> pair of <span class="container">(<span class="title">kCFPreferencesAnyApplication</span>, <span class="type">AppleFontSmoothing</span>)</span> does not exist</span>
-</code></pre><p>则意味着当前选择了关闭或自动。</p>
-<p>删除对该值的设置：<br><figure class="highlight bash"><figcaption><span>Terminal</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults -currentHost delete -globalDomain AppleFontSmoothing</span><br></pre></td></tr></table></figure></p>
-<p>经测，BenQ FP756-12ms 对于我来说最合适的值为 3。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>之前看到过有好多人遇到了 Mac 外接显示器显示不清晰的问题，一直以为是 HDMI 输出只支持某几种特定分辨率的原因。如今我也遇到了这个问题，收到 Mac mini 欣喜地接上电源、显示器、键盘鼠标，发现…好虚啊！</p>
-<p>可是我显然没有用 HDMI 输出…</p>
-]]>
-    </summary>
-    
-      <category term="Mac" scheme="http://blog.stoneark.org/tags/Mac/"/>
-    
-      <category term="Monitor" scheme="http://blog.stoneark.org/tags/Monitor/"/>
     
   </entry>
   

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>ios | SABlog</title>
+  <title>iOS | SABlog</title>
   <meta name="author" content="StoneArk">
   
   <meta name="description" content="方舟的技术博客">
@@ -60,7 +60,7 @@
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
-<h2 class="archive-title tag">ios</h2>
+<h2 class="archive-title tag">iOS</h2>
 
 
   
@@ -70,23 +70,494 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-02-17T03:29:30.000Z"><a href="/2014/02/17/jailbreak-my-ios7/">Feb 17 2014</a></time>
+        <time datetime="2015-09-18T06:02:09.000Z"><a href="/2015/09/18/UIAlertView-without-title/">Sep 18 2015</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/02/17/jailbreak-my-ios7/">Jailbreak my iOS 7</a></h1>
+    <h1 class="title"><a href="/2015/09/18/UIAlertView-without-title/">UIAlertView without title</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>iOS 7 的越狱已经发布好久了，不过我一直没越。iOS 7 已经有了许多不错的改变，比如增加了快捷开关、增加了中文的九宫格输入法等，让越狱需求已经不那么强烈。起码我越狱最大的目的无非就是，快捷开关、输入法、用手势替代 Home 按键。</p>
-<p>但 Apple 做得还是有些不够。</p>
-<p>快捷开关只是有限定的五个：飞行模式、WIFI、蓝牙、勿扰模式、屏幕旋转锁定，但飞行模式和蓝牙我几乎不会碰它，我更希望有的是蜂窝数据开关和铃声开关。</p>
-<p>中文九宫格输入法限定只能中国大陆行货才有这个功能，可惜我的 iPhone 不是大陆的。</p>
-<p>AssistiveTouch 虽然能解放 Home 按键，但实在是感觉既碍眼又不好用，还是用 Activator 的手势更舒服。</p>
-<p>所以…我今天还是越狱了。</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/jailbreak_ios7_evasi0n.jpg" alt="evasi0n7"></p>
+        <p>UIAlertView 是支持无标题的。如果传空字符串，即为没有标题，只显示内容；如果传 nil，则会把内容放到标题上。</p>
+<p>1、title 传空字符串，即：<br>UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@”” message:@”您确定要退出此帐号吗？” delegate:self cancelButtonTitle:@”取消” otherButtonTitles:@”确认”, nil];</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/uialertview_without_title_1.png" alt=""></p>
+<p>2、title 传 nil，即：<br>UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@”您确定要退出此帐号吗？” delegate:self cancelButtonTitle:@”取消” otherButtonTitles:@”确认”, nil];</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/uialertview_without_title_2.png" alt=""></p>
+<p>另外，如果需要自定义 AlertView 的样式，可以采用开源的 <a href="https://github.com/Friend-LGA/LGAlertView" target="_blank" rel="external">LGAlertView</a>。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-07-06T02:42:42.000Z"><a href="/2015/07/06/MBProgressHUD-and-UITableView-section-header/">Jul 6 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/07/06/MBProgressHUD-and-UITableView-section-header/">MBProgressHUD and UITableView section header</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在一个 UITableView 上添加一个 MBProgressHUD，很有可能会遇到这种情况，HUD 被 TableView 的 section header 挡住了：</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/hud_and_tableview_section_header.jpg" alt=""></p>
+<p>同样的，如果你用了 UITableViewController，则 self.view 就是一个 UITableView，则当向 self.view 添加一个 HUD 为 subview 时，就会遇到这个问题。</p>
+<p>在 github 上的 issue：<br><a href="https://github.com/jdg/MBProgressHUD/issues/242" target="_blank" rel="external">https://github.com/jdg/MBProgressHUD/issues/242</a></p>
+<p>在 stackoverflow 上的讨论：<br><a href="http://stackoverflow.com/questions/7199700/uitableview-headings-shown-on-top-of-mbprogresshud" target="_blank" rel="external">http://stackoverflow.com/questions/7199700/uitableview-headings-shown-on-top-of-mbprogresshud</a></p>
+<p>可以根据情况考虑，选择下面的方法：</p>
+<ol>
+<li>不用 UITableViewController，改用 UIViewController + TableView，并把 hud 添加到 self.view 上。</li>
+<li>把 hud 添加到 self.navigationController.view 上，这样会带来一个副作用，hud 显示的时候不能点击返回按钮，不推荐。</li>
+<li>调整 hud 的 z 值，hud.layer.zPosition = MAXFLOAT; （z 值越大越在上方），推荐采用。</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-06-29T07:47:49.000Z"><a href="/2015/06/29/limit-max-input-length-of-uitextview/">Jun 29 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/06/29/limit-max-input-length-of-uitextview/">限制 UITextView 最大输入字符数</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>实现以下两个 UITextView 的代理方法即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#define LENGTH_LIMIT 10&#10;- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text &#123;&#10;    if (textView.text.length &#62;= LENGTH_LIMIT &#38;&#38; text.length &#62; 0) &#123;&#10;        return NO;&#10;    &#125;&#10;    return YES;&#10;&#125;&#10;&#10;-(void)textViewDidChange:(UITextView *)textView &#123;&#10;    if (textView.text.length &#62; LENGTH_LIMIT) &#123;&#10;        textView.text = [textView.text substringToIndex:LENGTH_LIMIT];&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，这两个代理方法必须都实现。</p>
+<p>如果只实现第一个代理方法，则会出现一个问题：到达字数限制时，用键盘的确已无法输入进去，但可以通过点击键盘上方的联想字词继续输入进去，导致超过限制。通过实现第二个代理方法，可把通过联想或其他方式输入进去的多余字符截掉。这也是之前我没有注意到的一点。</p>
+<p>如果只实现第二个代理方法，虽然长度不会超过限制，但实际相当于先输入进去，后再截掉，导致按下键盘后虽然没有输入进去字符，但键盘上方的联想字词在不断地根据你的按键而联想。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-06-25T02:37:27.000Z"><a href="/2015/06/25/ios-8-2-tableview-cell-height-bug/">Jun 25 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/06/25/ios-8-2-tableview-cell-height-bug/">iOS 8.2 UITableView 的默认行高 bug</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><img src="http://stoneark.qiniudn.com/blogimg/ios82_tableview_cell_height_bug.png" alt="Cell高度错误"></p>
+<p>很简单的一个登录页面，用 Storyboard 的 Static Cell 来实现。开发时没有发现任何问题，交予测试时反馈输入框太小了，就是上面截图的样子，现象 100% 出现。而且发现，从该页面 Push 到下一层页面再 Pop 回该页面后，高度即可恢复正常。</p>
+<p>检查程序没发现任何问题，Cell Height 都采用了默认高度。在我的模拟器上和其他测试设备上也无法重现这个问题。</p>
+<p>检查那台出问题的测试机，发现系统版本为 iOS 8.2，而我的模拟器和测试机上都运行着 iOS 8.3 或 iOS 7.1。于是安装 iOS 8.2 模拟器，问题在 8.2 版本的模拟器上重现了！</p>
+<p>经研究，推测为 iOS 8.2 的系统 bug，只要是采用了 TableView 的默认行高，就会出现行高不正确的问题。这个 bug 已经在 iOS 8.3 上得到修复。若要确保 iOS 8.2 系统下也不会出现显示异常，可以采用以下任意一种方式：</p>
+<ol>
+<li>把 TableView 的 Row Height 属性设置为不是默认 44 的值。</li>
+<li>把 TableView 中的 TableViewCell 的 Row Height 属性，选中 Custom。</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-09-16T08:50:29.000Z"><a href="/2014/09/16/standard-of-ios-programming/">Sep 16 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/09/16/standard-of-ios-programming/">iOS 代码规范</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>这是我为团队制定的 iOS 代码规范，供大家参考。</p>
+<h2 id="文档说明">文档说明</h2><table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Time</th>
+<th>Author</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.1 Alpha</td>
+<td>2014-08-21</td>
+<td>StoneArk</td>
+</tr>
+<tr>
+<td>0.2 Beta</td>
+<td>2014-09-02</td>
+<td>StoneArk</td>
+</tr>
+<tr>
+<td>0.3 Beta</td>
+<td>2014-09-15</td>
+<td>StoneArk</td>
+</tr>
+<tr>
+<td>1.0</td>
+<td>2014-09-16</td>
+<td>StoneArk</td>
+</tr>
+</tbody>
+</table>
+<h2 id="基本原则">基本原则</h2><p>求同存异。</p>
+<p>合理的编码风格不只一个，尊重每位开发人员的编码习惯。但不合理的编码习惯必须避免。</p>
+<h2 id="命名规则">命名规则</h2><ul>
+<li>命名规则</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>范围</th>
+<th>命名规则</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>变量名、方法名</td>
+<td><a href="http://zh.wikipedia.org/wiki/%E9%A7%9D%E5%B3%B0%E5%BC%8F%E5%A4%A7%E5%B0%8F%E5%AF%AB">驼峰式命名</a> (小驼峰式命名)</td>
+<td><code>onlineCount</code> <br /> <code>- (void)viewDidLoad</code></td>
+</tr>
+<tr>
+<td>类名、枚举类型名</td>
+<td><a href="http://zh.wikipedia.org/wiki/%E5%B8%95%E6%96%AF%E5%8D%A1%E5%91%BD%E5%90%8D%E6%B3%95">Pascal 命名</a></td>
+<td><code>MainViewController</code> <br /> <code>FruitType</code></td>
+</tr>
+<tr>
+<td>常量</td>
+<td>全部大写或k开头的驼峰式命名</td>
+<td><code>FONTNAME</code> <br /> <code>kFontName</code></td>
+</tr>
+<tr>
+<td>宏定义</td>
+<td>全部大写</td>
+<td><code>LOCALDEBUG</code></td>
+</tr>
+<tr>
+<td>枚举值</td>
+<td>要有枚举类型前缀</td>
+<td><code>FruitType</code> 枚举类型的枚举值应为 <code>FruitTypeApple</code>, <code>FruitTypeBanana</code> 等</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>命名约定</li>
+</ul>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2014/09/16/standard-of-ios-programming/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-09-12T11:37:46.000Z"><a href="/2014/09/12/ios-8-glance/">Sep 12 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/09/12/ios-8-glance/">iOS 8 Glance</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>把自己的 4S 升级到了 iOS 8 GM Seed。第一次恢复了 iOS 7 上做的备份，结果卡得要命。然后重新刷了一遍，并设置为全新的 iPhone，流畅了许多，流畅度跟 iOS 7 差距不大。</p>
+<p>Home Screen，多了个健康：<br><img src="http://stoneark.qiniudn.com/blogimg%2Fios8_home_screen.jpg" alt=""></p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2014/09/12/ios-8-glance/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-01-13T02:48:58.000Z"><a href="/2014/01/13/round-rect-tableview-in-ios7/">Jan 13 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/01/13/round-rect-tableview-in-ios7/">在 iOS 7 上实现圆角 TableView</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="问题产生">问题产生</h2><p>iOS 7 改变了许多 UI 控件的样式，其中 TableView 就由原来的圆角样式变为了横条平铺样式，但有时我们仍然需要圆角的 TableView，如下图：</p>
+<table>
+<thead>
+<tr>
+<th>iOS7的TableView</th>
+<th>圆角的TableView</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="http://stoneark.qiniudn.com/blogimg/tableview_in_ios_7.png" alt="iOS7的TableView"></td>
+<td><img src="http://stoneark.qiniudn.com/blogimg/tableview_round_rect.png" alt="圆角的TableView"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="实现">实现</h2><p>在 TableView 的 delegate 中，在 willDisplayCell 代理方法中绘制圆角：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)tableView:(<span class="built_in">UITableView</span> *)tableView willDisplayCell:(<span class="built_in">UITableViewCell</span> *)cell forRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> ([cell respondsToSelector:<span class="keyword">@selector</span>(tintColor)])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">CGFloat</span> cornerRadius = <span class="number">5.</span>f;</span><br><span class="line">        cell<span class="variable">.backgroundColor</span> = <span class="built_in">UIColor</span><span class="variable">.clearColor</span>;</span><br><span class="line">        <span class="built_in">CAShapeLayer</span> *layer = [[<span class="built_in">CAShapeLayer</span> alloc] init];</span><br><span class="line">        <span class="built_in">CGMutablePathRef</span> pathRef = <span class="built_in">CGPathCreateMutable</span>();</span><br><span class="line">        <span class="built_in">CGRect</span> bounds = <span class="built_in">CGRectInset</span>(cell<span class="variable">.bounds</span>, <span class="number">10</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">BOOL</span> addLine = <span class="literal">NO</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (indexPath<span class="variable">.row</span> == <span class="number">0</span> &amp;&amp; indexPath<span class="variable">.row</span> == [tableView numberOfRowsInSection:indexPath<span class="variable">.section</span>]-<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">CGPathAddRoundedRect</span>(pathRef, <span class="literal">nil</span>, bounds, cornerRadius, cornerRadius);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (indexPath<span class="variable">.row</span> == <span class="number">0</span>)</span><br><span class="line">        &#123;   <span class="comment">//最顶端的Cell</span></span><br><span class="line">            <span class="built_in">CGPathMoveToPoint</span>(pathRef, <span class="literal">nil</span>, <span class="built_in">CGRectGetMinX</span>(bounds), <span class="built_in">CGRectGetMaxY</span>(bounds));</span><br><span class="line">            <span class="built_in">CGPathAddArcToPoint</span>(pathRef, <span class="literal">nil</span>, <span class="built_in">CGRectGetMinX</span>(bounds), <span class="built_in">CGRectGetMinY</span>(bounds), <span class="built_in">CGRectGetMidX</span>(bounds), <span class="built_in">CGRectGetMinY</span>(bounds), cornerRadius);</span><br><span class="line">            <span class="built_in">CGPathAddArcToPoint</span>(pathRef, <span class="literal">nil</span>, <span class="built_in">CGRectGetMaxX</span>(bounds), <span class="built_in">CGRectGetMinY</span>(bounds), <span class="built_in">CGRectGetMaxX</span>(bounds), <span class="built_in">CGRectGetMidY</span>(bounds), cornerRadius);</span><br><span class="line">            <span class="built_in">CGPathAddLineToPoint</span>(pathRef, <span class="literal">nil</span>, <span class="built_in">CGRectGetMaxX</span>(bounds), <span class="built_in">CGRectGetMaxY</span>(bounds));</span><br><span class="line">            addLine = <span class="literal">YES</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (indexPath<span class="variable">.row</span> == [tableView numberOfRowsInSection:indexPath<span class="variable">.section</span>]-<span class="number">1</span>)</span><br><span class="line">        &#123;   <span class="comment">//最底端的Cell</span></span><br><span class="line">            <span class="built_in">CGPathMoveToPoint</span>(pathRef, <span class="literal">nil</span>, <span class="built_in">CGRectGetMinX</span>(bounds), <span class="built_in">CGRectGetMinY</span>(bounds));</span><br><span class="line">            <span class="built_in">CGPathAddArcToPoint</span>(pathRef, <span class="literal">nil</span>, <span class="built_in">CGRectGetMinX</span>(bounds), <span class="built_in">CGRectGetMaxY</span>(bounds), <span class="built_in">CGRectGetMidX</span>(bounds), <span class="built_in">CGRectGetMaxY</span>(bounds), cornerRadius);</span><br><span class="line">            <span class="built_in">CGPathAddArcToPoint</span>(pathRef, <span class="literal">nil</span>, <span class="built_in">CGRectGetMaxX</span>(bounds), <span class="built_in">CGRectGetMaxY</span>(bounds), <span class="built_in">CGRectGetMaxX</span>(bounds), <span class="built_in">CGRectGetMidY</span>(bounds), cornerRadius);</span><br><span class="line">            <span class="built_in">CGPathAddLineToPoint</span>(pathRef, <span class="literal">nil</span>, <span class="built_in">CGRectGetMaxX</span>(bounds), <span class="built_in">CGRectGetMinY</span>(bounds));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;   <span class="comment">//中间的Cell</span></span><br><span class="line">            <span class="built_in">CGPathAddRect</span>(pathRef, <span class="literal">nil</span>, bounds);</span><br><span class="line">            addLine = <span class="literal">YES</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        layer<span class="variable">.path</span> = pathRef;</span><br><span class="line">        <span class="built_in">CFRelease</span>(pathRef);</span><br><span class="line">        layer<span class="variable">.fillColor</span> = [<span class="built_in">UIColor</span> whiteColor]<span class="variable">.CGColor</span>; <span class="comment">//填充颜色</span></span><br><span class="line">        layer<span class="variable">.strokeColor</span> = [<span class="built_in">UIColor</span> blackColor]<span class="variable">.CGColor</span>;       <span class="comment">//绘制边缘</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (addLine == <span class="literal">YES</span>) &#123;</span><br><span class="line">            <span class="built_in">CALayer</span> *lineLayer = [[<span class="built_in">CALayer</span> alloc] init];</span><br><span class="line">            <span class="built_in">CGFloat</span> lineHeight = (<span class="number">1.</span>f / [<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.scale</span>);</span><br><span class="line">            lineLayer<span class="variable">.frame</span> = <span class="built_in">CGRectMake</span>(<span class="built_in">CGRectGetMinX</span>(bounds), bounds<span class="variable">.size</span><span class="variable">.height</span>-lineHeight, bounds<span class="variable">.size</span><span class="variable">.width</span>, lineHeight);</span><br><span class="line">            lineLayer<span class="variable">.backgroundColor</span> = [<span class="built_in">UIColor</span> blackColor]<span class="variable">.CGColor</span>;        <span class="comment">//绘制中间间隔线</span></span><br><span class="line">            [layer addSublayer:lineLayer];</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">UIView</span> *testView = [[<span class="built_in">UIView</span> alloc] initWithFrame:bounds];</span><br><span class="line">        [testView<span class="variable">.layer</span> insertSublayer:layer atIndex:<span class="number">0</span>];</span><br><span class="line">        testView<span class="variable">.backgroundColor</span> = <span class="built_in">UIColor</span><span class="variable">.clearColor</span>;</span><br><span class="line">        cell<span class="variable">.backgroundView</span> = testView;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>并且要将 tableView 的 Seperator 设置为 None：</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/table_view_seperator.png" alt="Seperator"></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-01-12T01:51:58.000Z"><a href="/2014/01/12/ios-7-ui-transition-guide-scoping-the-project/">Jan 12 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/01/12/ios-7-ui-transition-guide-scoping-the-project/">iOS 7 UI 过渡指南 - 审视过渡工作的范围</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <blockquote>
+<p>本文翻译自苹果开发者中心文档<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/Scoping.html#//apple_ref/doc/uid/TP40013174-CH7-SW1" target="_blank" rel="external"> iOS 7 UI Transition Guide (Preparing for Transition - Scoping the Project) </a></p>
+</blockquote>
+<p>了解你的 app 特征及自定义的方式，能让你大致知道应该如何进⾏过渡。使用下面的清单填充上项目的细节，来审视整个过渡工作的范围。</p>
+<h3 id="每个_app_必须做的事情">每个 app 必须做的事情</h3><ul>
+<li><p>更新app的icon</p>
+<p>在iOS 7中，app 的图标尺寸在高分辨率的 iPhone 和 iPod touch 上是 120x120 像素，在高分辨率的 iPad 上是 152x152 像素。（了解更多图标大小的详情，请查阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/MobileHIG/IconMatrix.html#//apple_ref/doc/uid/TP40006556-CH27" target="_blank" rel="external">“Icon and Image Sizes”</a>）</p>
+<p>注意，iOS 7 不再对 app 的图标进行光照和阴影效果。并且，虽然 iOS 7 依然对 app 的图标加入圆角，但与之前版本的 iOS 采用的圆角相比，弧度发生了一些变化。</p>
+</li>
+<li><p>更新 app 的加载图像，如果原来的载⼊图像中不包含状态栏部分的话，补充上状态栏部分的图像。</p>
+</li>
+<li><p>如果你之前没有支持的话，现在应支持 Retina 屏幕和 iPhone 5 的屏幕尺寸。</p>
+</li>
+</ul>
+<h3 id="每个_app_应该做的事情">每个 app 应该做的事情</h3><ul>
+<li><p>确保 app 的内容在透明UI元素（比如透明的 bar 和透明键盘）和透明的系统状态栏下依然可辨识。在 iOS 7 中，视图控制器统一采⽤用了全屏视图（参阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/AppearanceCustomization.html#//apple_ref/doc/uid/TP40013174-CH15-SW2" target="_blank" rel="external">“Using View Controllers”</a>来了解更多）。</p>
+</li>
+<li><p>重新设计 bar 的自定义图标。在 iOS 7 上，bar 上的按钮图标更加轻巧，且有了不一样的风格。参阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/MobileHIG/BarIcons.html#//apple_ref/doc/uid/TP40006556-CH21" target="_blank" rel="external">“Bar Button Icons”</a>来了解一些设计指导。</p>
+</li>
+<li><p>准备采用无边框的按钮，去掉按钮的背景图⽚和边框曲线。</p>
+</li>
+<li><p>检查 app 中写死的 UI 数值，比如 size 和 position，用系统提供的动态数值替换它们。使用 Auto Layout 帮助你的 app 完成当布局变化时的响应。(如果你还不知道什么是 Auto Layout，请参阅 <a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/Introduction/Introduction.html#//apple_ref/doc/uid/TP40010853" target="_blank" rel="external"><em>Auto Layout Guide</em></a>）</p>
+</li>
+<li><p>检查 app 中使⽤ UIKit 控件的地方，检查尺寸和风格发生变化的控制器和视图是否对布局和外观产生了影响。例如，开关（Switch）变得更宽了，组合式表格（grouped tables）不再是嵌入的样式，进度条变得比以前更细。想要了解更详细的 UI 元素变化，请参阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/Bars.html#//apple_ref/doc/uid/TP40013174-CH8-SW1" target="_blank" rel="external">Bars and Bar Buttons</a>，<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/ContentViews.html#//apple_ref/doc/uid/TP40013174-CH10-SW1" target="_blank" rel="external">Content Views</a>，<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/Controls.html#//apple_ref/doc/uid/TP40013174-CH9-SW1" target="_blank" rel="external">Controls</a>，<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/TempViews.html#//apple_ref/doc/uid/TP40013174-CH11-SW1" target="_blank" rel="external">Temporary Views</a>。</p>
+</li>
+<li><p>使用动态的字体类型。在 iOS 7 中，用户可以自由调整 app 中字体的大小。如果采⽤动态字体，当用户在系统中设定自定义字号的时候，app 的字体也会发⽣生相应的变化。更多信息请参阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/AppearanceCustomization.html#//apple_ref/doc/uid/TP40013174-CH15-SW4" target="_blank" rel="external">Using Fonts</a>。</p>
+</li>
+<li><p>考虑用户从屏幕底部上滑调出控制中心的情况。如果 iOS 检测到一次滑动从屏幕底部开始，那么就会调出控制中心，而不会将这个手势传递给现在运行中的 app。如果 iOS 判断这次触摸不应该调出控制中心，那这次的触摸可能会稍微延迟一会儿才能传递到 app 中。</p>
+</li>
+<li><p>检查所有用到的阴影、渐变、浮雕效果。由于 iOS 7 的设计重视平面化和层次感，所以应该尽量少的应用会让 UI 元素具有拟物化的视觉效果，你应该重新考虑一下这些效果。</p>
+</li>
+<li><p>必要的话，将 app 升级到 iOS 6 中的最佳实践⽅法，如 Auto Layout 和 Storyboard，并确保 app 不会用到已不建议使用的 API 。</p>
+</li>
+</ul>
+<p>现在你了解到需要做哪类事情了，了解更多关于视图控制器、着色、字体的变化，请参阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/AppearanceCustomization.html#//apple_ref/doc/uid/TP40013174-CH15-SW1" target="_blank" rel="external">Appearance and Behavior</a>。</p>
+<h3 id="如果你必须继续支持_iOS_6">如果你必须继续支持 iOS 6</h3><p>如果你必须同时支持 iOS 6 和 iOS 7 两个系统，你可以在 app 运行的时候检测操作系统的版本，并加载相对应的资源⽂件。更多信息请参阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/SupportingEarlieriOS.html#//apple_ref/doc/uid/TP40013174-CH14-SW1" target="_blank" rel="external">Supporting iOS 6</a>。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-11-14T00:43:36.000Z"><a href="/2013/11/14/ios-7-ui-transition-guide-before-you-start/">Nov 14 2013</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/11/14/ios-7-ui-transition-guide-before-you-start/">iOS 7 UI 过渡指南 - 开始之前</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <blockquote>
+<p>本文翻译自苹果开发者中心文档<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/index.html#//apple_ref/doc/uid/TP40013174-CH6-SW1" target="_blank" rel="external"> iOS 7 UI Transition Guide (Preparing for Transition - Before You Start) </a></p>
+</blockquote>
+<h2 id="开始之前">开始之前</h2><p>iOS 7 引入了许多用户界面的新变化，例如无边框的按钮、半透明的控制条（bars）、全屏布局的视图控制器。使用 Xcode 5，你可以创建一个 iOS 7 的工程并且在 iOS 7 模拟器上运行，来看一眼采用 iOS 7 用户界面的应用程序是什么样子的。</p>
+<p>例如，下面的图片展示了一个示例工程 <em>TheElements</em> 在不同版本 iOS 模拟器上的区别。</p>
+<table>
+<thead>
+<tr>
+<th>iOS 7 模拟器上的示例程序</th>
+<th>iOS 6 模拟器上的示例程序</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="http://stoneark.qiniudn.com/blogimg/iOS7TransitionGuide/first_look_7_2x.png" alt="iOS7"></td>
+<td><img src="http://stoneark.qiniudn.com/blogimg/iOS7TransitionGuide/first_look_6_2x.png" alt="iOS6"></td>
+</tr>
+</tbody>
+</table>
+<p>看到这个对比，你肯定急切地想要投入到更新自己的应用以适配 iOS 7 的工作中，不过在你开始之前有些事情需要考虑。</p>
+<p>当你与内建程序交互时，iOS 7 变化的既细微又巨大之处就变得更加清晰。熟悉的 UI 元素非常易于辨认，但看起来已经与以往有很大不同。真实的虚拟触摸更加优雅，动作的真实性得到增强。</p>
+<blockquote>
+<p>注意：虽然所有 UI 元素的样子在 iOS 7 中都有了很大变化，而且有很多元素有了新的功能，但 UIKit API 几乎与之前保持一致。</p>
+</blockquote>
+<p>当你继续探索时，你会开始觉察到 iOS 7 的主题。</p>
+<ul>
+<li>遵从。用户界面会帮助用户理解并了解其内容，而从不争夺用户的眼球。</li>
+<li>清晰。文字在所有尺寸下都能清晰显示，图标清晰易懂，装饰优雅适宜，对实用性更多的关注促进了这样的设计。</li>
+<li>深度。虚拟的层次和具真实感的运动给用户带来使用上的乐趣，并更加易于理解。</li>
+</ul>
+<p>通过在 iOS 体验上引入这些根本而广泛的变化，iOS 7 提供了一个难得的机会让我们重新审视自己的应用程序核心目的是什么，该为用户提供什么功能。虽然你可能还没准备好抓住这个机会，但当你更新你的程序以适配 iOS 7 时请别忘了这一点。（如果你已经准备好重新审视你的应用程序设计，或者你正打算开启一个新的工程，请阅读《Designing for iOS 7》作为参考。）</p>
+<h3 id="应用程序的特性">应用程序的特性</h3><p>不论你决定重新设计一个应用程序还是更新当前的设计，你需要了解应用程序的特性如何影响这个设计的过程。首先，回答一下几个问题来帮助你明确下一步应该怎么做：</p>
+<ul>
+<li><p>你采用了 Auto Layout 来设计app吗？</p>
+<p>  如果你的 app 采用了 Auto Layout，你的工作就变得容易多了。在 Xcode 5 中，Auto Layout 可以帮助 app 适应新的 UI 元素度量，并能对字号动态调整。Auto Layout 对你从 iOS 6 过渡到 iOS 7，以及同时支持两个版本很有帮助。<br>  如果你没有采用 Auto Layout，现在是开始采用它的好时候了，尤其是如果你需要同时支持多个 app 版本时。如果你采用手动布局或程序化布局技术，你应该确认当文字大小改变时布局能合适地调整。</p>
+</li>
+<li><p>应用需要支持 iOS 6 吗？<br>  记住，iOS 的用户会非常快地更新他们的设备，并且期望他们最喜爱的 app 能够跟随潮流。<br>  如果由于商业原因要求必须支持 iOS 6，开始更新你当前的 app 来适应 iOS 7 依然是最好的选择。然后如果有可能的话，对 iOS 6 版本的 app 运用一些设计上的变化。详情可以参见“Supporting iOS 6”（原文第11页）。</p>
+</li>
+</ul>
+<p>下一步是确定 app 定制的方式。定制的数量，以及你采用的自定义技术，决定了你所需要做的工作的类型。</p>
+<p>按照以下三种类型来将你的 app 分类：</p>
+<ul>
+<li>标准型。app 只包含了标准的、未经自定义的、由 UIKit 提供的 UI 元素。</li>
+<li>自定义型。app 呈现了一个完全自定义的 UI，不包含任何 UIKit 中的 UI 元素。</li>
+<li>混合型。app 同时包含了标准的和自定义的 UI 元素，包括那些你通过调用 UIKit 中的色彩和外观设置 API 来自定义的标准元素。、</li>
+</ul>
+<p>对于标准型 app，你需要确定你的设计和用户体验设计在 iOS 7 环境下是否依然有效。如果你决定保持现在的布局和交互模式，大部分的工作只是进行微调，来确保 app 可以正确处理系统全局的手势。</p>
+<p>对于自定义型 app，也就是没有采用 UIKit 中的 UI 元素的app，在方法上就有些细微差别了。举例来说，如果你感觉当前的 UI 和体验依然合适，可能需要做的工作就很少。另一方面，如果你感觉 app 的风格和用户体验应该进行一些修改，来满足 iOS 7 用户的要求，你可能需要做比较多的工作。</p>
+<p>对于混合型 app，需要做的工作量是不一定的，取决于你所做的自定义更改，以及你将自定义内容与标准元素结合的方法。重新审视一个混合型 app 的整体设计时，你需要确保你的自定义内容与新的标准元素集成在一起依然正常并且显示效果不错。</p>
+<blockquote>
+<p>注意：如果你采用了完全自定义的方法来模拟标准 iOS 6 的 UI，可能会需要大量改动的工作，因为它会看起来非常过时。</p>
+</blockquote>
 
       
     </div>
@@ -124,7 +595,7 @@
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Apple/" style="font-size: 10px;">Apple</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 13.33px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16.67px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/TableView/" style="font-size: 10px;">TableView</a> <a href="/tags/Translation/" style="font-size: 13.33px;">Translation</a> <a href="/tags/UI/" style="font-size: 13.33px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 16.67px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16.67px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 16.67px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 13.33px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 13.33px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Apple/" style="font-size: 10px;">Apple</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 13.33px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16.67px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/TableView/" style="font-size: 13.33px;">TableView</a> <a href="/tags/Translation/" style="font-size: 13.33px;">Translation</a> <a href="/tags/UI/" style="font-size: 13.33px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 16.67px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16.67px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 16.67px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 13.33px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 13.33px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
   </div>
 </div>
 
@@ -135,23 +606,23 @@
   <ul class="entry">
     
       <li>
+        <a href="/2015/09/18/UIAlertView-without-title/">UIAlertView without title</a>
+      </li>
+    
+      <li>
+        <a href="/2015/07/06/MBProgressHUD-and-UITableView-section-header/">MBProgressHUD and UITableView section header</a>
+      </li>
+    
+      <li>
+        <a href="/2015/06/29/limit-max-input-length-of-uitextview/">限制 UITextView 最大输入字符数</a>
+      </li>
+    
+      <li>
+        <a href="/2015/06/25/ios-8-2-tableview-cell-height-bug/">iOS 8.2 UITableView 的默认行高 bug</a>
+      </li>
+    
+      <li>
         <a href="/2015/06/24/updated-to-hexo-3-from-2/">Updated to Hexo 3 from 2</a>
-      </li>
-    
-      <li>
-        <a href="/2015/06/10/WWDC-2015/">WWDC 2015</a>
-      </li>
-    
-      <li>
-        <a href="/2015/05/30/Google-I-O-2015/">Google I/O 2015</a>
-      </li>
-    
-      <li>
-        <a href="/2015/05/29/gem-install-failed-cannot-load-such-file-openssl/">“cannot load such file -- openssl” while “gem install”</a>
-      </li>
-    
-      <li>
-        <a href="/2015/05/22/baidumap-memory-not-be-freed/">百度地图 (iOS SDK) 内存不回收</a>
       </li>
     
   </ul>
