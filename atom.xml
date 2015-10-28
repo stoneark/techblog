@@ -5,7 +5,7 @@
   <subtitle><![CDATA[StoneArk's Blog]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.stoneark.org//"/>
-  <updated>2015-10-28T09:29:31.000Z</updated>
+  <updated>2015-10-28T09:32:24.000Z</updated>
   <id>http://blog.stoneark.org//</id>
   
   <author>
@@ -20,17 +20,20 @@
     <link href="http://blog.stoneark.org/2015/09/18/UIAlertView-without-title/"/>
     <id>http://blog.stoneark.org/2015/09/18/UIAlertView-without-title/</id>
     <published>2015-09-18T06:02:09.000Z</published>
-    <updated>2015-10-28T09:29:31.000Z</updated>
+    <updated>2015-10-28T09:32:24.000Z</updated>
     <content type="html"><![CDATA[<p>UIAlertView 是支持无标题的。如果传空字符串，即为没有标题，只显示内容；如果传 nil，则会把内容放到标题上。</p>
-<p>1、title 传空字符串，即：<br>UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@”” message:@”您确定要退出此帐号吗？” delegate:self cancelButtonTitle:@”取消” otherButtonTitles:@”确认”, nil];</p>
+<p>1、title 传空字符串，即：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@&#34;&#34; message:@&#34;&#24744;&#30830;&#23450;&#35201;&#36864;&#20986;&#27492;&#24080;&#21495;&#21527;&#65311;&#34; delegate:self cancelButtonTitle:@&#34;&#21462;&#28040;&#34; otherButtonTitles:@&#34;&#30830;&#35748;&#34;, nil];</span><br></pre></td></tr></table></figure>
 <p><img src="http://stoneark.qiniudn.com/blogimg/uialertview_without_title_1.png" alt=""></p>
-<p>2、title 传 nil，即：<br>UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@”您确定要退出此帐号吗？” delegate:self cancelButtonTitle:@”取消” otherButtonTitles:@”确认”, nil];</p>
+<p>2、title 传 nil，即：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@&#34;&#24744;&#30830;&#23450;&#35201;&#36864;&#20986;&#27492;&#24080;&#21495;&#21527;&#65311;&#34; delegate:self cancelButtonTitle:@&#34;&#21462;&#28040;&#34; otherButtonTitles:@&#34;&#30830;&#35748;&#34;, nil];</span><br></pre></td></tr></table></figure>
 <p><img src="http://stoneark.qiniudn.com/blogimg/uialertview_without_title_2.png" alt=""></p>
 <p>另外，如果需要自定义 AlertView 的样式，可以采用开源的 <a href="https://github.com/Friend-LGA/LGAlertView" target="_blank" rel="external">LGAlertView</a>。</p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p>UIAlertView 是支持无标题的。如果传空字符串，即为没有标题，只显示内容；如果传 nil，则会把内容放到标题上。</p>
-<p>1、title 传空字符串，即：<br>UIAlertView *alert = [[UIAlertView alloc]initWith]]>
+<p>1、title 传空字符串，即：</p>
+<figure class="highlight plain"><table><tr><td c]]>
     </summary>
     
       <category term="iOS" scheme="http://blog.stoneark.org/tags/iOS/"/>
