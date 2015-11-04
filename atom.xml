@@ -5,7 +5,7 @@
   <subtitle><![CDATA[StoneArk's Blog]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.stoneark.org//"/>
-  <updated>2015-10-29T08:20:50.000Z</updated>
+  <updated>2015-11-04T06:26:51.000Z</updated>
   <id>http://blog.stoneark.org//</id>
   
   <author>
@@ -14,6 +14,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[EI Capitan brings the missing Hex color picker]]></title>
+    <link href="http://blog.stoneark.org/2015/11/04/ei-capitan-brings-the-missing-hex-color-picker/"/>
+    <id>http://blog.stoneark.org/2015/11/04/ei-capitan-brings-the-missing-hex-color-picker/</id>
+    <published>2015-11-04T05:58:11.000Z</published>
+    <updated>2015-11-04T06:26:51.000Z</updated>
+    <content type="html"><![CDATA[<p>OS X 里的颜色选取器一直没有集成十六进制的功能，这给程序员和设计师带来了诸多不便，于是有开发者制作了对系统 Color Picker 的增强插件，如我一直在用的 <a href="http://wafflesoftware.net/hexpicker/" target="_blank" rel="external">Hex Color Picker</a>，在系统的 Color Picker 中增加了一栏，专门用来输入十六进制的颜色值，系统全局都能用，很是方便。</p>
+<p>但是它在 EI Capitan 上不再好用了，因为系统加入了一项新的安全技术，称作<a href="https://support.apple.com/en-us/HT204899" target="_blank" rel="external">系统完整性保护</a>，即使 root 账户也不允许修改系统主要程序的内容。相应的，像 XtraFinder、HexColorPicker 之类的系统增强类软件，在 EI Capitan 上都只能歇菜了。</p>
+<p>不过，好在 Apple 已经发觉到了我们的诉求，在系统的 Color Picker 里增加了十六进制的功能，虽然有些隐蔽：</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/ei_capitan_hex_color_picker.png" alt=""></p>
+<p>在第二个选项卡 (Color Slider) 中的 RGB Sliders 里面，下方有个 Hex Color 文本框。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>OS X 里的颜色选取器一直没有集成十六进制的功能，这给程序员和设计师带来了诸多不便，于是有开发者制作了对系统 Color Picker 的增强插件，如我一直在用的 <a href="http://wafflesoftware.net/hexpicker/" target=]]>
+    </summary>
+    
+      <category term="Mac OS X" scheme="http://blog.stoneark.org/tags/Mac-OS-X/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[限制最大输入字符数(更新)]]></title>
@@ -538,34 +558,6 @@
       <category term="Mac OS X" scheme="http://blog.stoneark.org/tags/Mac-OS-X/"/>
     
       <category term="Translation" scheme="http://blog.stoneark.org/tags/Translation/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[忘掉 Reveal，使用 Xcode6 来进行视图层次调试]]></title>
-    <link href="http://blog.stoneark.org/2015/01/19/use-xcode6-debug-view-hierarchy-and-forget-reveal/"/>
-    <id>http://blog.stoneark.org/2015/01/19/use-xcode6-debug-view-hierarchy-and-forget-reveal/</id>
-    <published>2015-01-19T03:13:41.000Z</published>
-    <updated>2015-01-19T06:44:01.000Z</updated>
-    <content type="html"><![CDATA[<p>Xcode 6 提供了许多新特性，视图层次调试（Debug View Hierarchy）便是其中很便捷的特性之一。之前调试视图层次，我们需要借助 Reveal、Spark Inspector 等商业软件，如今 Xcode 引入了这一功能，着实令人兴奋。</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/Xcode_Debug_View_Hierarchy.png" alt="Debug View Hierarchy"></p>
-<p>使用也很简单，在 Xcode 中以调试模式运行程序（模拟器、真机均可），然后就可以在 Xcode 底部调试区域找到 Debug View Hierarchy 的按钮（在跳出和模拟位置中间）：</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/Xcode_Debug_View_Hierarchy2.png" alt="Debug View Hierarchy button"></p>
-<p>或者，也可以在菜单中找到：Debug -&gt; View Debugging -&gt; Capture View Hierarchy。</p>
-<p>点击后稍等就会生成视图层次，同时进程会暂停。用鼠标拖动探索一下吧</p>
-<p>视图左下方的滑块可以调整层次间的距离，右下角的滑块可以调整显示的层数，下方的按钮可以控制是否显示 clipped 的内容、是否显示 constraints、放大缩小还原等。当然，如果需要诸如 live 修改等高级功能，还是需要借助 Reveal，但 Xcode 中提供的这些基本功能，大多数情况下也足够了。</p>
-<p>PS. 如果你在调试区域找不到那个按钮，菜单中的“Capture View Hierarchy” 也是灰色的，可能是你使用的调试设备为 64 位设备（iPhone 5 以上的模拟器或真机），但你的工程属性中并不支持 64 位的原因。可以尝试使用 iPhone 4S 模拟器，那个按钮应该就会出现了。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>Xcode 6 提供了许多新特性，视图层次调试（Debug View Hierarchy）便是其中很便捷的特性之一。之前调试视图层次，我们需要借助 Reveal、Spark Inspector 等商业软件，如今 Xcode 引入了这一功能，着实令人兴奋。</p>
-<p><i]]>
-    </summary>
-    
-      <category term="Debug" scheme="http://blog.stoneark.org/tags/Debug/"/>
-    
-      <category term="View Hierarchy" scheme="http://blog.stoneark.org/tags/View-Hierarchy/"/>
-    
-      <category term="Xcode6" scheme="http://blog.stoneark.org/tags/Xcode6/"/>
     
   </entry>
   

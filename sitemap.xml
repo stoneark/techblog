@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.stoneark.org/2015/11/04/ei-capitan-brings-the-missing-hex-color-picker/</loc>
+    <lastmod>2015-11-04T06:26:51.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.stoneark.org/2015/05/19/pop-then-push-immediately-with-uinavigationcontroller-in-ios8/</loc>
     <lastmod>2015-10-29T08:22:47.000Z</lastmod>
   </url>
