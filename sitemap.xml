@@ -2,8 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.stoneark.org/2016/01/29/NSAttributedString-image-vertically-center-alignment/</loc>
+    <lastmod>2016-03-06T07:24:36.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2015/11/19/UIControlEventTouchDown-event-response-delay/</loc>
+    <lastmod>2016-03-06T07:17:55.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2015/11/13/uiview-animation-with-auto-layout/</loc>
+    <lastmod>2016-03-06T07:16:05.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2016/01/14/pay-attention-to-casing-of-yyyy-in-date-format/</loc>
+    <lastmod>2016-03-06T07:06:36.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2016/01/22/disable-screen-auto-rotate-in-android-developing/</loc>
+    <lastmod>2016-03-05T10:48:47.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2016/02/26/apple-wwdr-intermediate-certificate-expired/</loc>
+    <lastmod>2016-03-05T07:19:02.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2016/03/02/swift-mixed-with-objective-c/</loc>
+    <lastmod>2016-03-05T06:38:33.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.stoneark.org/2015/11/04/ei-capitan-brings-the-missing-hex-color-picker/</loc>
-    <lastmod>2015-11-04T06:26:51.000Z</lastmod>
+    <lastmod>2015-11-04T06:26:17.000Z</lastmod>
   </url>
   
   <url>
@@ -33,7 +68,7 @@
   
   <url>
     <loc>http://blog.stoneark.org/2015/10/21/library-unbound-when-import-project-to-eclipse/</loc>
-    <lastmod>2015-10-29T07:10:00.000Z</lastmod>
+    <lastmod>2015-10-29T07:09:54.000Z</lastmod>
   </url>
   
   <url>
@@ -48,7 +83,7 @@
   
   <url>
     <loc>http://blog.stoneark.org/2015/07/06/MBProgressHUD-and-UITableView-section-header/</loc>
-    <lastmod>2015-10-28T08:57:34.000Z</lastmod>
+    <lastmod>2015-10-28T08:57:16.000Z</lastmod>
   </url>
   
   <url>

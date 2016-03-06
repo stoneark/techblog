@@ -66,6 +66,382 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-10-23T08:54:21.000Z"><a href="/2014/10/23/changes-in-new-baidumap-250/">Oct 23 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/10/23/changes-in-new-baidumap-250/">百度地图 iOS SDK 2.5.0版的变化</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在 <a href="../../../../2014/11/24/cannot-locate-compiling-with-xcode6">这篇博客</a> 中，介绍了 iOS8 中定位的变化，百度地图等第三方地图 SDK 在 Xcode6 下均出现水土不服。在广大人民群众的热切期待和漫长等待后，百度地图终于释出了新版 iOS SDK，版本号 2.5.0。在官方的 Change Log 中，看到主要增加了对 arm64、iPhone6、iPhone 6P Plus、iOS8 的支持。解决了一些bug。</p>
+<p>在工程中替换为新版 SDK 并 Build 后，满眼都是 Error。研究下去，发现变动相当多（之前使用的 SDK 版本号为 2.2.1），完全不管向下兼容性。</p>
+<h3 id="地图搜索">地图搜索</h3><p>(1) <code>BMKSearch</code> 分拆为 <code>BMKRouteSearch</code> 和 <code>BMKGeoCodeSearch</code>。</p>
+<p>(2) <code>BMKSearchDelegate</code> 分拆为 <code>BMKRouteSearchDelegate</code> 和 <code>BMKGeoCodeSearchDelegate</code>。</p>
+<p>(3) 新增类 <code>BMKTransitRoutePlanOption</code>、<code>BMKWalkingRoutePlanOption</code>、<code>BMKDrivingRoutePlanOption</code>，且 BMKRouteSearch（原 BMKSearch） 的方法 drivingSearch、transitSearch、walkingSearch 所需的参数变更为一个与之对应的 BMK…RoutePlanOption 类型的对象。</p>
+<p>原方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)transitSearch:(NSString*)city startNode:(BMKPlanNode*)start endNode:(BMKPlanNode*)end;&#10;- (BOOL)drivingSearch:(NSString*)startCity startNode:(BMKPlanNode*)start endCity:(NSString*)endCity endNode:(BMKPlanNode*)end;&#10;- (BOOL)drivingSearch:(NSString*)startCity startNode:(BMKPlanNode*)start endCity:(NSString*)endCity endNode:(BMKPlanNode*)end throughWayPoints:(NSArray*)wayPointsArray;&#10;- (BOOL)walkingSearch:(NSString*)startCity startNode:(BMKPlanNode*)start endCity:(NSString*)endCity endNode:(BMKPlanNode*)end;</span><br></pre></td></tr></table></figure>
+<p>新方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)transitSearch:(BMKTransitRoutePlanOption*)transitRoutePlanOption;&#10;- (BOOL)drivingSearch:(BMKDrivingRoutePlanOption*)drivingRoutePlanOption;&#10;- (BOOL)walkingSearch:(BMKWalkingRoutePlanOption*)walkingRoutePlanOption;</span><br></pre></td></tr></table></figure>
+<p>同时须注意，相比其他两种路径搜索，公交搜索必须指定城市名称，否则会直接不予检索，transitSearch 方法返回 NO。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">transitRouteSearchOption<span class="variable">.city</span> = <span class="string">@"济南市"</span>;</span><br></pre></td></tr></table></figure></p>
+<p>(4) <code>BMKPlanResult</code> 分拆为 <code>BMKWalkingRouteResult</code>、<code>BMKTransitRouteResult</code>、<code>BMKDrivingRouteResult</code>，同时 BMKRouteSearchDelegate（原 BMKSearchDelegate） 的代理方法变更，由：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)onGetWalkingRouteResult:(B<span class="built_in">MKSearch</span> *)searcher result:(B<span class="built_in">MKPlanResult</span> *)result errorCode:(<span class="keyword">int</span>)error;</span><br><span class="line">- (<span class="keyword">void</span>)onGetTransitRouteResult:(B<span class="built_in">MKSearch</span> *)searcher result:(B<span class="built_in">MKPlanResult</span> *)result errorCode:(<span class="keyword">int</span>)error;</span><br><span class="line">- (<span class="keyword">void</span>)onGetDrivingRouteResult:(B<span class="built_in">MKSearch</span> *)searcher result:(B<span class="built_in">MKPlanResult</span> *)result errorCode:(<span class="keyword">int</span>)error;</span><br></pre></td></tr></table></figure></p>
+<p>变更为：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)onGetWalkingRouteResult:(B<span class="built_in">MKRouteSearch</span>*)searcher result:(B<span class="built_in">MKWalkingRouteResult</span>*)result errorCode:(B<span class="built_in">MKSearchErrorCode</span>)error;</span><br><span class="line">- (<span class="keyword">void</span>)onGetTransitRouteResult:(B<span class="built_in">MKRouteSearch</span>*)searcher result:(B<span class="built_in">MKTransitRouteResult</span>*)result errorCode:(B<span class="built_in">MKSearchErrorCode</span>)error;</span><br><span class="line">- (<span class="keyword">void</span>)onGetDrivingRouteResult:(B<span class="built_in">MKRouteSearch</span>*)searcher result:(B<span class="built_in">MKDrivingRouteResult</span>*)result errorCode:(B<span class="built_in">MKSearchErrorCode</span>)error;</span><br></pre></td></tr></table></figure></p>
+<h3 id="地图定位">地图定位</h3><p>(1) 新增类 <code>BMKLocationService</code> 及代理 <code>BMKLocationServiceDelegate</code>。BMKMapView 不再管理定位功能，其属性 <code>location</code>，和代理方法：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)mapView:(B<span class="built_in">MKMapView</span> *)mapView didUpdateUserLocation:(B<span class="built_in">MKUserLocation</span> *)userLocation;</span><br></pre></td></tr></table></figure></p>
+<p>都不再存在，定位功能全部剥离到 BMKLocationService。</p>
+<p>(2) 如果地图需要定位，需要单独创建一个 BMKLocationService 对象，并实现代理 BMKLocationServiceDelegate，在代理方法中执行 mapView 新增的 <code>updateLocationData</code> 方法，大致如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)didUpdateUserLocation:(B<span class="built_in">MKUserLocation</span> *)userLocation</span><br><span class="line">&#123;</span><br><span class="line">  [_bMapView updateLocationData:userLocation];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(3) 含有定位的地图界面，pop 回上一层 ViewController ，再 push 到这个界面，会崩溃的问题。<br>如果你遇到这个问题，请<strong>用真机运行</strong>，如果依然崩溃，确保以下两条：</p>
+<ul>
+<li><code>viewWillDisappear</code> 中写了 <code>[_locService stopUserLocationService];</code>。</li>
+<li><code>[_locService startUserLocationService];</code> 在 <code>viewWillAppear</code> 中，而不是在 <code>viewDidLoad</code> 中。</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-09-16T08:50:29.000Z"><a href="/2014/09/16/standard-of-ios-programming/">Sep 16 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/09/16/standard-of-ios-programming/">iOS 代码规范</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>这是我为团队制定的 iOS 代码规范，供大家参考。</p>
+<h2 id="文档说明">文档说明</h2><table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Time</th>
+<th>Author</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.1 Alpha</td>
+<td>2014-08-21</td>
+<td>StoneArk</td>
+</tr>
+<tr>
+<td>0.2 Beta</td>
+<td>2014-09-02</td>
+<td>StoneArk</td>
+</tr>
+<tr>
+<td>0.3 Beta</td>
+<td>2014-09-15</td>
+<td>StoneArk</td>
+</tr>
+<tr>
+<td>1.0</td>
+<td>2014-09-16</td>
+<td>StoneArk</td>
+</tr>
+</tbody>
+</table>
+<h2 id="基本原则">基本原则</h2><p>求同存异。</p>
+<p>合理的编码风格不只一个，尊重每位开发人员的编码习惯。但不合理的编码习惯必须避免。</p>
+<h2 id="命名规则">命名规则</h2><ul>
+<li>命名规则</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>范围</th>
+<th>命名规则</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>变量名、方法名</td>
+<td><a href="http://zh.wikipedia.org/wiki/%E9%A7%9D%E5%B3%B0%E5%BC%8F%E5%A4%A7%E5%B0%8F%E5%AF%AB">驼峰式命名</a> (小驼峰式命名)</td>
+<td><code>onlineCount</code> <br /> <code>- (void)viewDidLoad</code></td>
+</tr>
+<tr>
+<td>类名、枚举类型名</td>
+<td><a href="http://zh.wikipedia.org/wiki/%E5%B8%95%E6%96%AF%E5%8D%A1%E5%91%BD%E5%90%8D%E6%B3%95">Pascal 命名</a></td>
+<td><code>MainViewController</code> <br /> <code>FruitType</code></td>
+</tr>
+<tr>
+<td>常量</td>
+<td>全部大写或k开头的驼峰式命名</td>
+<td><code>FONTNAME</code> <br /> <code>kFontName</code></td>
+</tr>
+<tr>
+<td>宏定义</td>
+<td>全部大写</td>
+<td><code>LOCALDEBUG</code></td>
+</tr>
+<tr>
+<td>枚举值</td>
+<td>要有枚举类型前缀</td>
+<td><code>FruitType</code> 枚举类型的枚举值应为 <code>FruitTypeApple</code>, <code>FruitTypeBanana</code> 等</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>命名约定</li>
+</ul>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2014/09/16/standard-of-ios-programming/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-09-13T09:34:40.000Z"><a href="/2014/09/13/new-itunes-connect-bug-when-submitting-for-review/">Sep 13 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/09/13/new-itunes-connect-bug-when-submitting-for-review/">新版 iTunes Connect 提交流程有变有 bug</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在 <a href="itunes-connect-website-updated.html">上一篇博客</a> 中，对 iTunes Connect 的改版从界面上进行了了解。今天进行了一次新版本的提交，发现提交的流程也有变化，并且貌似存在一个 bug。</p>
+<p>以往的流程中，在填写完版本信息上传程序之前，是”Prepare for Upload”状态，需要在 iTunes Connect 网站点击”Ready to Upload Binary”按钮，才会进入”Waiting for Upload”状态，允许通过 Xcode 或 Application Loader 上传程序。成功上传程序后，无需进行其他操作，在 iTunes Connect 中就会自动变为”Upload Received”状态，经过几分钟的处理后，再自动变为”Waiting for Review”状态，等待审核。</p>
+<p>而现在的流程是，一个程序版本一旦建立，即进入”Prepare for Submission”状态，在这个状态就可以上传程序，而不再有”Ready to Upload Binary”按钮，也不再有”Prepare for Upload”和”Waiting for Upload”两个状态。但上传后不会自动开始审核，需要在 iTunes Conect 中选择上传的 Build，然后点击”Submit for Review”按钮，才会提交审核，进入”Waiting for Review”状态。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fnew_itunes_connect_bug_step1.jpg" alt=""><br><img src="http://stoneark.qiniudn.com/blogimg%2Fnew_itunes_connect_bug_step2.jpg" alt=""><br><img src="http://stoneark.qiniudn.com/blogimg%2Fnew_itunes_connect_bug_step3.jpg" alt=""></p>
+<p>但问题是，明明已经选择了 Build，但是点击提交后，依然提示没有选择 Build：<br><img src="http://stoneark.qiniudn.com/blogimg%2Fnew_itunes_connect_bug_error.jpg" alt=""></p>
+<p>尝试着删掉重新选择、重新上传一个 Build、换浏览器等都不奏效，推测是新版 iTunes Connect 的一个 bug 吧。</p>
+<p>不过这次的流程变动我认为还是非常合理的，上传程序并不代表提交审核，只有点击了提交按钮才意味着提交审核。这样也就允许我们可以提前将程序上传，待测试结果出来后，点击按钮提交即可。同时，这样也允许了多次上传程序（只要 Build Version 不同）。</p>
+<p>PS. 9 月 15 日早上重新点了一次 “Submit for Review” 按钮，什么都没改动，已经可以成功提交了。证明的确是新版 iTunes Connect 的问题。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-09-12T11:37:46.000Z"><a href="/2014/09/12/ios-8-glance/">Sep 12 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/09/12/ios-8-glance/">iOS 8 Glance</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>把自己的 4S 升级到了 iOS 8 GM Seed。第一次恢复了 iOS 7 上做的备份，结果卡得要命。然后重新刷了一遍，并设置为全新的 iPhone，流畅了许多，流畅度跟 iOS 7 差距不大。</p>
+<p>Home Screen，多了个健康：<br><img src="http://stoneark.qiniudn.com/blogimg%2Fios8_home_screen.jpg" alt=""></p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2014/09/12/ios-8-glance/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-09-10T01:24:29.000Z"><a href="/2014/09/10/itunes-connect-website-updated/">Sep 10 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/09/10/itunes-connect-website-updated/">iTunes Connect 更新了</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="https://itunesconnect.apple.com" target="_blank" rel="external">iTunes Connect</a> 更新了，最直观的感受就是网站界面换成了扁平风格，与 iCloud 风格一致。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fnew_itunes_connect_login.jpg" alt="login page"><br><img src="http://stoneark.qiniudn.com/blogimg%2Fnew_itunes_connect_main.jpg" alt="main page"></p>
+<p>不过依然可以看到，还是有很多页面没有完成风格的切换。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fnew_itunes_connect_rights.jpg" alt="rights page"></p>
+<p>增加了 4.7-inch 和 5.5-inch，以及 Video Preview。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fnew_itunes_connect_video.jpg" alt="video and screenshot"></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-08-27T08:50:29.000Z"><a href="/2014/08/27/become-a-ddos-attacker-unluckily/">Aug 27 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/27/become-a-ddos-attacker-unluckily/">Become a DDOS attacker unluckily</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>下午客户反馈后台管理系统打不开，经排查发现服务器停机了，原因是防火墙发现我们的服务器对外发起了 DDOS 攻击。</p>
+<p>重新启动服务器后，打开任务管理器发现了一大堆可疑进程：<br><img src="http://stoneark.qiniudn.com/blogimg%2Fddos_attacker_tasklist.png" alt="Task list"></p>
+<p>其中的 hrlFFFF.tmp, hrl1C83.tmp, hrlAAC1.tmp, Bf.exe, svchobst.exe, WinHogb32.exe, bbyo.exe, jqs.exe, bytbac.exe, hrl11.tmp, 还有开机自启的两个 iexplorer.exe，都是十分可疑的进程。</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2014/08/27/become-a-ddos-attacker-unluckily/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-08-03T09:07:49.000Z"><a href="/2014/08/03/replace-google-fonts-to-local/">Aug 3 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/08/03/replace-google-fonts-to-local/">将 Google Fonts 替换到本地读取</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>由于 Google Fonts 服务在国内被屏蔽了，所以导致很多引用了谷歌字体的网页在加载时打开十分缓慢。</p>
+<p>解决方法也很简单，把网页中需要的字体下载到本地，并从本地加载字体文件即可。</p>
+<p>不过有个小前提：需要先翻出去才能下载到所需要的谷歌字体文件哦。</p>
+<ol>
+<li>翻出去</li>
+<li><p>在网页的 html 源代码（假设为 <code>index.html</code> ）中，找到引用了谷歌字体的部分，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;link href=&#34;http://fonts.googleapis.com/css?family=Open+Sans:300,800&#34; rel=&#34;stylesheet&#34; type=&#34;text/css&#34; /&#62;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在网页浏览器中访问上面的地址 <a href="http://fonts.googleapis.com/css?family=Open+Sans:300,800" target="_blank" rel="external">http://fonts.googleapis.com/css?family=Open+Sans:300,800</a> ，可以得到一个 css 文件，文件内容为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@font-face &#123;&#10;  font-family: &#39;Open Sans&#39;;&#10;  font-style: normal;&#10;  font-weight: 300;&#10;  src: local(&#39;Open Sans Light&#39;), local(&#39;OpenSans-Light&#39;), url(https://themes.googleusercontent.com/static/fonts/opensans/v8/DXI1ORHCpsQm3Vp6mXoaTaRDOzjiPcYnFooOUGCOsRk.woff) format(&#39;woff&#39;);&#10;&#125;&#10;@font-face &#123;&#10;  font-family: &#39;Open Sans&#39;;&#10;  font-style: normal;&#10;  font-weight: 800;&#10;  src: local(&#39;Open Sans Extrabold&#39;), local(&#39;OpenSans-Extrabold&#39;), url(https://themes.googleusercontent.com/static/fonts/opensans/v8/EInbV5DfGHOiMmvb1Xr-hqRDOzjiPcYnFooOUGCOsRk.woff) format(&#39;woff&#39;);&#10;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>把它保存到本地，可命名为 <code>OpenSans.css</code> 。在 index.html 所在的位置新建一个目录，命名为 <code>googlefonts</code> ，将刚才得到的 OpenSans.css 文件放置在这个目录下。</p>
+<ol>
+<li>在上面的 <code>OpenSans.css</code> 文件中，可以找到字体文件的地址，即：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://themes.googleusercontent.com/static/fonts/opensans/v8/DXI1ORHCpsQm3Vp6mXoaTaRDOzjiPcYnFooOUGCOsRk.woff]]]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>和<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://themes.googleusercontent.com/static/fonts/opensans/v8/EInbV5DfGHOiMmvb1Xr-hqRDOzjiPcYnFooOUGCOsRk.woff</span><br></pre></td></tr></table></figure></p>
+<p>将这两个文件下载到本地（不需修改文件名。以下的步骤假设保存时未修改文件名，若修改了文件名请自行修改以下步骤中的内容），并放置在 googlefonts 目录下。</p>
+<ol>
+<li>修改 <code>OpenSans.css</code> 文件，将字体的地址改为本地地址，即将：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://themes.googleusercontent.com/static/fonts/opensans/v8/DXI1ORHCpsQm3Vp6mXoaTaRDOzjiPcYnFooOUGCOsRk.woff</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>修改为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DXI1ORHCpsQm3Vp6mXoaTaRDOzjiPcYnFooOUGCOsRk.woff</span><br></pre></td></tr></table></figure></p>
+<p>对另一个 woff 文件链接同样地做处理，即将：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://themes.googleusercontent.com/static/fonts/opensans/v8/EInbV5DfGHOiMmvb1Xr-hqRDOzjiPcYnFooOUGCOsRk.woff</span><br></pre></td></tr></table></figure></p>
+<p>修改为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DXI1ORHCpsQm3Vp6mXoaTaRDOzjiPcYnFooOUGCOsRk.woff</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>修改 <code>index.html</code> ，将 css 的地址改为本地地址，即将：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;link href=&#34;http://fonts.googleapis.com/css?family=Open+Sans:300,800&#34; rel=&#34;stylesheet&#34; type=&#34;text/css&#34; /&#62;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>修改为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;link href=&#34;googlefonts/OpenSans.css&#34; rel=&#34;stylesheet&#34; type=&#34;text/css&#34; /&#62;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-02-17T03:29:30.000Z"><a href="/2014/02/17/jailbreak-my-ios7/">Feb 17 2014</a></time>
       
       
@@ -189,406 +565,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-01-12T01:51:58.000Z"><a href="/2014/01/12/ios-7-ui-transition-guide-scoping-the-project/">Jan 12 2014</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/01/12/ios-7-ui-transition-guide-scoping-the-project/">iOS 7 UI 过渡指南 - 审视过渡工作的范围</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <blockquote>
-<p>本文翻译自苹果开发者中心文档<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/Scoping.html#//apple_ref/doc/uid/TP40013174-CH7-SW1" target="_blank" rel="external"> iOS 7 UI Transition Guide (Preparing for Transition - Scoping the Project) </a></p>
-</blockquote>
-<p>了解你的 app 特征及自定义的方式，能让你大致知道应该如何进⾏过渡。使用下面的清单填充上项目的细节，来审视整个过渡工作的范围。</p>
-<h3 id="每个_app_必须做的事情">每个 app 必须做的事情</h3><ul>
-<li><p>更新app的icon</p>
-<p>在iOS 7中，app 的图标尺寸在高分辨率的 iPhone 和 iPod touch 上是 120x120 像素，在高分辨率的 iPad 上是 152x152 像素。（了解更多图标大小的详情，请查阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/MobileHIG/IconMatrix.html#//apple_ref/doc/uid/TP40006556-CH27" target="_blank" rel="external">“Icon and Image Sizes”</a>）</p>
-<p>注意，iOS 7 不再对 app 的图标进行光照和阴影效果。并且，虽然 iOS 7 依然对 app 的图标加入圆角，但与之前版本的 iOS 采用的圆角相比，弧度发生了一些变化。</p>
-</li>
-<li><p>更新 app 的加载图像，如果原来的载⼊图像中不包含状态栏部分的话，补充上状态栏部分的图像。</p>
-</li>
-<li><p>如果你之前没有支持的话，现在应支持 Retina 屏幕和 iPhone 5 的屏幕尺寸。</p>
-</li>
-</ul>
-<h3 id="每个_app_应该做的事情">每个 app 应该做的事情</h3><ul>
-<li><p>确保 app 的内容在透明UI元素（比如透明的 bar 和透明键盘）和透明的系统状态栏下依然可辨识。在 iOS 7 中，视图控制器统一采⽤用了全屏视图（参阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/AppearanceCustomization.html#//apple_ref/doc/uid/TP40013174-CH15-SW2" target="_blank" rel="external">“Using View Controllers”</a>来了解更多）。</p>
-</li>
-<li><p>重新设计 bar 的自定义图标。在 iOS 7 上，bar 上的按钮图标更加轻巧，且有了不一样的风格。参阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/MobileHIG/BarIcons.html#//apple_ref/doc/uid/TP40006556-CH21" target="_blank" rel="external">“Bar Button Icons”</a>来了解一些设计指导。</p>
-</li>
-<li><p>准备采用无边框的按钮，去掉按钮的背景图⽚和边框曲线。</p>
-</li>
-<li><p>检查 app 中写死的 UI 数值，比如 size 和 position，用系统提供的动态数值替换它们。使用 Auto Layout 帮助你的 app 完成当布局变化时的响应。(如果你还不知道什么是 Auto Layout，请参阅 <a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/Introduction/Introduction.html#//apple_ref/doc/uid/TP40010853" target="_blank" rel="external"><em>Auto Layout Guide</em></a>）</p>
-</li>
-<li><p>检查 app 中使⽤ UIKit 控件的地方，检查尺寸和风格发生变化的控制器和视图是否对布局和外观产生了影响。例如，开关（Switch）变得更宽了，组合式表格（grouped tables）不再是嵌入的样式，进度条变得比以前更细。想要了解更详细的 UI 元素变化，请参阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/Bars.html#//apple_ref/doc/uid/TP40013174-CH8-SW1" target="_blank" rel="external">Bars and Bar Buttons</a>，<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/ContentViews.html#//apple_ref/doc/uid/TP40013174-CH10-SW1" target="_blank" rel="external">Content Views</a>，<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/Controls.html#//apple_ref/doc/uid/TP40013174-CH9-SW1" target="_blank" rel="external">Controls</a>，<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/TempViews.html#//apple_ref/doc/uid/TP40013174-CH11-SW1" target="_blank" rel="external">Temporary Views</a>。</p>
-</li>
-<li><p>使用动态的字体类型。在 iOS 7 中，用户可以自由调整 app 中字体的大小。如果采⽤动态字体，当用户在系统中设定自定义字号的时候，app 的字体也会发⽣生相应的变化。更多信息请参阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/AppearanceCustomization.html#//apple_ref/doc/uid/TP40013174-CH15-SW4" target="_blank" rel="external">Using Fonts</a>。</p>
-</li>
-<li><p>考虑用户从屏幕底部上滑调出控制中心的情况。如果 iOS 检测到一次滑动从屏幕底部开始，那么就会调出控制中心，而不会将这个手势传递给现在运行中的 app。如果 iOS 判断这次触摸不应该调出控制中心，那这次的触摸可能会稍微延迟一会儿才能传递到 app 中。</p>
-</li>
-<li><p>检查所有用到的阴影、渐变、浮雕效果。由于 iOS 7 的设计重视平面化和层次感，所以应该尽量少的应用会让 UI 元素具有拟物化的视觉效果，你应该重新考虑一下这些效果。</p>
-</li>
-<li><p>必要的话，将 app 升级到 iOS 6 中的最佳实践⽅法，如 Auto Layout 和 Storyboard，并确保 app 不会用到已不建议使用的 API 。</p>
-</li>
-</ul>
-<p>现在你了解到需要做哪类事情了，了解更多关于视图控制器、着色、字体的变化，请参阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/AppearanceCustomization.html#//apple_ref/doc/uid/TP40013174-CH15-SW1" target="_blank" rel="external">Appearance and Behavior</a>。</p>
-<h3 id="如果你必须继续支持_iOS_6">如果你必须继续支持 iOS 6</h3><p>如果你必须同时支持 iOS 6 和 iOS 7 两个系统，你可以在 app 运行的时候检测操作系统的版本，并加载相对应的资源⽂件。更多信息请参阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/SupportingEarlieriOS.html#//apple_ref/doc/uid/TP40013174-CH14-SW1" target="_blank" rel="external">Supporting iOS 6</a>。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2013-12-12T06:39:45.000Z"><a href="/2013/12/12/ibeacon-and-the-huge-treasure-of-use-cases-translation/">Dec 12 2013</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2013/12/12/ibeacon-and-the-huge-treasure-of-use-cases-translation/">iBeacon 的应用案例及巨大价值(译)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <blockquote>
-<p>本文翻译自 Quora 上 <em>Brian Roemmele</em> 对问题 <a href="http://www.quora.com/iBeacons-iOS-SDK-Feature/What-are-some-interesting-applications-that-are-enabled-by-iBeacons-technology-featured-in-iOS-7#" target="_blank" rel="external"><em>What are some interesting applications that are enabled by iBeacons technology featured in iOS 7?</em></a> 的回答</p>
-</blockquote>
-<h3 id="iBeacon_And_The_Huge_Treasure_Of_Use_Cases">iBeacon And The Huge Treasure Of Use Cases</h3><p>作为一个研究员，我发现了 245 个采用 iBeacons 技术的案例。有大约 88 个是支付系统的应用，大约 45 个关注并围绕于微定位技术，其他的是些很有用但表现并不明显的。我自 1999 年开始深入研究这个技术。我在之前对 RFID<a href="#anchor-reference">[1]</a> 和 IrDA<a href="#anchor-reference">[2]</a> 的研究也为我提供了一些研究资料。</p>
-<p>我将从 iBeacons 技术的一个概念方面入手，然后我们可以发掘出一系列有趣的应用案例。</p>
-<p>非常有趣的是，iBeacons 的商标在 2011 年被确立，然后在 2012 年 9 月 10 日被废弃<a href="#anchor-reference">[3]</a>。</p>
-<h3 id="符号和短波通讯">符号和短波通讯</h3><p>1994 年瑞典的冬天，手机制造商爱立信的研究员致力于完善短波频率来建立个人区域网络（Personal Area Network, PAN）<a href="#anchor-reference">[4]</a>，希望能用这种技术来替代连接打印机和计算机的 RS-232 线缆。爱立信将这个概念进行了完善，并将这个想法提交到了 IEEE<a href="#anchor-reference">[5]</a> 作为标准的无线电频率协议，后来被蓝牙专家组（Bluetooth Special Group）<a href="#anchor-reference">[6]</a>命名为蓝牙（Bluetooth）。蓝牙的图标是由古日耳曼字符 Hagall 和 Bjarkan 组合而成，有关这个词语的来源还有一个有趣的历史。<br><img src="http://stoneark.qiniudn.com/blogimg/ibeacon_usage_bluetoothicon.jpeg" alt="蓝牙图标"><br>蓝牙自 2009 年推出 3.0 版本<a href="#anchor-reference">[7]</a>，尤其是其中加入了单向广播无连接数据（Unicast Connectionless Data, UCD），使蓝牙变得更加易用，这也成为 iBeacons 技术产生的基础。</p>
-<p>随着 2010 年夏天蓝牙 4.0 版本的发布<a href="#anchor-reference">[8]</a>，加入了蓝牙低功耗模式（Bluetooth Low Energy, BLE），同单向广播联系在一起，使蓝牙可以完美地成为一个廉价、低功耗的信标。</p>
-<h3 id="Apple_+_Bluetooth">Apple + Bluetooth</h3><p>苹果有很长的支持蓝牙的历史。他们有很多专利和专利应用，涵盖了大量的应用案例。自 iPhone 4 之后苹果开始支持蓝牙 4.0 技术标准。iPhone 5s 对于蓝牙的应用更加深入和完善。</p>
-<p>后来，在 2012 年夏天，苹果收购了一家叫 Passif 的公司<a href="#anchor-reference">[9]</a>。Passif 找到了一种方法可以从周围所有设备获取到周围的电磁波频率，并用这些能量去驱动小型的 BLE 和智能 NFC 设备。这意味着将来苹果的 iBeacon 将不需要电池，而且会比其他需要电池的 iBeancon 设备更加廉价。整个电路可以被整合为一个名片盒的大小。<strong>在大批量生产的情况下，每个单元的成本将会低于 1 美元。</strong></p>
-<p>苹果在 2013 年全球开发者大会中宣布 iBeacons 将被集成在 iOS 7 中，并且苹果向开发者开放了部分，而并不是全部的 iBeacons API。由于一些原因，我们在一段时间内对这样做的原因还不得而知。</p>
-<h3 id="iBeacons:_二维码的愿景，但比二维码更好">iBeacons: 二维码的愿景，但比二维码更好</h3><p>现代、非工业的二维码<a href="#anchor-reference">[10]</a>是为了连接真实世界和互联网世界。二维码的流行程度实际上大大超出了当时的设想。在美国，它甚至成为了最成功的移动钱包，成为了星巴克应用<a href="#anchor-reference">[11]</a>的基础。</p>
-<p>星巴克采用二维码获得成功的原因，是在于他们反向地运用了二维码。星巴克使用二维码扫描器，顾客在他们的设备上显示二维码。这就与其他大多数公司采用二维码的方式形成了鲜明的对比，他们都是让顾客使用扫描器比如一个内建相机，而商家提供一个印刷的静态二维码图像。用户的手机必须做很多工作才能保证完成正确的交互。而且 iOS 设备需要一个单独的通用程序来对二维码进行解码，并期望二维码所表述的需求可以被正确执行。</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/ibeacon_usage_howtoscanqr.jpeg" alt="如何扫描二维码"></p>
-<p><em>图例：一家公司发布的有关扫描二维码步骤的教程</em></p>
-<p>用户的操作体验十分复杂，他们不得不做以上这所有的操作才能完成，这也是二维码技术的一个巨大问题所在，使二维码技术很难在真实的网络世界中达到应用的爆发点。</p>
-<p>二维码技术的缺点和复杂性问题都能被 iBeacons 技术解决。iBeacons 技术带来的用户体验能完全实现二维码的愿景，并且能够超出了二维码的构想。当然，二维码不会消失，依然会在某些行业，如出版印刷业继续服务。</p>
-<h3 id="iBeacon_可以替代二维码">iBeacon 可以替代二维码</h3><p>商户在他们的零售地点实现 iBeacons 技术可以调用 iOS 7 API 中任意数量的 API 接口，大多数都是为了商业而开发的。当苹果完善了这些 API 之后，也可能发生在操作系统层，这就比仅仅发送一个 ID 到接收设备上能做得更多，使 iBeacons 有了一个巨大的不同。</p>
-<p>iBeacon 设备也可以连接到任意数量的其他无线设备和传感器，对所有的信息进行计算并交互然后将其发送回顾客的手机。当然，iBeacon 和顾客的手机能够以前所未有的精度来报告自己的位置。</p>
-<p>这样在最简单的零售行业将包含信息的二维码进行替换，iBeacons 会让顾客更容易接入并与信息进行交互，而不需要让他们进行额外的操作。</p>
-<p>当企业家和技术人员完全理解它的意义之后，这个技术特性可以带来数十亿美元的市场。</p>
-<h3 id="Passbook_+_iBeacons">Passbook + iBeacons</h3><p>苹果必然会将 iBeacon 特性引入到 Passbook 中。通过引入它，顾客只需要站在相应的位置，或者在一个设置好的时间，就可以更快捷地获得打折和其他优惠信息。如果 Passbook 是一家独立的公司，它就一定已经成为了一家被风投估值数十亿美元的公司<a href="#anchor-reference">[12]</a>。当然，Passbook 和 iBeacons 可能会成为未来 iWallet 的基础，但我还不能公开表明 iBeacons 将来将会以多么振奋人心的方式来应用，但我会尽快。最强大的应用目前应该还不明晰。</p>
-<h3 id="iBeacons_会产生一个数十亿美元的市场">iBeacons 会产生一个数十亿美元的市场</h3><p>我们仅仅是接触到了 iBeacons 的一个最基础但也最强大的应用案例，就像我说的，iBeacons 还有许多的应用。有些是非常庞大的系统，有些大公司已经迅速行动来争取占领市场先机，就像 PayPal Beacon<a href="#anchor-reference">[13]</a>。虽然严格来讲那并不是 iBeacon，但它的实现很大胆，很早地在零售支付领域采取了切实的行动方案。PayPal 已经举起了这面技术的大旗，并将在未来一年迅速地将这项技术进行成熟。</p>
-<p>有些公司选择去倾听有着商业洞察力和经验的支付领域专家，而且我们已经从哲学角度看到了带来的益处。有些公司则尽可能地不去考虑务实的商业专家和现实情况，并更喜欢选择那些没有经验的非专家，而不去雇用哪些有经验的专家。当我深入表明在零售支付领域 iBeacons 带来的变化时，我们能看到对于创业公司来讲，这种想法是多么不成熟。</p>
-<p>创业公司以及在传统公司的开发者都有无限的潜力围绕这种技术去实现各种各样的产品和应用。我已经了解到 50 多家公司在做，还有一些公司在秘密地进行研究。我预言这项技术将会很快带来数十亿的市场。一个创业公司甚至获得了 2013 年 Techcrunch Disrupt 大奖<a href="#anchor-reference">[14]</a>。</p>
-<h3 id="苹果：不是第一个采用这项新技术的，却是第一个将它变得优雅的">苹果：不是第一个采用这项新技术的，却是第一个将它变得优雅的</h3><p>就像苹果的所有技术一样，他们通常不是第一个采用这项技术的，但他们通常是第一个将硬件和软件完美融合，并产生最优雅的用户体验的。iBeacons 技术会被集成在 iOS 7 中，并将与 Touch ID 和 iCloud 密钥串绑定。这种协同增效作用将会使 iPhone 在未来的几年内成为一种独一无二的设备。</p>
-<hr>
-<p><a name="anchor-reference"></a><br>参考文献</p>
-<p>[1] <a href="http://en.wikipedia.org/wiki/Radio-frequency_identification" target="_blank" rel="external">Radio-frequency identification</a><br>[2] <a href="http://en.wikipedia.org/wiki/Infrared_Data_Association" target="_blank" rel="external">Infrared Data Association</a><br>[3] <a href="http://www.trademarkia.com/ibeacon-85435051.html" target="_blank" rel="external">IBEACON - Reviews &amp; Brand Information - iBeacon Ramsey, - Serial Number: 85435051</a><br>[4] <a href="http://en.wikipedia.org/wiki/Personal_area_network" target="_blank" rel="external">Personal area network</a><br>[5] <a href="http://en.wikipedia.org/wiki/Bluetooth#Bluetooth_vs._Wi-Fi_.28IEEE_802.11.29" target="_blank" rel="external">Bluetooth</a><br>[6] <a href="http://en.wikipedia.org/wiki/Bluetooth_Special_Interest_Group" target="_blank" rel="external">Bluetooth Special Interest Group</a><br>[7] <a href="http://en.wikipedia.org/wiki/Bluetooth#Bluetooth_v3.0_.2B_HS" target="_blank" rel="external">Bluetooth</a><br>[8] <a href="http://en.wikipedia.org/wiki/Bluetooth#Bluetooth_v4.0" target="_blank" rel="external">Bluetooth</a><br>[9] <a href="http://acceptingpayments.quora.com/Apple-+-Nikola-Tesla-Inspired-Technology-May-Change-Payments-And-Maybe-The-Entire-Mobile-World" target="_blank" rel="external">Apple + Nikola Tesla Inspired Technology May Change Payments And Maybe The Entire Mobile World by Brian Roemmele on Accepting Payment Cards</a><br>[10] <a href="http://en.wikipedia.org/wiki/QR_code" target="_blank" rel="external">QR code</a><br>[11] <a href="http://www.quora.com/Online-and-Mobile-Payments/What-retailer-is-the-most-successful-in-mobile-payments" target="_blank" rel="external">Online and Mobile Payments: What retailer is the most successful in mobile payments?</a><br>[12] <a href="http://acceptingpayments.quora.com/Almost-No-One-Noticed-How-Much-This-One-Year-Old-Has-Grown" target="_blank" rel="external">Almost No One Noticed How Much This One Year Old Has Grown. by Brian Roemmele on Accepting Payment Cards</a><br>[13] <a href="http://acceptingpayments.quora.com/PayPal-Beacons-Are-Finally-Announced" target="_blank" rel="external">PayPal Beacons Are Finally Announced by Brian Roemmele on Accepting Payment Cards</a><br>[14] <a href="http://estimote.com/" target="_blank" rel="external">real world context for your apps</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2013-11-14T00:43:36.000Z"><a href="/2013/11/14/ios-7-ui-transition-guide-before-you-start/">Nov 14 2013</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2013/11/14/ios-7-ui-transition-guide-before-you-start/">iOS 7 UI 过渡指南 - 开始之前</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <blockquote>
-<p>本文翻译自苹果开发者中心文档<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/index.html#//apple_ref/doc/uid/TP40013174-CH6-SW1" target="_blank" rel="external"> iOS 7 UI Transition Guide (Preparing for Transition - Before You Start) </a></p>
-</blockquote>
-<h2 id="开始之前">开始之前</h2><p>iOS 7 引入了许多用户界面的新变化，例如无边框的按钮、半透明的控制条（bars）、全屏布局的视图控制器。使用 Xcode 5，你可以创建一个 iOS 7 的工程并且在 iOS 7 模拟器上运行，来看一眼采用 iOS 7 用户界面的应用程序是什么样子的。</p>
-<p>例如，下面的图片展示了一个示例工程 <em>TheElements</em> 在不同版本 iOS 模拟器上的区别。</p>
-<table>
-<thead>
-<tr>
-<th>iOS 7 模拟器上的示例程序</th>
-<th>iOS 6 模拟器上的示例程序</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><img src="http://stoneark.qiniudn.com/blogimg/iOS7TransitionGuide/first_look_7_2x.png" alt="iOS7"></td>
-<td><img src="http://stoneark.qiniudn.com/blogimg/iOS7TransitionGuide/first_look_6_2x.png" alt="iOS6"></td>
-</tr>
-</tbody>
-</table>
-<p>看到这个对比，你肯定急切地想要投入到更新自己的应用以适配 iOS 7 的工作中，不过在你开始之前有些事情需要考虑。</p>
-<p>当你与内建程序交互时，iOS 7 变化的既细微又巨大之处就变得更加清晰。熟悉的 UI 元素非常易于辨认，但看起来已经与以往有很大不同。真实的虚拟触摸更加优雅，动作的真实性得到增强。</p>
-<blockquote>
-<p>注意：虽然所有 UI 元素的样子在 iOS 7 中都有了很大变化，而且有很多元素有了新的功能，但 UIKit API 几乎与之前保持一致。</p>
-</blockquote>
-<p>当你继续探索时，你会开始觉察到 iOS 7 的主题。</p>
-<ul>
-<li>遵从。用户界面会帮助用户理解并了解其内容，而从不争夺用户的眼球。</li>
-<li>清晰。文字在所有尺寸下都能清晰显示，图标清晰易懂，装饰优雅适宜，对实用性更多的关注促进了这样的设计。</li>
-<li>深度。虚拟的层次和具真实感的运动给用户带来使用上的乐趣，并更加易于理解。</li>
-</ul>
-<p>通过在 iOS 体验上引入这些根本而广泛的变化，iOS 7 提供了一个难得的机会让我们重新审视自己的应用程序核心目的是什么，该为用户提供什么功能。虽然你可能还没准备好抓住这个机会，但当你更新你的程序以适配 iOS 7 时请别忘了这一点。（如果你已经准备好重新审视你的应用程序设计，或者你正打算开启一个新的工程，请阅读《Designing for iOS 7》作为参考。）</p>
-<h3 id="应用程序的特性">应用程序的特性</h3><p>不论你决定重新设计一个应用程序还是更新当前的设计，你需要了解应用程序的特性如何影响这个设计的过程。首先，回答一下几个问题来帮助你明确下一步应该怎么做：</p>
-<ul>
-<li><p>你采用了 Auto Layout 来设计app吗？</p>
-<p>  如果你的 app 采用了 Auto Layout，你的工作就变得容易多了。在 Xcode 5 中，Auto Layout 可以帮助 app 适应新的 UI 元素度量，并能对字号动态调整。Auto Layout 对你从 iOS 6 过渡到 iOS 7，以及同时支持两个版本很有帮助。<br>  如果你没有采用 Auto Layout，现在是开始采用它的好时候了，尤其是如果你需要同时支持多个 app 版本时。如果你采用手动布局或程序化布局技术，你应该确认当文字大小改变时布局能合适地调整。</p>
-</li>
-<li><p>应用需要支持 iOS 6 吗？<br>  记住，iOS 的用户会非常快地更新他们的设备，并且期望他们最喜爱的 app 能够跟随潮流。<br>  如果由于商业原因要求必须支持 iOS 6，开始更新你当前的 app 来适应 iOS 7 依然是最好的选择。然后如果有可能的话，对 iOS 6 版本的 app 运用一些设计上的变化。详情可以参见“Supporting iOS 6”（原文第11页）。</p>
-</li>
-</ul>
-<p>下一步是确定 app 定制的方式。定制的数量，以及你采用的自定义技术，决定了你所需要做的工作的类型。</p>
-<p>按照以下三种类型来将你的 app 分类：</p>
-<ul>
-<li>标准型。app 只包含了标准的、未经自定义的、由 UIKit 提供的 UI 元素。</li>
-<li>自定义型。app 呈现了一个完全自定义的 UI，不包含任何 UIKit 中的 UI 元素。</li>
-<li>混合型。app 同时包含了标准的和自定义的 UI 元素，包括那些你通过调用 UIKit 中的色彩和外观设置 API 来自定义的标准元素。、</li>
-</ul>
-<p>对于标准型 app，你需要确定你的设计和用户体验设计在 iOS 7 环境下是否依然有效。如果你决定保持现在的布局和交互模式，大部分的工作只是进行微调，来确保 app 可以正确处理系统全局的手势。</p>
-<p>对于自定义型 app，也就是没有采用 UIKit 中的 UI 元素的app，在方法上就有些细微差别了。举例来说，如果你感觉当前的 UI 和体验依然合适，可能需要做的工作就很少。另一方面，如果你感觉 app 的风格和用户体验应该进行一些修改，来满足 iOS 7 用户的要求，你可能需要做比较多的工作。</p>
-<p>对于混合型 app，需要做的工作量是不一定的，取决于你所做的自定义更改，以及你将自定义内容与标准元素结合的方法。重新审视一个混合型 app 的整体设计时，你需要确保你的自定义内容与新的标准元素集成在一起依然正常并且显示效果不错。</p>
-<blockquote>
-<p>注意：如果你采用了完全自定义的方法来模拟标准 iOS 6 的 UI，可能会需要大量改动的工作，因为它会看起来非常过时。</p>
-</blockquote>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2013-11-06T07:17:28.000Z"><a href="/2013/11/06/migrate-to-hexo/">Nov 6 2013</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2013/11/06/migrate-to-hexo/">博客迁移到了 Hexo</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>越来越多的人希望建立自己的独立博客，独立博客框架也越来越多，比如大名鼎鼎的 Wordpress，我之前也在用它。Wordpress 是个动态的博客框架，基于 PHP+MySQL，功能非常强大但也越来越臃肿，有丰富的的插件、主题、社区资源，不仅可以做个人博客，还被很多企业作为了企业网站的框架。</p>
-<p>由于 Wordpress 是个动态框架，必须部署在一台支持 PHP 和 MySQL 的主机上，意味着至少需要租用一台虚拟主机。我之前就是租用了一台虚拟主机，里面仅仅是我访问量极低的博客，感觉有点浪费。更重要的是，对于一个 geek，Wordpress 不够酷，所以我决心换掉它。</p>
-<p>调查了一下其他的博客框架，比较有意思的有 <a href="http://typecho.org/" target="_blank" rel="external">Typecho</a>, <a href="http://jekyllrb.com/" target="_blank" rel="external">Jekyll</a>, <a href="http://octopress.org/" target="_blank" rel="external">Octopress</a>, <a href="http://zespia.tw/hexo" target="_blank" rel="external">Hexo</a></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Slogan</th>
-<th>Technical</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Typecho</td>
-<td>轻击键盘，静候回音</td>
-<td>PHP5+MySQL/PostgreSQL/SQLite</td>
-</tr>
-<tr>
-<td>Jekyll</td>
-<td>Transform your plain text into static websites and blogs.</td>
-<td>Ruby</td>
-</tr>
-<tr>
-<td>Octopress</td>
-<td>A blogging framework for hackers.</td>
-<td>Ruby</td>
-</tr>
-<tr>
-<td>Hexo</td>
-<td>A fast, simple &amp; powerful blog framework, powered by Node.js.</td>
-<td>Node.js﻿</td>
-</tr>
-</tbody>
-</table>
-<p>其中，后面三个都是静态博客框架，原理是把博客内容生成静态的 HTML 网页，最终会是一个全静态的网站，所以只需要放到任意一个支持 HTML 的主机就可以了。而 Github pages 就是一个，这样就得到了一个免费的独立博客。更酷的是，写作博客要用 Markdown 文法，配置博客、发布博客都需要用命令行来完成，对于 programmer 来讲效率和灵活性都更好（主要是看上去也更高端…）。</p>
-<p>最终我迁移到了 Hexo，感觉还不错。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2012-04-19T08:09:29.000Z"><a href="/2012/04/19/create-d-setup-package-with-dot-net-framework-35-using-vs2010/">Apr 19 2012</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2012/04/19/create-d-setup-package-with-dot-net-framework-35-using-vs2010/">用Visual Studio 2010创建集成.Net Framework3.5 SP1的安装包</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>由于windows7集成的是.Net Framework3.5SP1，还没有集成.Net Framework4，所以我在给别人做东西的时候还是更倾向于基于3.5 SP1。而又要考虑到目前还仍有不少的XP用户，所以即使是采用3.5 SP1，也需要考虑客户机上是不是安装了.Net Framework。</p>
-<p>所以在制作安装包的时候，需要将.Net的安装包也集成进去。而Visual Studio2010默认只包含了.Net 4的安装包，所以在生成集成有3.5SP1的安装包时，遇到了一些麻烦。</p>
-<p>首先，想要制作一个带有.Net Framework的安装包，需要如下：<br>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2012/04/19/create-d-setup-package-with-dot-net-framework-35-using-vs2010/#more" class="more-link">Read More</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2012-03-08T08:02:36.000Z"><a href="/2012/03/08/oracle-10g-change-host-name/">Mar 8 2012</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2012/03/08/oracle-10g-change-host-name/">Oracle10g更改HOST名的办法</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>在安装目录的如下位置，找到如下两个文件：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">product\10.2.0\db_1\network\ADMIN\listener.ora&#10;product\10.2.0\db_1\network\ADMIN\tnsnames.ora</span><br></pre></td></tr></table></figure>
-<p>将文件中的HOST值改为想要更改的主机名或IP地址即可</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2012-03-01T07:58:18.000Z"><a href="/2012/03/01/oracle-10g-installation-on-win7/">Mar 1 2012</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2012/03/01/oracle-10g-installation-on-win7/">在Win7下安装Oracle 10g</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>Oracle 10g默认是不支持win7的，会在安装环境检测中出错。官方网站只提供了for windows vista/2008的安装包，但完全可以在win7环境下运行。方法如下：</p>
-<ol>
-<li>在<a href="http://www.oracle.com/technetwork/cn/database/10203vista-088351-zhs.html" target="_blank" rel="external">http://www.oracle.com/technetwork/cn/database/10203vista-088351-zhs.html</a>可下载到Oracle 10g 10.2.0.3 for Vista/2k8的企业版</li>
-<li>将下载到的文件（10203_vista_w2k8_x86_production_db.zip）解压，由于10g没有对win7的版本号提供支持，故需要修改以下两个文件：</li>
-</ol>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db\Disk1\stage\prereq\db\refhost.xml&#10;db\Disk1\stage\prereq\db_prereqs\db\refhost.xml</span><br></pre></td></tr></table></figure>
-<p>修改方法相同，均为：<br>找到以下段落：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;!--Microsoft Windows Vista--&#62;&#10;&#60;OPERATING_SYSTEM&#62;&#10;  &#60;VERSION VALUE=&#34;6.0&#34;/&#62;&#10;&#60;/OPERATING_SYSTEM&#62;</span><br></pre></td></tr></table></figure>
-<p>并在其后增加如下段落：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;!--Microsoft Windows 7--&#62;&#10;&#60;OPERATING_SYSTEM&#62;&#10;  &#60;VERSION VALUE=&#34;6.1&#34;/&#62;&#10;&#60;/OPERATING_SYSTEM&#62;</span><br></pre></td></tr></table></figure>
-<p>保存即可</p>
-<ol>
-<li>直接运行setup进行安装即可</li>
-</ol>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -613,7 +589,7 @@
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Apple/" style="font-size: 10px;">Apple</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12.5px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 17.5px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/TableView/" style="font-size: 12.5px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12.5px;">Translation</a> <a href="/tags/UI/" style="font-size: 12.5px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 15px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 15px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 12.5px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Apple/" style="font-size: 12.5px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12.5px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 17.5px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12.5px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12.5px;">Translation</a> <a href="/tags/UI/" style="font-size: 12.5px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 15px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 15px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 12.5px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
   </div>
 </div>
 
@@ -624,23 +600,23 @@
   <ul class="entry">
     
       <li>
-        <a href="/2015/11/04/ei-capitan-brings-the-missing-hex-color-picker/">EI Capitan brings the missing Hex color picker</a>
+        <a href="/2016/03/02/swift-mixed-with-objective-c/">Swift 与 Objective-C 混编</a>
       </li>
     
       <li>
-        <a href="/2015/10/29/limit-max-input-length-update/">限制最大输入字符数(更新)</a>
+        <a href="/2016/02/26/apple-wwdr-intermediate-certificate-expired/">苹果证书签发者过期</a>
       </li>
     
       <li>
-        <a href="/2015/10/21/library-unbound-when-import-project-to-eclipse/">向 Eclipse 中导入项目提示 JRE unbound</a>
+        <a href="/2016/01/29/NSAttributedString-image-vertically-center-alignment/">NSAttributedString 图片与文字垂直居中</a>
       </li>
     
       <li>
-        <a href="/2015/10/19/instant-message-services/">第三方即时通讯服务</a>
+        <a href="/2016/01/22/disable-screen-auto-rotate-in-android-developing/">Android 开发中禁止屏幕自动旋转</a>
       </li>
     
       <li>
-        <a href="/2015/09/18/UIAlertView-without-title/">UIAlertView without title</a>
+        <a href="/2016/01/14/pay-attention-to-casing-of-yyyy-in-date-format/">小心时间格式里 yyyy 的大小写</a>
       </li>
     
   </ul>
@@ -651,7 +627,7 @@
   </div>
   <footer id="footer" class="inner"><div class="alignleft">
   
-  &copy; 2015 StoneArk
+  &copy; 2016 StoneArk
   
 </div>
 <div class="clearfix"></div></footer>

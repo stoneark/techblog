@@ -66,6 +66,313 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-05-19T08:29:12.000Z"><a href="/2015/05/19/pop-then-push-immediately-with-uinavigationcontroller-in-ios8/">May 19 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/19/pop-then-push-immediately-with-uinavigationcontroller-in-ios8/">Pop then push immediately with UINavigationController in iOS 8</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在某些业务场景下，需要将一个 ViewController 从 NavigationController 里 pop 后，立即 push 进另一个 ViewController。在 iOS8 之前这不是什么问题，用以下代码即可轻松实现：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[navigationController popViewControllerAnimated:<span class="literal">NO</span>];</span><br><span class="line">[navigationController pushViewController:newViewController animated:<span class="literal">YES</span>];</span><br></pre></td></tr></table></figure>
+<p>但在 iOS8 上这样无法实现，pop 后不会 push 另一个 ViewController。可以用以下方法实现，思路是直接修改 navigationController 里栈的数据（暂时没有找到其他更好的方法）：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSMutableArray</span> *viewControllersInStack = [<span class="built_in">NSMutableArray</span> arrayWithArray:navigationController<span class="variable">.viewControllers</span>];</span><br><span class="line">[viewControllersInStack removeLastObject];</span><br><span class="line">[viewControllersInStack addObject:newViewController];</span><br><span class="line">[navController setViewControllers:viewControllersInStack animated:<span class="literal">YES</span>];</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-02-11T08:52:49.000Z"><a href="/2015/02/11/branching-model-summary/">Feb 11 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/02/11/branching-model-summary/">分支策略总结</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>前几日在发布新版本时，发现 SVN 的分支策略有问题，然后读了 <a href="../../../../2015/02/03/common-branching-patterns-translation-part-one">SVN 的常见分支模式</a>，依照文章里的模式改变了分支策略，貌似解决了问题。但我对之前用的策略还是念念不忘，经过调查和思考，得出结论：之前用的策略也没有问题，and what’s more，那是 Git 更常用的分支模式，但更适合于开发流程规范、并严格遵循的项目。</p>
+<p>在 Git 分支模型的阐述上，Vincent Driessen 的 <a href="http://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a> 是一篇很多人认为不错的文章，译文也已经有好几篇了：<a href="http://www.oschina.net/translate/a-successful-git-branching-model">介绍一个成功的 Git 分支模型</a>，<a href="http://jiongks.name/blog/a-successful-git-branching-model/">Git 分支的最佳实践</a>，<a href="http://www.juvenxu.com/2010/11/28/a-successful-git-branching-model/">一个成功的Git分支模型</a>。</p>
+<p>个人认为，这篇文章阐述的分支模型是非常不错的，但遣词造句上实在有些繁琐，读起来很费劲，不过绝对值得一读。</p>
+<p>下面是我对分支策略的总结。</p>
+<h3 id="Subversion_和_Git">Subversion 和 Git</h3><ol>
+<li>Git 是分布式的版本控制系统，所有人都拥有一个仓库，而不仅仅是一个 working copy。但依然要有一个远端的中心，称为 origin。相对的，Subversion 是集中式的版本控制系统，仓库只在远端。</li>
+<li>Subversion 的三大部分是 trunk、branches、tags，即主干、分支、标记。相对的，Git 没有 trunk 的概念，主干可以认为是 master 分支，也是分支之一。</li>
+<li>Git 的分支才是真正意义上的分支。相对的，Subversion 在本质上不存在分支，所谓分支只是目录的拷贝。</li>
+<li>Git 在分支与合并方面是简单易行的。相对的，Subversion 的分支与合并总是让人恐惧。</li>
+</ol>
+<h3 id="分支模式一（Git_风格）">分支模式一（Git 风格）</h3><ol>
+<li>长期分支有主分支（master）和开发分支（develop），短期分支有特性分支（feature）、预发布分支（release）、补丁分支（hotfix）。</li>
+<li>master 分支，始终 <strong>仅</strong> 保存每次发布的版本，HEAD 则指向当前发布的最新版本。日常的开发工作不直接在主分支进行。</li>
+<li>develop 分支，其中为 <strong>下一次</strong> 要发布的版本（而不包含下次的下次发布应包含的功能）。</li>
+<li>feature 分支，开发某项新特性时使用。这项特性可能在下一次发布时加入软件，也可能在下次的下次发布时才加入软件。也有可能是实验性质的特性，最终可能得以加入软件，也可能效果不好直接抛弃。它应从 develop 分支出，开发完毕后合并回 develop 或直接丢弃。注意并回的时机，是要在 <strong>下次发布的版本</strong> 中引入这个特性时，而 <strong>不是</strong> 下次的下次发布时。合并完毕后，应将这个 feature 分支删除。</li>
+<li>release 分支，在某一版本准备发布时使用。在 develop 分支已经可以进入发布前的测试时，从 develop 分支出，命名为 <code>release-1.0</code>。测试过程中的 bug 修复，应提交到该分支。测试结束可以发布时，将该分支合并回 master 分支和 develop 分支，并给 master 分支打一个 tag（如 1.0）。然后，将这个 release 分支删除。需要注意的是，合并回 master，是因为这将成为一个新的发布版本；合并回 develop，是为了将 release 分支中对 bug 的修复也合并回 develop 分支，更好的方式是随着测试而不断地将 bug 修复合并回 develop，避免最后才一次性合并。</li>
+<li>hotfix 分支，在线上版本出现 bug 需要紧急修复时使用。在 master 分支出，命名为 <code>hotfix-1.0.1</code>。在完成修复代码并通过测试后，合并回 master 和 develop，并对 master 打一个 tag（如 1.0.1）。然后，将这个 hotfix 分支删除。</li>
+</ol>
+<h3 id="分支模式二（Subversion_风格）">分支模式二（Subversion 风格）</h3><ol>
+<li>trunk 主干，日常的开发工作直接在 trunk 进行。</li>
+<li>长期分支有发布分支（release），短期分支有特性分支（feature）。</li>
+<li>release 分支，在某一版本准备发布时使用。在 trunk 中的开发已经可以进入发布前的测试时，从 trunk 分支出，命名为 <code>release-1.0</code>。测试过程中的 bug 修复，应提交到该分支。测试结束可以发布时，将该分支合并回 trunk，并给该 release 分支打一个 tag（如 1.0）。注意，这个 release 分支将 <strong>永久保留</strong> ，之后的 hotfix 也将在此分支进行。</li>
+<li>feature 分支，开发某项新特性时使用。这与分支模式一里的 feature 分支完全相同，唯一不同的是，它从 trunk 分支出，并最终合并回 trunk 或直接丢弃，最后被删除。</li>
+</ol>
+<h3 id="Then_which_one?">Then which one?</h3>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/02/11/branching-model-summary/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-02-05T05:40:36.000Z"><a href="/2015/02/05/noip-2014-rps-solution-in-python/">Feb 5 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/02/05/noip-2014-rps-solution-in-python/">生活大爆炸版石头剪刀布</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>前几日偶然间发现，14年母校的信息学成绩十分了得，<a href="http://www.tadyz.com/news/show.aspx?id=4507&amp;cid=52" target="_blank" rel="external">在 NOI 2014 中获得了一枚铜牌</a>，<a href="http://www.tadyz.com/news/show.aspx?id=4831&amp;cid=52" target="_blank" rel="external">在 NOIP 2014 中获得了五个一等、两个二等</a>，真是后生可畏，一代更比一代强啊。</p>
+<p>好久好久没有做过算法题了。从 NOIP 2003 到 NOIP 2008，从没进复赛，到以总分第二获得一等奖，再到后面几年不堪的表现，NOIP 陪伴了我的整个中学。今天找来 NOIP 2014 的复赛题看了看，发现第一题挺水的，于是做了做。可惜的是 free pascal 在 Yosemite 上竟无法安装，所以决定用 python 来写，顺便再熟悉一下 python。</p>
+<p>题目可<a href="http://wenku.baidu.com/link?url=GxvKf1aphFBGKdzO8WLmF6qC5q7VrGx_I3hAH8PDFEzkFOBoiG1e3dN6qLRyR5VZ6DxpZgN67G85VuaU4JVCv3ErJ92Yefr3l6iOfqjQLh_" target="_blank" rel="external">在这儿查看</a>或自行查找，是 NOIP 2014 提高组复赛 Day1 的第一题：生活大爆炸版石头剪刀布。</p>
+<p>题目不难，数据规模也不大，把整个过程模拟一下就好了。唯一值得说的是，将题目中的胜负关系表格补全后形成一个二维数组，就能很方便地在这个数组中查询到每一轮出拳的结果。</p>
+<figure class="highlight python"><figcaption><span>rps.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">filein = open(<span class="string">"rps.in"</span>,<span class="string">"r"</span>)</span><br><span class="line">arrInput = filein.readline().split()</span><br><span class="line">n = int(arrInput[<span class="number">0</span>])</span><br><span class="line">na = int(arrInput[<span class="number">1</span>])</span><br><span class="line">nb = int(arrInput[<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line">arrInput = filein.readline().split()</span><br><span class="line">arrA = [int(x) <span class="keyword">for</span> x <span class="keyword">in</span> arrInput]</span><br><span class="line"></span><br><span class="line">arrInput = filein.readline().split()</span><br><span class="line">arrB = [int(x) <span class="keyword">for</span> x <span class="keyword">in</span> arrInput]</span><br><span class="line">filein.close()</span><br><span class="line"></span><br><span class="line">resultTable = [[<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>],[<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>],[<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>],[<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>],[<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]]</span><br><span class="line">scoreA = <span class="number">0</span></span><br><span class="line">scoreB = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</span><br><span class="line">    solutionA = arrA[i % na]</span><br><span class="line">    solutionB = arrB[i % nb]</span><br><span class="line">    scoreA += resultTable[solutionA][solutionB]</span><br><span class="line">    scoreB += resultTable[solutionB][solutionA]</span><br><span class="line"></span><br><span class="line">fileout = open(<span class="string">"rps.out"</span>,<span class="string">"w"</span>)</span><br><span class="line">strScore = str(scoreA) + <span class="string">' '</span> + str(scoreB) + <span class="string">'\n'</span></span><br><span class="line">fileout.write(strScore)</span><br><span class="line">fileout.close()</span><br></pre></td></tr></table></figure>
+<p>程序很简单。刚开始是读取数据：<code>n</code>、<code>na</code>、<code>nb</code> 的含义如题，<code>arrA</code> 和 <code>arrB</code> 保存 A 和 B 的策略。<code>resultTable</code> 是前面说过的胜负关系数组，resultTable[甲,乙] 表示甲对乙的得分。for 循环中是对 n 轮出拳进行模拟：用当前的轮数与 A 或 B 的循环节长度取模，就能得到本轮 A 和 B 的策略，用这两个策略去 resultTable 中查询，就能得到 A 和 B 本轮的得分，保存于 <code>scoreA</code> 和 <code>scoreB</code>。最后输出结果。</p>
+<p>对 python 了解不多，如果有写的不妥之处，欢迎拍砖。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-02-03T03:26:44.000Z"><a href="/2015/02/03/common-branching-patterns-translation-part-one/">Feb 3 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/02/03/common-branching-patterns-translation-part-one/">常见分支模式（译）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="前言">前言</h2><p>今天在将分支合并回 trunk 的时候，发现之前采用的分支模式不太合适，于是去查阅了 SVN 的用户手册 <a href="http://svnbook.red-bean.com/en/1.7/svn-book.html#svn.branchmerge.commonpatterns" target="_blank" rel="external">Version Control With Subversion - Common Branching Patterns</a>，对分支管理有了更全面的认识。</p>
+<p>版权声明：本文翻译自 Ben Collins-Sussman, Brian W. Fitzpatrick, C. Michael Pilato 撰写的 <a href="http://svnbook.red-bean.com/en/1.7/svn-book.html" target="_blank" rel="external">Version Control With Subversion</a>。这是一本自由书籍，遵循 Creative Common Attribution License，<a href="http://svnbook.red-bean.com/en/1.7/svn.copyright.html" target="_blank" rel="external">这里是它的版权协议</a>，本译文同样遵循此协议。</p>
+<h2 id="译文">译文</h2><p>使用分支 (branch) 和合并 (merge) 的方式有很多，本节介绍了其中最常用的几种。</p>
+<p>版本控制是在软件开发中最常用到的概念，所以我们来看一下被开发团队们最常用到的分支/合并模式。如果你在软件开发中并没有用 Subversion 来做版本控制，直接略过这一节就好。如果你是第一次在软件开发中使用版本控制，那请格外注意，因为这些模式通常已被认为是最佳实践。这些模式并不是 Subversion 才独有的，而是适用于任意的版本控制系统。我们以 Subversion 来描述这些模式，让它更容易理解。</p>
+<h3 id="用于发布的分支_(Release_分支)">用于发布的分支 (Release 分支)</h3><p>大多数软件都遵循这样的生命周期：编码，测试，发布，如此循环往复。在这个过程中存在两个问题。第一，在质量保证团队测试稳定版本的同时，开发团队依然需要继续开发新的功能。当软件在接受测试时，新的开发工作不能停顿。第二，开发团队大多都需要支持较老的、已经发布出去的版本。如果在较老的代码中发现了 bug，这个 bug 很有可能也存在于已经释出的版本中。客户想要马上修复它，而不用等待下一个大版本发布时才能解决。</p>
+<p>这两个问题借助版本控制可以解决。以下是经典的过程：</p>
+<ol>
+<li><em>开发者将所有新工作提交到 trunk 上。</em> 每日的改变都被提交到 <em>/trunk</em> ：包括新功能、bug 修复等。</li>
+<li><em>复制 trunk 到一个 “release” 分支。</em> 当团队认为软件可以发布的时候（比如，发布 1.0 版本），<em>/trunk</em> 会被拷贝到 <em>/branches/1.0</em> 。</li>
+<li><em>团队继续并行工作。</em> 一个团队开始对 release 分支进行严格的测试，同时，另一个团队在 <em>/trunk</em> 继续新的工作（比如，开发 2.0 版本）。无论哪一个团队发现了 bug，在必要的时候，对于这个 bug 的修复都可以移植 (ported) 到另一个团队。这个过程在某个时间点会停止，然后这个分支将会被“冻结”，以供发布前进行最终测试。</li>
+<li><em>标记这个分支 (tagged) 并发布。</em> 当测试结束后，为 <em>/branches/1.0</em> 创建一个标记到 <em>/tags/1.0.0</em> ，作为一个引用快照。这个 tag 中的版本将会被打包并发布给用户。</li>
+<li><em>这个分支随着时间的推移进行适当的维护。</em> 2.0 版本的开发工作在 <em>/trunk</em> 中继续，修复的 bug 也陆续从 <em>/trunk</em> 中移植到 <em>/branches/1.0</em> 。当修复的 bug 数量累积到足够多的时候，管理层可能决定发布 1.0.1 版本，此时应把 <em>/branches/1.0</em> 创建标记到 <em>/tags/1.0.1</em> ，这个 1.0.1 的 tag 会被打包发布。</li>
+</ol>
+<p>这整个过程将随着软件的成熟而不断反复进行：当 2.0 的工作完成后，一个新的名为 2.0 的 release 分支会被创建、测试、标记，最终发布。几年后，整个 repository 将会是好多个处于“维护”模式的 release 分支，和好多个标志着最终发布给用户的 tag。</p>
+<h3 id="用于新特性的分支_(Feature_分支)">用于新特性的分支 (Feature 分支)</h3><p><em>用于新特性的分支 (feature branch)</em> 是在这一章最合适的例子（当 Sally 继续在 <em>/trunk</em> 工作时，你需要开发一个新功能）【译者注：请参见原文在本节之前创设的情境】。这时一种临时的分支，用于进行一些复杂的修改，而不会影响到 <em>/trunk</em> 的稳定。不像 release 分支（需要永久支持），feature 分支的生命历程是：创建，使用它来进行新特性的开发，合并回 trunk，然后被永久删除。它们的作用是有限的。</p>
+<p>另外，什么时候需要创建 feature 分支是不一定的，与不同工程的不同情况有关。有些工程从来不使用 feature 分支：所有人都可以自由地向 <em>/trunk</em> 提交。这种系统的好处是非常简单－－不需要有人懂得有关分支和合并的知识。缺点是 trunk 的代码经常是不稳定的甚至是不可用的。而有些工程将分支用到了极致：所有的修改都 <em>从不</em> 直接提交到 trunk。即使是最微不足道的修改，也需要专门创建一个短命的分支，仔细审查，然后合并回 trunk。然后这个短命的分支就被删除了。这样可以保证在任何时间 trunk 都绝对稳定并可用，但是导致了大量的流程开销。</p>
+<p>大多数工程采用了折中的方式。这种方式坚持 <em>trunk</em> 在任何时间都可以正常编译并通过回归测试。只有当某次修改包含大量提交，可能造成不稳定时，才需要创建 feature 分支。一个好的判断准则是：如果一个功能需要开发者独立工作好几天，然后一次性提交大量的修改（因为要保证 <em>trunk</em> 的稳定，所以要一次性），那这样的修改是不是大到需要进行代码审查了？如果对这个问题的回答是肯定的，那这些修改就应该在一个 feature 分支中进行。这样，开发者就能以递增的方式向 feature 分支中多次提交，而不必担心影响稳定，其他人也可以很容易地审阅到分支中这些代码的变化情况。</p>
+<p>最后还有一个问题，如何在工作的进程中保持 feature 分支和 trunk 的同步。正如我们之前所说，在一个分支上工作数周甚至数月是有很大风险的；trunk 上的修改越来越多，与 feature 分支中对应代码行的差距越来越大，从 branch 合并回 trunk 可能会变得噩梦一般。</p>
+<p>可以通过时常将 trunk 的变更合并到 branch 来避免这种状况【译者注：合并不是单向的，可以从 branch 合并回 trunk，也可以从 trunk 合并到 branch，后者也被称为“同步”】。制定一个原则：每周一次，将上周 trunk 上的变更合并到 branch 中。</p>
+<p>在某个时间点，你会准备将“已同步”的 feature 分支合并回 trunk 中。要做这件事，首先要进行最后一次同步，将 trunk 最新的修改同步到 feature 分支中。完成后，最新的 branch 和 trunk 除了你在 branch 上的修改之外，将是完全一致的。然后就可以通过 <code>reintegrate</code> 选项将分支合并回去了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd trunk-working-copy&#10;&#10;$ svn update&#10;At revision 1910.&#10;&#10;$ svn merge --reintegrate http://svn.example.com/repos/calc/branches/mybranch&#10;--- Merging differences between repository URLs into &#39;.&#39;:&#10;U    real.c&#10;U    integer.c&#10;A    newdirectory&#10;A    newdirectory/newfile&#10; U   .&#10;&#8230;</span><br></pre></td></tr></table></figure>
+<p>另外一种理解这种模式的方法是，每周从 trunk 向 branch 的同步可以看作是在 working copy 中执行了 <em>svn update</em> ，最后的合并操作可以看作是在 working copy 中执行了 <em>svn commit</em> 。既然这样，working copy 不就可以认为是一种非常浅的、私有的分支吗？它就是一种特别的分支，每次只有很少的变更。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-01-26T09:21:36.000Z"><a href="/2015/01/26/remove-empty-folder-in-launchpad/">Jan 26 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/01/26/remove-empty-folder-in-launchpad/">删掉 Launchpad 里的空白文件夹</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Yosemite 的 bug 是真不少，昨晚又发现了一个，Launchpad 里的空白文件夹怎么删都删不掉！（Yosemite 10.10.1）</p>
+<p>昨晚手一滑，在 Launchpad 里把一个应用的图标拖到另一个上面了，自然而然地形成了一个文件夹。我随即把他俩都从文件夹里移出来，文件夹自动消失了，看起来没啥问题。等等！重启一下，问题来了，那个文件夹又出现了，而且是空白的，按住 Option 键也没有叉号。如果把一个应用图标再拖进去，然后再拖出来，那个文件夹会再次消失，不过重启之后…抓狂啊！</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/empty_folder_in_launchpad.png" alt="Empty folder in Launchpad"></p>
+<p>找到如下方法，在终端中：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults write com.apple.dock ResetLaunchPad -bool true&#10;$ killall Dock</span><br></pre></td></tr></table></figure>
+<p>如果无效，可以尝试重新启动一下 Mac。</p>
+<p>另外，网络上还流传着另一种方法，也可以尝试一下，看上去原理都是重置 Dock 的数据：</p>
+<pre><code>把 ~/<span class="keyword">Library</span>/Dock 目录中的所有文件移入废纸篓，重新启动即可。
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-01-26T09:10:30.000Z"><a href="/2015/01/26/mac-mini-not-responding-frequently/">Jan 26 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/01/26/mac-mini-not-responding-frequently/">最近 Mac mini 经常死机</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>最近刚买不久的 Mac mini 经常死机，刚买了不到两个月，已经死机至少三次了，而且有两次是死到不得不长按电源按钮强制关机的地步。这让我着实有些郁闷，办公室的 iMac 用了一年半了，印象中只死过一次机。</p>
+<p>回忆了一下死机的情形，有两次都是从 Launchpad 打开应用导致的。具体表现是：在 Launchpad 里单击一个应用的图标，Launchpad 本应该打开这个应用并且让自己消失，但此时却没有任何反应，应用没有被打开，Launchpad 也没有消失，继续点击依然是这样的，无论点击什么应用都是这样。</p>
+<p>有一次是过了一会儿就死了，鼠标变为旋转的风火轮，等了好久好久都没反应，只能强制关机。</p>
+<p>另一次是等了好久后，点击的应用被打开，由于刚才狂点了好多次，所以同时还弹出了好多对话框，提示你这个应用已经被打开了，不能再次打开。但问题还没完，这个好不容易被打开的应用再也关不掉了。Dock 里和强制退出程序列表里，一直有这个程序，强制退出也没用。但是在 Activitiy Monitor 里已经没有这个进程了。于是，如果想关机，系统会不断尝试把这个程序关闭，但是一直关闭不了，只能长按电源…</p>
+<p>系统是 Yosemite 10.10.1，难道是 Yosemite 的众多 bug 之一吗？也想不到会是什么原因，唯一能想到可以做的就是修复磁盘权限。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/fix_disk_authority.png" alt="Fix disk authority"></p>
+<p><strong>Applications/.DS_Store！</strong>难道就是因为它的权限出了问题？看上去是很个靠谱的解释。如果过一段时间我没在下面续写新内容，那就是这个原因了，如果有受相同问题困扰的朋友，可以参考。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-01-26T03:18:21.000Z"><a href="/2015/01/26/on-the-origins-of-ds-store-translation/">Jan 26 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/01/26/on-the-origins-of-ds-store-translation/">.DS_Store 的由来（译）</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="前言">前言</h2><p>本文作者为原苹果工程师 Arno Gourdol，正是他主导了 Mac OS X 系统上 Finder 应用的开发。这篇文章为我们阐述了 .DS_Store 文件的由来，是个很不错的计算机历史小文章。原文链接：<a href="http://arno.org/arnotify/2006/10/on-the-origins-of-ds_store/" target="_blank" rel="external">http://arno.org/arnotify/2006/10/on-the-origins-of-ds_store/</a>。</p>
+<h2 id="译文">译文</h2><p><strong>如果你是一个 Mac 用户，或者你曾经从 Mac 向 Windows 传输过文件，你可能会对一个名为 <code>.DS_Store</code> 的文件很熟悉。但这个名字是从何而来呢？</strong></p>
+<p>时间回到 1999 年，我在苹果公司担任 Mac OS X 系统内 Finder 应用的技术主管。在那时，Finder 的代码已有 8 年的历史，代码已经很难以维护。做任何改变都需要做大量的工作，而且常常会影响到两三个看似跟它无关的功能。所以在 Mac OS X 上我们决定，从设计开始，重写 Finder。</p>
+<p>涉及到的工作之一，便是分离用户界面和核心功能，也就是后台代码。Finder 的后台会穷举文件、监视文件系统变化、处理元数据，包括图标的位置和文件夹设置。在内部，这两个部分被我们称作 Finder_FE 和 Finder_BE（Frontend 和 Backend）。</p>
+<p>但是，没过多久我们就意识到，Finder 以外的应用也很可能需要调用 Finder 后台的功能。所以我们计划在将来某一天，让它成为一个公共的 API。由于我之前曾负责命名了 Icon Services 和 Navigation Services，所以我们决定把它命名为 Desktop Services（在那时，我们还曾考虑过把 Finder 改名为 “Desktop”）。因此，<code>.DS_Store</code> 这个名字，就是 “Desktop Services Store”（桌面服务存储） 的意思。我们在文件名之前添加了一个句点，以保证在 Unix 操作系统上，包括 Mac OS 上，被识别为一个隐藏文件。</p>
+<p>个人认为这并不是一个好的名字，我曾希望找到一个描述性更好的名字，但已经太晚了 :)</p>
+<p>另外，还有一个至今仍未被修复的 bug，会导致过度创建 <code>.DS_Store</code> 文件。仅当用户更改了视图设置或改变了目录内图标的位置时，这些文件才应创建。可惜的是，事情并没有如此发生，而是当某个目录被访问时，<code>.DS_Store</code> 文件就会被创建。</p>
+<p>另外，Finder_BE，也就是 Desktop Services，不再只被 Finder 调用：Navigation Services（打开/保存对话框）现在也会调用它，在 Mac OS 的最初版本中并不是这样的。但现在，Desktop Services 的 API 依然没有完全开放出来。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-01-19T03:13:41.000Z"><a href="/2015/01/19/use-xcode6-debug-view-hierarchy-and-forget-reveal/">Jan 19 2015</a></time>
       
       
@@ -174,362 +481,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-12-30T07:27:55.000Z"><a href="/2014/12/30/tricks-about-circumflex-of pinyin-in-osx/">Dec 30 2014</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/12/30/tricks-about-circumflex-of pinyin-in-osx/">OS X 中有关拼音声调的 tricks</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h3 id="输入“hǎo”">输入“hǎo”</h3><p>输入带声调的拼音字母，在 iOS 上是非常简单的，在拼音输入法里，长按一个韵母字母，即可弹出声调选择框。<br><img src="http://stoneark.qiniudn.com/blogimg/pinyin_circumflex_in_ios.png" alt="iOS上的拼音音调"></p>
-<p>但在 OS X 上，在拼音输入法下长按变成了连续输入，而不会弹出声调选择框。在英文输入法下长按虽然会弹出声调选择框，但不是汉语拼音标准的声调，最大的影响就是，里面找不到三声。<br><img src="http://stoneark.qiniudn.com/blogimg/pinyin_circumflex_in_osx.png" alt="英文输入法的音调"></p>
-<p>解决方法是，添加输入源“美国（扩展）”，选择这个输入源，然后：</p>
-<ul>
-<li>option + a，再按 a，可得到 ā。</li>
-<li>option + e，再按 a，可得到 á。</li>
-<li>option + v，再按 a，可得到 ǎ。</li>
-<li>option + `，再按 a，可得到 à。</li>
-</ul>
-<h3 id="拼音输入法按声调筛选">拼音输入法按声调筛选</h3><p>输入全拼后，按 option + tab，可按声调筛选。<br><img src="http://stoneark.qiniudn.com/blogimg/pinyin_circumflex_filter.png" alt="按声调筛选"></p>
-<h3 id="输入“犇”">输入“犇”</h3><p>复杂文字的输入可进行拆字输入，如犇，可输入 niuniuniu（三个牛），然后按 shift + space，还会贴心地告诉你这个字的读音。<br><img src="http://stoneark.qiniudn.com/blogimg/pinyin_circumflex_niuniuniu.png" alt="拆字输入"></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-12-29T03:24:08.000Z"><a href="/2014/12/29/gmail-be-blocked-entirely/">Dec 29 2014</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/12/29/gmail-be-blocked-entirely/">gmail be blocked entirely</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><img src="http://stoneark.qiniudn.com/blogimg/gmail_blocked_entirely.png" alt="Google 流量统计"></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-12-16T13:35:16.000Z"><a href="/2014/12/16/transfer-from-evernote-international-to-yinxiang/">Dec 16 2014</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/12/16/transfer-from-evernote-international-to-yinxiang/">从 Evernote 迁移到了印象笔记</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>一直用 <a href="https://evernote.com" target="_blank" rel="external">Evernote</a> 做笔记管理，其简单快捷、搜索功能强大、多平台同步方便。2012 年，Evernote 专门推出了中国版，取名<a href="https://www.yinxiang.com" target="_blank" rel="external">印象笔记</a>。值得注意的是，中国版印象笔记与 Evernote International 的账户是完全分离的，中国版的数据完全存储在中国境内的服务器上，访问速度比 Evernote 更快更稳定，你懂的。</p>
-<p>我一直没有迁移到中国版的印象笔记。虽然印象笔记团队声明会给中国用户一样的数据安全保证，虽然我只记录一些技术内容和平时的想法，但总觉得哪里怪怪的。</p>
-<p>但是最近，Evernote International 经常变得访问及其缓慢。尤其是在 Mac 版客户端上，经常出现笔记内容为空的情况，昨天甚至把之前一篇笔记的内容弄丢了。唉，迫于无奈决定迁移到印象笔记。</p>
-<p>迁移方法可参见<a href="https://www.yinxiang.com/contact/support/kb/#!/article/yx0036" target="_blank" rel="external">印象笔记知识库</a>。我采用了 <a href="https://app.yinxiang.com/shard/s10/sh/a2d0903c-f751-48fd-a5c0-68d7bcd0c450/ce188822309c0124ba328248e1bed420" target="_blank" rel="external">NoteDup</a> 工具，只要用 International 和印象笔记的账户分别授权就好了。不过图片比较多的笔记会非常慢，甚至卡在那儿无法继续进行，如果有这种情况发生建议直接跳过去，手动迁移这一条笔记（一个晚上都没复制过去啊亲）。迁移完检查笔记数量，发现少了一条，找了好久终于找到了那条没被复制过去的笔记，我唯一能想到的原因就是笔记里有 g 和 f 和 w 这三个字母的组合了…</p>
-<p>迁移之后速度大大提升。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-12-15T07:54:29.000Z"><a href="/2014/12/15/my-new-computer-mac-mini/">Dec 15 2014</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/12/15/my-new-computer-mac-mini/">My new computer - Mac mini</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>前些日子买了 2014 版的 Mac mini，这也是我自己的第一台 Mac，之前都是用黑苹果和办公室里公司配的 iMac。</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/my_mac_mini.png" alt="My Mac mini"></p>
-<p>回想一下，自 2000 年爹妈给买了第一台电脑至今，也算见证了计算机和互联网在中国的发展历程。写下用过的三台电脑的配置，也足以看到计算机技术在这十几年来的发展了。</p>
-<table>
-<thead>
-<tr>
-<th>*</th>
-<th style="text-align:center">DIY PC(Oct, 2000)</th>
-<th>Lenovo F31 Laptop(Oct, 2007)</th>
-<th>Mac mini(Dec, 2014)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>CPU</strong></td>
-<td style="text-align:center">Intel Celeron 2 600MHz</td>
-<td>Intel Core 2 Duo T5250 (1.5GHz)</td>
-<td>Intel Core i5-4288U (2.6GHz)</td>
-</tr>
-<tr>
-<td><strong>RAM</strong></td>
-<td style="text-align:center">SDRAM 64MB</td>
-<td>2GB (1GB*2) DDR2 667MHz</td>
-<td>8GB LPDDR3 1600MHz</td>
-</tr>
-<tr>
-<td><strong>Harddisk</strong></td>
-<td style="text-align:center">Quantum 20GB PATA 5400rpm</td>
-<td>WD 160GB SATA 5400rpm</td>
-<td>Apple 256GB PCIe SSD</td>
-</tr>
-<tr>
-<td><strong>Video Card</strong></td>
-<td style="text-align:center">nVidia TNT2(8MB,AGP)</td>
-<td>nVidia Geforce 8400M GS(128MB,PCIe x16)</td>
-<td>Intel Iris Graphics(Built-in)</td>
-</tr>
-<tr>
-<td><strong>Sound Card</strong></td>
-<td style="text-align:center">Creative Vibra 128</td>
-<td>Built-in Realtek HDA</td>
-<td>Built-in Intel HDA</td>
-</tr>
-<tr>
-<td><strong>Modem</strong></td>
-<td style="text-align:center">Motorola 56kbps</td>
-<td>Motorola 56kbps</td>
-<td>None</td>
-</tr>
-<tr>
-<td><strong>NIC</strong></td>
-<td style="text-align:center">None</td>
-<td>BCM5906 10M/100M</td>
-<td>BCM5701 10/100/1000BASE-T</td>
-</tr>
-<tr>
-<td><strong>WLAN</strong></td>
-<td style="text-align:center">None</td>
-<td>Intel 3945ABG</td>
-<td>Broadcom 802.11a/b/g/n</td>
-</tr>
-<tr>
-<td><strong>Bluetooth</strong></td>
-<td style="text-align:center">None</td>
-<td>Bluetooth 2.0</td>
-<td>Bluetooth 4.0</td>
-</tr>
-<tr>
-<td><strong>Monitor</strong></td>
-<td style="text-align:center">Samsung SyncMaster 550s 15’CRT</td>
-<td>Built-in 13.3’ LCD</td>
-<td>None</td>
-</tr>
-<tr>
-<td><strong>ODD</strong></td>
-<td style="text-align:center">CD-ROM 48X</td>
-<td>DVD±RW</td>
-<td>None</td>
-</tr>
-<tr>
-<td><strong>Sound box</strong></td>
-<td style="text-align:center">Ranbow M2</td>
-<td>Built-in</td>
-<td>Built-in</td>
-</tr>
-<tr>
-<td><strong>OS</strong></td>
-<td style="text-align:center">Windows 98 SE</td>
-<td>Windows Vista Home Premium</td>
-<td>Mac OS X Yosemite</td>
-</tr>
-</tbody>
-</table>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-12-11T08:59:26.000Z"><a href="/2014/12/11/monitor-connected-to-mac-mini-fuzzily-displayed/">Dec 11 2014</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/12/11/monitor-connected-to-mac-mini-fuzzily-displayed/">Mac mini 外接显示器显示模糊的解决</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>之前看到过有好多人遇到了 Mac 外接显示器显示不清晰的问题，一直以为是 HDMI 输出只支持某几种特定分辨率的原因。如今我也遇到了这个问题，收到 Mac mini 欣喜地接上电源、显示器、键盘鼠标，发现…好虚啊！</p>
-<p>可是我显然没有用 HDMI 输出…</p>
-<p>用了 CE-LINK 的 Mini DP to VGA 转接线接到了一个之前闲置不用的显示器上（BenQ FP756-12ms），惨不忍睹。在系统偏好的通用里，已经选择了“使用 LCD 平滑字体（可用时）”。</p>
-<p>Google 找到了解决的方法，原因是系统把显示器识别成了 CRT，所以没有采用 LCD 平滑。</p>
-<p>OS X 有五种字体平滑选项：关闭、自动、轻、中、重。但在偏好设置里有关字体平滑选项只有一个复选框，不选即为关闭，选上即为自动。可惜这个“自动”识别错了。</p>
-<p>所以我们需要强制指定字体平滑，方法是更改 globalDomain 中的 AppleFontSmoothing 参数。</p>
-<figure class="highlight bash"><figcaption><span>Terminal</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults -currentHost write -globalDomain AppleFontSmoothing -int <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>其中，最后的参数 1 为轻度，还可选择 2 为中度，3 为重度。</p>
-<p>另外，查看该值可通过：<br><figure class="highlight bash"><figcaption><span>Terminal</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults -currentHost <span class="built_in">read</span> -globalDomain AppleFontSmoothing</span><br></pre></td></tr></table></figure></p>
-<p>若提示</p>
-<pre><code><span class="type">The</span> domain/<span class="default"><span class="keyword">default</span> pair of <span class="container">(<span class="title">kCFPreferencesAnyApplication</span>, <span class="type">AppleFontSmoothing</span>)</span> does not exist</span>
-</code></pre><p>则意味着当前选择了关闭或自动。</p>
-<p>删除对该值的设置：<br><figure class="highlight bash"><figcaption><span>Terminal</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults -currentHost delete -globalDomain AppleFontSmoothing</span><br></pre></td></tr></table></figure></p>
-<p>经测，BenQ FP756-12ms 对于我来说最合适的值为 3。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-11-25T08:58:35.000Z"><a href="/2014/11/25/not-show-subviews-of-an-uilabel-on-ios8/">Nov 25 2014</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/11/25/not-show-subviews-of-an-uilabel-on-ios8/">iOS8 中 UILabel 不显示 subview 的问题</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>在 iOS8 中，如果在一个 UILabel 对象上添加 subview，同时给这个 label 设置了背景色 (backgroundColor)，则会发现这些 subview 都不显示出来，但可以响应事件（如一个按钮作为 subview，按钮不显示但可以正常响应点击）。如果不给这个 label 设置背景色，则可以正常显示。</p>
-<p>在 iOS7 上不存在此问题。</p>
-<p>有些开发者为了方便，在自定义 NavigationBar 时用 UILabel 做父容器，然后在其上添加按钮，导致了在 iOS8 上运行时，导航栏上的按钮都不显示。</p>
-<p>避免采用 UILabel 等做父容器，它们本来就不适合做父容器。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-11-24T09:08:23.000Z"><a href="/2014/11/24/cannot-locate-compiling-with-xcode6/">Nov 24 2014</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/11/24/cannot-locate-compiling-with-xcode6/">Cannot locate compiling with Xcode6</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>正式推出的 iOS8 中，定位服务分为了 <em>使用应用程序期间</em> 和 <em>始终</em> 两种权限，这导致了一些变化。之前的工程若用 Xcode5 编译，并在 iOS8 上运行，会向用户请求始终获取位置的权限。若用 Xcode6 编译，会发现程序不会向用户请求权限，同时导致无法定位。</p>
-<p>解决方法并不复杂，只需在 <code>Info.plist</code> 中加入请求定位权限时显示给用户的提示信息即可：</p>
-<figure class="highlight plist"><figcaption><span>-Info.plist</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">key</span>&gt;</span>NSLocationWhenInUseUsageDescription<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">string</span>&gt;</span>写上为什么要在程序运行时获取位置<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>或<br><figure class="highlight plist"><figcaption><span>-Info.plist</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">key</span>&gt;</span>NSLocationAlwaysUsageDescription<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">string</span>&gt;</span>写上为什么要始终获取位置<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -554,7 +505,7 @@
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Apple/" style="font-size: 10px;">Apple</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12.5px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 17.5px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/TableView/" style="font-size: 12.5px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12.5px;">Translation</a> <a href="/tags/UI/" style="font-size: 12.5px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 15px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 15px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 12.5px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Apple/" style="font-size: 12.5px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12.5px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 17.5px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12.5px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12.5px;">Translation</a> <a href="/tags/UI/" style="font-size: 12.5px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 15px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 15px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 12.5px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
   </div>
 </div>
 
@@ -565,23 +516,23 @@
   <ul class="entry">
     
       <li>
-        <a href="/2015/11/04/ei-capitan-brings-the-missing-hex-color-picker/">EI Capitan brings the missing Hex color picker</a>
+        <a href="/2016/03/02/swift-mixed-with-objective-c/">Swift 与 Objective-C 混编</a>
       </li>
     
       <li>
-        <a href="/2015/10/29/limit-max-input-length-update/">限制最大输入字符数(更新)</a>
+        <a href="/2016/02/26/apple-wwdr-intermediate-certificate-expired/">苹果证书签发者过期</a>
       </li>
     
       <li>
-        <a href="/2015/10/21/library-unbound-when-import-project-to-eclipse/">向 Eclipse 中导入项目提示 JRE unbound</a>
+        <a href="/2016/01/29/NSAttributedString-image-vertically-center-alignment/">NSAttributedString 图片与文字垂直居中</a>
       </li>
     
       <li>
-        <a href="/2015/10/19/instant-message-services/">第三方即时通讯服务</a>
+        <a href="/2016/01/22/disable-screen-auto-rotate-in-android-developing/">Android 开发中禁止屏幕自动旋转</a>
       </li>
     
       <li>
-        <a href="/2015/09/18/UIAlertView-without-title/">UIAlertView without title</a>
+        <a href="/2016/01/14/pay-attention-to-casing-of-yyyy-in-date-format/">小心时间格式里 yyyy 的大小写</a>
       </li>
     
   </ul>
@@ -592,7 +543,7 @@
   </div>
   <footer id="footer" class="inner"><div class="alignleft">
   
-  &copy; 2015 StoneArk
+  &copy; 2016 StoneArk
   
 </div>
 <div class="clearfix"></div></footer>
