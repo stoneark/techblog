@@ -66,6 +66,81 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-10-29T07:22:50.000Z"><a href="/2015/10/29/limit-max-input-length-update/">Oct 29 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/10/29/limit-max-input-length-update/">限制最大输入字符数(更新)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在 <a href="../../../2015/06/29/limit-max-input-length-of-uitextview/">这篇博客</a> 中提到的限制 UITextView 最大输入字符数的方法，依然是有问题的。问题出现于用拼音输入法输入中文的时候，比如键入“你好世界”，对应的拼音为“nihaoshijie”。限制最大长度为 5，则虽然“你好世界”为四个字，但在输入拼音字符的时候，会超过 5 个字符，导致无法输入进去。</p>
+<p><a href="http://blog.sina.com.cn/s/blog_60f977e70101g4gj.html" target="_blank" rel="external">iOS:UITextField中文输入法输入时对字符长度的限制</a> 这篇文章中提出了一个方法，经尝试是可以正确处理这种情形的。基本方法如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)textViewDidChange:(<span class="built_in">UITextView</span> *)textView &#123;</span><br><span class="line">    <span class="built_in">NSString</span> *lang = [[textView textInputMode] primaryLanguage];</span><br><span class="line">    <span class="comment">// 对简体中文输入进行特殊处理</span></span><br><span class="line">    <span class="keyword">if</span> ([lang isEqualToString:<span class="string">@"zh-Hans"</span>]) &#123;</span><br><span class="line">        <span class="built_in">UITextRange</span> *selectedRange = [textView markedTextRange];</span><br><span class="line">        <span class="comment">// 获取高亮部分</span></span><br><span class="line">        <span class="built_in">UITextPosition</span> *position = [textView positionFromPosition:selectedRange<span class="variable">.start</span> offset:<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">if</span> (!position) &#123;</span><br><span class="line">            <span class="comment">// 没有高亮选择的字，则进行字数限制</span></span><br><span class="line">            <span class="keyword">if</span> (textView<span class="variable">.text</span><span class="variable">.length</span> &gt; LENGTH_LIMIT) &#123;</span><br><span class="line">                textView<span class="variable">.text</span> = [textView<span class="variable">.text</span> substringToIndex:LENGTH_LIMIT];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="comment">// 有高亮选择的字，认为现在正在拼音输入状态，暂不进行限制</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 简体中文以外的直接限制，暂不考虑其他语言</span></span><br><span class="line">        <span class="keyword">if</span> (textView<span class="variable">.text</span><span class="variable">.length</span> &gt; LENGTH_LIMIT) &#123;</span><br><span class="line">            textView<span class="variable">.text</span> = [textView<span class="variable">.text</span> substringToIndex:LENGTH_LIMIT];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同时，在上面这篇文章中还受到一点启示，UITextField 是没有类似 textViewDidChange 这样的代理方法的，所以对于 UITextField 我们该怎么办？可以通过监听 <code>UITextFieldTextDidChangeNotification</code> 通知来达到一样的目的。</p>
+<p>在初始化时添加监听：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(textFieldDidChanged:) name:<span class="string">@"UITextFieldTextDidChangeNotification"</span> object:_textField];</span><br></pre></td></tr></table></figure></p>
+<p>实现监听方法：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)textFieldDidChanged:(<span class="built_in">NSNotification</span> *)notification &#123;</span><br><span class="line">	<span class="built_in">UITextField</span> *textField = (<span class="built_in">UITextField</span>*)notification<span class="variable">.object</span>;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>别忘了在 dealloc 时移除监听：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] removeObserver:<span class="keyword">self</span> name:<span class="string">@"UITextFieldTextDidChangeNotification"</span> object:_textField];</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-10-21T08:47:11.000Z"><a href="/2015/10/21/library-unbound-when-import-project-to-eclipse/">Oct 21 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/10/21/library-unbound-when-import-project-to-eclipse/">向 Eclipse 中导入项目提示 JRE unbound</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在 Eclipse 中导入 Java 项目后，常会出现编译报错，一个很常见的原因是工程属性中所定义的某些 Library 在本地找不到。又经常是本地安装的版本与工程属性中指定的版本不一致，比如本地安装了 JRE 8，但工程属性中定义的是使用 JRE 7。</p>
+<p>在左侧的对应工程上点右键 -&gt; Build Path -&gt; Configure Build Path，在弹出的对话框中，右侧顶部点选 Libraries，下方的列表中会发现有几项后面有 “(unbound)” 后缀。此时就代表，项目属性中定义的版本，在本地找不到，所以无法编译。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/library_unbound_in_eclipse.jpg" alt=""></p>
+<p>解决方法也很简单，如果本地没有安装所需要的 Library，安装上就好。如果本地安装了，只是版本不一致，而且可以用本地版本替代的情况，可以选择 unbound 的条目，再点击右侧 Edit 按钮，在列表中选择本地有的版本，或者直接选择 Workspace default JRE，即可解决。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-10-19T08:45:16.000Z"><a href="/2015/10/19/instant-message-services/">Oct 19 2015</a></time>
       
       
@@ -379,90 +454,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-29T07:05:11.000Z"><a href="/2015/05/29/gem-install-failed-cannot-load-such-file-openssl/">May 29 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/29/gem-install-failed-cannot-load-such-file-openssl/">“cannot load such file -- openssl” while “gem install”</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>工作用的 iMac 上一直没有安装 CocoaPods，因为曾经安装时遇到了一个错误，然后比较忙就搁置了，以至于搁置到了现在，今天终于把这遗留问题解决了。</p>
-<p><a href="https://cocoapods.org/" target="_blank" rel="external">CocoaPods</a> 是应用于 Xcode 工程的第三方库依赖管理工具，可以非常方便地管理工程所需要引用的第三方库。由于它是用 ruby 开发的，所以在 Mac 上安装它是一个非常简单的事情：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo gem install cocoapods</span><br></pre></td></tr></table></figure>
-<p>但是当我执行这个命令时，却得到了错误的反馈：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ERROR:  Loading <span class="built_in">command</span>: install (LoadError)</span><br><span class="line">	cannot load such file -- openssl</span><br><span class="line">ERROR:  While executing gem ... (NoMethodError)</span><br><span class="line">    undefined method `invoke_with_build_args<span class="string">' for nil:NilClass</span></span><br></pre></td></tr></table></figure>
-<p>其实此时不只是安装 CocoaPods，安装其他大部分的 gem 都会是这个结局，因为找不到 openssl，无法建立加密连接，也就无法开始下载。</p>
-<p>系统中是有 openssl 的，而且 openssl 可以正常工作，只是 ruby 找不到它。至于为什么突然找不到了，那就不太清楚了，推测可能是更新 OS X 时引发的问题吧。试了很多方法，各种不奏效，最后通过以下的方法解决了。大体思路是用 rvm 重新安装 openssl，然后重新安装 ruby，并指定 openssl 的路径。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rvm pkg install openssl</span><br><span class="line">rvm reinstall ruby-<span class="number">2.1</span> --with-openssl-dir=<span class="variable">$rvm_path</span>/usr</span><br></pre></td></tr></table></figure>
-<p>都安装完成之后，就可以正常 <code>gem install</code> 啦。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-22T08:40:57.000Z"><a href="/2015/05/22/baidumap-memory-not-be-freed/">May 22 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/22/baidumap-memory-not-be-freed/">百度地图 (iOS SDK) 内存不回收</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>情景：有一个列表，点击列表中的某一条目后，进入详情页面，详情页面是一个地图。</p>
-<p>环境：百度地图 iOS SDK v2.7.0</p>
-<p>测试人员发现，从列表反复多次进入详情（push, pop, push, pop, …），五六次后程序崩溃。查看日志，发现是 Received Memory Warning。</p>
-<p>通过 Xcode 的 Debug Navigator 监测，发现每进入一次地图页面，内存即增加占用约 20MB，但返回后内存并不回收。于是内存占用逐渐增多，直至被 kill。</p>
-<p>继续监测程序的运行，发现地图页面在 pop 时，dealloc 方法并没有被执行，所以整个详情页面，包括地图，一直没有从内存中被 dealloc。</p>
-<p>最终发现，除了百度地图的 mapView，在 self.view 上还有另一个 subview，而正因为这个 subview 没有 removeFromSuperView，导致了内存一直不能被回收。</p>
-<p>含有百度地图的 viewWillDisappear 里一般是这样写的：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewWillDisappear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [_bmkMapView viewWillDisappear];</span><br><span class="line">    [_bmkMapView setDelegate:<span class="literal">nil</span>];</span><br><span class="line">    [<span class="keyword">super</span> viewWillDisappear:animated];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>但此时需要这样写：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewWillDisappear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [_bmkMapView viewWillDisappear];</span><br><span class="line">    [_bmkMapView setDelegate:<span class="literal">nil</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">UIView</span> *view <span class="keyword">in</span> [<span class="keyword">self</span><span class="variable">.view</span> subviews]) &#123;</span><br><span class="line">        [view removeFromSuperview];</span><br><span class="line">    &#125;</span><br><span class="line">    [<span class="keyword">super</span> viewWillDisappear:animated];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>另外，还有一些其他的情形也可能造成此类问题，基本原理是一致的，都是因为还有某个对象被引用着。内存的管理还是得加小心啊。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -482,23 +473,20 @@
 </div>
 
   
-
-  
-<div class="widget tagcloud">
-  <h3 class="title">标签云</h3>
-  <div class="entry">
-    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Apple/" style="font-size: 12.5px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12.5px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 17.5px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12.5px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12.5px;">Translation</a> <a href="/tags/UI/" style="font-size: 12.5px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 15px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 15px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 12.5px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
-  </div>
-</div>
-
-
-  
 <div class="widget tag">
   <h3 class="title">最新文章</h3>
   <ul class="entry">
     
       <li>
+        <a href="/2016/03/06/software-companies-which-have-been-famous/">曾经十分出名的软件公司</a>
+      </li>
+    
+      <li>
         <a href="/2016/03/02/swift-mixed-with-objective-c/">Swift 与 Objective-C 混编</a>
+      </li>
+    
+      <li>
+        <a href="/2016/02/29/recent-developer-interviews/">最近开发人员招聘情况</a>
       </li>
     
       <li>
@@ -509,15 +497,29 @@
         <a href="/2016/01/29/NSAttributedString-image-vertically-center-alignment/">NSAttributedString 图片与文字垂直居中</a>
       </li>
     
-      <li>
-        <a href="/2016/01/22/disable-screen-auto-rotate-in-android-developing/">Android 开发中禁止屏幕自动旋转</a>
-      </li>
-    
-      <li>
-        <a href="/2016/01/14/pay-attention-to-casing-of-yyyy-in-date-format/">小心时间格式里 yyyy 的大小写</a>
-      </li>
-    
   </ul>
+</div>
+
+
+  <div class="widget tag">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Sidebar -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4881458609429989"
+     data-ad-slot="3691435958"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Apple/" style="font-size: 12.5px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12.5px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 17.5px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12.5px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12.5px;">Translation</a> <a href="/tags/UI/" style="font-size: 12.5px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 15px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 15px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 12.5px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+  </div>
 </div>
 
 </aside>
