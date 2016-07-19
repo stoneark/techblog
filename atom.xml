@@ -5,7 +5,7 @@
   <subtitle><![CDATA[StoneArk's Blog]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.stoneark.org//"/>
-  <updated>2016-03-19T14:36:47.000Z</updated>
+  <updated>2016-07-19T07:25:15.000Z</updated>
   <id>http://blog.stoneark.org//</id>
   
   <author>
@@ -14,6 +14,252 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Blank activity and Empty activity in Android Studio]]></title>
+    <link href="http://blog.stoneark.org/2016/04/21/blank-activity-and-empty-activity-in-android-studio/"/>
+    <id>http://blog.stoneark.org/2016/04/21/blank-activity-and-empty-activity-in-android-studio/</id>
+    <published>2016-04-21T09:31:18.000Z</published>
+    <updated>2016-07-19T07:25:15.000Z</updated>
+    <content type="html"><![CDATA[<p>Android Studio 新建 Activity 的模板里，有一个 <code>Blank Activity</code>，还有一个 <code>Empty Activity</code>。这两个是不同的。</p>
+<p>Blank Activity，会为你新建这样一个 Activity：含有导航栏，导航栏上有返回按钮，并设置了导航栏标题，右下角有一个浮动按钮。</p>
+<p>可以发现工程中新建了一个 NewActivity.java 的类，同时新建了两个布局文件，一个是 activity_new.xml，另一个是 content_new.xml。activity_new.xml 中是一个 CoordinatorLayout，并且 include 了 content_new.xml。这个 Activity 显示的内容实际在 content_new.xml 中，它是一个 RelativeLayout。</p>
+<p>Empty Activity，会为你新建这样一个 Activity：含有导航栏，没有返回按钮，导航栏标题没有设置，其他都是空白。</p>
+<p>工程中新建了 NewActivity.java 和 activity_new.xml，里面是一个 RelativeLayout。</p>
+<p>要想实现 Blank Activity 的效果，并希望不要有多余的东西，在一个 xml 布局中实现，可以按照以下框架（下面以 EditPasswordActivity 为例）:</p>
+<a id="more"></a>
+<figure class="highlight xml"><figcaption><span>activity_edit_password.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">android.support.design.widget.CoordinatorLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attribute">xmlns:app</span>=<span class="value">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    <span class="attribute">xmlns:tools</span>=<span class="value">"http://schemas.android.com/tools"</span></span><br><span class="line">    <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">    <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span></span><br><span class="line">    <span class="attribute">android:fitsSystemWindows</span>=<span class="value">"true"</span></span><br><span class="line">    <span class="attribute">tools:context</span>=<span class="value">"org.stoneark.doorsbylin.EditPasswordActivity"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">android.support.design.widget.AppBarLayout</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:theme</span>=<span class="value">"@style/AppTheme.AppBarOverlay"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="title">android.support.v7.widget.Toolbar</span></span><br><span class="line">            <span class="attribute">android:id</span>=<span class="value">"@+id/toolbar"</span></span><br><span class="line">            <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">            <span class="attribute">android:layout_height</span>=<span class="value">"?attr/actionBarSize"</span></span><br><span class="line">            <span class="attribute">android:background</span>=<span class="value">"?attr/colorPrimary"</span></span><br><span class="line">            <span class="attribute">app:popupTheme</span>=<span class="value">"@style/AppTheme.PopupOverlay"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="title">android.support.design.widget.AppBarLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">RelativeLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">        <span class="attribute">xmlns:tools</span>=<span class="value">"http://schemas.android.com/tools"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span></span><br><span class="line">        <span class="attribute">android:paddingBottom</span>=<span class="value">"@dimen/activity_vertical_margin"</span></span><br><span class="line">        <span class="attribute">android:paddingLeft</span>=<span class="value">"@dimen/activity_horizontal_margin"</span></span><br><span class="line">        <span class="attribute">android:paddingRight</span>=<span class="value">"@dimen/activity_horizontal_margin"</span></span><br><span class="line">        <span class="attribute">android:paddingTop</span>=<span class="value">"@dimen/activity_vertical_margin"</span></span><br><span class="line">        <span class="attribute">app:layout_behavior</span>=<span class="value">"@string/appbar_scrolling_view_behavior"</span></span><br><span class="line">        <span class="attribute">tools:context</span>=<span class="value">"org.stoneark.doorsbylin.EditPasswordActivity"</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">RelativeLayout</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">android.support.design.widget.CoordinatorLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>中间的这个 RelativeLayout，就是这个 Activity 实际承载的内容，替换成自己的布局即可。但请注意！！一定要为这个布局添加这个属性：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app:layout_behavior="@string/appbar_scrolling_view_behavior"</span><br></pre></td></tr></table></figure>
+<p>这样的话，这个布局将会在顶部导航栏的下方开始显示。如果不加这个属性，它将从屏幕顶端开始显示，会跟顶部的导航栏重叠在一起。在有的手机上会被导航栏遮盖，有的手机上会显示在导航栏上方。</p>
+<blockquote>
+<p>附注：@string/appbar_scrolling_view_behavior 是 Android SDK 里定义的一个字符串，直接使用即可，内容为：<br>  <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string></p>
+</blockquote>
+<p>然后在 Activity 的 onCreate() 里添加以下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);</span><br><span class="line">setSupportActionBar(toolbar);</span><br><span class="line">getSupportActionBar().setDisplayHomeAsUpEnabled(<span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+<p>并且在 AndroidManifest.xml 里给这个 Activity 添加属性：</p>
+<figure class="highlight xml"><figcaption><span>AndroidManifest.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">activity</span></span><br><span class="line">  <span class="attribute">android:name</span>=<span class="value">“.EditPasswordActivity"</span></span><br><span class="line">  <span class="attribute">android:label</span>=<span class="value">"@string/title_activity_edit_password"</span></span><br><span class="line">  <span class="attribute">android:theme</span>=<span class="value">"@style/AppTheme.NoActionBar"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">meta-data</span></span><br><span class="line">      <span class="attribute">android:name</span>=<span class="value">"android.support.PARENT_ACTIVITY"</span></span><br><span class="line">      <span class="attribute">android:value</span>=<span class="value">"org.stoneark.doorsbylin.UserCenterActivity"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Android Studio 新建 Activity 的模板里，有一个 <code>Blank Activity</code>，还有一个 <code>Empty Activity</code>。这两个是不同的。</p>
+<p>Blank Activity，会为你新建这样一个 Activity：含有导航栏，导航栏上有返回按钮，并设置了导航栏标题，右下角有一个浮动按钮。</p>
+<p>可以发现工程中新建了一个 NewActivity.java 的类，同时新建了两个布局文件，一个是 activity_new.xml，另一个是 content_new.xml。activity_new.xml 中是一个 CoordinatorLayout，并且 include 了 content_new.xml。这个 Activity 显示的内容实际在 content_new.xml 中，它是一个 RelativeLayout。</p>
+<p>Empty Activity，会为你新建这样一个 Activity：含有导航栏，没有返回按钮，导航栏标题没有设置，其他都是空白。</p>
+<p>工程中新建了 NewActivity.java 和 activity_new.xml，里面是一个 RelativeLayout。</p>
+<p>要想实现 Blank Activity 的效果，并希望不要有多余的东西，在一个 xml 布局中实现，可以按照以下框架（下面以 EditPasswordActivity 为例）:</p>]]>
+    
+    </summary>
+    
+      <category term="Android" scheme="http://blog.stoneark.org/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Android application display name]]></title>
+    <link href="http://blog.stoneark.org/2016/04/19/Android-application-display-name/"/>
+    <id>http://blog.stoneark.org/2016/04/19/Android-application-display-name/</id>
+    <published>2016-04-19T08:30:25.000Z</published>
+    <updated>2016-07-18T09:45:06.000Z</updated>
+    <content type="html"><![CDATA[<p>Android 应用的显示名称，在 <code>AndroidManifest.xml</code> 中进行修改。</p>
+<figure class="highlight"><figcaption><span>AndroidManifest.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;application</span><br><span class="line">   android:allowBackup="true"</span><br><span class="line">   android:icon="@mipmap/ic_launcher"</span><br><span class="line">   android:label="@string/app_name"</span><br><span class="line">   android:supportsRtl="true"</span><br><span class="line">   android:theme="@style/AppTheme"&gt;</span><br><span class="line">   &lt;activity</span><br><span class="line">       android:name=".LoginActivity"</span><br><span class="line">       android:label="@string/title_activity_login"&gt;</span><br><span class="line">       &lt;intent-filter&gt;</span><br><span class="line">           &lt;action android:name="android.intent.action.MAIN" /&gt;</span><br><span class="line">           &lt;category android:name="android.intent.category.LAUNCHER" /&gt;</span><br><span class="line">       &lt;/intent-filter&gt;</span><br><span class="line">   &lt;/activity&gt;</span><br><span class="line">   &lt;activity</span><br><span class="line">      ...</span><br><span class="line">   &lt;/activity&gt;</span><br><span class="line">&lt;/application&gt;</span><br></pre></td></tr></table></figure>
+<p>我们会很显然的认为，修改最外层的 <code>android:label</code> 即可，也就是修改 <code>@string/app_name</code> 的值。但经过实践会发现并不是这样的，Launcher 里显示的竟然是 <code>@string/title_activity_login</code>，也就是 Login Activity 的标题。</p>
+<p>实际上，在 Launcher 中显示的应用名称，是被标记为首页面的 Activity 的标题。也就是被标记为：</p>
+<figure class="highlight xml"><figcaption><span>AndroidManifest.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">intent-filter</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">action</span> <span class="attribute">android:name</span>=<span class="value">"android.intent.action.MAIN"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">category</span> <span class="attribute">android:name</span>=<span class="value">"android.intent.category.LAUNCHER"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">intent-filter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>的 Activity。</p>
+<p>那 application 标签的 android:label 属性是用来做什么的？它的确如它的名字一样，代表了应用的名称。在应用程序管理器中看到的名称，就是这个名称。但是这个名称并不是 Launcher 用的名称，所以用户在手机的桌面（应用程序列表）中，看到的不是这个名称。</p>
+<p>这着实让人感到不可理解。自认为还是 iOS 的处理方式更科学－－在 info.plist 文件中有一个属性 Bundle display name，在这里面存储了应用的显示名称，这是一个应用全局的设置。</p>
+<p>那如果首页面 Activity 的标题，跟应用的显示名称不能保持一致，怎么办？那就在 AndroidManifest.xml 里，把首页面 Activity 的 label 设置成应用名称，然后在首页面 Activity 的 onCreate 里，用 setTitle 方法再把标题改掉就好了，如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">   setTitle(<span class="string">"登录"</span>);</span><br><span class="line">   setContentView(R.layout.activity_login);</span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Android 应用的显示名称，在 <code>AndroidManifest.xml</code> 中进行修改。</p>
+<figure class="highlight"><figcaption><span>AndroidManifest.xml</span></fig]]>
+    </summary>
+    
+      <category term="Android" scheme="http://blog.stoneark.org/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[html form submit]]></title>
+    <link href="http://blog.stoneark.org/2016/04/16/html-form-submit/"/>
+    <id>http://blog.stoneark.org/2016/04/16/html-form-submit/</id>
+    <published>2016-04-16T08:21:39.000Z</published>
+    <updated>2016-07-19T07:26:00.000Z</updated>
+    <content type="html"><![CDATA[<p>最近在做的部分与 HTML 的 form 表单相关，记录下以下几个问题。</p>
+<h2 id="用_form_表单外的_button_提交">用 form 表单外的 button 提交</h2><p>一般情况下，form 表单的提交按钮会写在 form 表单内，而且非常方便，如:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">form</span> <span class="attribute">action</span>=<span class="value">"/userlist/add"</span> <span class="attribute">method</span>=<span class="value">"POST"</span>&gt;</span></span><br><span class="line">  用户名：<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">id</span>=<span class="value">"username"</span> <span class="attribute">required</span>=<span class="value">"required"</span> /&gt;</span></span><br><span class="line">  密码：<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">id</span>=<span class="value">"password"</span> <span class="attribute">required</span>=<span class="value">"required"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"submit"</span> <span class="attribute">value</span>=<span class="value">"提交"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这样，就会有一个叫提交的按钮，点击后会执行 form 的 action。</p>
+<p>但有时我们需要在 form 标签以外的某一个 button 上执行表单的提交。比如在另外一个 div 上有一个 button。这时就让这个 button 去执行一个 js 方法，用 js 去调用这个 form 的submit 方法即可，如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"modal-body"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">form</span> <span class="attribute">action</span>=<span class="value">"/userlist/add"</span> <span class="attribute">method</span>=<span class="value">"POST"</span> <span class="attribute">id</span>=<span class="value">"formNewUser"</span>&gt;</span></span><br><span class="line">  用户名：<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">id</span>=<span class="value">"username"</span> /&gt;</span></span><br><span class="line">  密码：<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">id</span>=<span class="value">"password"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"submit"</span> <span class="attribute">value</span>=<span class="value">"提交"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"modal-footer"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">onclick</span>=<span class="value">"$('#formNewUser').submit()"</span>&gt;</span>提交<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>注意，直接调用 submit 方法的方式提交，即使给 username 和 password 的 input 标签添加了 required 属性，也不会自动校验，而是直接执行 action 的方法。所以如果需要校验必填项，就在 js 方法里面校验，如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"modal-footer"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">onclick</span>=<span class="value">"submitValidate()"</span>&gt;</span>提交<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">submitValidate</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> ($(<span class="string">"#username"</span>).val().length == <span class="number">0</span>) &#123;</span><br><span class="line">  alert(<span class="string">"请输入用户名"</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> ($(<span class="string">"#password"</span>).val().length == <span class="number">0</span>) &#123;</span><br><span class="line">  alert(<span class="string">"请输入密码"</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  $(<span class="string">'#formNewUser'</span>).submit()</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="form_表单内的_button_会默认自动提交">form 表单内的 button 会默认自动提交</h2><p>如果一个 button 在 form 表单里，那他默认就是一个 submit 按钮，不管你有没有写成 <code>type=&quot;submit&quot;</code>。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">form</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">button</span>&gt;</span>...<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>但有些按钮我们并不想让它执行提交，则可以对其添加属性 <code>type=&quot;button&quot;</code> 即可。</p>
+<h2 id="提交非由用户填写的参数">提交非由用户填写的参数</h2><p>有时我们需要在调用接口时，提交一些不是由用户填写的参数。</p>
+<p>如编辑一条数据，其 id 是程序在提交时直接填充上的，而不需要由用户填写，也不需要用户看到。</p>
+<p>这时，只需要在 form 里增加一个 input，并且将其 <code>hidden</code> 属性设置为 <code>hidden</code>，value 属性设置为所需要提交的值即可。如:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">form</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">value</span>=<span class="value">"1234567890abcdef"</span> <span class="attribute">hidden</span>=<span class="value">"hidden"</span> <span class="attribute">name</span>=<span class="value">"id"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">name</span>=<span class="value">"username"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">name</span>=<span class="value">"address"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>最近在做的部分与 HTML 的 form 表单相关，记录下以下几个问题。</p>
+<h2 id="用_form_表单外的_button_提交">用 form 表单外的 button 提交</h2><p>一般情况下，form 表单的提交按钮会写在 form 表单内，而且非常方]]>
+    </summary>
+    
+      <category term="Web" scheme="http://blog.stoneark.org/tags/Web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[EJS template]]></title>
+    <link href="http://blog.stoneark.org/2016/04/14/ejs-template/"/>
+    <id>http://blog.stoneark.org/2016/04/14/ejs-template/</id>
+    <published>2016-04-14T07:03:06.000Z</published>
+    <updated>2016-07-18T07:40:33.000Z</updated>
+    <content type="html"><![CDATA[<p>与所有软件开发一样，Web 开发中也会面对着逻辑和数据。将逻辑和数据分开，是良好的工程结构必须做到的，否则代码会混乱不堪。而很不幸的是，用 JavaScript 去生成 HTML 时，往往就会都杂糅到一块儿。</p>
+<p><a href="http://www.embeddedjs.com" target="_blank" rel="external">EJS</a> 就是一个 JavaScript 的模版类，可以将逻辑写成一个 HTML 模版，并把数据分离出去。包括 hexo, Express.js 等框架中也都采用了 EJS。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/ejs_template.png" alt="EJS"></p>
+<p>其最主要的是 <code>&lt;% js代码 %&gt;</code> 和 <code>&lt;%= 表达式 %&gt;</code> 两个语句。前者会执行里面的 js 代码，后者会将里面的表达式直接输出到 HTML 中。</p>
+<p>如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;% <span class="keyword">if</span> (gender==<span class="number">0</span>) &#123; %&gt;</span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">%=</span> '<span class="attribute">Male</span>' %&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">%</span> &#125; <span class="attribute">else</span> <span class="attribute">if</span> (<span class="attribute">gender</span>=<span class="value">=1)</span> &#123; %&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">%=</span> '<span class="attribute">Female</span>' %&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">%</span> &#125; <span class="attribute">else</span> &#123; %&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">%=</span> '<span class="attribute">Unknown</span>' %&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">%</span> &#125; %&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>简单的判断，也可用问号表达式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%= a&gt;<span class="number">10</span> ? <span class="string">'Success'</span> : <span class="string">'Failed'</span> %&gt;</span><br></pre></td></tr></table></figure>
+<p>需要注意，开括号<code>&lt;%</code>的右侧和内容之间、闭括号<code>%&gt;</code>的左侧和内容之间，一定要留有空格，否则会报错。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>与所有软件开发一样，Web 开发中也会面对着逻辑和数据。将逻辑和数据分开，是良好的工程结构必须做到的，否则代码会混乱不堪。而很不幸的是，用 JavaScript 去生成 HTML 时，往往就会都杂糅到一块儿。</p>
+<p><a href="http://www.embed]]>
+    </summary>
+    
+      <category term="Web" scheme="http://blog.stoneark.org/tags/Web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Android 收回软键盘]]></title>
+    <link href="http://blog.stoneark.org/2016/03/27/Android-hide-soft-keyboard/"/>
+    <id>http://blog.stoneark.org/2016/03/27/Android-hide-soft-keyboard/</id>
+    <published>2016-03-27T09:17:46.000Z</published>
+    <updated>2016-07-18T10:12:12.000Z</updated>
+    <content type="html"><![CDATA[<p>在 iOS 里，如果要收回软键盘，只需要调用当前持有焦点的 TextField 的 resignFirstResponder 方法即可。所以很自然的，在 Android 里，就会想到调用 EditText 的 <code>clearFocus()</code> 方法。但发现这样并没有让键盘收回，这与 iOS 不同。</p>
+<p>在 Android 中，应借助 <code>InputMethodManager</code> 可隐藏键盘，方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">hideKeyboard</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    View viewFocus = <span class="keyword">this</span>.getCurrentFocus();</span><br><span class="line">    <span class="keyword">if</span> (viewFocus != <span class="keyword">null</span>) &#123;</span><br><span class="line">        InputMethodManager imManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);</span><br><span class="line">        imManager.hideSoftInputFromWindow(viewFocus.getWindowToken(), <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要注意，就像刚才所说，虽然有 viewFocus.clearFocus() 这个方法，但调用它是无法让软键盘收回的。</p>
+<p>另外，用上面这个方法能够收回键盘，但输入框依然持有着焦点。也就是说，焦点与软键盘是否显示，并无关系。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>在 iOS 里，如果要收回软键盘，只需要调用当前持有焦点的 TextField 的 resignFirstResponder 方法即可。所以很自然的，在 Android 里，就会想到调用 EditText 的 <code>clearFocus()</code> 方法。但发现]]>
+    </summary>
+    
+      <category term="Android" scheme="http://blog.stoneark.org/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Android 单选框]]></title>
+    <link href="http://blog.stoneark.org/2016/03/27/Android-radiobutton/"/>
+    <id>http://blog.stoneark.org/2016/03/27/Android-radiobutton/</id>
+    <published>2016-03-27T08:03:37.000Z</published>
+    <updated>2016-07-16T09:02:27.000Z</updated>
+    <content type="html"><![CDATA[<p>与 iOS 不同，Android 提供了单选框，含有两个组件：<code>RadioButton</code> 和 <code>RadioGroup</code>。</p>
+<p>把若干个 RadioButton 放到一个 RadioGroup 内，则这个 RadioGroup 内的 RadioButton 自动完成只能选择一个的功能。</p>
+<p>但是需要注意，如果想要提供默认值，如默认选择第一个 RadioButton，不能在布局文件中把第一个 RadioButton 的 checked 属性设为 true，否则它会一直处于被选中状态。如果要实现默认值，在 java 代码中实现，如可以在 onCreate 时调用 RadioGroup 的 check 方法，传入第一个 RadioButton 的 id 即可，如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">radioGroup.check(R.id.radioButtonFirst);</span><br></pre></td></tr></table></figure>
+<p>另外，如果要取得 RadioGroup 中被选择的项，可通过 RadioGroup 的 getCheckedRadioButtonId 方法得到被选择的 RadioButton 的 id。然后可通过 findViewById 得到这个 RadioButton，再以此得到它的 tag 确定选择了第几项。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>与 iOS 不同，Android 提供了单选框，含有两个组件：<code>RadioButton</code> 和 <code>RadioGroup</code>。</p>
+<p>把若干个 RadioButton 放到一个 RadioGroup 内，则这个 RadioGro]]>
+    </summary>
+    
+      <category term="Android" scheme="http://blog.stoneark.org/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Android pop to parent activity with status preserving]]></title>
+    <link href="http://blog.stoneark.org/2016/03/26/Android-pop-to-parent-activity-with-status-preserving/"/>
+    <id>http://blog.stoneark.org/2016/03/26/Android-pop-to-parent-activity-with-status-preserving/</id>
+    <published>2016-03-26T07:04:56.000Z</published>
+    <updated>2016-07-16T07:18:11.000Z</updated>
+    <content type="html"><![CDATA[<p>用 Android Studio 创建的 Blank Activity，在新建向导里会问你它是否有上级页面，可以在里面填上它上一级的 Activity，那么生成的 Activity 顶部的导航栏左侧就有返回按钮，并且点击后可以返回上一级页面。</p>
+<p>但是这个返回按钮是有问题的。正常情况下，点击返回应该直接返回到之前创建的上层 Activity，也就是直接 pop 到上一层。但是这个返回按钮，是把上一层 Activity 重新创建了一遍显示出来的，导致无法显示之前的状态。</p>
+<p>比如上层 Activity 有一个 ViewPager，里面有两个 Fragment。在第二个 Fragment 里点击进入了详情的 Activity，然后点击返回按钮，发现返回到了上层 Activity 的初始状态-默认选择的第一个 Fragment。</p>
+<p>可以在 <code>AndroidManifest.xml</code> 中看到，实现方式是定义了一个 PARMENT_ACTIVITY:</p>
+<figure class="highlight xml"><figcaption><span>AndroidManifest.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">activity</span> <span class="attribute">android:name</span>=<span class="value">".ProductListActivity"</span></span><br><span class="line">    <span class="attribute">android:label</span>=<span class="value">"@string/title_activity_product_list"</span></span><br><span class="line">    <span class="attribute">android:parentActivityName</span>=<span class="value">".MainActivity"</span></span><br><span class="line">    <span class="attribute">android:theme</span>=<span class="value">"@style/AppTheme.NoActionBar"</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">meta-data</span></span><br><span class="line">        <span class="attribute">android:name</span>=<span class="value">"android.support.PARENT_ACTIVITY"</span></span><br><span class="line">        <span class="attribute">android:value</span>=<span class="value">"org.stoneark.doorsbylin.MainActivity"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>解决方法也很简单，在 <code>AndroidManifest.xml</code> 中把上一层 Activity 的属性 <code>android:launchMode</code> 改为 <code>singleTop</code> 即可，即：</p>
+<figure class="highlight xml"><figcaption><span>AndroidManifest.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">activity</span></span><br><span class="line">    <span class="attribute">android:name</span>=<span class="value">".MainActivity"</span></span><br><span class="line">    <span class="attribute">android:label</span>=<span class="value">"@string/title_activity_main"</span></span><br><span class="line">    <span class="attribute">android:theme</span>=<span class="value">"@style/AppTheme.NoActionBar"</span></span><br><span class="line">    <span class="attribute">android:launchMode</span>=<span class="value">"singleTop"</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>launchMode 的默认值是 standard，每次都会强制重新创建一个 activity 的实例，所以导致了问题。根据 <a href="https://developer.android.com/guide/topics/manifest/activity-element.html#lmode" target="_blank" rel="external">Android 文档</a>中的描述，<br>android:launchMode 的取值有：<code>standard</code> 、<code>singleTop</code> 、<code>singleTask</code>、<code>singleInstance</code>，默认值是 standard：</p>
+<ul>
+<li><code>standard</code> 允许该 activity 有多个实例，并且每当显示这个 activity 时就总是重新创建一个。</li>
+<li><code>singleTop</code> 允许该 activity 有多个实例，但如果它当前在栈顶，则不重新创建。</li>
+<li><code>singleTask</code> 只允许该 activity 有一个实例，并且它只能存在于栈底。</li>
+<li><code>singleInstance</code> 与 singleTask 相同，另外还要求栈中只能有它自己，而不能再启动另外任何 activity。</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>用 Android Studio 创建的 Blank Activity，在新建向导里会问你它是否有上级页面，可以在里面填上它上一级的 Activity，那么生成的 Activity 顶部的导航栏左侧就有返回按钮，并且点击后可以返回上一级页面。</p>
+<p>但是这个返回按钮]]>
+    </summary>
+    
+      <category term="Android" scheme="http://blog.stoneark.org/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Android 用 ID 字符串取到对应的 View]]></title>
+    <link href="http://blog.stoneark.org/2016/03/24/Android-find-view-by-id-string/"/>
+    <id>http://blog.stoneark.org/2016/03/24/Android-find-view-by-id-string/</id>
+    <published>2016-03-24T06:21:02.000Z</published>
+    <updated>2016-07-16T07:15:36.000Z</updated>
+    <content type="html"><![CDATA[<p>我们经常会需要在一个 for 循环中，取到多个 View，这时就需要用拼接得到的字符串作为 ID 来取 View。<br>但 findViewById 的参数是一个 Int 类型，一般用 R.id.xxx 来直接得到这个 Int 值。但如何用字符串来取 View 呢？</p>
+<p>这时需要先用 getResources().getIdentifier 由 String 得到对应的 Int，比如下面将会获取 btnItem0 到 btnItem5 这六个按钮：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=<span class="number">5</span>;i++) &#123;</span><br><span class="line">    String strButtonID = <span class="string">"btnItem"</span> + i;</span><br><span class="line">    <span class="keyword">int</span> buttonID = getResources().getIdentifier(strButtonID,<span class="string">"id"</span>,<span class="string">"org.stoneark.packagename"</span>);</span><br><span class="line">    Button btnItem = (Button) findViewById(buttonID);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    <summary type="html">
+    <![CDATA[<p>我们经常会需要在一个 for 循环中，取到多个 View，这时就需要用拼接得到的字符串作为 ID 来取 View。<br>但 findViewById 的参数是一个 Int 类型，一般用 R.id.xxx 来直接得到这个 Int 值。但如何用字符串来取 View 呢？</p]]>
+    </summary>
+    
+      <category term="Android" scheme="http://blog.stoneark.org/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Android Button with both text and image]]></title>
+    <link href="http://blog.stoneark.org/2016/03/23/Android-Button-with-both-text-and-image/"/>
+    <id>http://blog.stoneark.org/2016/03/23/Android-Button-with-both-text-and-image/</id>
+    <published>2016-03-23T08:30:25.000Z</published>
+    <updated>2016-07-16T07:15:24.000Z</updated>
+    <content type="html"><![CDATA[<p>最近帮朋友做一个不大不小的项目，开发上需要完成 iOS、Android、后台管理三部分。Android 和后台管理的开发虽然之前也都了解一些，但一直没有真正做过什么东西。于是决定把 iOS 交给 Ran，Android 和后台管理也不再找别人做了，自己尝试一下。</p>
+<p>Android 的开发在有些地方还是比 iOS 更加方便的。比如实现一个同时有文字和图片的按钮，在 Android 上，Button 有这样四个属性：<br><code>drawableLeft</code>, <code>drawableRight</code>, <code>drawableTop</code>, <code>drawableBottom</code>，<br>分别可以在文字的左侧、右侧、顶部、下部放置图片，简直不能再简单。</p>
+<p>当然，还是那句话，不存在 iOS 开发更简单或者 Android 开发更简单这样的说法。它们各自都有实现起来相对另一个更方便的地方。所谓简单与难，其实只是精通与知道的差别。永远不要说别人的工作比自己的简单－－只是别人比你知道的更多。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>最近帮朋友做一个不大不小的项目，开发上需要完成 iOS、Android、后台管理三部分。Android 和后台管理的开发虽然之前也都了解一些，但一直没有真正做过什么东西。于是决定把 iOS 交给 Ran，Android 和后台管理也不再找别人做了，自己尝试一下。</p>
+<]]>
+    </summary>
+    
+      <category term="Android" scheme="http://blog.stoneark.org/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Android Ripple Button with Background color]]></title>
+    <link href="http://blog.stoneark.org/2016/03/21/Android-Ripple-Button-with-Background-color/"/>
+    <id>http://blog.stoneark.org/2016/03/21/Android-Ripple-Button-with-Background-color/</id>
+    <published>2016-03-21T07:03:52.000Z</published>
+    <updated>2016-07-16T07:15:45.000Z</updated>
+    <content type="html"><![CDATA[<p>自从引入了 Meterial design，Android 变得漂亮了许多，比如从 Lollipop 开始 Button 默认就带有了 Ripple 效果。但如果给这个 Button 赋了 background 属性，改变了它的背景色，则会发现 Ripple 效果消失了。</p>
+<p>如果要改变它的背景色，还想要有 Ripple 效果，那么不要改它的 background 属性，而是将它的 style 属性设置为 @style/Widget.AppCompat.Button.Colored，然后在 Colors.xml 中更改 colorAccent 的颜色值即可。但是要注意，这种方式类似改变“主题”，程序中所有的按钮、单选框等控件的颜色都会一同改变。</p>
+<p>除了 colorAccent，还有 colorPrimary, colorPrimaryDark 等可以改变的主题颜色。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>自从引入了 Meterial design，Android 变得漂亮了许多，比如从 Lollipop 开始 Button 默认就带有了 Ripple 效果。但如果给这个 Button 赋了 background 属性，改变了它的背景色，则会发现 Ripple 效果消失了。<]]>
+    </summary>
+    
+      <category term="Android" scheme="http://blog.stoneark.org/tags/Android/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[曾经十分出名的软件公司]]></title>
@@ -222,240 +468,6 @@
     </summary>
     
       <category term="Mac OS X" scheme="http://blog.stoneark.org/tags/Mac-OS-X/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[限制最大输入字符数(更新)]]></title>
-    <link href="http://blog.stoneark.org/2015/10/29/limit-max-input-length-update/"/>
-    <id>http://blog.stoneark.org/2015/10/29/limit-max-input-length-update/</id>
-    <published>2015-10-29T07:22:50.000Z</published>
-    <updated>2015-10-29T08:20:50.000Z</updated>
-    <content type="html"><![CDATA[<p>在 <a href="../../../2015/06/29/limit-max-input-length-of-uitextview/">这篇博客</a> 中提到的限制 UITextView 最大输入字符数的方法，依然是有问题的。问题出现于用拼音输入法输入中文的时候，比如键入“你好世界”，对应的拼音为“nihaoshijie”。限制最大长度为 5，则虽然“你好世界”为四个字，但在输入拼音字符的时候，会超过 5 个字符，导致无法输入进去。</p>
-<p><a href="http://blog.sina.com.cn/s/blog_60f977e70101g4gj.html" target="_blank" rel="external">iOS:UITextField中文输入法输入时对字符长度的限制</a> 这篇文章中提出了一个方法，经尝试是可以正确处理这种情形的。基本方法如下：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)textViewDidChange:(<span class="built_in">UITextView</span> *)textView &#123;</span><br><span class="line">    <span class="built_in">NSString</span> *lang = [[textView textInputMode] primaryLanguage];</span><br><span class="line">    <span class="comment">// 对简体中文输入进行特殊处理</span></span><br><span class="line">    <span class="keyword">if</span> ([lang isEqualToString:<span class="string">@"zh-Hans"</span>]) &#123;</span><br><span class="line">        <span class="built_in">UITextRange</span> *selectedRange = [textView markedTextRange];</span><br><span class="line">        <span class="comment">// 获取高亮部分</span></span><br><span class="line">        <span class="built_in">UITextPosition</span> *position = [textView positionFromPosition:selectedRange<span class="variable">.start</span> offset:<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">if</span> (!position) &#123;</span><br><span class="line">            <span class="comment">// 没有高亮选择的字，则进行字数限制</span></span><br><span class="line">            <span class="keyword">if</span> (textView<span class="variable">.text</span><span class="variable">.length</span> &gt; LENGTH_LIMIT) &#123;</span><br><span class="line">                textView<span class="variable">.text</span> = [textView<span class="variable">.text</span> substringToIndex:LENGTH_LIMIT];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="comment">// 有高亮选择的字，认为现在正在拼音输入状态，暂不进行限制</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 简体中文以外的直接限制，暂不考虑其他语言</span></span><br><span class="line">        <span class="keyword">if</span> (textView<span class="variable">.text</span><span class="variable">.length</span> &gt; LENGTH_LIMIT) &#123;</span><br><span class="line">            textView<span class="variable">.text</span> = [textView<span class="variable">.text</span> substringToIndex:LENGTH_LIMIT];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>同时，在上面这篇文章中还受到一点启示，UITextField 是没有类似 textViewDidChange 这样的代理方法的，所以对于 UITextField 我们该怎么办？可以通过监听 <code>UITextFieldTextDidChangeNotification</code> 通知来达到一样的目的。</p>
-<p>在初始化时添加监听：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(textFieldDidChanged:) name:<span class="string">@"UITextFieldTextDidChangeNotification"</span> object:_textField];</span><br></pre></td></tr></table></figure></p>
-<p>实现监听方法：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)textFieldDidChanged:(<span class="built_in">NSNotification</span> *)notification &#123;</span><br><span class="line">	<span class="built_in">UITextField</span> *textField = (<span class="built_in">UITextField</span>*)notification<span class="variable">.object</span>;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>别忘了在 dealloc 时移除监听：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] removeObserver:<span class="keyword">self</span> name:<span class="string">@"UITextFieldTextDidChangeNotification"</span> object:_textField];</span><br></pre></td></tr></table></figure></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>在 <a href="../../../2015/06/29/limit-max-input-length-of-uitextview/">这篇博客</a> 中提到的限制 UITextView 最大输入字符数的方法，依然是有问题的。问题出现于用拼音输入法输入中文的时候，比如]]>
-    </summary>
-    
-      <category term="iOS" scheme="http://blog.stoneark.org/tags/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[向 Eclipse 中导入项目提示 JRE unbound]]></title>
-    <link href="http://blog.stoneark.org/2015/10/21/library-unbound-when-import-project-to-eclipse/"/>
-    <id>http://blog.stoneark.org/2015/10/21/library-unbound-when-import-project-to-eclipse/</id>
-    <published>2015-10-21T08:47:11.000Z</published>
-    <updated>2015-10-29T07:09:54.000Z</updated>
-    <content type="html"><![CDATA[<p>在 Eclipse 中导入 Java 项目后，常会出现编译报错，一个很常见的原因是工程属性中所定义的某些 Library 在本地找不到。又经常是本地安装的版本与工程属性中指定的版本不一致，比如本地安装了 JRE 8，但工程属性中定义的是使用 JRE 7。</p>
-<p>在左侧的对应工程上点右键 -&gt; Build Path -&gt; Configure Build Path，在弹出的对话框中，右侧顶部点选 Libraries，下方的列表中会发现有几项后面有 “(unbound)” 后缀。此时就代表，项目属性中定义的版本，在本地找不到，所以无法编译。</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/library_unbound_in_eclipse.jpg" alt=""></p>
-<p>解决方法也很简单，如果本地没有安装所需要的 Library，安装上就好。如果本地安装了，只是版本不一致，而且可以用本地版本替代的情况，可以选择 unbound 的条目，再点击右侧 Edit 按钮，在列表中选择本地有的版本，或者直接选择 Workspace default JRE，即可解决。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>在 Eclipse 中导入 Java 项目后，常会出现编译报错，一个很常见的原因是工程属性中所定义的某些 Library 在本地找不到。又经常是本地安装的版本与工程属性中指定的版本不一致，比如本地安装了 JRE 8，但工程属性中定义的是使用 JRE 7。</p>
-<p>在左]]>
-    </summary>
-    
-      <category term="Eclipse" scheme="http://blog.stoneark.org/tags/Eclipse/"/>
-    
-      <category term="Java" scheme="http://blog.stoneark.org/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[第三方即时通讯服务]]></title>
-    <link href="http://blog.stoneark.org/2015/10/19/instant-message-services/"/>
-    <id>http://blog.stoneark.org/2015/10/19/instant-message-services/</id>
-    <published>2015-10-19T08:45:16.000Z</published>
-    <updated>2015-10-29T06:43:12.000Z</updated>
-    <content type="html"><![CDATA[<p>越来越多的移动 App 加入了即时通讯功能，目前也有越来越多的第三方即时通讯服务供开发者选择。如 <a href="http://www.easemob.com/" target="_blank" rel="external">环信</a>、<a href="http://www.rongcloud.cn/" target="_blank" rel="external">融云</a>、<a href="https://imwukong.com" target="_blank" rel="external">阿里悟空</a>、<a href="http://www.yuntongxun.com/" target="_blank" rel="external">容联云通讯</a>、<a href="https://leancloud.cn/" target="_blank" rel="external">LeanCloud</a>、<a href="http://bmob.cn/" target="_blank" rel="external">Bmob</a> 等。</p>
-<p>环信，最早的专门做移动通讯服务的团队之一。其功能很丰富，具有完善的用户系统、群系统等，也是为数不多能提供视频通话的服务。Demo 完成度也很高，但是工程结构一般。其通讯核心部分封装为了环信 SDK，以 .a 文件的方式打包发布，同时提供 cocoapods 方式引入（但更新很不及时）。UI 部分并未进行很好的组织，仅是在 Demo 中以源代码的形式提供，且代码质量一般。如果要调整 UI，只能在 Demo 源代码的基础上修改，或者自己实现。</p>
-<p>融云，功能丰富、Demo 完成度高。迭代速度极快，每周更新一次。通讯核心部分和 UI 部分分别封装为了 IMLib 和 IMKit 两个库，工程结构良好。实现 UI 时，可以继承 IMKit 中的类，如有需要可在子类中进行调整。当然也可以只用 IMKit，自己实现 UI。与环信不同的是，它并没有用户系统，并不存储任何与用户相关的信息。这样设计的初衷在于，当一个应用需要集成即时通讯服务时，往往应用本身的服务器已经有一个用户系统了。所以对于应用的每一个注册用户，应用服务器不需要再申请注册一个新的融云用户，而只需要直接采用用户 ID 作为通讯的身份即可，用户信息全部都从自己的应用服务器中维护。</p>
-<p>阿里悟空为阿里来往所采用的即时通讯服务，2015 年将服务对外开放并开发了移动端 SDK。目前功能较简单，Demo 完整程度较低。仅提供了核心通讯功能的封装，Demo 中的 UI 部分很简陋，只能作为参考。其也不存在用户系统，OpenID 的方式与融云的用户管理方式相似。</p>
-<p>容联云通讯，包含短信验证码、即时通讯、音视频通话等，短信验证码的服务客户很多。腾讯云的音视频云通信 AVC，今年刚开放，主要优势在于音视频通讯。</p>
-<p>LeanCloud 和 Bmob，是集多种应用服务为一身的后端服务。包括数据存储服务、消息推送服务、实时通信服务等。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>越来越多的移动 App 加入了即时通讯功能，目前也有越来越多的第三方即时通讯服务供开发者选择。如 <a href="http://www.easemob.com/" target="_blank" rel="external">环信</a>、<a href="http://]]>
-    </summary>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[UIAlertView without title]]></title>
-    <link href="http://blog.stoneark.org/2015/09/18/UIAlertView-without-title/"/>
-    <id>http://blog.stoneark.org/2015/09/18/UIAlertView-without-title/</id>
-    <published>2015-09-18T06:02:09.000Z</published>
-    <updated>2015-10-28T09:32:24.000Z</updated>
-    <content type="html"><![CDATA[<p>UIAlertView 是支持无标题的。如果传空字符串，即为没有标题，只显示内容；如果传 nil，则会把内容放到标题上。</p>
-<p>1、title 传空字符串，即：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@&#34;&#34; message:@&#34;&#24744;&#30830;&#23450;&#35201;&#36864;&#20986;&#27492;&#24080;&#21495;&#21527;&#65311;&#34; delegate:self cancelButtonTitle:@&#34;&#21462;&#28040;&#34; otherButtonTitles:@&#34;&#30830;&#35748;&#34;, nil];</span><br></pre></td></tr></table></figure>
-<p><img src="http://stoneark.qiniudn.com/blogimg/uialertview_without_title_1.png" alt=""></p>
-<p>2、title 传 nil，即：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@&#34;&#24744;&#30830;&#23450;&#35201;&#36864;&#20986;&#27492;&#24080;&#21495;&#21527;&#65311;&#34; delegate:self cancelButtonTitle:@&#34;&#21462;&#28040;&#34; otherButtonTitles:@&#34;&#30830;&#35748;&#34;, nil];</span><br></pre></td></tr></table></figure>
-<p><img src="http://stoneark.qiniudn.com/blogimg/uialertview_without_title_2.png" alt=""></p>
-<p>另外，如果需要自定义 AlertView 的样式，可以采用开源的 <a href="https://github.com/Friend-LGA/LGAlertView" target="_blank" rel="external">LGAlertView</a>。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>UIAlertView 是支持无标题的。如果传空字符串，即为没有标题，只显示内容；如果传 nil，则会把内容放到标题上。</p>
-<p>1、title 传空字符串，即：</p>
-<figure class="highlight plain"><table><tr><td c]]>
-    </summary>
-    
-      <category term="iOS" scheme="http://blog.stoneark.org/tags/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[MBProgressHUD and UITableView section header]]></title>
-    <link href="http://blog.stoneark.org/2015/07/06/MBProgressHUD-and-UITableView-section-header/"/>
-    <id>http://blog.stoneark.org/2015/07/06/MBProgressHUD-and-UITableView-section-header/</id>
-    <published>2015-07-06T02:42:42.000Z</published>
-    <updated>2015-10-28T08:57:16.000Z</updated>
-    <content type="html"><![CDATA[<p>在一个 UITableView 上添加一个 MBProgressHUD，很有可能会遇到这种情况，HUD 被 TableView 的 section header 挡住了：</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/hud_and_tableview_section_header.jpg" alt=""></p>
-<p>同样的，如果你用了 UITableViewController，则 self.view 就是一个 UITableView，则当向 self.view 添加一个 HUD 为 subview 时，就会遇到这个问题。</p>
-<p>在 github 上的 issue：<br><a href="https://github.com/jdg/MBProgressHUD/issues/242" target="_blank" rel="external">https://github.com/jdg/MBProgressHUD/issues/242</a></p>
-<p>在 stackoverflow 上的讨论：<br><a href="http://stackoverflow.com/questions/7199700/uitableview-headings-shown-on-top-of-mbprogresshud" target="_blank" rel="external">http://stackoverflow.com/questions/7199700/uitableview-headings-shown-on-top-of-mbprogresshud</a></p>
-<p>可以根据情况考虑，选择下面的方法：</p>
-<ol>
-<li>不用 UITableViewController，改用 UIViewController + TableView，并把 hud 添加到 self.view 上。</li>
-<li>把 hud 添加到 self.navigationController.view 上，这样会带来一个副作用，hud 显示的时候不能点击返回按钮，不推荐。</li>
-<li>调整 hud 的 z 值，hud.layer.zPosition = MAXFLOAT; （z 值越大越在上方），推荐采用。</li>
-</ol>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>在一个 UITableView 上添加一个 MBProgressHUD，很有可能会遇到这种情况，HUD 被 TableView 的 section header 挡住了：</p>
-<p><img src="http://stoneark.qiniudn.com/blogim]]>
-    </summary>
-    
-      <category term="iOS" scheme="http://blog.stoneark.org/tags/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[限制 UITextView 最大输入字符数]]></title>
-    <link href="http://blog.stoneark.org/2015/06/29/limit-max-input-length-of-uitextview/"/>
-    <id>http://blog.stoneark.org/2015/06/29/limit-max-input-length-of-uitextview/</id>
-    <published>2015-06-29T07:47:49.000Z</published>
-    <updated>2015-10-29T08:21:08.000Z</updated>
-    <content type="html"><![CDATA[<p>实现以下两个 UITextView 的代理方法即可：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#define LENGTH_LIMIT 10</span></span><br><span class="line">- (<span class="built_in">BOOL</span>)textView:(<span class="built_in">UITextView</span> *)textView shouldChangeTextInRange:(<span class="built_in">NSRange</span>)range replacementText:(<span class="built_in">NSString</span> *)text &#123;</span><br><span class="line">    <span class="keyword">if</span> (textView<span class="variable">.text</span><span class="variable">.length</span> &gt;= LENGTH_LIMIT &amp;&amp; text<span class="variable">.length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(<span class="keyword">void</span>)textViewDidChange:(<span class="built_in">UITextView</span> *)textView &#123;</span><br><span class="line">    <span class="keyword">if</span> (textView<span class="variable">.text</span><span class="variable">.length</span> &gt; LENGTH_LIMIT) &#123;</span><br><span class="line">        textView<span class="variable">.text</span> = [textView<span class="variable">.text</span> substringToIndex:LENGTH_LIMIT];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意，这两个代理方法必须都实现。</p>
-<p>如果只实现第一个代理方法，则会出现一个问题：到达字数限制时，用键盘的确已无法输入进去，但可以通过点击键盘上方的联想字词继续输入进去，导致超过限制。通过实现第二个代理方法，可把通过联想或其他方式输入进去的多余字符截掉。这也是之前我没有注意到的一点。</p>
-<p>如果只实现第二个代理方法，虽然长度不会超过限制，但实际相当于先输入进去，后再截掉，导致按下键盘后虽然没有输入进去字符，但键盘上方的联想字词在不断地根据你的按键而联想。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>实现以下两个 UITextView 的代理方法即可：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span cla]]>
-    </summary>
-    
-      <category term="iOS" scheme="http://blog.stoneark.org/tags/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[iOS 8.2 UITableView 的默认行高 bug]]></title>
-    <link href="http://blog.stoneark.org/2015/06/25/ios-8-2-tableview-cell-height-bug/"/>
-    <id>http://blog.stoneark.org/2015/06/25/ios-8-2-tableview-cell-height-bug/</id>
-    <published>2015-06-25T02:37:27.000Z</published>
-    <updated>2015-10-27T07:01:24.000Z</updated>
-    <content type="html"><![CDATA[<p><img src="http://stoneark.qiniudn.com/blogimg/ios82_tableview_cell_height_bug.png" alt="Cell高度错误"></p>
-<p>很简单的一个登录页面，用 Storyboard 的 Static Cell 来实现。开发时没有发现任何问题，交予测试时反馈输入框太小了，就是上面截图的样子，现象 100% 出现。而且发现，从该页面 Push 到下一层页面再 Pop 回该页面后，高度即可恢复正常。</p>
-<p>检查程序没发现任何问题，Cell Height 都采用了默认高度。在我的模拟器上和其他测试设备上也无法重现这个问题。</p>
-<p>检查那台出问题的测试机，发现系统版本为 iOS 8.2，而我的模拟器和测试机上都运行着 iOS 8.3 或 iOS 7.1。于是安装 iOS 8.2 模拟器，问题在 8.2 版本的模拟器上重现了！</p>
-<p>经研究，推测为 iOS 8.2 的系统 bug，只要是采用了 TableView 的默认行高，就会出现行高不正确的问题。这个 bug 已经在 iOS 8.3 上得到修复。若要确保 iOS 8.2 系统下也不会出现显示异常，可以采用以下任意一种方式：</p>
-<ol>
-<li>把 TableView 的 Row Height 属性设置为不是默认 44 的值。</li>
-<li>把 TableView 中的 TableViewCell 的 Row Height 属性，选中 Custom。</li>
-</ol>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p><img src="http://stoneark.qiniudn.com/blogimg/ios82_tableview_cell_height_bug.png" alt="Cell高度错误"></p>
-<p>很简单的一个登录页面，用 Storyboard 的 Stati]]>
-    </summary>
-    
-      <category term="TableView" scheme="http://blog.stoneark.org/tags/TableView/"/>
-    
-      <category term="iOS" scheme="http://blog.stoneark.org/tags/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Updated to Hexo 3 from 2]]></title>
-    <link href="http://blog.stoneark.org/2015/06/24/updated-to-hexo-3-from-2/"/>
-    <id>http://blog.stoneark.org/2015/06/24/updated-to-hexo-3-from-2/</id>
-    <published>2015-06-24T07:41:21.000Z</published>
-    <updated>2015-07-06T06:39:03.000Z</updated>
-    <content type="html"><![CDATA[<p>我一直在用的静态博客框架 Hexo，在今年 3 月份大版本<a href="https://hexo.io/news/2015/03/05/hexo-3-0-released/" target="_blank" rel="external">升级到了 3.0 版</a>。一直没有从 2.x 升级到 3.x，今天升级并迁移到了最新的 3.1.1，了解了一下 3.x 的变化。<br>官方提供了<a href="https://github.com/hexojs/hexo/wiki/Migrating-from-2.x-to-3.0" target="_blank" rel="external">迁移文档</a>，升级过程很顺畅，安装 hexo-cli 时果然如文档所说 “error occurred”，把老版本的 hexo 先删掉就好。</p>
-<p>有一个地方文档中并未提及，需要格外注意：除了安装 hexo-cli 之外的步骤，都应该在你的 blog 根目录下进行。这也反映出了新版本最大的变化：模块分离。</p>
-<p>首先可以看到，新版本多了一个 <code>hexo-cli</code>，也就是 Hexo command line interface，这也是新版本中唯一需要安装到系统全局的模块。把 CLI 从主模块中分离，可以让 CLI 加载更快，同时能够允许你在不同的目录下维护着不同版本的 hexo blog。</p>
-<p>而其他所有模块，包括 hexo, hexo-server, hexo-deployer, hexo-generator, hexo-renderer 等，都被安装在某一个 blog 的 node_modules 目录下，仅应用于这一个 blog。</p>
-<p>模块分离有利有弊，但大多数情形下是利大于弊的。对于 hexo 来讲，带来最大的利就是，blog 目录下包含着所有需要的内容和程序，受系统环境的限制就能做到尽可能的小。而先前版本的 hexo，blog 目录中仅包含所有的内容，而并不包含程序 — 程序需要调用系统中安装的。设想一下，Alice 在 Bob 家度假，突然想用 Bob 的个人电脑写个博客（假设 Alice 没有带自己的笔记本）。Alice 平常用的是 2.x 版本的 hexo，并把 blog 目录同步到了 Dropbox。而 Bob 用的是 2.y 版本的 hexo，2.x 和 2.y 版本是不完全兼容的。于是，当 Alice 在自己的 blog 目录下执行 hexo 的命令时，可能会出现一些意想不到的错误 — 内容是 2.x 版本的，而程序是 2.y 版本的。</p>
-<p>而如果它们都用了现在模块分离程度更高的版本，那么在 Alice 的 blog 目录中，就同时包含了 3.x 版本的内容和 3.x 版本的程序，虽然 Bob 的电脑上是 3.y 版本，但这并不影响什么 — 因为唯一需要依赖系统的是 hexo-cli，而这个 hexo-cli 只是一个 driver，具体的功能实现都将由 blog 目录中的程序接管。而由于这个 hexo-cli 功能非常简单，所以可以做到非常稳定，不同的版本基本上可以完全兼容。</p>
-<p>这样的大版本更新也是有些副作用的，比如由于 hexo-deployer-git 模块也改变了，之前的 git 提交历史都没有了…</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>我一直在用的静态博客框架 Hexo，在今年 3 月份大版本<a href="https://hexo.io/news/2015/03/05/hexo-3-0-released/" target="_blank" rel="external">升级到了 3.0 版</a>。一]]>
-    </summary>
-    
-      <category term="hexo" scheme="http://blog.stoneark.org/tags/hexo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[WWDC 2015]]></title>
-    <link href="http://blog.stoneark.org/2015/06/10/WWDC-2015/"/>
-    <id>http://blog.stoneark.org/2015/06/10/WWDC-2015/</id>
-    <published>2015-06-10T08:27:02.000Z</published>
-    <updated>2015-07-14T08:28:29.000Z</updated>
-    <content type="html"><![CDATA[<p>今年的 WWDC 没有什么让人兴奋的看点，没有硬件新品，没有突破性改变的软件新品，所带来的都是些稳定性的提高、细节的完善、功能的增强。但其实这也正是苹果目前最应该做的，步子大容易扯着蛋，这句话在 OS X Yosemite 和 iOS 8 上得到了验证。</p>
-<h3 id="New_OS">New OS</h3><p>iOS 9，OS X EI Capitan, watch OS 2.</p>
-<p>iOS 9，最让人没想到的是，它竟然还支持 iPhone 4s 和 iPad 2。按照以往的规则，iPhone 4s 和 iPad 2 今年应该被最新版的系统抛弃了。据说苹果对 iOS 9 从底层进行了大量的改造，大幅提高了系统的流畅度和稳定性，所以可以让老设备焕发第二春。可能是因为老设备运行 iOS 8 实在是太不堪入目，苹果想挽回一点儿面子？我迫不及待地把手中已经卡成翔的 iPhone 4s 升级到了 iOS 9 Developer Preview，用了两天，果断降回来了—频繁死机、卡顿，完全没法用，现阶段大家就不要尝试了。放张图给大家看看吧。<br><img src="http://7ktrjm.com1.z0.glb.clouddn.com/blogimg/ios9_devprev_scrshot.jpg" alt="iOS 9 Developer Preview"></p>
-<p>iOS 9 在功能上最大的革新，是 iPad 上支持了多任务分屏，有 Slide Over、Split View、画中画三种模式。再就是 Siri 的搜索更加智能，会根据使用习惯给出建议。其他的都是些小变化了，比如地图支持公交、备忘录变成了个富文本编辑器、Passbook 变成了 Wallet。增加了两个新应用：News 和 Apple Music，估计在国内也没什么用。</p>
-<p>对了，观感上的变化就是换了新的默认字体，英文新字体 San Francisco，中文新字体苹方，看上去还蛮不适应。</p>
-<p>EI Capitan 没给我留下什么印象，还是好好改 bug 吧，把 bug 改好就挺好了…watch OS 2 也没啥说的，好好支持原生应用吧…</p>
-<h3 id="New_tools">New tools</h3><p>Xcode 7, Swift 2, New developer program.</p>
-<p>Xcode 7，竟然对在设备上调试不再做限制了，不再需要开发者身份就能直接将程序在任意设备上运行。这着实降低了开发者的入门门槛，但我比较担心这样会不会有空子可钻，毕竟 iOS 平台的应用安全就是靠着层层限制所保证的，一旦 Xcode 这种毫无限制的 Adhoc 被钻了空子，还是很棘手的。</p>
-<p><img src="http://7ktrjm.com1.z0.glb.clouddn.com/blogimg/xcode7_run_on_device.jpg" alt="Xcode 7 run on device"></p>
-<p>Swift 发布了 2.0 版，已经日臻成熟了。</p>
-<p>一个令人兴奋的消息是，Developer Program 以后不再区分 iOS 和 Mac，之前购买的也将升级为新的 Apple Developer Program。以后只需要一个 99 美金就可以同时上架 iOS App Store 和 Mac App Store 了。</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/new_apple_developer_program.jpg" alt="New Apple Developer Program"></p>
-<h3 id="后记">后记</h3><p>今天看到篇文章，抨击之前 OS X 的中文默认字体，看着还有点意思：<a href="https://qdan.me/list/VXl0z-WpwObF_83e" target="_blank" rel="external">OS X / iOS 六年字体战争</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>今年的 WWDC 没有什么让人兴奋的看点，没有硬件新品，没有突破性改变的软件新品，所带来的都是些稳定性的提高、细节的完善、功能的增强。但其实这也正是苹果目前最应该做的，步子大容易扯着蛋，这句话在 OS X Yosemite 和 iOS 8 上得到了验证。</p>
-<h3 i]]>
-    </summary>
-    
-      <category term="WWDC" scheme="http://blog.stoneark.org/tags/WWDC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Google I/O 2015]]></title>
-    <link href="http://blog.stoneark.org/2015/05/30/Google-I-O-2015/"/>
-    <id>http://blog.stoneark.org/2015/05/30/Google-I-O-2015/</id>
-    <published>2015-05-30T01:26:28.000Z</published>
-    <updated>2015-07-14T08:25:57.000Z</updated>
-    <content type="html"><![CDATA[<p>Google I/O 2015 召开了，虽说今年的 Google I/O 没有像去年一样带来很多新东西，但这次大会不乏让人眼前一亮的内容。</p>
-<p>首先是 Android M，终于把之前粗放的权限管理进行了重新设计，不再像之前那样只是在安装应用的时候通知你一下，而是借鉴了 iOS 更为科学的权限管理方式。Android 最大的问题之一就是权限，希望这次可以真正得到解决。Android M 原生支持了指纹识别，支持了 64 位架构，别的好像也没什么。</p>
-<p>新推出的 Google Photos 看起来蛮不错，自然语言搜索貌似很强大。可以存储无限容量的照片，重要的是免费。当然有些人说之所以免费，是为了要搜集更大量的信息，以提高数据分析的能力。</p>
-<p>还有个很有意思的东西，Cardboard，一个很接地气的 VR 装置，不得不佩服 Google 工程师们在 20% 时间里发挥出的聪明才智。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>Google I/O 2015 召开了，虽说今年的 Google I/O 没有像去年一样带来很多新东西，但这次大会不乏让人眼前一亮的内容。</p>
-<p>首先是 Android M，终于把之前粗放的权限管理进行了重新设计，不再像之前那样只是在安装应用的时候通知你一下，而是借]]>
-    </summary>
-    
-      <category term="Google" scheme="http://blog.stoneark.org/tags/Google/"/>
     
   </entry>
   

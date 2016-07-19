@@ -2,6 +2,61 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.stoneark.org/2016/04/16/html-form-submit/</loc>
+    <lastmod>2016-07-19T07:26:00.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2016/04/21/blank-activity-and-empty-activity-in-android-studio/</loc>
+    <lastmod>2016-07-19T07:25:15.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/about/index.html</loc>
+    <lastmod>2016-07-19T07:17:42.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2016/03/27/Android-hide-soft-keyboard/</loc>
+    <lastmod>2016-07-18T10:12:12.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2016/04/19/Android-application-display-name/</loc>
+    <lastmod>2016-07-18T09:45:06.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2016/04/14/ejs-template/</loc>
+    <lastmod>2016-07-18T07:40:33.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2016/03/27/Android-radiobutton/</loc>
+    <lastmod>2016-07-16T09:02:27.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2016/03/26/Android-pop-to-parent-activity-with-status-preserving/</loc>
+    <lastmod>2016-07-16T07:18:11.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2016/03/21/Android-Ripple-Button-with-Background-color/</loc>
+    <lastmod>2016-07-16T07:15:45.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2016/03/24/Android-find-view-by-id-string/</loc>
+    <lastmod>2016-07-16T07:15:36.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.stoneark.org/2016/03/23/Android-Button-with-both-text-and-image/</loc>
+    <lastmod>2016-07-16T07:15:24.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.stoneark.org/2016/02/29/recent-developer-interviews/</loc>
     <lastmod>2016-03-21T06:24:13.000Z</lastmod>
   </url>
@@ -254,11 +309,6 @@
   <url>
     <loc>http://blog.stoneark.org/2014/08/03/replace-google-fonts-to-local/</loc>
     <lastmod>2014-08-03T09:23:17.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://blog.stoneark.org/about/index.html</loc>
-    <lastmod>2014-07-16T03:35:08.000Z</lastmod>
   </url>
   
   <url>
