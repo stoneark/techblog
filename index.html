@@ -66,384 +66,423 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2016-04-21T09:31:18.000Z"><a href="/2016/04/21/blank-activity-and-empty-activity-in-android-studio/">Apr 21 2016</a></time>
+        <time datetime="2016-06-04T09:59:05.000Z"><a href="/2016/06/04/ciji-release/">Jun 4 2016</a></time>
       
       
   
-    <h1 class="title"><a href="/2016/04/21/blank-activity-and-empty-activity-in-android-studio/">Blank activity and Empty activity in Android Studio</a></h1>
+    <h1 class="title"><a href="/2016/06/04/ciji-release/">詞記 Release!</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>Android Studio 新建 Activity 的模板里，有一个 <code>Blank Activity</code>，还有一个 <code>Empty Activity</code>。这两个是不同的。</p>
-<p>Blank Activity，会为你新建这样一个 Activity：含有导航栏，导航栏上有返回按钮，并设置了导航栏标题，右下角有一个浮动按钮。</p>
-<p>可以发现工程中新建了一个 NewActivity.java 的类，同时新建了两个布局文件，一个是 activity_new.xml，另一个是 content_new.xml。activity_new.xml 中是一个 CoordinatorLayout，并且 include 了 content_new.xml。这个 Activity 显示的内容实际在 content_new.xml 中，它是一个 RelativeLayout。</p>
-<p>Empty Activity，会为你新建这样一个 Activity：含有导航栏，没有返回按钮，导航栏标题没有设置，其他都是空白。</p>
-<p>工程中新建了 NewActivity.java 和 activity_new.xml，里面是一个 RelativeLayout。</p>
-<p>要想实现 Blank Activity 的效果，并希望不要有多余的东西，在一个 xml 布局中实现，可以按照以下框架（下面以 EditPasswordActivity 为例）:</p>
+        <p><em>Dear friends,</em></p>
+<p>我的最新作品，词记，已正式上线 App Store 啦！</p>
+<p><img src="http://stoneark.qiniudn.com/appimg/ciji/brief.png" width="450"></p>
+<h3 id="应用简介_(Description)">应用简介 (Description)</h3><p>你一定写过日记。或许是小学语文老师布置的家庭作业，或许是青春期时懵懵懂懂的情感记忆，或许是长大后日记本里给自己的加油打气，或许是旅行在外每天晚上写下的旅途随笔。</p>
+<p>词记，让你用一个独特的方式写日记。把今天所有的点点滴滴，在思绪中整理、精心挑选，然后只用一个词来概括。</p>
+<p>或许随着时间流逝，再看到这些词时，早已想不起这词背后的故事。但这些故事给自己留下的感觉，却依然明晰：惊喜、开心、阳光明媚、意外收获，亦或失落、无聊、阴雨绵绵、心情好糟。</p>
+<p>是的，这就是我们的生活。</p>
+<p>词记，用一个词记录今天！<br>一天一个词，烦恼去无边～</p>
+<p>You have ever written diary. Maybe homework assigned by your teacher, maybe affection memories in your teens, maybe “fighting” in your notebook after graduation, maybe notes in every evening on your trip.</p>
+<p>Ciji (詞記), a special way to keep a diary. All things happened today, in mind, pick only one word to describe!</p>
+<p>Time flies, maybe you cannot remember the things happened behind these words, but the feelings are clear: surprise, happy, sunshine, windfall, or disappointed, boring, rainy, restless, etc.</p>
+<p>Yeah, it is our life.</p>
+<p>Ciji (詞記), use one word to record today.<br>A word a day, keep the sadness away~</p>
+<h3 id="应用下载_(Download)">应用下载 (Download)</h3><p><a href="https://itunes.apple.com/cn/app/ci-ji-yong-yi-ge-ci-ji-lu-jin-tian/id1113379853?l=zh&amp;ls=1&amp;mt=8" target="_blank" rel="external"><img src="http://stoneark.qiniudn.com/appimg/appstore.png" width="150"></a></p>
+<p>喜欢请五星好评哦！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-26T08:58:59.000Z"><a href="/2016/05/26/itunes-connect-error-itms-90475/">May 26 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/26/itunes-connect-error-itms-90475/">iTunes Connect Error ITMS-90475</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>提交 binary 到 iTunes Connect 时，遇到了之前未遇到过的错误：</p>
+<blockquote>
+<p>ERROR ITMS-90475: “Invalid Bundle. iPad Multitasking support requires launch story board in bundle ‘org.stoneark.worddiary’.”</p>
+</blockquote>
+<p>原因是，iPad 程序（或者 Universal 程序），从 iOS 9 / Xcode 7 开始，默认要求支持多任务分屏。但这要求必须使用 Launch Storyboard，而不能再用 Launch Image。而正如<a href="/2016/05/19/bug-about-launchscreen-storyboard">之前说过的</a>，所以我并没有采用 Launch Storyboard，所以导致了这个问题。</p>
+<p>目前可以暂时不支持多任务分屏，在工程属性的 General 里，把 <code>Requires full screen</code> 勾选上即可（会在 Info.plist 里增加字段 <code>UIRequiresFullScreen</code>）。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-25T08:35:16.000Z"><a href="/2016/05/25/application-localization-in-ios-development/">May 25 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/25/application-localization-in-ios-development/">Application localization in iOS development</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>iOS 对国际化的支持是相对比较完善的。</p>
+<h2 id="应用的国际化支持">应用的国际化支持</h2><p>在 Project 属性中，有 Localizations 一项，在其中可以管理支持的语言列表，还可以选择是否开启 Base 语言。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/application_localization_in_ios_development_1.png" width="457"></p>
+<h2 id="为资源文件开启国际化">为资源文件开启国际化</h2><p>在资源文件（如 strings/xib/storyboard）的文件属性中，可以在 Localization 项中进行国际化语言的管理。如果尚未国际化，会有一个长长的 Localization 按钮，点击后开启这个文件的国际化。如果已国际化，会显示并可管理当前文件已支持的语言。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/application_localization_in_ios_development_2.png" width="259"></p>
+<p>如果想取消对这个文件的国际化，在 Xcode 里做不到。唯一的办法是，去 Finder 里把各个语言的 .lproj 目录下的这个资源文件删掉，只留一份放到工程目录的最外层（而不从属与任何 .lproj 目录）。</p>
+<h2 id="字符串的国际化：">字符串的国际化：</h2><p>自己新建一个 String 文件到工程里，名为 <code>Localizable.strings</code> 即可。（这是默认的文件名，调用 <code>NSLocalizedString</code> 方法默认取这个文件，如果用了其他的文件名，则每次调用方法时，需要指定文件名）</p>
+<p>例如，Localizable.strings 内容为：</p>
+<figure class="highlight xml"><figcaption><span>Localizable.strings(Chinese (Simplified))</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">"Today" = "今天";</span><br><span class="line">"Yesterday" = "昨天";</span><br><span class="line">"%d days ago" = "%d天前";</span><br><span class="line">/* &#123;User First Name&#125;'s Profile */</span><br><span class="line">"%@'s Profile"="%@'s Profile";</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><figcaption><span>Localizable.strings(English)</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">"Today" = "Today";</span><br><span class="line">"Yesterday" = "Yesterday";</span><br><span class="line">"%d days ago" = "%d days ago";</span><br><span class="line">/* &#123;User First Name&#125;'s Profile */</span><br><span class="line">"%@'s Profile"="%@的个人资料";</span><br></pre></td></tr></table></figure>
+<p>获取时：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span> *str;</span><br><span class="line">str = <span class="built_in">NSLocalizedString</span>(<span class="string">@"Today"</span>, <span class="literal">nil</span>);</span><br><span class="line"><span class="keyword">int</span> temp = <span class="number">3</span>;</span><br><span class="line">str = [<span class="built_in">NSString</span> stringWithFormat:<span class="built_in">NSLocalizedString</span>(<span class="string">@"%d days ago"</span>, <span class="literal">nil</span>), temp];</span><br><span class="line">str = [<span class="built_in">NSString</span> stringWithFormat:<span class="built_in">NSLocalizedString</span>(<span class="string">@"%@'s Profile"</span>, <span class="string">@"&#123;User First Name&#125;'s Profile"</span>), user<span class="variable">.name</span>];</span><br></pre></td></tr></table></figure>
+<p>上面是常用的情况。还有一种复杂的情况，是在有些语言里，某两个参数的位置可能会颠倒，这时需要使用转义符：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#34;%@ Error! %@ failed!&#34; = &#34;%2$@ &#22833;&#36133;&#20102;&#65281;&#65285;1$@ &#38169;&#35823;&#20102;&#65281;&#34;;</span><br></pre></td></tr></table></figure>
+<p>更为详细的可参照：<br><a href="http://nshipster.com/nslocalizedstring/" target="_blank" rel="external">http://nshipster.com/nslocalizedstring/</a><br><a href="https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/LoadingResources/Strings/Strings.html" target="_blank" rel="external">https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/LoadingResources/Strings/Strings.html</a><br><a href="https://developer.apple.com/library/ios/documentation/MacOSX/Conceptual/BPInternational/InternationalizingYourCode/InternationalizingYourCode.html" target="_blank" rel="external">https://developer.apple.com/library/ios/documentation/MacOSX/Conceptual/BPInternational/InternationalizingYourCode/InternationalizingYourCode.html</a></p>
+<h2 id="xib/storyboard_的国际化">xib/storyboard 的国际化</h2><p>除了借助 localizable strings 文件进行界面国际化之外，对于 xib/storyboard 可以直接进行国际化。虽然看上去很方便、很直观，但其实并不是特别好用。</p>
+<p>它的原理其实还是 localizable strings，只不过这个 strings 文件是 Xcode 自动创建的。创建的时机是在你对这个界面开启 localization 时，而且它并不会监控 xib/storyboard 的变化。如果你在 localization 之后又改变了这个 xib/storyboard，主要是增加了新的控件，那么这个新控件并不会自动出现在 strings 文件中。</p>
+<p>那你就没办法了，Xcode 也没有提供同步的手段，你唯一能做的是查看 xib 的源代码，从中找到新建控件的 ID，然后自己写到那个 strings 文件里－－噢，这一点都不方便。</p>
+<h2 id="Bundle_Display_Name_的国际化">Bundle Display Name 的国际化</h2><p>显然，需要对不同语言设定不同的应用名称，也就是 Bundle Display Name，我们都知道它在 Info.plist 里。</p>
+<p>但注意，不是把 Info.plist 进行 Localization，如果对 Info.plist 进行了 Localization，会编译报错 the file Info.plist does not exist.</p>
+<p>正确的方式是在工程里新建一个名为 <code>InfoPlist.strings</code> 的文件，然后对这个 strings 文件进行国际化，在里面写入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#34;CFBundleDisplayName&#34; = &#34;&#21517;&#31216;&#34;;</span><br></pre></td></tr></table></figure>
+<p>即可。</p>
+<p>注意，需要把 InfoPlist.strings 文件加到工程属性里的 Copy Bundle Resources 里（默认应该就给加上了，如果有问题可以检查一下）。但不要把 Info.plist 文件加到 Copy Bundle Resources 里，否则出现编译警告。</p>
+<h2 id="Base_语言的问题">Base 语言的问题</h2><p>测试发现，将 iOS 设备设置为并没有支持的语言时，应用并没有正确地显示为 Base 中的字符串（英语），而是显示成了简体中文。</p>
+<p>Stackoverflow 上有很多国内外开发者遇到了这个问题，但都未找到原因和解决方法。</p>
+<p><a href="http://stackoverflow.com/questions/20241256/ios-app-default-language-en-is-not-applied" target="_blank" rel="external">http://stackoverflow.com/questions/20241256/ios-app-default-language-en-is-not-applied</a><br><a href="http://stackoverflow.com/questions/20241256/ios-app-default-language-en-is-not-applied" target="_blank" rel="external">http://stackoverflow.com/questions/20584984/ios-set-a-default-language-in-xcode-for-my-app</a><br><a href="http://stackoverflow.com/questions/18114994/does-my-base-internationalization-storyboard-have-to-correspond-to-a-fallback-la" target="_blank" rel="external">http://stackoverflow.com/questions/18114994/does-my-base-internationalization-storyboard-have-to-correspond-to-a-fallback-la</a></p>
+<h2 id="App_Store_应用名称及简介的国际化">App Store 应用名称及简介的国际化</h2><p>希望让应用在不同国家的 App Store 中显示不同语言的名称，在 iTunes Connect 里新建应用时先用一个主要语言新建，如简体中文，新建成功后在 App 信息里可以看到“可本地化的信息”，可以在右侧选择语言，并且填入相对应的信息。另外，在版本中对应用简介、关键字、截图等也都须进行国际化。</p>
+<p>如果未做本地化，则按照选择的主要语言显示。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/application_localization_in_ios_development.png" width="871"></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-19T08:17:08.000Z"><a href="/2016/05/19/bug-about-launchscreen-storyboard/">May 19 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/19/bug-about-launchscreen-storyboard/">Bug about launchscreen storyboard</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Launchscreen storyboard，看起来很美，用起来很臭虫。</p>
+<p>之前一直没在实践中真正采用过它，这次一试，可真是让人摸不着头脑。</p>
+<p>一旦有两个 ImageView，则它们的表现会非常奇怪。尤其是两个图像有重叠部分的时候。<br>即使一张图片在另一张下方，也会把上方图片的重叠部分遮盖住。</p>
+<p>设计时：（灰色渐变背景在底层，词记图标在上层）</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/bug_about_launchscreen_storyboard.png" width="350"></p>
+<p>运行时：（重叠部分被底层遮盖了）</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/bug_about_launchscreen_storyboard_1.png" width="320"></p>
+<p>关于 Launchscreen storyboard，涉及到 UIImageView 出现了很多问题，至今也没有解决：<br><a href="https://forums.developer.apple.com/thread/17146" target="_blank" rel="external">https://forums.developer.apple.com/thread/17146</a>，<br><a href="https://forums.developer.apple.com/message/62721" target="_blank" rel="external">https://forums.developer.apple.com/message/62721</a></p>
+<p>暂时还是不用它了，用回 Launch image asset。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-18T07:18:19.000Z"><a href="/2016/05/18/sketch-keep-transparent-pixels-when-export/">May 18 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/18/sketch-keep-transparent-pixels-when-export/">Sketch 导出时保留透明像素</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>有些图标我们希望它的边缘要有一定的透明像素。</p>
+<p>比如有一组图标作为 TableView 列表左侧的图标，如果这些图标的宽度不相同的话，会造成文字的左侧起点不能对齐。所以这一组图标的宽度必须都相同。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/sketch_keep_transparent_pixels.jpg" width="240"></p>
+<p>假设统一宽度为 20px，但是有的图标的实际尺寸可能不足 20px，所以一般我们会将这些图标的左右两边，填充透明像素，来使它达到宽度 20px。<em>但是 Sketch 在导出 slice 时总是自作聪明地把透明像素裁切掉。</em></p>
+<p><strong>解决方法：</strong></p>
+<p>默认情况下，我们对一个 Symbol 点击 Make Exportable 后，会变成这个样子，Symbol 标志的右下角加了一个切片标志。这时候我们是不能改变 <strong>Export 的各种属性</strong>的。<br><img src="http://stoneark.qiniudn.com/blogimg/sketch_keep_transparent_pixels_1.png" width="116"></p>
+<p>在右侧 Export 区域，点击小刀图标：<br><img src="http://stoneark.qiniudn.com/blogimg/sketch_keep_transparent_pixels_2.png" width="211"></p>
+<p>就会变成这样的两个层：<br><img src="http://stoneark.qiniudn.com/blogimg/sketch_keep_transparent_pixels_3.png" width="108"></p>
+<p>然后我们就可以点击上面那个切片层，设置所有的 <strong>Export 属性</strong>，确保 Trim Transparent Pixels 未选中即可，并且调节 Size 和 Position，让切片左右两侧有透明区域。<br><img src="http://stoneark.qiniudn.com/blogimg/sketch_keep_transparent_pixels_4.png" width="212"></p>
+<p>注意的是，这时切片层和 Symbol 已经没有任何联系了，而是一个普普通通的切片，所以可以任意调节位置、大小等。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-17T07:39:12.000Z"><a href="/2016/05/17/local-notification-changes-after-iOS-8/">May 17 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/17/local-notification-changes-after-iOS-8/">Local notification changes after iOS 8</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>大多数 iOS 开发者应该知道，在 iOS 8 的时候推送通知的开发有了些变化。主要体现在一些命名的变化（Remote 改为 User），另外相对之前只需要一句代码就能解决，现在需要多一些步骤。但总的来说改变并不大，实现原理并未改变。</p>
+<p>如 iOS 7:</p>
+<figure class="highlight objc"><figcaption><span>iOS 7</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerForRemoteNotificationTypes:(</span><br><span class="line">	<span class="built_in">UIRemoteNotificationTypeAlert</span> |</span><br><span class="line">	<span class="built_in">UIRemoteNotificationTypeBadge</span> | </span><br><span class="line">	<span class="built_in">UIRemoteNotificationTypeSound</span> )];</span><br></pre></td></tr></table></figure>
+<p>iOS 8:</p>
+<figure class="highlight objc"><figcaption><span>iOS 8</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIUserNotificationType</span> notificationTypes = <span class="built_in">UIUserNotificationTypeBadge</span> | <span class="built_in">UIUserNotificationTypeSound</span> | <span class="built_in">UIUserNotificationTypeAlert</span>;</span><br><span class="line"><span class="built_in">UIUserNotificationSettings</span> *notificationSettings = [<span class="built_in">UIUserNotificationSettings</span> settingsForTypes:notificationTypes categories:<span class="literal">nil</span>];</span><br><span class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerUserNotificationSettings:notificationSettings];</span><br><span class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerForRemoteNotifications];</span><br></pre></td></tr></table></figure>
+<p>虽然很多人早就已经知道并在实践中作出了改变，但可能依然有些人并不知道 iOS 做出这种改变的原因。</p>
+<p>原因是要对本地通知进行规范，并与远程推送通知进行统一。</p>
+<p>之前对于本地通知，是无需取得用户授权的，只有远程推送类型的通知需要申请用户授权。上面的那些代码也只是针对远程通知来说的（所以它们之前的命名中都带有”Remote”字眼），本地通知根本无须注册，直接发送通知就好了。但其实这并不合理。</p>
+<p>进行改变之后，本地通知跟远程推送通知的概念进行了统一，它们唯一的不同只是消息来源的不同。所以本地通知也需要进行授权。</p>
+<p>在代码上，它们的注册也只有一句代码的差距：如果只需要本地通知，则不书写最后的一句：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerForRemoteNotifications];</span><br></pre></td></tr></table></figure>
+<p>即可。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-14T07:31:04.000Z"><a href="/2016/05/14/iCloud-development/">May 14 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/14/iCloud-development/">iCloud development</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>iCloud 开发的几种模式：</p>
+<ol>
+<li>Key-value Storage，在 iCloud 上保存一些简单数据，类似 NSUserDefault 的 iCloud 端实现。每用户最多 1MB 存储。</li>
+<li>iCloud Document，在 iCloud Drive 上以文件方式保存的数据。</li>
+<li>CloudKit，后端云存储。与上面两个不同，上面是用户自己的 iCloud 存储，只有用户自己可以读取自己的数据。而 CloudKit 是开发者的 iCloud，是与用户无关的，所有用户都可访问。类似 LeanCloud、Bmob 之类的服务。目前可以认为对开发者是免费的（因为免费额度绝对足够大），除了 iOS 外还提供了 JS 的访问方式。</li>
+</ol>
+<p>具体可参考 <a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/iCloudDesignGuide/Chapters/Introduction.html" target="_blank" rel="external">About Incorporating iCloud into Your App</a>。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-05-13T07:21:14.000Z"><a href="/2016/05/13/get-how-many-days-in-the-month/">May 13 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/13/get-how-many-days-in-the-month/">得到某月有几天</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>获取某月有几天，经典算法是按月份和是否闰年进行判断。</p>
+<p>对于 iOS，可以直接用 NSCalendar：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSDate</span> *today = [<span class="built_in">NSDate</span> date];</span><br><span class="line"><span class="built_in">NSCalendar</span> *c = [<span class="built_in">NSCalendar</span> currentCalendar];</span><br><span class="line"><span class="built_in">NSRange</span> days = [c rangeOfUnit:<span class="built_in">NSDayCalendarUnit</span> inUnit:<span class="built_in">NSMonthCalendarUnit</span> forDate:today];</span><br></pre></td></tr></table></figure>
+<p>对于 js，也有一个巧妙的方法。js 里 Date 的构造方法 <code>new Date(&quot;yyyy/MM/dd&quot;)</code> ，当你传入的是 “yyyy/MM/0”，也就是日为 0 的话，得到的会是 yyyy/MM 月的上一个月的最后一天，这样就能通过它来得到上个月有几天了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getDaysInMonth</span>(<span class="params">year,month</span>)</span>&#123;</span><br><span class="line">    month = <span class="built_in">parseInt</span>(month,<span class="number">10</span>) + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">var</span> tempDate = <span class="keyword">new</span> <span class="built_in">Date</span>(year + <span class="string">"/"</span> + month + <span class="string">"/0"</span>);</span><br><span class="line">    <span class="keyword">return</span> tempDate.getDay();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-04-29T06:34:43.000Z"><a href="/2016/04/29/Android-app-store-in-China-not-friendly-to-personal-developer/">Apr 29 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/04/29/Android-app-store-in-China-not-friendly-to-personal-developer/">国内 Android 应用市场对个人开发者并不友好</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>根据以往的经验，把一个 Android 应用在国内的应用市场上架简直容易得很－－审核？他们真的会审核吗？看一眼就会点击”审核通过“按钮吧！只是国内的应用市场太多，对各种资料的要求不尽相同，所以会很繁琐。但通过审核从来都不会是什么问题。</p>
+<p>所以我从来都不担心 Android 应用的上架。</p>
+<p>但这次还真就通不过了，原因是－－这次是个人开发者身份。国内这些 Android 应用市场对个人开发者并不友好。</p>
+<p>在申请个人开发者账号时，就遇到了一些麻烦，有个市场要求必填固定电话，还有一个要求提供网络文化经营许可证，这直接就是把个人开发者拒之门外的意思。</p>
+<p>提交应用后，被应用宝拒绝，理由：该应用内容包含支付功能，暂不支持个人开发商提交，请修改企业资质或删除支付相关功能后重新提交。</p>
+<p>被 360 开放平台拒绝，理由：亲爱的开发者您好，应用名称（内容）体现为公司性质，名称：XX集团，请注册为企业开发者，并提供著作权或该公司授权证明后提交。</p>
+<p>应用宝不允许个人开发者的应用带有支付功能，不知道这是出于什么考虑。但无法理解的是，提交的这个应用里并没有在线支付功能。360 提出的理由，这个应用的内容的确有公司性质，但是，好吧我也没什么好说的。</p>
+<p>再次尝试依然得到了同样的结果，可能与相关的管理政策有关吧。还是不得不说，苹果对个人开发者非常友好，这可能也是 App Store 如此有生命力，诞生了这么多优秀作品的原因之一。</p>
+<p>最后决定放弃在市场上线，直接发布 apk。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-04-28T08:07:08.000Z"><a href="/2016/04/28/Android-shrink-code/">Apr 28 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/04/28/Android-shrink-code/">Android 代码混淆</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Android Studio 工程中，默认就创建了 <code>proguard-rules.pro</code> 文件，可以在其中编写 Proguard 的混淆规则。</p>
+<p>但是，默认是不打开混淆的，需要在 <code>build.gradle</code> 文件中，找到这一段：</p>
+<figure class="highlight xml"><figcaption><span>build.gradle</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">buildTypes &#123;</span><br><span class="line">   release &#123;</span><br><span class="line">       minifyEnabled false</span><br><span class="line">       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>把 <code>minifyEnabled</code> 从 false 改为 true，即可开启在 release 打包时进行混淆。</p>
+<p>为什么混淆开关的名字是 minify enabled ？所谓的”混淆“，其实也就是用无意义的符号（如 a,b,c）去代替代码中有意义的符号（如 title, imagePath, url 等），那么代码即使被反编译后，依然很难直接看懂其含义。从另一个角度看，其实也是让代码精简化的过程。（另外，混淆代码的英文是 Shrink Code）</p>
+<p>打开混淆后，在 proguard-rules.pro 文件中编辑混淆规则即可。这个文件其实就是之前用 Eclipse 时的 proguard.cfg，混淆规则的写法是一样的，需要在其中写明哪些类不要进行混淆。</p>
+<p>具体可参考 Android 文档 <a href="http://developer.android.com/tools/help/proguard.html">Shrink Your Code and Resources</a>。</p>
+<p>需要注意的是，不要对第三方库进行混淆，否则调用第三方库的地方，将找不到对应方法，应该不难理解。LeanCloud 给出了一个混淆规则，可以参考：</p>
       
     </div>
     <footer>
       
         
           <div class="alignleft">
-            <a href="/2016/04/21/blank-activity-and-empty-activity-in-android-studio/#more" class="more-link">Read More</a>
+            <a href="/2016/04/28/Android-shrink-code/#more" class="more-link">Read More</a>
           </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-04-19T08:30:25.000Z"><a href="/2016/04/19/Android-application-display-name/">Apr 19 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/04/19/Android-application-display-name/">Android application display name</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>Android 应用的显示名称，在 <code>AndroidManifest.xml</code> 中进行修改。</p>
-<figure class="highlight"><figcaption><span>AndroidManifest.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;application</span><br><span class="line">   android:allowBackup="true"</span><br><span class="line">   android:icon="@mipmap/ic_launcher"</span><br><span class="line">   android:label="@string/app_name"</span><br><span class="line">   android:supportsRtl="true"</span><br><span class="line">   android:theme="@style/AppTheme"&gt;</span><br><span class="line">   &lt;activity</span><br><span class="line">       android:name=".LoginActivity"</span><br><span class="line">       android:label="@string/title_activity_login"&gt;</span><br><span class="line">       &lt;intent-filter&gt;</span><br><span class="line">           &lt;action android:name="android.intent.action.MAIN" /&gt;</span><br><span class="line">           &lt;category android:name="android.intent.category.LAUNCHER" /&gt;</span><br><span class="line">       &lt;/intent-filter&gt;</span><br><span class="line">   &lt;/activity&gt;</span><br><span class="line">   &lt;activity</span><br><span class="line">      ...</span><br><span class="line">   &lt;/activity&gt;</span><br><span class="line">&lt;/application&gt;</span><br></pre></td></tr></table></figure>
-<p>我们会很显然的认为，修改最外层的 <code>android:label</code> 即可，也就是修改 <code>@string/app_name</code> 的值。但经过实践会发现并不是这样的，Launcher 里显示的竟然是 <code>@string/title_activity_login</code>，也就是 Login Activity 的标题。</p>
-<p>实际上，在 Launcher 中显示的应用名称，是被标记为首页面的 Activity 的标题。也就是被标记为：</p>
-<figure class="highlight xml"><figcaption><span>AndroidManifest.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">intent-filter</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">action</span> <span class="attribute">android:name</span>=<span class="value">"android.intent.action.MAIN"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">category</span> <span class="attribute">android:name</span>=<span class="value">"android.intent.category.LAUNCHER"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">intent-filter</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>的 Activity。</p>
-<p>那 application 标签的 android:label 属性是用来做什么的？它的确如它的名字一样，代表了应用的名称。在应用程序管理器中看到的名称，就是这个名称。但是这个名称并不是 Launcher 用的名称，所以用户在手机的桌面（应用程序列表）中，看到的不是这个名称。</p>
-<p>这着实让人感到不可理解。自认为还是 iOS 的处理方式更科学－－在 info.plist 文件中有一个属性 Bundle display name，在这里面存储了应用的显示名称，这是一个应用全局的设置。</p>
-<p>那如果首页面 Activity 的标题，跟应用的显示名称不能保持一致，怎么办？那就在 AndroidManifest.xml 里，把首页面 Activity 的 label 设置成应用名称，然后在首页面 Activity 的 onCreate 里，用 setTitle 方法再把标题改掉就好了，如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">   setTitle(<span class="string">"登录"</span>);</span><br><span class="line">   setContentView(R.layout.activity_login);</span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-04-16T08:21:39.000Z"><a href="/2016/04/16/html-form-submit/">Apr 16 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/04/16/html-form-submit/">html form submit</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>最近在做的部分与 HTML 的 form 表单相关，记录下以下几个问题。</p>
-<h2 id="用_form_表单外的_button_提交">用 form 表单外的 button 提交</h2><p>一般情况下，form 表单的提交按钮会写在 form 表单内，而且非常方便，如:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">form</span> <span class="attribute">action</span>=<span class="value">"/userlist/add"</span> <span class="attribute">method</span>=<span class="value">"POST"</span>&gt;</span></span><br><span class="line">  用户名：<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">id</span>=<span class="value">"username"</span> <span class="attribute">required</span>=<span class="value">"required"</span> /&gt;</span></span><br><span class="line">  密码：<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">id</span>=<span class="value">"password"</span> <span class="attribute">required</span>=<span class="value">"required"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"submit"</span> <span class="attribute">value</span>=<span class="value">"提交"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>这样，就会有一个叫提交的按钮，点击后会执行 form 的 action。</p>
-<p>但有时我们需要在 form 标签以外的某一个 button 上执行表单的提交。比如在另外一个 div 上有一个 button。这时就让这个 button 去执行一个 js 方法，用 js 去调用这个 form 的submit 方法即可，如：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"modal-body"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">form</span> <span class="attribute">action</span>=<span class="value">"/userlist/add"</span> <span class="attribute">method</span>=<span class="value">"POST"</span> <span class="attribute">id</span>=<span class="value">"formNewUser"</span>&gt;</span></span><br><span class="line">  用户名：<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">id</span>=<span class="value">"username"</span> /&gt;</span></span><br><span class="line">  密码：<span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">id</span>=<span class="value">"password"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"submit"</span> <span class="attribute">value</span>=<span class="value">"提交"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"modal-footer"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">onclick</span>=<span class="value">"$('#formNewUser').submit()"</span>&gt;</span>提交<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>注意，直接调用 submit 方法的方式提交，即使给 username 和 password 的 input 标签添加了 required 属性，也不会自动校验，而是直接执行 action 的方法。所以如果需要校验必填项，就在 js 方法里面校验，如：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"modal-footer"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">button</span> <span class="attribute">onclick</span>=<span class="value">"submitValidate()"</span>&gt;</span>提交<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">submitValidate</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="keyword">if</span> ($(<span class="string">"#username"</span>).val().length == <span class="number">0</span>) &#123;</span><br><span class="line">  alert(<span class="string">"请输入用户名"</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> ($(<span class="string">"#password"</span>).val().length == <span class="number">0</span>) &#123;</span><br><span class="line">  alert(<span class="string">"请输入密码"</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  $(<span class="string">'#formNewUser'</span>).submit()</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="form_表单内的_button_会默认自动提交">form 表单内的 button 会默认自动提交</h2><p>如果一个 button 在 form 表单里，那他默认就是一个 submit 按钮，不管你有没有写成 <code>type=&quot;submit&quot;</code>。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">form</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">button</span>&gt;</span>...<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>但有些按钮我们并不想让它执行提交，则可以对其添加属性 <code>type=&quot;button&quot;</code> 即可。</p>
-<h2 id="提交非由用户填写的参数">提交非由用户填写的参数</h2><p>有时我们需要在调用接口时，提交一些不是由用户填写的参数。</p>
-<p>如编辑一条数据，其 id 是程序在提交时直接填充上的，而不需要由用户填写，也不需要用户看到。</p>
-<p>这时，只需要在 form 里增加一个 input，并且将其 <code>hidden</code> 属性设置为 <code>hidden</code>，value 属性设置为所需要提交的值即可。如:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">form</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">value</span>=<span class="value">"1234567890abcdef"</span> <span class="attribute">hidden</span>=<span class="value">"hidden"</span> <span class="attribute">name</span>=<span class="value">"id"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">name</span>=<span class="value">"username"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">name</span>=<span class="value">"address"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-04-14T07:03:06.000Z"><a href="/2016/04/14/ejs-template/">Apr 14 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/04/14/ejs-template/">EJS template</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>与所有软件开发一样，Web 开发中也会面对着逻辑和数据。将逻辑和数据分开，是良好的工程结构必须做到的，否则代码会混乱不堪。而很不幸的是，用 JavaScript 去生成 HTML 时，往往就会都杂糅到一块儿。</p>
-<p><a href="http://www.embeddedjs.com" target="_blank" rel="external">EJS</a> 就是一个 JavaScript 的模版类，可以将逻辑写成一个 HTML 模版，并把数据分离出去。包括 hexo, Express.js 等框架中也都采用了 EJS。</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/ejs_template.png" alt="EJS"></p>
-<p>其最主要的是 <code>&lt;% js代码 %&gt;</code> 和 <code>&lt;%= 表达式 %&gt;</code> 两个语句。前者会执行里面的 js 代码，后者会将里面的表达式直接输出到 HTML 中。</p>
-<p>如：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;% <span class="keyword">if</span> (gender==<span class="number">0</span>) &#123; %&gt;</span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">%=</span> '<span class="attribute">Male</span>' %&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">%</span> &#125; <span class="attribute">else</span> <span class="attribute">if</span> (<span class="attribute">gender</span>=<span class="value">=1)</span> &#123; %&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">%=</span> '<span class="attribute">Female</span>' %&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">%</span> &#125; <span class="attribute">else</span> &#123; %&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">%=</span> '<span class="attribute">Unknown</span>' %&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">%</span> &#125; %&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p>简单的判断，也可用问号表达式：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%= a&gt;<span class="number">10</span> ? <span class="string">'Success'</span> : <span class="string">'Failed'</span> %&gt;</span><br></pre></td></tr></table></figure>
-<p>需要注意，开括号<code>&lt;%</code>的右侧和内容之间、闭括号<code>%&gt;</code>的左侧和内容之间，一定要留有空格，否则会报错。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-03-27T09:17:46.000Z"><a href="/2016/03/27/Android-hide-soft-keyboard/">Mar 27 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/03/27/Android-hide-soft-keyboard/">Android 收回软键盘</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>在 iOS 里，如果要收回软键盘，只需要调用当前持有焦点的 TextField 的 resignFirstResponder 方法即可。所以很自然的，在 Android 里，就会想到调用 EditText 的 <code>clearFocus()</code> 方法。但发现这样并没有让键盘收回，这与 iOS 不同。</p>
-<p>在 Android 中，应借助 <code>InputMethodManager</code> 可隐藏键盘，方法如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">hideKeyboard</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    View viewFocus = <span class="keyword">this</span>.getCurrentFocus();</span><br><span class="line">    <span class="keyword">if</span> (viewFocus != <span class="keyword">null</span>) &#123;</span><br><span class="line">        InputMethodManager imManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);</span><br><span class="line">        imManager.hideSoftInputFromWindow(viewFocus.getWindowToken(), <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>要注意，就像刚才所说，虽然有 viewFocus.clearFocus() 这个方法，但调用它是无法让软键盘收回的。</p>
-<p>另外，用上面这个方法能够收回键盘，但输入框依然持有着焦点。也就是说，焦点与软键盘是否显示，并无关系。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-03-27T08:03:37.000Z"><a href="/2016/03/27/Android-radiobutton/">Mar 27 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/03/27/Android-radiobutton/">Android 单选框</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>与 iOS 不同，Android 提供了单选框，含有两个组件：<code>RadioButton</code> 和 <code>RadioGroup</code>。</p>
-<p>把若干个 RadioButton 放到一个 RadioGroup 内，则这个 RadioGroup 内的 RadioButton 自动完成只能选择一个的功能。</p>
-<p>但是需要注意，如果想要提供默认值，如默认选择第一个 RadioButton，不能在布局文件中把第一个 RadioButton 的 checked 属性设为 true，否则它会一直处于被选中状态。如果要实现默认值，在 java 代码中实现，如可以在 onCreate 时调用 RadioGroup 的 check 方法，传入第一个 RadioButton 的 id 即可，如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">radioGroup.check(R.id.radioButtonFirst);</span><br></pre></td></tr></table></figure>
-<p>另外，如果要取得 RadioGroup 中被选择的项，可通过 RadioGroup 的 getCheckedRadioButtonId 方法得到被选择的 RadioButton 的 id。然后可通过 findViewById 得到这个 RadioButton，再以此得到它的 tag 确定选择了第几项。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-03-26T07:04:56.000Z"><a href="/2016/03/26/Android-pop-to-parent-activity-with-status-preserving/">Mar 26 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/03/26/Android-pop-to-parent-activity-with-status-preserving/">Android pop to parent activity with status preserving</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>用 Android Studio 创建的 Blank Activity，在新建向导里会问你它是否有上级页面，可以在里面填上它上一级的 Activity，那么生成的 Activity 顶部的导航栏左侧就有返回按钮，并且点击后可以返回上一级页面。</p>
-<p>但是这个返回按钮是有问题的。正常情况下，点击返回应该直接返回到之前创建的上层 Activity，也就是直接 pop 到上一层。但是这个返回按钮，是把上一层 Activity 重新创建了一遍显示出来的，导致无法显示之前的状态。</p>
-<p>比如上层 Activity 有一个 ViewPager，里面有两个 Fragment。在第二个 Fragment 里点击进入了详情的 Activity，然后点击返回按钮，发现返回到了上层 Activity 的初始状态-默认选择的第一个 Fragment。</p>
-<p>可以在 <code>AndroidManifest.xml</code> 中看到，实现方式是定义了一个 PARMENT_ACTIVITY:</p>
-<figure class="highlight xml"><figcaption><span>AndroidManifest.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">activity</span> <span class="attribute">android:name</span>=<span class="value">".ProductListActivity"</span></span><br><span class="line">    <span class="attribute">android:label</span>=<span class="value">"@string/title_activity_product_list"</span></span><br><span class="line">    <span class="attribute">android:parentActivityName</span>=<span class="value">".MainActivity"</span></span><br><span class="line">    <span class="attribute">android:theme</span>=<span class="value">"@style/AppTheme.NoActionBar"</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">meta-data</span></span><br><span class="line">        <span class="attribute">android:name</span>=<span class="value">"android.support.PARENT_ACTIVITY"</span></span><br><span class="line">        <span class="attribute">android:value</span>=<span class="value">"org.stoneark.doorsbylin.MainActivity"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>解决方法也很简单，在 <code>AndroidManifest.xml</code> 中把上一层 Activity 的属性 <code>android:launchMode</code> 改为 <code>singleTop</code> 即可，即：</p>
-<figure class="highlight xml"><figcaption><span>AndroidManifest.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">activity</span></span><br><span class="line">    <span class="attribute">android:name</span>=<span class="value">".MainActivity"</span></span><br><span class="line">    <span class="attribute">android:label</span>=<span class="value">"@string/title_activity_main"</span></span><br><span class="line">    <span class="attribute">android:theme</span>=<span class="value">"@style/AppTheme.NoActionBar"</span></span><br><span class="line">    <span class="attribute">android:launchMode</span>=<span class="value">"singleTop"</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>launchMode 的默认值是 standard，每次都会强制重新创建一个 activity 的实例，所以导致了问题。根据 <a href="https://developer.android.com/guide/topics/manifest/activity-element.html#lmode" target="_blank" rel="external">Android 文档</a>中的描述，<br>android:launchMode 的取值有：<code>standard</code> 、<code>singleTop</code> 、<code>singleTask</code>、<code>singleInstance</code>，默认值是 standard：</p>
-<ul>
-<li><code>standard</code> 允许该 activity 有多个实例，并且每当显示这个 activity 时就总是重新创建一个。</li>
-<li><code>singleTop</code> 允许该 activity 有多个实例，但如果它当前在栈顶，则不重新创建。</li>
-<li><code>singleTask</code> 只允许该 activity 有一个实例，并且它只能存在于栈底。</li>
-<li><code>singleInstance</code> 与 singleTask 相同，另外还要求栈中只能有它自己，而不能再启动另外任何 activity。</li>
-</ul>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-03-24T06:21:02.000Z"><a href="/2016/03/24/Android-find-view-by-id-string/">Mar 24 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/03/24/Android-find-view-by-id-string/">Android 用 ID 字符串取到对应的 View</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>我们经常会需要在一个 for 循环中，取到多个 View，这时就需要用拼接得到的字符串作为 ID 来取 View。<br>但 findViewById 的参数是一个 Int 类型，一般用 R.id.xxx 来直接得到这个 Int 值。但如何用字符串来取 View 呢？</p>
-<p>这时需要先用 getResources().getIdentifier 由 String 得到对应的 Int，比如下面将会获取 btnItem0 到 btnItem5 这六个按钮：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=<span class="number">5</span>;i++) &#123;</span><br><span class="line">    String strButtonID = <span class="string">"btnItem"</span> + i;</span><br><span class="line">    <span class="keyword">int</span> buttonID = getResources().getIdentifier(strButtonID,<span class="string">"id"</span>,<span class="string">"org.stoneark.packagename"</span>);</span><br><span class="line">    Button btnItem = (Button) findViewById(buttonID);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-03-23T08:30:25.000Z"><a href="/2016/03/23/Android-Button-with-both-text-and-image/">Mar 23 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/03/23/Android-Button-with-both-text-and-image/">Android Button with both text and image</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>最近帮朋友做一个不大不小的项目，开发上需要完成 iOS、Android、后台管理三部分。Android 和后台管理的开发虽然之前也都了解一些，但一直没有真正做过什么东西。于是决定把 iOS 交给 Ran，Android 和后台管理也不再找别人做了，自己尝试一下。</p>
-<p>Android 的开发在有些地方还是比 iOS 更加方便的。比如实现一个同时有文字和图片的按钮，在 Android 上，Button 有这样四个属性：<br><code>drawableLeft</code>, <code>drawableRight</code>, <code>drawableTop</code>, <code>drawableBottom</code>，<br>分别可以在文字的左侧、右侧、顶部、下部放置图片，简直不能再简单。</p>
-<p>当然，还是那句话，不存在 iOS 开发更简单或者 Android 开发更简单这样的说法。它们各自都有实现起来相对另一个更方便的地方。所谓简单与难，其实只是精通与知道的差别。永远不要说别人的工作比自己的简单－－只是别人比你知道的更多。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-03-21T07:03:52.000Z"><a href="/2016/03/21/Android-Ripple-Button-with-Background-color/">Mar 21 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/03/21/Android-Ripple-Button-with-Background-color/">Android Ripple Button with Background color</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>自从引入了 Meterial design，Android 变得漂亮了许多，比如从 Lollipop 开始 Button 默认就带有了 Ripple 效果。但如果给这个 Button 赋了 background 属性，改变了它的背景色，则会发现 Ripple 效果消失了。</p>
-<p>如果要改变它的背景色，还想要有 Ripple 效果，那么不要改它的 background 属性，而是将它的 style 属性设置为 @style/Widget.AppCompat.Button.Colored，然后在 Colors.xml 中更改 colorAccent 的颜色值即可。但是要注意，这种方式类似改变“主题”，程序中所有的按钮、单选框等控件的颜色都会一同改变。</p>
-<p>除了 colorAccent，还有 colorPrimary, colorPrimaryDark 等可以改变的主题颜色。</p>
-
-      
-    </div>
-    <footer>
-      
         
         
       
@@ -477,23 +516,23 @@
   <ul class="entry">
     
       <li>
-        <a href="/2016/04/21/blank-activity-and-empty-activity-in-android-studio/">Blank activity and Empty activity in Android Studio</a>
+        <a href="/2016/06/04/ciji-release/">詞記 Release!</a>
       </li>
     
       <li>
-        <a href="/2016/04/19/Android-application-display-name/">Android application display name</a>
+        <a href="/2016/05/26/itunes-connect-error-itms-90475/">iTunes Connect Error ITMS-90475</a>
       </li>
     
       <li>
-        <a href="/2016/04/16/html-form-submit/">html form submit</a>
+        <a href="/2016/05/25/application-localization-in-ios-development/">Application localization in iOS development</a>
       </li>
     
       <li>
-        <a href="/2016/04/14/ejs-template/">EJS template</a>
+        <a href="/2016/05/19/bug-about-launchscreen-storyboard/">Bug about launchscreen storyboard</a>
       </li>
     
       <li>
-        <a href="/2016/03/27/Android-hide-soft-keyboard/">Android 收回软键盘</a>
+        <a href="/2016/05/18/sketch-keep-transparent-pixels-when-export/">Sketch 导出时保留透明像素</a>
       </li>
     
   </ul>
@@ -504,7 +543,7 @@
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 14px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 14px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 14px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
   </div>
 </div>
 

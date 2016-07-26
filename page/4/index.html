@@ -66,25 +66,20 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-05-29T07:05:11.000Z"><a href="/2015/05/29/gem-install-failed-cannot-load-such-file-openssl/">May 29 2015</a></time>
+        <time datetime="2015-11-13T08:51:45.000Z"><a href="/2015/11/13/uiview-animation-with-auto-layout/">Nov 13 2015</a></time>
       
       
   
-    <h1 class="title"><a href="/2015/05/29/gem-install-failed-cannot-load-such-file-openssl/">“cannot load such file -- openssl” while “gem install”</a></h1>
+    <h1 class="title"><a href="/2015/11/13/uiview-animation-with-auto-layout/">在 Auto layout 下应用 UIView 动画</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>工作用的 iMac 上一直没有安装 CocoaPods，因为曾经安装时遇到了一个错误，然后比较忙就搁置了，以至于搁置到了现在，今天终于把这遗留问题解决了。</p>
-<p><a href="https://cocoapods.org/" target="_blank" rel="external">CocoaPods</a> 是应用于 Xcode 工程的第三方库依赖管理工具，可以非常方便地管理工程所需要引用的第三方库。由于它是用 ruby 开发的，所以在 Mac 上安装它是一个非常简单的事情：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo gem install cocoapods</span><br></pre></td></tr></table></figure>
-<p>但是当我执行这个命令时，却得到了错误的反馈：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ERROR:  Loading <span class="built_in">command</span>: install (LoadError)</span><br><span class="line">	cannot load such file -- openssl</span><br><span class="line">ERROR:  While executing gem ... (NoMethodError)</span><br><span class="line">    undefined method `invoke_with_build_args<span class="string">' for nil:NilClass</span></span><br></pre></td></tr></table></figure>
-<p>其实此时不只是安装 CocoaPods，安装其他大部分的 gem 都会是这个结局，因为找不到 openssl，无法建立加密连接，也就无法开始下载。</p>
-<p>系统中是有 openssl 的，而且 openssl 可以正常工作，只是 ruby 找不到它。至于为什么突然找不到了，那就不太清楚了，推测可能是更新 OS X 时引发的问题吧。试了很多方法，各种不奏效，最后通过以下的方法解决了。大体思路是用 rvm 重新安装 openssl，然后重新安装 ruby，并指定 openssl 的路径。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rvm pkg install openssl</span><br><span class="line">rvm reinstall ruby-<span class="number">2.1</span> --with-openssl-dir=<span class="variable">$rvm_path</span>/usr</span><br></pre></td></tr></table></figure>
-<p>都安装完成之后，就可以正常 <code>gem install</code> 啦。</p>
+        <p>在之前不使用 Autolayout 时，如果需要做简单的 UIView 动画，只需要：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="built_in">UIView</span> animateWithDuration:<span class="number">0.25</span> animations:^&#123;</span><br><span class="line">  [_topView setFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">100</span>,<span class="number">35</span>)];</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure></p>
+<p>但是使用 Autolayout，不能再手动去更改 frame。而且我们会发现，如果按照之前的做法直接改写成：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="built_in">UIView</span> animateWithDuration:<span class="number">0.25</span> animations:^&#123;</span><br><span class="line">  [_constraintTopViewHeight setConstant:<span class="number">35</span>];</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure></p>
+<p>是没有动画效果的，依然会瞬间改变它的约束。</p>
+<p>正确的方法是：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[_constraintTopViewHeight setConstant:<span class="number">35</span>];</span><br><span class="line">[<span class="built_in">UIView</span> animateWithDuration:<span class="number">0.25</span> animations:^&#123;</span><br><span class="line">  [<span class="keyword">self</span><span class="variable">.view</span> layoutIfNeeded];</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -107,27 +102,21 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-05-22T08:40:57.000Z"><a href="/2015/05/22/baidumap-memory-not-be-freed/">May 22 2015</a></time>
+        <time datetime="2015-11-04T05:58:11.000Z"><a href="/2015/11/04/ei-capitan-brings-the-missing-hex-color-picker/">Nov 4 2015</a></time>
       
       
   
-    <h1 class="title"><a href="/2015/05/22/baidumap-memory-not-be-freed/">百度地图 (iOS SDK) 内存不回收</a></h1>
+    <h1 class="title"><a href="/2015/11/04/ei-capitan-brings-the-missing-hex-color-picker/">EI Capitan brings the missing Hex color picker</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>情景：有一个列表，点击列表中的某一条目后，进入详情页面，详情页面是一个地图。</p>
-<p>环境：百度地图 iOS SDK v2.7.0</p>
-<p>测试人员发现，从列表反复多次进入详情（push, pop, push, pop, …），五六次后程序崩溃。查看日志，发现是 Received Memory Warning。</p>
-<p>通过 Xcode 的 Debug Navigator 监测，发现每进入一次地图页面，内存即增加占用约 20MB，但返回后内存并不回收。于是内存占用逐渐增多，直至被 kill。</p>
-<p>继续监测程序的运行，发现地图页面在 pop 时，dealloc 方法并没有被执行，所以整个详情页面，包括地图，一直没有从内存中被 dealloc。</p>
-<p>最终发现，除了百度地图的 mapView，在 self.view 上还有另一个 subview，而正因为这个 subview 没有 removeFromSuperView，导致了内存一直不能被回收。</p>
-<p>含有百度地图的 viewWillDisappear 里一般是这样写的：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewWillDisappear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [_bmkMapView viewWillDisappear];</span><br><span class="line">    [_bmkMapView setDelegate:<span class="literal">nil</span>];</span><br><span class="line">    [<span class="keyword">super</span> viewWillDisappear:animated];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>但此时需要这样写：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewWillDisappear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [_bmkMapView viewWillDisappear];</span><br><span class="line">    [_bmkMapView setDelegate:<span class="literal">nil</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">UIView</span> *view <span class="keyword">in</span> [<span class="keyword">self</span><span class="variable">.view</span> subviews]) &#123;</span><br><span class="line">        [view removeFromSuperview];</span><br><span class="line">    &#125;</span><br><span class="line">    [<span class="keyword">super</span> viewWillDisappear:animated];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>另外，还有一些其他的情形也可能造成此类问题，基本原理是一致的，都是因为还有某个对象被引用着。内存的管理还是得加小心啊。</p>
+        <p>OS X 里的颜色选取器一直没有集成十六进制的功能，这给程序员和设计师带来了诸多不便，于是有开发者制作了对系统 Color Picker 的增强插件，如我一直在用的 <a href="http://wafflesoftware.net/hexpicker/" target="_blank" rel="external">Hex Color Picker</a>，在系统的 Color Picker 中增加了一栏，专门用来输入十六进制的颜色值，系统全局都能用，很是方便。</p>
+<p>但是它在 EI Capitan 上不再好用了，因为系统加入了一项新的安全技术，称作<a href="https://support.apple.com/en-us/HT204899" target="_blank" rel="external">系统完整性保护</a>，即使 root 账户也不允许修改系统主要程序的内容。相应的，像 XtraFinder、HexColorPicker 之类的系统增强类软件，在 EI Capitan 上都只能歇菜了。</p>
+<p>不过，好在 Apple 已经发觉到了我们的诉求，在系统的 Color Picker 里增加了十六进制的功能，虽然有些隐蔽：</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/ei_capitan_hex_color_picker.png" alt=""></p>
+<p>在第二个选项卡 (Color Slider) 中的 RGB Sliders 里面，下方有个 Hex Color 文本框。</p>
 
       
     </div>
@@ -150,118 +139,23 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-05-19T08:29:12.000Z"><a href="/2015/05/19/pop-then-push-immediately-with-uinavigationcontroller-in-ios8/">May 19 2015</a></time>
+        <time datetime="2015-10-29T07:22:50.000Z"><a href="/2015/10/29/limit-max-input-length-update/">Oct 29 2015</a></time>
       
       
   
-    <h1 class="title"><a href="/2015/05/19/pop-then-push-immediately-with-uinavigationcontroller-in-ios8/">Pop then push immediately with UINavigationController in iOS 8</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>在某些业务场景下，需要将一个 ViewController 从 NavigationController 里 pop 后，立即 push 进另一个 ViewController。在 iOS8 之前这不是什么问题，用以下代码即可轻松实现：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[navigationController popViewControllerAnimated:<span class="literal">NO</span>];</span><br><span class="line">[navigationController pushViewController:newViewController animated:<span class="literal">YES</span>];</span><br></pre></td></tr></table></figure>
-<p>但在 iOS8 上这样无法实现，pop 后不会 push 另一个 ViewController。可以用以下方法实现，思路是直接修改 navigationController 里栈的数据（暂时没有找到其他更好的方法）：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSMutableArray</span> *viewControllersInStack = [<span class="built_in">NSMutableArray</span> arrayWithArray:navigationController<span class="variable">.viewControllers</span>];</span><br><span class="line">[viewControllersInStack removeLastObject];</span><br><span class="line">[viewControllersInStack addObject:newViewController];</span><br><span class="line">[navController setViewControllers:viewControllersInStack animated:<span class="literal">YES</span>];</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-02-11T08:52:49.000Z"><a href="/2015/02/11/branching-model-summary/">Feb 11 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/02/11/branching-model-summary/">分支策略总结</a></h1>
+    <h1 class="title"><a href="/2015/10/29/limit-max-input-length-update/">限制最大输入字符数(更新)</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>前几日在发布新版本时，发现 SVN 的分支策略有问题，然后读了 <a href="../../../../2015/02/03/common-branching-patterns-translation-part-one">SVN 的常见分支模式</a>，依照文章里的模式改变了分支策略，貌似解决了问题。但我对之前用的策略还是念念不忘，经过调查和思考，得出结论：之前用的策略也没有问题，and what’s more，那是 Git 更常用的分支模式，但更适合于开发流程规范、并严格遵循的项目。</p>
-<p>在 Git 分支模型的阐述上，Vincent Driessen 的 <a href="http://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a> 是一篇很多人认为不错的文章，译文也已经有好几篇了：<a href="http://www.oschina.net/translate/a-successful-git-branching-model">介绍一个成功的 Git 分支模型</a>，<a href="http://jiongks.name/blog/a-successful-git-branching-model/">Git 分支的最佳实践</a>，<a href="http://www.juvenxu.com/2010/11/28/a-successful-git-branching-model/">一个成功的Git分支模型</a>。</p>
-<p>个人认为，这篇文章阐述的分支模型是非常不错的，但遣词造句上实在有些繁琐，读起来很费劲，不过绝对值得一读。</p>
-<p>下面是我对分支策略的总结。</p>
-<h3 id="Subversion_和_Git">Subversion 和 Git</h3><ol>
-<li>Git 是分布式的版本控制系统，所有人都拥有一个仓库，而不仅仅是一个 working copy。但依然要有一个远端的中心，称为 origin。相对的，Subversion 是集中式的版本控制系统，仓库只在远端。</li>
-<li>Subversion 的三大部分是 trunk、branches、tags，即主干、分支、标记。相对的，Git 没有 trunk 的概念，主干可以认为是 master 分支，也是分支之一。</li>
-<li>Git 的分支才是真正意义上的分支。相对的，Subversion 在本质上不存在分支，所谓分支只是目录的拷贝。</li>
-<li>Git 在分支与合并方面是简单易行的。相对的，Subversion 的分支与合并总是让人恐惧。</li>
-</ol>
-<h3 id="分支模式一（Git_风格）">分支模式一（Git 风格）</h3><ol>
-<li>长期分支有主分支（master）和开发分支（develop），短期分支有特性分支（feature）、预发布分支（release）、补丁分支（hotfix）。</li>
-<li>master 分支，始终 <strong>仅</strong> 保存每次发布的版本，HEAD 则指向当前发布的最新版本。日常的开发工作不直接在主分支进行。</li>
-<li>develop 分支，其中为 <strong>下一次</strong> 要发布的版本（而不包含下次的下次发布应包含的功能）。</li>
-<li>feature 分支，开发某项新特性时使用。这项特性可能在下一次发布时加入软件，也可能在下次的下次发布时才加入软件。也有可能是实验性质的特性，最终可能得以加入软件，也可能效果不好直接抛弃。它应从 develop 分支出，开发完毕后合并回 develop 或直接丢弃。注意并回的时机，是要在 <strong>下次发布的版本</strong> 中引入这个特性时，而 <strong>不是</strong> 下次的下次发布时。合并完毕后，应将这个 feature 分支删除。</li>
-<li>release 分支，在某一版本准备发布时使用。在 develop 分支已经可以进入发布前的测试时，从 develop 分支出，命名为 <code>release-1.0</code>。测试过程中的 bug 修复，应提交到该分支。测试结束可以发布时，将该分支合并回 master 分支和 develop 分支，并给 master 分支打一个 tag（如 1.0）。然后，将这个 release 分支删除。需要注意的是，合并回 master，是因为这将成为一个新的发布版本；合并回 develop，是为了将 release 分支中对 bug 的修复也合并回 develop 分支，更好的方式是随着测试而不断地将 bug 修复合并回 develop，避免最后才一次性合并。</li>
-<li>hotfix 分支，在线上版本出现 bug 需要紧急修复时使用。在 master 分支出，命名为 <code>hotfix-1.0.1</code>。在完成修复代码并通过测试后，合并回 master 和 develop，并对 master 打一个 tag（如 1.0.1）。然后，将这个 hotfix 分支删除。</li>
-</ol>
-<h3 id="分支模式二（Subversion_风格）">分支模式二（Subversion 风格）</h3><ol>
-<li>trunk 主干，日常的开发工作直接在 trunk 进行。</li>
-<li>长期分支有发布分支（release），短期分支有特性分支（feature）。</li>
-<li>release 分支，在某一版本准备发布时使用。在 trunk 中的开发已经可以进入发布前的测试时，从 trunk 分支出，命名为 <code>release-1.0</code>。测试过程中的 bug 修复，应提交到该分支。测试结束可以发布时，将该分支合并回 trunk，并给该 release 分支打一个 tag（如 1.0）。注意，这个 release 分支将 <strong>永久保留</strong> ，之后的 hotfix 也将在此分支进行。</li>
-<li>feature 分支，开发某项新特性时使用。这与分支模式一里的 feature 分支完全相同，唯一不同的是，它从 trunk 分支出，并最终合并回 trunk 或直接丢弃，最后被删除。</li>
-</ol>
-<h3 id="Then_which_one?">Then which one?</h3>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/02/11/branching-model-summary/#more" class="more-link">Read More</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-02-05T05:40:36.000Z"><a href="/2015/02/05/noip-2014-rps-solution-in-python/">Feb 5 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/02/05/noip-2014-rps-solution-in-python/">生活大爆炸版石头剪刀布</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>前几日偶然间发现，14年母校的信息学成绩十分了得，<a href="http://www.tadyz.com/news/show.aspx?id=4507&amp;cid=52" target="_blank" rel="external">在 NOI 2014 中获得了一枚铜牌</a>，<a href="http://www.tadyz.com/news/show.aspx?id=4831&amp;cid=52" target="_blank" rel="external">在 NOIP 2014 中获得了五个一等、两个二等</a>，真是后生可畏，一代更比一代强啊。</p>
-<p>好久好久没有做过算法题了。从 NOIP 2003 到 NOIP 2008，从没进复赛，到以总分第二获得一等奖，再到后面几年不堪的表现，NOIP 陪伴了我的整个中学。今天找来 NOIP 2014 的复赛题看了看，发现第一题挺水的，于是做了做。可惜的是 free pascal 在 Yosemite 上竟无法安装，所以决定用 python 来写，顺便再熟悉一下 python。</p>
-<p>题目可<a href="http://wenku.baidu.com/link?url=GxvKf1aphFBGKdzO8WLmF6qC5q7VrGx_I3hAH8PDFEzkFOBoiG1e3dN6qLRyR5VZ6DxpZgN67G85VuaU4JVCv3ErJ92Yefr3l6iOfqjQLh_" target="_blank" rel="external">在这儿查看</a>或自行查找，是 NOIP 2014 提高组复赛 Day1 的第一题：生活大爆炸版石头剪刀布。</p>
-<p>题目不难，数据规模也不大，把整个过程模拟一下就好了。唯一值得说的是，将题目中的胜负关系表格补全后形成一个二维数组，就能很方便地在这个数组中查询到每一轮出拳的结果。</p>
-<figure class="highlight python"><figcaption><span>rps.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">filein = open(<span class="string">"rps.in"</span>,<span class="string">"r"</span>)</span><br><span class="line">arrInput = filein.readline().split()</span><br><span class="line">n = int(arrInput[<span class="number">0</span>])</span><br><span class="line">na = int(arrInput[<span class="number">1</span>])</span><br><span class="line">nb = int(arrInput[<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line">arrInput = filein.readline().split()</span><br><span class="line">arrA = [int(x) <span class="keyword">for</span> x <span class="keyword">in</span> arrInput]</span><br><span class="line"></span><br><span class="line">arrInput = filein.readline().split()</span><br><span class="line">arrB = [int(x) <span class="keyword">for</span> x <span class="keyword">in</span> arrInput]</span><br><span class="line">filein.close()</span><br><span class="line"></span><br><span class="line">resultTable = [[<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>],[<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>],[<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>],[<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>],[<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]]</span><br><span class="line">scoreA = <span class="number">0</span></span><br><span class="line">scoreB = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,n):</span><br><span class="line">    solutionA = arrA[i % na]</span><br><span class="line">    solutionB = arrB[i % nb]</span><br><span class="line">    scoreA += resultTable[solutionA][solutionB]</span><br><span class="line">    scoreB += resultTable[solutionB][solutionA]</span><br><span class="line"></span><br><span class="line">fileout = open(<span class="string">"rps.out"</span>,<span class="string">"w"</span>)</span><br><span class="line">strScore = str(scoreA) + <span class="string">' '</span> + str(scoreB) + <span class="string">'\n'</span></span><br><span class="line">fileout.write(strScore)</span><br><span class="line">fileout.close()</span><br></pre></td></tr></table></figure>
-<p>程序很简单。刚开始是读取数据：<code>n</code>、<code>na</code>、<code>nb</code> 的含义如题，<code>arrA</code> 和 <code>arrB</code> 保存 A 和 B 的策略。<code>resultTable</code> 是前面说过的胜负关系数组，resultTable[甲,乙] 表示甲对乙的得分。for 循环中是对 n 轮出拳进行模拟：用当前的轮数与 A 或 B 的循环节长度取模，就能得到本轮 A 和 B 的策略，用这两个策略去 resultTable 中查询，就能得到 A 和 B 本轮的得分，保存于 <code>scoreA</code> 和 <code>scoreB</code>。最后输出结果。</p>
-<p>对 python 了解不多，如果有写的不妥之处，欢迎拍砖。</p>
+        <p>在 <a href="../../../2015/06/29/limit-max-input-length-of-uitextview/">这篇博客</a> 中提到的限制 UITextView 最大输入字符数的方法，依然是有问题的。问题出现于用拼音输入法输入中文的时候，比如键入“你好世界”，对应的拼音为“nihaoshijie”。限制最大长度为 5，则虽然“你好世界”为四个字，但在输入拼音字符的时候，会超过 5 个字符，导致无法输入进去。</p>
+<p><a href="http://blog.sina.com.cn/s/blog_60f977e70101g4gj.html" target="_blank" rel="external">iOS:UITextField中文输入法输入时对字符长度的限制</a> 这篇文章中提出了一个方法，经尝试是可以正确处理这种情形的。基本方法如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)textViewDidChange:(<span class="built_in">UITextView</span> *)textView &#123;</span><br><span class="line">    <span class="built_in">NSString</span> *lang = [[textView textInputMode] primaryLanguage];</span><br><span class="line">    <span class="comment">// 对简体中文输入进行特殊处理</span></span><br><span class="line">    <span class="keyword">if</span> ([lang isEqualToString:<span class="string">@"zh-Hans"</span>]) &#123;</span><br><span class="line">        <span class="built_in">UITextRange</span> *selectedRange = [textView markedTextRange];</span><br><span class="line">        <span class="comment">// 获取高亮部分</span></span><br><span class="line">        <span class="built_in">UITextPosition</span> *position = [textView positionFromPosition:selectedRange<span class="variable">.start</span> offset:<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">if</span> (!position) &#123;</span><br><span class="line">            <span class="comment">// 没有高亮选择的字，则进行字数限制</span></span><br><span class="line">            <span class="keyword">if</span> (textView<span class="variable">.text</span><span class="variable">.length</span> &gt; LENGTH_LIMIT) &#123;</span><br><span class="line">                textView<span class="variable">.text</span> = [textView<span class="variable">.text</span> substringToIndex:LENGTH_LIMIT];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="comment">// 有高亮选择的字，认为现在正在拼音输入状态，暂不进行限制</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 简体中文以外的直接限制，暂不考虑其他语言</span></span><br><span class="line">        <span class="keyword">if</span> (textView<span class="variable">.text</span><span class="variable">.length</span> &gt; LENGTH_LIMIT) &#123;</span><br><span class="line">            textView<span class="variable">.text</span> = [textView<span class="variable">.text</span> substringToIndex:LENGTH_LIMIT];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同时，在上面这篇文章中还受到一点启示，UITextField 是没有类似 textViewDidChange 这样的代理方法的，所以对于 UITextField 我们该怎么办？可以通过监听 <code>UITextFieldTextDidChangeNotification</code> 通知来达到一样的目的。</p>
+<p>在初始化时添加监听：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(textFieldDidChanged:) name:<span class="string">@"UITextFieldTextDidChangeNotification"</span> object:_textField];</span><br></pre></td></tr></table></figure></p>
+<p>实现监听方法：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)textFieldDidChanged:(<span class="built_in">NSNotification</span> *)notification &#123;</span><br><span class="line">	<span class="built_in">UITextField</span> *textField = (<span class="built_in">UITextField</span>*)notification<span class="variable">.object</span>;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>别忘了在 dealloc 时移除监听：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] removeObserver:<span class="keyword">self</span> name:<span class="string">@"UITextFieldTextDidChangeNotification"</span> object:_textField];</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -284,38 +178,141 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-02-03T03:26:44.000Z"><a href="/2015/02/03/common-branching-patterns-translation-part-one/">Feb 3 2015</a></time>
+        <time datetime="2015-10-21T08:47:11.000Z"><a href="/2015/10/21/library-unbound-when-import-project-to-eclipse/">Oct 21 2015</a></time>
       
       
   
-    <h1 class="title"><a href="/2015/02/03/common-branching-patterns-translation-part-one/">常见分支模式（译）</a></h1>
+    <h1 class="title"><a href="/2015/10/21/library-unbound-when-import-project-to-eclipse/">向 Eclipse 中导入项目提示 JRE unbound</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <h2 id="前言">前言</h2><p>今天在将分支合并回 trunk 的时候，发现之前采用的分支模式不太合适，于是去查阅了 SVN 的用户手册 <a href="http://svnbook.red-bean.com/en/1.7/svn-book.html#svn.branchmerge.commonpatterns" target="_blank" rel="external">Version Control With Subversion - Common Branching Patterns</a>，对分支管理有了更全面的认识。</p>
-<p>版权声明：本文翻译自 Ben Collins-Sussman, Brian W. Fitzpatrick, C. Michael Pilato 撰写的 <a href="http://svnbook.red-bean.com/en/1.7/svn-book.html" target="_blank" rel="external">Version Control With Subversion</a>。这是一本自由书籍，遵循 Creative Common Attribution License，<a href="http://svnbook.red-bean.com/en/1.7/svn.copyright.html" target="_blank" rel="external">这里是它的版权协议</a>，本译文同样遵循此协议。</p>
-<h2 id="译文">译文</h2><p>使用分支 (branch) 和合并 (merge) 的方式有很多，本节介绍了其中最常用的几种。</p>
-<p>版本控制是在软件开发中最常用到的概念，所以我们来看一下被开发团队们最常用到的分支/合并模式。如果你在软件开发中并没有用 Subversion 来做版本控制，直接略过这一节就好。如果你是第一次在软件开发中使用版本控制，那请格外注意，因为这些模式通常已被认为是最佳实践。这些模式并不是 Subversion 才独有的，而是适用于任意的版本控制系统。我们以 Subversion 来描述这些模式，让它更容易理解。</p>
-<h3 id="用于发布的分支_(Release_分支)">用于发布的分支 (Release 分支)</h3><p>大多数软件都遵循这样的生命周期：编码，测试，发布，如此循环往复。在这个过程中存在两个问题。第一，在质量保证团队测试稳定版本的同时，开发团队依然需要继续开发新的功能。当软件在接受测试时，新的开发工作不能停顿。第二，开发团队大多都需要支持较老的、已经发布出去的版本。如果在较老的代码中发现了 bug，这个 bug 很有可能也存在于已经释出的版本中。客户想要马上修复它，而不用等待下一个大版本发布时才能解决。</p>
-<p>这两个问题借助版本控制可以解决。以下是经典的过程：</p>
+        <p>在 Eclipse 中导入 Java 项目后，常会出现编译报错，一个很常见的原因是工程属性中所定义的某些 Library 在本地找不到。又经常是本地安装的版本与工程属性中指定的版本不一致，比如本地安装了 JRE 8，但工程属性中定义的是使用 JRE 7。</p>
+<p>在左侧的对应工程上点右键 -&gt; Build Path -&gt; Configure Build Path，在弹出的对话框中，右侧顶部点选 Libraries，下方的列表中会发现有几项后面有 “(unbound)” 后缀。此时就代表，项目属性中定义的版本，在本地找不到，所以无法编译。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/library_unbound_in_eclipse.jpg" alt=""></p>
+<p>解决方法也很简单，如果本地没有安装所需要的 Library，安装上就好。如果本地安装了，只是版本不一致，而且可以用本地版本替代的情况，可以选择 unbound 的条目，再点击右侧 Edit 按钮，在列表中选择本地有的版本，或者直接选择 Workspace default JRE，即可解决。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-10-19T08:45:16.000Z"><a href="/2015/10/19/instant-message-services/">Oct 19 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/10/19/instant-message-services/">第三方即时通讯服务</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>越来越多的移动 App 加入了即时通讯功能，目前也有越来越多的第三方即时通讯服务供开发者选择。如 <a href="http://www.easemob.com/" target="_blank" rel="external">环信</a>、<a href="http://www.rongcloud.cn/" target="_blank" rel="external">融云</a>、<a href="https://imwukong.com" target="_blank" rel="external">阿里悟空</a>、<a href="http://www.yuntongxun.com/" target="_blank" rel="external">容联云通讯</a>、<a href="https://leancloud.cn/" target="_blank" rel="external">LeanCloud</a>、<a href="http://bmob.cn/" target="_blank" rel="external">Bmob</a> 等。</p>
+<p>环信，最早的专门做移动通讯服务的团队之一。其功能很丰富，具有完善的用户系统、群系统等，也是为数不多能提供视频通话的服务。Demo 完成度也很高，但是工程结构一般。其通讯核心部分封装为了环信 SDK，以 .a 文件的方式打包发布，同时提供 cocoapods 方式引入（但更新很不及时）。UI 部分并未进行很好的组织，仅是在 Demo 中以源代码的形式提供，且代码质量一般。如果要调整 UI，只能在 Demo 源代码的基础上修改，或者自己实现。</p>
+<p>融云，功能丰富、Demo 完成度高。迭代速度极快，每周更新一次。通讯核心部分和 UI 部分分别封装为了 IMLib 和 IMKit 两个库，工程结构良好。实现 UI 时，可以继承 IMKit 中的类，如有需要可在子类中进行调整。当然也可以只用 IMKit，自己实现 UI。与环信不同的是，它并没有用户系统，并不存储任何与用户相关的信息。这样设计的初衷在于，当一个应用需要集成即时通讯服务时，往往应用本身的服务器已经有一个用户系统了。所以对于应用的每一个注册用户，应用服务器不需要再申请注册一个新的融云用户，而只需要直接采用用户 ID 作为通讯的身份即可，用户信息全部都从自己的应用服务器中维护。</p>
+<p>阿里悟空为阿里来往所采用的即时通讯服务，2015 年将服务对外开放并开发了移动端 SDK。目前功能较简单，Demo 完整程度较低。仅提供了核心通讯功能的封装，Demo 中的 UI 部分很简陋，只能作为参考。其也不存在用户系统，OpenID 的方式与融云的用户管理方式相似。</p>
+<p>容联云通讯，包含短信验证码、即时通讯、音视频通话等，短信验证码的服务客户很多。腾讯云的音视频云通信 AVC，今年刚开放，主要优势在于音视频通讯。</p>
+<p>LeanCloud 和 Bmob，是集多种应用服务为一身的后端服务。包括数据存储服务、消息推送服务、实时通信服务等。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-09-18T06:02:09.000Z"><a href="/2015/09/18/UIAlertView-without-title/">Sep 18 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/09/18/UIAlertView-without-title/">UIAlertView without title</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>UIAlertView 是支持无标题的。如果传空字符串，即为没有标题，只显示内容；如果传 nil，则会把内容放到标题上。</p>
+<p>1、title 传空字符串，即：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@&#34;&#34; message:@&#34;&#24744;&#30830;&#23450;&#35201;&#36864;&#20986;&#27492;&#24080;&#21495;&#21527;&#65311;&#34; delegate:self cancelButtonTitle:@&#34;&#21462;&#28040;&#34; otherButtonTitles:@&#34;&#30830;&#35748;&#34;, nil];</span><br></pre></td></tr></table></figure>
+<p><img src="http://stoneark.qiniudn.com/blogimg/uialertview_without_title_1.png" alt=""></p>
+<p>2、title 传 nil，即：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@&#34;&#24744;&#30830;&#23450;&#35201;&#36864;&#20986;&#27492;&#24080;&#21495;&#21527;&#65311;&#34; delegate:self cancelButtonTitle:@&#34;&#21462;&#28040;&#34; otherButtonTitles:@&#34;&#30830;&#35748;&#34;, nil];</span><br></pre></td></tr></table></figure>
+<p><img src="http://stoneark.qiniudn.com/blogimg/uialertview_without_title_2.png" alt=""></p>
+<p>另外，如果需要自定义 AlertView 的样式，可以采用开源的 <a href="https://github.com/Friend-LGA/LGAlertView" target="_blank" rel="external">LGAlertView</a>。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-07-06T02:42:42.000Z"><a href="/2015/07/06/MBProgressHUD-and-UITableView-section-header/">Jul 6 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/07/06/MBProgressHUD-and-UITableView-section-header/">MBProgressHUD and UITableView section header</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在一个 UITableView 上添加一个 MBProgressHUD，很有可能会遇到这种情况，HUD 被 TableView 的 section header 挡住了：</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/hud_and_tableview_section_header.jpg" alt=""></p>
+<p>同样的，如果你用了 UITableViewController，则 self.view 就是一个 UITableView，则当向 self.view 添加一个 HUD 为 subview 时，就会遇到这个问题。</p>
+<p>在 github 上的 issue：<br><a href="https://github.com/jdg/MBProgressHUD/issues/242" target="_blank" rel="external">https://github.com/jdg/MBProgressHUD/issues/242</a></p>
+<p>在 stackoverflow 上的讨论：<br><a href="http://stackoverflow.com/questions/7199700/uitableview-headings-shown-on-top-of-mbprogresshud" target="_blank" rel="external">http://stackoverflow.com/questions/7199700/uitableview-headings-shown-on-top-of-mbprogresshud</a></p>
+<p>可以根据情况考虑，选择下面的方法：</p>
 <ol>
-<li><em>开发者将所有新工作提交到 trunk 上。</em> 每日的改变都被提交到 <em>/trunk</em> ：包括新功能、bug 修复等。</li>
-<li><em>复制 trunk 到一个 “release” 分支。</em> 当团队认为软件可以发布的时候（比如，发布 1.0 版本），<em>/trunk</em> 会被拷贝到 <em>/branches/1.0</em> 。</li>
-<li><em>团队继续并行工作。</em> 一个团队开始对 release 分支进行严格的测试，同时，另一个团队在 <em>/trunk</em> 继续新的工作（比如，开发 2.0 版本）。无论哪一个团队发现了 bug，在必要的时候，对于这个 bug 的修复都可以移植 (ported) 到另一个团队。这个过程在某个时间点会停止，然后这个分支将会被“冻结”，以供发布前进行最终测试。</li>
-<li><em>标记这个分支 (tagged) 并发布。</em> 当测试结束后，为 <em>/branches/1.0</em> 创建一个标记到 <em>/tags/1.0.0</em> ，作为一个引用快照。这个 tag 中的版本将会被打包并发布给用户。</li>
-<li><em>这个分支随着时间的推移进行适当的维护。</em> 2.0 版本的开发工作在 <em>/trunk</em> 中继续，修复的 bug 也陆续从 <em>/trunk</em> 中移植到 <em>/branches/1.0</em> 。当修复的 bug 数量累积到足够多的时候，管理层可能决定发布 1.0.1 版本，此时应把 <em>/branches/1.0</em> 创建标记到 <em>/tags/1.0.1</em> ，这个 1.0.1 的 tag 会被打包发布。</li>
+<li>不用 UITableViewController，改用 UIViewController + TableView，并把 hud 添加到 self.view 上。</li>
+<li>把 hud 添加到 self.navigationController.view 上，这样会带来一个副作用，hud 显示的时候不能点击返回按钮，不推荐。</li>
+<li>调整 hud 的 z 值，hud.layer.zPosition = MAXFLOAT; （z 值越大越在上方），推荐采用。</li>
 </ol>
-<p>这整个过程将随着软件的成熟而不断反复进行：当 2.0 的工作完成后，一个新的名为 2.0 的 release 分支会被创建、测试、标记，最终发布。几年后，整个 repository 将会是好多个处于“维护”模式的 release 分支，和好多个标志着最终发布给用户的 tag。</p>
-<h3 id="用于新特性的分支_(Feature_分支)">用于新特性的分支 (Feature 分支)</h3><p><em>用于新特性的分支 (feature branch)</em> 是在这一章最合适的例子（当 Sally 继续在 <em>/trunk</em> 工作时，你需要开发一个新功能）【译者注：请参见原文在本节之前创设的情境】。这时一种临时的分支，用于进行一些复杂的修改，而不会影响到 <em>/trunk</em> 的稳定。不像 release 分支（需要永久支持），feature 分支的生命历程是：创建，使用它来进行新特性的开发，合并回 trunk，然后被永久删除。它们的作用是有限的。</p>
-<p>另外，什么时候需要创建 feature 分支是不一定的，与不同工程的不同情况有关。有些工程从来不使用 feature 分支：所有人都可以自由地向 <em>/trunk</em> 提交。这种系统的好处是非常简单－－不需要有人懂得有关分支和合并的知识。缺点是 trunk 的代码经常是不稳定的甚至是不可用的。而有些工程将分支用到了极致：所有的修改都 <em>从不</em> 直接提交到 trunk。即使是最微不足道的修改，也需要专门创建一个短命的分支，仔细审查，然后合并回 trunk。然后这个短命的分支就被删除了。这样可以保证在任何时间 trunk 都绝对稳定并可用，但是导致了大量的流程开销。</p>
-<p>大多数工程采用了折中的方式。这种方式坚持 <em>trunk</em> 在任何时间都可以正常编译并通过回归测试。只有当某次修改包含大量提交，可能造成不稳定时，才需要创建 feature 分支。一个好的判断准则是：如果一个功能需要开发者独立工作好几天，然后一次性提交大量的修改（因为要保证 <em>trunk</em> 的稳定，所以要一次性），那这样的修改是不是大到需要进行代码审查了？如果对这个问题的回答是肯定的，那这些修改就应该在一个 feature 分支中进行。这样，开发者就能以递增的方式向 feature 分支中多次提交，而不必担心影响稳定，其他人也可以很容易地审阅到分支中这些代码的变化情况。</p>
-<p>最后还有一个问题，如何在工作的进程中保持 feature 分支和 trunk 的同步。正如我们之前所说，在一个分支上工作数周甚至数月是有很大风险的；trunk 上的修改越来越多，与 feature 分支中对应代码行的差距越来越大，从 branch 合并回 trunk 可能会变得噩梦一般。</p>
-<p>可以通过时常将 trunk 的变更合并到 branch 来避免这种状况【译者注：合并不是单向的，可以从 branch 合并回 trunk，也可以从 trunk 合并到 branch，后者也被称为“同步”】。制定一个原则：每周一次，将上周 trunk 上的变更合并到 branch 中。</p>
-<p>在某个时间点，你会准备将“已同步”的 feature 分支合并回 trunk 中。要做这件事，首先要进行最后一次同步，将 trunk 最新的修改同步到 feature 分支中。完成后，最新的 branch 和 trunk 除了你在 branch 上的修改之外，将是完全一致的。然后就可以通过 <code>reintegrate</code> 选项将分支合并回去了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cd trunk-working-copy&#10;&#10;$ svn update&#10;At revision 1910.&#10;&#10;$ svn merge --reintegrate http://svn.example.com/repos/calc/branches/mybranch&#10;--- Merging differences between repository URLs into &#39;.&#39;:&#10;U    real.c&#10;U    integer.c&#10;A    newdirectory&#10;A    newdirectory/newfile&#10; U   .&#10;&#8230;</span><br></pre></td></tr></table></figure>
-<p>另外一种理解这种模式的方法是，每周从 trunk 向 branch 的同步可以看作是在 working copy 中执行了 <em>svn update</em> ，最后的合并操作可以看作是在 working copy 中执行了 <em>svn commit</em> 。既然这样，working copy 不就可以认为是一种非常浅的、私有的分支吗？它就是一种特别的分支，每次只有很少的变更。</p>
 
       
     </div>
@@ -338,63 +335,21 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-01-26T09:21:36.000Z"><a href="/2015/01/26/remove-empty-folder-in-launchpad/">Jan 26 2015</a></time>
+        <time datetime="2015-06-29T07:47:49.000Z"><a href="/2015/06/29/limit-max-input-length-of-uitextview/">Jun 29 2015</a></time>
       
       
   
-    <h1 class="title"><a href="/2015/01/26/remove-empty-folder-in-launchpad/">删掉 Launchpad 里的空白文件夹</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>Yosemite 的 bug 是真不少，昨晚又发现了一个，Launchpad 里的空白文件夹怎么删都删不掉！（Yosemite 10.10.1）</p>
-<p>昨晚手一滑，在 Launchpad 里把一个应用的图标拖到另一个上面了，自然而然地形成了一个文件夹。我随即把他俩都从文件夹里移出来，文件夹自动消失了，看起来没啥问题。等等！重启一下，问题来了，那个文件夹又出现了，而且是空白的，按住 Option 键也没有叉号。如果把一个应用图标再拖进去，然后再拖出来，那个文件夹会再次消失，不过重启之后…抓狂啊！</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/empty_folder_in_launchpad.png" alt="Empty folder in Launchpad"></p>
-<p>找到如下方法，在终端中：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults write com.apple.dock ResetLaunchPad -bool true&#10;$ killall Dock</span><br></pre></td></tr></table></figure>
-<p>如果无效，可以尝试重新启动一下 Mac。</p>
-<p>另外，网络上还流传着另一种方法，也可以尝试一下，看上去原理都是重置 Dock 的数据：</p>
-<pre><code>把 ~/<span class="keyword">Library</span>/Dock 目录中的所有文件移入废纸篓，重新启动即可。
-</code></pre>
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-01-26T09:10:30.000Z"><a href="/2015/01/26/mac-mini-not-responding-frequently/">Jan 26 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/01/26/mac-mini-not-responding-frequently/">最近 Mac mini 经常死机</a></h1>
+    <h1 class="title"><a href="/2015/06/29/limit-max-input-length-of-uitextview/">限制 UITextView 最大输入字符数</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>最近刚买不久的 Mac mini 经常死机，刚买了不到两个月，已经死机至少三次了，而且有两次是死到不得不长按电源按钮强制关机的地步。这让我着实有些郁闷，办公室的 iMac 用了一年半了，印象中只死过一次机。</p>
-<p>回忆了一下死机的情形，有两次都是从 Launchpad 打开应用导致的。具体表现是：在 Launchpad 里单击一个应用的图标，Launchpad 本应该打开这个应用并且让自己消失，但此时却没有任何反应，应用没有被打开，Launchpad 也没有消失，继续点击依然是这样的，无论点击什么应用都是这样。</p>
-<p>有一次是过了一会儿就死了，鼠标变为旋转的风火轮，等了好久好久都没反应，只能强制关机。</p>
-<p>另一次是等了好久后，点击的应用被打开，由于刚才狂点了好多次，所以同时还弹出了好多对话框，提示你这个应用已经被打开了，不能再次打开。但问题还没完，这个好不容易被打开的应用再也关不掉了。Dock 里和强制退出程序列表里，一直有这个程序，强制退出也没用。但是在 Activitiy Monitor 里已经没有这个进程了。于是，如果想关机，系统会不断尝试把这个程序关闭，但是一直关闭不了，只能长按电源…</p>
-<p>系统是 Yosemite 10.10.1，难道是 Yosemite 的众多 bug 之一吗？也想不到会是什么原因，唯一能想到可以做的就是修复磁盘权限。</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/fix_disk_authority.png" alt="Fix disk authority"></p>
-<p><strong>Applications/.DS_Store！</strong>难道就是因为它的权限出了问题？看上去是很个靠谱的解释。如果过一段时间我没在下面续写新内容，那就是这个原因了，如果有受相同问题困扰的朋友，可以参考。</p>
+        <p>实现以下两个 UITextView 的代理方法即可：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#define LENGTH_LIMIT 10</span></span><br><span class="line">- (<span class="built_in">BOOL</span>)textView:(<span class="built_in">UITextView</span> *)textView shouldChangeTextInRange:(<span class="built_in">NSRange</span>)range replacementText:(<span class="built_in">NSString</span> *)text &#123;</span><br><span class="line">    <span class="keyword">if</span> (textView<span class="variable">.text</span><span class="variable">.length</span> &gt;= LENGTH_LIMIT &amp;&amp; text<span class="variable">.length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(<span class="keyword">void</span>)textViewDidChange:(<span class="built_in">UITextView</span> *)textView &#123;</span><br><span class="line">    <span class="keyword">if</span> (textView<span class="variable">.text</span><span class="variable">.length</span> &gt; LENGTH_LIMIT) &#123;</span><br><span class="line">        textView<span class="variable">.text</span> = [textView<span class="variable">.text</span> substringToIndex:LENGTH_LIMIT];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，这两个代理方法必须都实现。</p>
+<p>如果只实现第一个代理方法，则会出现一个问题：到达字数限制时，用键盘的确已无法输入进去，但可以通过点击键盘上方的联想字词继续输入进去，导致超过限制。通过实现第二个代理方法，可把通过联想或其他方式输入进去的多余字符截掉。这也是之前我没有注意到的一点。</p>
+<p>如果只实现第二个代理方法，虽然长度不会超过限制，但实际相当于先输入进去，后再截掉，导致按下键盘后虽然没有输入进去字符，但键盘上方的联想字词在不断地根据你的按键而联想。</p>
 
       
     </div>
@@ -417,24 +372,25 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-01-26T03:18:21.000Z"><a href="/2015/01/26/on-the-origins-of-ds-store-translation/">Jan 26 2015</a></time>
+        <time datetime="2015-06-25T02:37:27.000Z"><a href="/2015/06/25/ios-8-2-tableview-cell-height-bug/">Jun 25 2015</a></time>
       
       
   
-    <h1 class="title"><a href="/2015/01/26/on-the-origins-of-ds-store-translation/">.DS_Store 的由来（译）</a></h1>
+    <h1 class="title"><a href="/2015/06/25/ios-8-2-tableview-cell-height-bug/">iOS 8.2 UITableView 的默认行高 bug</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <h2 id="前言">前言</h2><p>本文作者为原苹果工程师 Arno Gourdol，正是他主导了 Mac OS X 系统上 Finder 应用的开发。这篇文章为我们阐述了 .DS_Store 文件的由来，是个很不错的计算机历史小文章。原文链接：<a href="http://arno.org/arnotify/2006/10/on-the-origins-of-ds_store/" target="_blank" rel="external">http://arno.org/arnotify/2006/10/on-the-origins-of-ds_store/</a>。</p>
-<h2 id="译文">译文</h2><p><strong>如果你是一个 Mac 用户，或者你曾经从 Mac 向 Windows 传输过文件，你可能会对一个名为 <code>.DS_Store</code> 的文件很熟悉。但这个名字是从何而来呢？</strong></p>
-<p>时间回到 1999 年，我在苹果公司担任 Mac OS X 系统内 Finder 应用的技术主管。在那时，Finder 的代码已有 8 年的历史，代码已经很难以维护。做任何改变都需要做大量的工作，而且常常会影响到两三个看似跟它无关的功能。所以在 Mac OS X 上我们决定，从设计开始，重写 Finder。</p>
-<p>涉及到的工作之一，便是分离用户界面和核心功能，也就是后台代码。Finder 的后台会穷举文件、监视文件系统变化、处理元数据，包括图标的位置和文件夹设置。在内部，这两个部分被我们称作 Finder_FE 和 Finder_BE（Frontend 和 Backend）。</p>
-<p>但是，没过多久我们就意识到，Finder 以外的应用也很可能需要调用 Finder 后台的功能。所以我们计划在将来某一天，让它成为一个公共的 API。由于我之前曾负责命名了 Icon Services 和 Navigation Services，所以我们决定把它命名为 Desktop Services（在那时，我们还曾考虑过把 Finder 改名为 “Desktop”）。因此，<code>.DS_Store</code> 这个名字，就是 “Desktop Services Store”（桌面服务存储） 的意思。我们在文件名之前添加了一个句点，以保证在 Unix 操作系统上，包括 Mac OS 上，被识别为一个隐藏文件。</p>
-<p>个人认为这并不是一个好的名字，我曾希望找到一个描述性更好的名字，但已经太晚了 :)</p>
-<p>另外，还有一个至今仍未被修复的 bug，会导致过度创建 <code>.DS_Store</code> 文件。仅当用户更改了视图设置或改变了目录内图标的位置时，这些文件才应创建。可惜的是，事情并没有如此发生，而是当某个目录被访问时，<code>.DS_Store</code> 文件就会被创建。</p>
-<p>另外，Finder_BE，也就是 Desktop Services，不再只被 Finder 调用：Navigation Services（打开/保存对话框）现在也会调用它，在 Mac OS 的最初版本中并不是这样的。但现在，Desktop Services 的 API 依然没有完全开放出来。</p>
+        <p><img src="http://stoneark.qiniudn.com/blogimg/ios82_tableview_cell_height_bug.png" alt="Cell高度错误"></p>
+<p>很简单的一个登录页面，用 Storyboard 的 Static Cell 来实现。开发时没有发现任何问题，交予测试时反馈输入框太小了，就是上面截图的样子，现象 100% 出现。而且发现，从该页面 Push 到下一层页面再 Pop 回该页面后，高度即可恢复正常。</p>
+<p>检查程序没发现任何问题，Cell Height 都采用了默认高度。在我的模拟器上和其他测试设备上也无法重现这个问题。</p>
+<p>检查那台出问题的测试机，发现系统版本为 iOS 8.2，而我的模拟器和测试机上都运行着 iOS 8.3 或 iOS 7.1。于是安装 iOS 8.2 模拟器，问题在 8.2 版本的模拟器上重现了！</p>
+<p>经研究，推测为 iOS 8.2 的系统 bug，只要是采用了 TableView 的默认行高，就会出现行高不正确的问题。这个 bug 已经在 iOS 8.3 上得到修复。若要确保 iOS 8.2 系统下也不会出现显示异常，可以采用以下任意一种方式：</p>
+<ol>
+<li>把 TableView 的 Row Height 属性设置为不是默认 44 的值。</li>
+<li>把 TableView 中的 TableViewCell 的 Row Height 属性，选中 Custom。</li>
+</ol>
 
       
     </div>
@@ -457,24 +413,23 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-01-19T03:13:41.000Z"><a href="/2015/01/19/use-xcode6-debug-view-hierarchy-and-forget-reveal/">Jan 19 2015</a></time>
+        <time datetime="2015-06-24T07:41:21.000Z"><a href="/2015/06/24/updated-to-hexo-3-from-2/">Jun 24 2015</a></time>
       
       
   
-    <h1 class="title"><a href="/2015/01/19/use-xcode6-debug-view-hierarchy-and-forget-reveal/">忘掉 Reveal，使用 Xcode6 来进行视图层次调试</a></h1>
+    <h1 class="title"><a href="/2015/06/24/updated-to-hexo-3-from-2/">Updated to Hexo 3 from 2</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>Xcode 6 提供了许多新特性，视图层次调试（Debug View Hierarchy）便是其中很便捷的特性之一。之前调试视图层次，我们需要借助 Reveal、Spark Inspector 等商业软件，如今 Xcode 引入了这一功能，着实令人兴奋。</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/Xcode_Debug_View_Hierarchy.png" alt="Debug View Hierarchy"></p>
-<p>使用也很简单，在 Xcode 中以调试模式运行程序（模拟器、真机均可），然后就可以在 Xcode 底部调试区域找到 Debug View Hierarchy 的按钮（在跳出和模拟位置中间）：</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/Xcode_Debug_View_Hierarchy2.png" alt="Debug View Hierarchy button"></p>
-<p>或者，也可以在菜单中找到：Debug -&gt; View Debugging -&gt; Capture View Hierarchy。</p>
-<p>点击后稍等就会生成视图层次，同时进程会暂停。用鼠标拖动探索一下吧</p>
-<p>视图左下方的滑块可以调整层次间的距离，右下角的滑块可以调整显示的层数，下方的按钮可以控制是否显示 clipped 的内容、是否显示 constraints、放大缩小还原等。当然，如果需要诸如 live 修改等高级功能，还是需要借助 Reveal，但 Xcode 中提供的这些基本功能，大多数情况下也足够了。</p>
-<p>PS. 如果你在调试区域找不到那个按钮，菜单中的“Capture View Hierarchy” 也是灰色的，可能是你使用的调试设备为 64 位设备（iPhone 5 以上的模拟器或真机），但你的工程属性中并不支持 64 位的原因。可以尝试使用 iPhone 4S 模拟器，那个按钮应该就会出现了。</p>
+        <p>我一直在用的静态博客框架 Hexo，在今年 3 月份大版本<a href="https://hexo.io/news/2015/03/05/hexo-3-0-released/" target="_blank" rel="external">升级到了 3.0 版</a>。一直没有从 2.x 升级到 3.x，今天升级并迁移到了最新的 3.1.1，了解了一下 3.x 的变化。<br>官方提供了<a href="https://github.com/hexojs/hexo/wiki/Migrating-from-2.x-to-3.0" target="_blank" rel="external">迁移文档</a>，升级过程很顺畅，安装 hexo-cli 时果然如文档所说 “error occurred”，把老版本的 hexo 先删掉就好。</p>
+<p>有一个地方文档中并未提及，需要格外注意：除了安装 hexo-cli 之外的步骤，都应该在你的 blog 根目录下进行。这也反映出了新版本最大的变化：模块分离。</p>
+<p>首先可以看到，新版本多了一个 <code>hexo-cli</code>，也就是 Hexo command line interface，这也是新版本中唯一需要安装到系统全局的模块。把 CLI 从主模块中分离，可以让 CLI 加载更快，同时能够允许你在不同的目录下维护着不同版本的 hexo blog。</p>
+<p>而其他所有模块，包括 hexo, hexo-server, hexo-deployer, hexo-generator, hexo-renderer 等，都被安装在某一个 blog 的 node_modules 目录下，仅应用于这一个 blog。</p>
+<p>模块分离有利有弊，但大多数情形下是利大于弊的。对于 hexo 来讲，带来最大的利就是，blog 目录下包含着所有需要的内容和程序，受系统环境的限制就能做到尽可能的小。而先前版本的 hexo，blog 目录中仅包含所有的内容，而并不包含程序 — 程序需要调用系统中安装的。设想一下，Alice 在 Bob 家度假，突然想用 Bob 的个人电脑写个博客（假设 Alice 没有带自己的笔记本）。Alice 平常用的是 2.x 版本的 hexo，并把 blog 目录同步到了 Dropbox。而 Bob 用的是 2.y 版本的 hexo，2.x 和 2.y 版本是不完全兼容的。于是，当 Alice 在自己的 blog 目录下执行 hexo 的命令时，可能会出现一些意想不到的错误 — 内容是 2.x 版本的，而程序是 2.y 版本的。</p>
+<p>而如果它们都用了现在模块分离程度更高的版本，那么在 Alice 的 blog 目录中，就同时包含了 3.x 版本的内容和 3.x 版本的程序，虽然 Bob 的电脑上是 3.y 版本，但这并不影响什么 — 因为唯一需要依赖系统的是 hexo-cli，而这个 hexo-cli 只是一个 driver，具体的功能实现都将由 blog 目录中的程序接管。而由于这个 hexo-cli 功能非常简单，所以可以做到非常稳定，不同的版本基本上可以完全兼容。</p>
+<p>这样的大版本更新也是有些副作用的，比如由于 hexo-deployer-git 模块也改变了，之前的 git 提交历史都没有了…</p>
 
       
     </div>
@@ -515,23 +470,23 @@
   <ul class="entry">
     
       <li>
-        <a href="/2016/04/21/blank-activity-and-empty-activity-in-android-studio/">Blank activity and Empty activity in Android Studio</a>
+        <a href="/2016/06/04/ciji-release/">詞記 Release!</a>
       </li>
     
       <li>
-        <a href="/2016/04/19/Android-application-display-name/">Android application display name</a>
+        <a href="/2016/05/26/itunes-connect-error-itms-90475/">iTunes Connect Error ITMS-90475</a>
       </li>
     
       <li>
-        <a href="/2016/04/16/html-form-submit/">html form submit</a>
+        <a href="/2016/05/25/application-localization-in-ios-development/">Application localization in iOS development</a>
       </li>
     
       <li>
-        <a href="/2016/04/14/ejs-template/">EJS template</a>
+        <a href="/2016/05/19/bug-about-launchscreen-storyboard/">Bug about launchscreen storyboard</a>
       </li>
     
       <li>
-        <a href="/2016/03/27/Android-hide-soft-keyboard/">Android 收回软键盘</a>
+        <a href="/2016/05/18/sketch-keep-transparent-pixels-when-export/">Sketch 导出时保留透明像素</a>
       </li>
     
   </ul>
@@ -542,7 +497,7 @@
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 14px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 14px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 14px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
   </div>
 </div>
 
