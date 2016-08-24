@@ -57,7 +57,8 @@
   </ul>
   <div class="clearfix"></div>
 </nav>
-<div class="clearfix"></div></header>
+<div class="clearfix"></div>
+</header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
 <h2 class="archive-title tag">Xcode6</h2>
@@ -122,8 +123,8 @@
       
         <p>正式推出的 iOS8 中，定位服务分为了 <em>使用应用程序期间</em> 和 <em>始终</em> 两种权限，这导致了一些变化。之前的工程若用 Xcode5 编译，并在 iOS8 上运行，会向用户请求始终获取位置的权限。若用 Xcode6 编译，会发现程序不会向用户请求权限，同时导致无法定位。</p>
 <p>解决方法并不复杂，只需在 <code>Info.plist</code> 中加入请求定位权限时显示给用户的提示信息即可：</p>
-<figure class="highlight plist"><figcaption><span>-Info.plist</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">key</span>&gt;</span>NSLocationWhenInUseUsageDescription<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">string</span>&gt;</span>写上为什么要在程序运行时获取位置<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>或<br><figure class="highlight plist"><figcaption><span>-Info.plist</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">key</span>&gt;</span>NSLocationAlwaysUsageDescription<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">string</span>&gt;</span>写上为什么要始终获取位置<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plist"><figcaption><span>-Info.plist</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">key</span>&gt;</span>NSLocationWhenInUseUsageDescription<span class="tag">&lt;/<span class="name">key</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span>&gt;</span>写上为什么要在程序运行时获取位置<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>或<br><figure class="highlight plist"><figcaption><span>-Info.plist</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">key</span>&gt;</span>NSLocationAlwaysUsageDescription<span class="tag">&lt;/<span class="name">key</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span>&gt;</span>写上为什么要始终获取位置<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -158,9 +159,9 @@
       
         <p>自 Xcode 6 起，继承于 NSObject 的类一定要避免使用 description 等作为属性的名字，否则会被认为是 NSObject 中的 description 属性。</p>
 <p>警告内容：</p>
-<pre><code>Auto <span class="keyword">property</span> synthesis will <span class="keyword">not</span> synthesize <span class="keyword">property</span> 'description' because <span class="keyword">it</span> <span class="keyword">is</span> 'readwrite' <span class="keyword">but</span> <span class="keyword">it</span> will be synthesized 'readonly' via another <span class="keyword">property</span>.
+<pre><code>Auto property synthesis will not synthesize property &apos;description&apos; because it is &apos;readwrite&apos; but it will be synthesized &apos;readonly&apos; via another property.
 </code></pre><p>如果在代码中执行了 setDescription，则程序会崩溃，错误信息：</p>
-<pre><code>*** Terminating app due to uncaught exception 'NSInvalidArgumentException', reason: '-<span class="keyword">[</span>AnObject setDescription:]: unrecognized selector sent to<span class="instruction"> instance </span>0x79e8b260'
+<pre><code>*** Terminating app due to uncaught exception &apos;NSInvalidArgumentException&apos;, reason: &apos;-[AnObject setDescription:]: unrecognized selector sent to instance 0x79e8b260&apos;
 </code></pre><p>如果在代码中试图取 description 的值，则会得到 NSObject 的 description 属性，即该对象的指针，如 <code>&lt;AnObject: 0x7c97f870&gt;</code>。</p>
 <p>其实本就该避免，只不过之前不会出问题而已。</p>
 
@@ -200,23 +201,23 @@
   <ul class="entry">
     
       <li>
-        <a href="/2016/06/04/ciji-release/">詞記 Release!</a>
+        <a href="/2016/07/05/changes-about-programming-thinking-in-swift/">Swift 编程思路的变化</a>
       </li>
     
       <li>
-        <a href="/2016/05/26/itunes-connect-error-itms-90475/">iTunes Connect Error ITMS-90475</a>
+        <a href="/2016/07/03/iap-take-effect-later-than-app-release/">应用上线后 IAP 商品不会立即生效</a>
       </li>
     
       <li>
-        <a href="/2016/05/25/application-localization-in-ios-development/">Application localization in iOS development</a>
+        <a href="/2016/06/30/the-strict-sapprft/">管理宽广而严格的广电总局</a>
       </li>
     
       <li>
-        <a href="/2016/05/19/bug-about-launchscreen-storyboard/">Bug about launchscreen storyboard</a>
+        <a href="/2016/06/18/battery-drainer-gpsd/">Battery drainer gpsd</a>
       </li>
     
       <li>
-        <a href="/2016/05/18/sketch-keep-transparent-pixels-when-export/">Sketch 导出时保留透明像素</a>
+        <a href="/2016/06/17/imei-missing-after-downgrade-samsung-s4/">IMEI missing after downgrade Samsung S4</a>
       </li>
     
   </ul>
@@ -227,7 +228,7 @@
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 14px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 12px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
   </div>
 </div>
 

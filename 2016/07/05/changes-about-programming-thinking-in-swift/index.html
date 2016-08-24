@@ -1,0 +1,220 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Swift 编程思路的变化 | SABlog</title>
+  <meta name="author" content="StoneArk">
+  
+  <meta name="description" content="方舟的技术博客">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Swift 编程思路的变化"/>
+  <meta property="og:site_name" content="SABlog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="SABlog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-57166172-1', 'auto');
+	ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">SABlog</a></h1>
+  <h2><a href="/">StoneArk&#39;s Blog</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+      <li><a href="/atom.xml">RSS</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-07-05T08:46:19.000Z"><a href="/2016/07/05/changes-about-programming-thinking-in-swift/">Jul 5 2016</a></time>
+      
+      
+  
+    <h1 class="title">Swift 编程思路的变化</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天看到<a href="http://alisoftware.github.io/swift/2015/09/06/thinking-in-swift-1/" target="_blank" rel="external">这篇文章</a>，才发现之前那次尝试着用 Swift 写代码时犯了一个多大的错误。</p>
+<p>上次是在做优优育儿时，有一个新功能非常简单，就是一个单纯的列表页，所以尝试着用 Swift 进行了实现。而我当时正是像文章中写的那样，只是把之前 Objective-C 的写法按照 Swift 的语法进行了变化，然后相信了 Xcode 的代码更正提示，结果虽然可以正常运行，但代码里全是 exclamation mark。</p>
+<p>阅读了这个系列的文章，发现 Swift 的确是个现代化的语言。虽然凭借传统语言的知识可以很容易地入手，但它所带来的不仅仅是语法的改变，更多的是编程思路的变化。</p>
+<p>下面我将分别展示三段代码，功能是从 JSON 串中得到一个 Article 对象的数组。第一段是用 Objective-C 编写的代码，这也是我写这种功能的标准形式。第二段是按照传统思路编写的 Swift 代码，是应该避免的。第三段是用正确的思路编写的 Swift 代码。</p>
+<a id="more"></a>
+<h3 id="第一段代码"><a href="#第一段代码" class="headerlink" title="第一段代码"></a>第一段代码</h3><figure class="highlight objc"><figcaption><span>ArticleObject.h</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ArticleObject</span> : <span class="title">NSObject</span></span></div><div class="line">+ (<span class="built_in">NSArray</span>*)articleArrayWithJSONData:(<span class="built_in">NSData</span>*)data;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<figure class="highlight objc"><figcaption><span>ArticleObject.m</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"ArticleObject.h"</span></span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ArticleObject</span>()</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> *objectID;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> *title;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSURL</span> *url;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ArticleObject</span></span></div><div class="line">+ (<span class="built_in">NSArray</span>*)articleArrayWithJSONData:(<span class="built_in">NSData</span>*)data &#123;</div><div class="line">    <span class="built_in">NSArray</span> *arrData = [<span class="built_in">NSJSONSerialization</span> JSONObjectWithData:data options:<span class="number">0</span> error:<span class="literal">nil</span>];</div><div class="line">    <span class="built_in">NSMutableArray</span> *arrArticle = [[<span class="built_in">NSMutableArray</span> alloc]init];</div><div class="line">    <span class="keyword">for</span> (<span class="built_in">NSDictionary</span> *dictItem <span class="keyword">in</span> arrData) &#123;</div><div class="line">        ArticleObject *articleObj = [[ArticleObject alloc]initWithDictionary:dictItem];</div><div class="line">        [arrArticle addObject:articleObj];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> arrArticle;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)initWithDictionary:(<span class="built_in">NSDictionary</span>*)dict &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> = [<span class="keyword">super</span> init]) &#123;</div><div class="line">        [<span class="keyword">self</span> setWithDictionary:dict];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setWithDictionary:(<span class="built_in">NSDictionary</span>*)dict &#123;</div><div class="line">    [<span class="keyword">self</span> setObjectID:dict[<span class="string">@"id"</span>]];</div><div class="line">    [<span class="keyword">self</span> setTitle:dict[<span class="string">@"title"</span>]];</div><div class="line">    [<span class="keyword">self</span> setUrl:[<span class="built_in">NSURL</span> URLWithString:dict[<span class="string">@"url"</span>]]];</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h3 id="第二段代码"><a href="#第二段代码" class="headerlink" title="第二段代码"></a>第二段代码</h3><p>可以看到，这段代码完全就是上面代码的 Swift 版，很容易理解，但里面有很多的惊叹号。至于为什么这样做非常不好，可以参见最开头提到的文章。</p>
+<figure class="highlight swift"><figcaption><span>ArticleObject.swift</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ArticleObject</span>: <span class="title">NSObject</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> objectID: <span class="type">String</span> = <span class="string">""</span></div><div class="line">    <span class="keyword">var</span> title: <span class="type">String</span> = <span class="string">""</span></div><div class="line">    <span class="keyword">var</span> url: <span class="type">NSURL</span>!</div><div class="line">    </div><div class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">articleArrayWithJSONData</span><span class="params">(data: NSData)</span></span> -&gt; <span class="type">NSArray</span> &#123;</div><div class="line">        <span class="keyword">let</span> arrData: <span class="type">NSArray</span> = <span class="keyword">try</span>! <span class="type">NSJSONSerialization</span>.<span class="type">JSONObjectWithData</span>(data, options: []) <span class="keyword">as</span>! <span class="type">NSArray</span></div><div class="line">        <span class="keyword">let</span> arrArticle: <span class="type">NSMutableArray</span> = <span class="type">NSMutableArray</span>()</div><div class="line">        <span class="keyword">for</span> dictItem <span class="keyword">in</span> arrData &#123;</div><div class="line">            <span class="keyword">let</span> articleObj : <span class="type">ArticleObject</span> = <span class="type">ArticleObject</span>()</div><div class="line">            articleObj.setWithDictionary(dictItem <span class="keyword">as</span>! <span class="type">NSDictionary</span>)</div><div class="line">            arrArticle.addObject(articleObj)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> arrArticle</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">setWithDictionary</span><span class="params">(dict: NSDictionary)</span></span> &#123;</div><div class="line">        <span class="keyword">self</span>.objectID = dict[<span class="string">"id"</span>] <span class="keyword">as</span>! <span class="type">String</span></div><div class="line">        <span class="keyword">self</span>.title = dict[<span class="string">"title"</span>] <span class="keyword">as</span>! <span class="type">String</span></div><div class="line">        <span class="keyword">self</span>.url = <span class="type">NSURL</span>(string: dict[<span class="string">"url"</span>] <span class="keyword">as</span>! <span class="type">String</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="第三段代码"><a href="#第三段代码" class="headerlink" title="第三段代码"></a>第三段代码</h3><p>这里面就有很多 Swift 的新东西了，比如 guard let, if let, flatMap 等。虽然代码好像更长了，也不那么易懂了，但这才是更安全可靠的代码。</p>
+<figure class="highlight swift"><figcaption><span>ArticleObject.swift</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ArticleObject</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> objectID: <span class="type">String</span></div><div class="line">    <span class="keyword">var</span> title: <span class="type">String</span></div><div class="line">    <span class="keyword">var</span> url: <span class="type">NSURL</span></div><div class="line">    </div><div class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">articleArrayWithJSONData</span><span class="params">(data: NSData)</span></span> -&gt; [<span class="type">ArticleObject</span>] &#123;</div><div class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> jsonData = <span class="keyword">try</span>? <span class="type">NSJSONSerialization</span>.<span class="type">JSONObjectWithData</span>(data, options: []),</div><div class="line">            <span class="keyword">let</span> arrData = jsonData <span class="keyword">as</span>? <span class="type">Array</span>&lt;<span class="type">Dictionary</span>&lt;<span class="type">String</span>,<span class="type">AnyObject</span>&gt;&gt;</div><div class="line">            <span class="keyword">else</span> &#123;<span class="keyword">return</span>[]&#125;</div><div class="line">        <span class="keyword">return</span> arrData.flatMap&#123;(dictItem: <span class="type">Dictionary</span>&lt;<span class="type">String</span>,<span class="type">AnyObject</span>&gt;) -&gt; <span class="type">ArticleObject</span>? <span class="keyword">in</span></div><div class="line">            <span class="keyword">if</span> <span class="keyword">let</span> articleObj: <span class="type">ArticleObject</span> = <span class="type">ArticleObject</span>(dictionary: dictItem) &#123;</div><div class="line">                <span class="keyword">return</span> articleObj</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">return</span> <span class="literal">nil</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">init</span>?(dictionary: [<span class="type">String</span>:<span class="type">AnyObject</span>]) &#123;</div><div class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> objectID = dictionary[<span class="string">"id"</span>] <span class="keyword">as</span>? <span class="type">String</span>,</div><div class="line">            <span class="keyword">let</span> title = dictionary[<span class="string">"title"</span>] <span class="keyword">as</span>? <span class="type">String</span>,</div><div class="line">            <span class="keyword">let</span> urlString = dictionary[<span class="string">"url"</span>] <span class="keyword">as</span>? <span class="type">String</span>,</div><div class="line">            <span class="keyword">let</span> url = <span class="type">NSURL</span>(string: urlString)</div><div class="line">            <span class="keyword">else</span> &#123;<span class="keyword">return</span> <span class="literal">nil</span>&#125;</div><div class="line">        </div><div class="line">        <span class="keyword">self</span>.objectID = objectID;</div><div class="line">        <span class="keyword">self</span>.title = title;</div><div class="line">        <span class="keyword">self</span>.url = url;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">setData</span><span class="params">(withDictionary: NSDictionary)</span></span> &#123;</div><div class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> objectID = withDictionary[<span class="string">"id"</span>] <span class="keyword">as</span>? <span class="type">String</span>,</div><div class="line">            <span class="keyword">let</span> title = withDictionary[<span class="string">"title"</span>] <span class="keyword">as</span>? <span class="type">String</span>,</div><div class="line">            <span class="keyword">let</span> urlString = withDictionary[<span class="string">"url"</span>] <span class="keyword">as</span>? <span class="type">String</span>,</div><div class="line">            <span class="keyword">let</span> url = <span class="type">NSURL</span>(string: urlString)</div><div class="line">            <span class="keyword">else</span> &#123;<span class="keyword">return</span>&#125;</div><div class="line">        </div><div class="line">        <span class="keyword">self</span>.objectID = objectID;</div><div class="line">        <span class="keyword">self</span>.title = title;</div><div class="line">        <span class="keyword">self</span>.url = url;</div><div class="line">    &#125;   </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/Swift/">Swift</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:blog.stoneark.org">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2016/07/05/changes-about-programming-thinking-in-swift/">Swift 编程思路的变化</a>
+      </li>
+    
+      <li>
+        <a href="/2016/07/03/iap-take-effect-later-than-app-release/">应用上线后 IAP 商品不会立即生效</a>
+      </li>
+    
+      <li>
+        <a href="/2016/06/30/the-strict-sapprft/">管理宽广而严格的广电总局</a>
+      </li>
+    
+      <li>
+        <a href="/2016/06/18/battery-drainer-gpsd/">Battery drainer gpsd</a>
+      </li>
+    
+      <li>
+        <a href="/2016/06/17/imei-missing-after-downgrade-samsung-s4/">IMEI missing after downgrade Samsung S4</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 12px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 StoneArk
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'stoneark';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

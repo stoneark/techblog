@@ -57,9 +57,252 @@
   </ul>
   <div class="clearfix"></div>
 </nav>
-<div class="clearfix"></div></header>
+<div class="clearfix"></div>
+</header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-04-16T08:21:39.000Z"><a href="/2016/04/16/html-form-submit/">Apr 16 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/04/16/html-form-submit/">html form submit</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>最近在做的部分与 HTML 的 form 表单相关，记录下以下几个问题。</p>
+<h2 id="用-form-表单外的-button-提交"><a href="#用-form-表单外的-button-提交" class="headerlink" title="用 form 表单外的 button 提交"></a>用 form 表单外的 button 提交</h2><p>一般情况下，form 表单的提交按钮会写在 form 表单内，而且非常方便，如:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/userlist/add"</span> <span class="attr">method</span>=<span class="string">"POST"</span>&gt;</span></div><div class="line">  用户名：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"username"</span> <span class="attr">required</span>=<span class="string">"required"</span> /&gt;</span></div><div class="line">  密码：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"password"</span> <span class="attr">required</span>=<span class="string">"required"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"提交"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这样，就会有一个叫提交的按钮，点击后会执行 form 的 action。</p>
+<p>但有时我们需要在 form 标签以外的某一个 button 上执行表单的提交。比如在另外一个 div 上有一个 button。这时就让这个 button 去执行一个 js 方法，用 js 去调用这个 form 的submit 方法即可，如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"modal-body"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/userlist/add"</span> <span class="attr">method</span>=<span class="string">"POST"</span> <span class="attr">id</span>=<span class="string">"formNewUser"</span>&gt;</span></div><div class="line">  用户名：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"username"</span> /&gt;</span></div><div class="line">  密码：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"password"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"提交"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"modal-footer"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"$('#formNewUser').submit()"</span>&gt;</span>提交<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>注意，直接调用 submit 方法的方式提交，即使给 username 和 password 的 input 标签添加了 required 属性，也不会自动校验，而是直接执行 action 的方法。所以如果需要校验必填项，就在 js 方法里面校验，如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"modal-footer"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"submitValidate()"</span>&gt;</span>提交<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">submitValidate</span>(<span class="params"></span>) </span>&#123;</div><div class="line"><span class="keyword">if</span> ($(<span class="string">"#username"</span>).val().length == <span class="number">0</span>) &#123;</div><div class="line">  alert(<span class="string">"请输入用户名"</span>);</div><div class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> ($(<span class="string">"#password"</span>).val().length == <span class="number">0</span>) &#123;</div><div class="line">  alert(<span class="string">"请输入密码"</span>);</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">  $(<span class="string">'#formNewUser'</span>).submit()</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="form-表单内的-button-会默认自动提交"><a href="#form-表单内的-button-会默认自动提交" class="headerlink" title="form 表单内的 button 会默认自动提交"></a>form 表单内的 button 会默认自动提交</h2><p>如果一个 button 在 form 表单里，那他默认就是一个 submit 按钮，不管你有没有写成 <code>type=&quot;submit&quot;</code>。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span>&gt;</span>...<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>但有些按钮我们并不想让它执行提交，则可以对其添加属性 <code>type=&quot;button&quot;</code> 即可。</p>
+<h2 id="提交非由用户填写的参数"><a href="#提交非由用户填写的参数" class="headerlink" title="提交非由用户填写的参数"></a>提交非由用户填写的参数</h2><p>有时我们需要在调用接口时，提交一些不是由用户填写的参数。</p>
+<p>如编辑一条数据，其 id 是程序在提交时直接填充上的，而不需要由用户填写，也不需要用户看到。</p>
+<p>这时，只需要在 form 里增加一个 input，并且将其 <code>hidden</code> 属性设置为 <code>hidden</code>，value 属性设置为所需要提交的值即可。如:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">value</span>=<span class="string">"1234567890abcdef"</span> <span class="attr">hidden</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"id"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"username"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"address"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-04-14T07:03:06.000Z"><a href="/2016/04/14/ejs-template/">Apr 14 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/04/14/ejs-template/">EJS template</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>与所有软件开发一样，Web 开发中也会面对着逻辑和数据。将逻辑和数据分开，是良好的工程结构必须做到的，否则代码会混乱不堪。而很不幸的是，用 JavaScript 去生成 HTML 时，往往就会都杂糅到一块儿。</p>
+<p><a href="http://www.embeddedjs.com" target="_blank" rel="external">EJS</a> 就是一个 JavaScript 的模版类，可以将逻辑写成一个 HTML 模版，并把数据分离出去。包括 hexo, Express.js 等框架中也都采用了 EJS。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/ejs_template.png" alt="EJS"></p>
+<p>其最主要的是 <code>&lt;% js代码 %&gt;</code> 和 <code>&lt;%= 表达式 %&gt;</code> 两个语句。前者会执行里面的 js 代码，后者会将里面的表达式直接输出到 HTML 中。</p>
+<p>如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;% <span class="keyword">if</span> (gender==<span class="number">0</span>) &#123; %&gt;</div><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">%=</span> '<span class="attr">Male</span>' %&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">%</span> &#125; <span class="attr">else</span> <span class="attr">if</span> (<span class="attr">gender</span>==<span class="string">1)</span> &#123; %&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%=</span> '<span class="attr">Female</span>' %&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%</span> &#125; <span class="attr">else</span> &#123; %&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%=</span> '<span class="attr">Unknown</span>' %&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></div></pre></td></tr></table></figure>
+<p>简单的判断，也可用问号表达式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;%= a&gt;<span class="number">10</span> ? <span class="string">'Success'</span> : <span class="string">'Failed'</span> %&gt;</div></pre></td></tr></table></figure>
+<p>需要注意，开括号<code>&lt;%</code>的右侧和内容之间、闭括号<code>%&gt;</code>的左侧和内容之间，一定要留有空格，否则会报错。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-03-27T09:17:46.000Z"><a href="/2016/03/27/Android-hide-soft-keyboard/">Mar 27 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/03/27/Android-hide-soft-keyboard/">Android 收回软键盘</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在 iOS 里，如果要收回软键盘，只需要调用当前持有焦点的 TextField 的 resignFirstResponder 方法即可。所以很自然的，在 Android 里，就会想到调用 EditText 的 <code>clearFocus()</code> 方法。但发现这样并没有让键盘收回，这与 iOS 不同。</p>
+<p>在 Android 中，应借助 <code>InputMethodManager</code> 可隐藏键盘，方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">hideKeyboard</span><span class="params">()</span> </span>&#123;</div><div class="line">    View viewFocus = <span class="keyword">this</span>.getCurrentFocus();</div><div class="line">    <span class="keyword">if</span> (viewFocus != <span class="keyword">null</span>) &#123;</div><div class="line">        InputMethodManager imManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);</div><div class="line">        imManager.hideSoftInputFromWindow(viewFocus.getWindowToken(), <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>要注意，就像刚才所说，虽然有 viewFocus.clearFocus() 这个方法，但调用它是无法让软键盘收回的。</p>
+<p>另外，用上面这个方法能够收回键盘，但输入框依然持有着焦点。也就是说，焦点与软键盘是否显示，并无关系。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-03-27T08:03:37.000Z"><a href="/2016/03/27/Android-radiobutton/">Mar 27 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/03/27/Android-radiobutton/">Android 单选框</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>与 iOS 不同，Android 提供了单选框，含有两个组件：<code>RadioButton</code> 和 <code>RadioGroup</code>。</p>
+<p>把若干个 RadioButton 放到一个 RadioGroup 内，则这个 RadioGroup 内的 RadioButton 自动完成只能选择一个的功能。</p>
+<p>但是需要注意，如果想要提供默认值，如默认选择第一个 RadioButton，不能在布局文件中把第一个 RadioButton 的 checked 属性设为 true，否则它会一直处于被选中状态。如果要实现默认值，在 java 代码中实现，如可以在 onCreate 时调用 RadioGroup 的 check 方法，传入第一个 RadioButton 的 id 即可，如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">radioGroup.check(R.id.radioButtonFirst);</div></pre></td></tr></table></figure>
+<p>另外，如果要取得 RadioGroup 中被选择的项，可通过 RadioGroup 的 getCheckedRadioButtonId 方法得到被选择的 RadioButton 的 id。然后可通过 findViewById 得到这个 RadioButton，再以此得到它的 tag 确定选择了第几项。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-03-26T07:04:56.000Z"><a href="/2016/03/26/Android-pop-to-parent-activity-with-status-preserving/">Mar 26 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/03/26/Android-pop-to-parent-activity-with-status-preserving/">Android pop to parent activity with status preserving</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>用 Android Studio 创建的 Blank Activity，在新建向导里会问你它是否有上级页面，可以在里面填上它上一级的 Activity，那么生成的 Activity 顶部的导航栏左侧就有返回按钮，并且点击后可以返回上一级页面。</p>
+<p>但是这个返回按钮是有问题的。正常情况下，点击返回应该直接返回到之前创建的上层 Activity，也就是直接 pop 到上一层。但是这个返回按钮，是把上一层 Activity 重新创建了一遍显示出来的，导致无法显示之前的状态。</p>
+<p>比如上层 Activity 有一个 ViewPager，里面有两个 Fragment。在第二个 Fragment 里点击进入了详情的 Activity，然后点击返回按钮，发现返回到了上层 Activity 的初始状态-默认选择的第一个 Fragment。</p>
+<p>可以在 <code>AndroidManifest.xml</code> 中看到，实现方式是定义了一个 PARMENT_ACTIVITY:</p>
+<figure class="highlight xml"><figcaption><span>AndroidManifest.xml</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".ProductListActivity"</span></span></div><div class="line">    <span class="attr">android:label</span>=<span class="string">"@string/title_activity_product_list"</span></div><div class="line">    <span class="attr">android:parentActivityName</span>=<span class="string">".MainActivity"</span></div><div class="line">    <span class="attr">android:theme</span>=<span class="string">"@style/AppTheme.NoActionBar"</span> &gt;</div><div class="line">    <span class="tag">&lt;<span class="name">meta-data</span></span></div><div class="line">        <span class="attr">android:name</span>=<span class="string">"android.support.PARENT_ACTIVITY"</span></div><div class="line">        <span class="attr">android:value</span>=<span class="string">"org.stoneark.doorsbylin.MainActivity"</span> /&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>解决方法也很简单，在 <code>AndroidManifest.xml</code> 中把上一层 Activity 的属性 <code>android:launchMode</code> 改为 <code>singleTop</code> 即可，即：</p>
+<figure class="highlight xml"><figcaption><span>AndroidManifest.xml</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">activity</span></span></div><div class="line">    <span class="attr">android:name</span>=<span class="string">".MainActivity"</span></div><div class="line">    <span class="attr">android:label</span>=<span class="string">"@string/title_activity_main"</span></div><div class="line">    <span class="attr">android:theme</span>=<span class="string">"@style/AppTheme.NoActionBar"</span></div><div class="line">    <span class="attr">android:launchMode</span>=<span class="string">"singleTop"</span> &gt;</div><div class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>launchMode 的默认值是 standard，每次都会强制重新创建一个 activity 的实例，所以导致了问题。根据 <a href="https://developer.android.com/guide/topics/manifest/activity-element.html#lmode" target="_blank" rel="external">Android 文档</a>中的描述，<br>android:launchMode 的取值有：<code>standard</code> 、<code>singleTop</code> 、<code>singleTask</code>、<code>singleInstance</code>，默认值是 standard：</p>
+<ul>
+<li><code>standard</code> 允许该 activity 有多个实例，并且每当显示这个 activity 时就总是重新创建一个。</li>
+<li><code>singleTop</code> 允许该 activity 有多个实例，但如果它当前在栈顶，则不重新创建。</li>
+<li><code>singleTask</code> 只允许该 activity 有一个实例，并且它只能存在于栈底。</li>
+<li><code>singleInstance</code> 与 singleTask 相同，另外还要求栈中只能有它自己，而不能再启动另外任何 activity。</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-03-24T06:21:02.000Z"><a href="/2016/03/24/Android-find-view-by-id-string/">Mar 24 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/03/24/Android-find-view-by-id-string/">Android 用 ID 字符串取到对应的 View</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>我们经常会需要在一个 for 循环中，取到多个 View，这时就需要用拼接得到的字符串作为 ID 来取 View。<br>但 findViewById 的参数是一个 Int 类型，一般用 R.id.xxx 来直接得到这个 Int 值。但如何用字符串来取 View 呢？</p>
+<p>这时需要先用 getResources().getIdentifier 由 String 得到对应的 Int，比如下面将会获取 btnItem0 到 btnItem5 这六个按钮：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=<span class="number">5</span>;i++) &#123;</div><div class="line">    String strButtonID = <span class="string">"btnItem"</span> + i;</div><div class="line">    <span class="keyword">int</span> buttonID = getResources().getIdentifier(strButtonID,<span class="string">"id"</span>,<span class="string">"org.stoneark.packagename"</span>);</div><div class="line">    Button btnItem = (Button) findViewById(buttonID);</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -189,237 +432,16 @@
         <p>Swift 这门新兴的编程语言，自从 WWDC 2014 被发布以来不断被完善，并获得了越来越多苹果开发者的认可。WWDC 2015 时 2.0 版本的发布以及开源，让我们看到了 Swift 的不断成熟，苹果也在提倡开发者们向 Swift 转移。</p>
 <p>我很早就阅读了 Swift 的相关内容，并且感觉它是一个很不错的开发语言。它具有一些现代脚本语言的特征，更重要的是跟我早先常用的 Pascal 语言在很多地方十分相近，感觉很亲切。虽然如此，实际在工作中还并未引进 Swift，我和我的团队依然在用 Objective-C 进行 iOS 软件的开发。</p>
 <p>今天突然想在开发新功能时试一把 Swift，于是研究了一下 Swift 和 Objective-C 的混编，在原有 Objective-C 工程中引入了 Swift。</p>
-<h3 id="Swift_代码调用_Objective-C_代码">Swift 代码调用 Objective-C 代码</h3><p>在现有 Objective-C 工程中，新建一个 Cocoa Touch Class，新建时选择 Language 为 Swift，会弹出对话框提示是否需要创建 Bridging Header:<br><img src="http://stoneark.qiniudn.com/blogimg%2Fswift_objc_bridge0.jpg" alt="Create Bridging Header"></p>
+<h3 id="Swift-代码调用-Objective-C-代码"><a href="#Swift-代码调用-Objective-C-代码" class="headerlink" title="Swift 代码调用 Objective-C 代码"></a>Swift 代码调用 Objective-C 代码</h3><p>在现有 Objective-C 工程中，新建一个 Cocoa Touch Class，新建时选择 Language 为 Swift，会弹出对话框提示是否需要创建 Bridging Header:<br><img src="http://stoneark.qiniudn.com/blogimg%2Fswift_objc_bridge0.jpg" alt="Create Bridging Header"></p>
 <p>创建后工程中会新建一个名为 <code>ProjectName-Bridging-Header.h</code> 的头文件。编辑这个头文件，Swift 代码需要调用的 Objective-C 头文件，都在这个文件中 import 即可：</p>
-<figure class="highlight objc"><figcaption><span>ProjectName-Bridging-Header.h</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Use this file to import your target's public headers that you would like to expose to Swift.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="preprocessor">#import <span class="title">"BaseViewController.h"</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">"APIHandler.h"</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;YYModel.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;MJRefresh.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><figcaption><span>ProjectName-Bridging-Header.h</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  Use this file to import your target's public headers that you would like to expose to Swift.</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="meta">#import <span class="meta-string">"BaseViewController.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"APIHandler.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;YYModel.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;MJRefresh.h&gt;</span></span></div></pre></td></tr></table></figure>
 <p>另外，可以在工程属性的 Build Settings 中，可以找到 <code>Objective-C Bridging Header</code> 项，其中已自动填入了这个 ProjectName-Bridging-Header.h 的路径。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fswift_objc_bridge1.png" alt=""></p>
-<h3 id="Objective-C_代码调用_Swift_代码">Objective-C 代码调用 Swift 代码</h3><p>在需要调用 Swift 代码的 Objective-C 文件头部，写入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#import &#8220;ProductModuleName-Swift.h&#8221;</span><br></pre></td></tr></table></figure>
+<h3 id="Objective-C-代码调用-Swift-代码"><a href="#Objective-C-代码调用-Swift-代码" class="headerlink" title="Objective-C 代码调用 Swift 代码"></a>Objective-C 代码调用 Swift 代码</h3><p>在需要调用 Swift 代码的 Objective-C 文件头部，写入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#import “ProductModuleName-Swift.h”</div></pre></td></tr></table></figure>
 <p>即可，然后就能调用工程中 <strong>所有</strong> 的 Swift 源码，并不需要单独指定需要调用哪一个。<br>这个 ProductModuleName，默认就是工程名称，如”YouYouYuEr-Swift.h”。可以在工程属性的 Build Settings 中，找到 <code>Product Module Name</code> 项查看。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fswift_objc_bridge2.png" alt=""></p>
 <p>这个头文件的全名，也可在工程属性的 Build Settings 中，找到 <code>Objective-C Generated Interface Header Name</code> 项查看，可以看到它的值为 <code>$(SWIFT_MODULE_NAME)-Swift.h</code>。（可见上一小节第 2 张图）</p>
 <p>但注意，这个文件在工程中 <strong>并不</strong> 实际存在。因为就像刚才所说，import 这个文件后能调用工程中 <strong>所有</strong> 的 swift 源码，所以就不需要由开发者再去编辑这个文件，来告知编译器需要引用哪些 .swift 文件。而反过来则不同，Swift 调用 Objective-C 需要告知编译器需要调用哪些 Obejctive-C 文件，所以需要一个 ProjectName-Bridging-Header.h 供开发者去编辑。</p>
-<h3 id="总结">总结</h3><p>可以看到，Build Settings 中的 <code>Objective-C Bridging Header</code> 和 <code>Objective-C Generated Interface Header Name</code> 两项，是 Swift 与 Objective-C 混编的关键，分别为一种语言引用另一种语言提供了桥梁。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-02-29T08:52:47.000Z"><a href="/2016/02/29/recent-developer-interviews/">Feb 29 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/02/29/recent-developer-interviews/">最近开发人员招聘情况</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>作为整个技术团队的负责人，日常工作中十分重要的一项就是人才的引进，对于技术团队的发展来讲更是至关重要。</p>
-<p>年后算是一个跳槽的高峰时段，投简历和来公司面试的也不少，但是合适的并不多。现在的程序员市场有这么几个特点：</p>
-<ol>
-<li>培训热度持续走高，尤其是 iOS 培训。越来越多的人想通过培训进入软件行业，其教育背景也不再只是计算机相关专业。最近我看到的简历里，很多求职者之前的职业五花八门，如面点师、仓库管理员、销售人员、公关人员、建筑设计师。这足以说明程序员被越来越多的人认为是一个体面、高薪、有前途的职业。</li>
-<li>培训质量有所下降，出现简历造假现象。我并不排斥培训，我也见过刚培训完成后，理论知识和实践能力都蛮不错的求职者。但相当多数的求职者，虽然刚培训完，一些基本的问题都还回答不清楚，更别提自己学习一些培训以外的知识了。通过看简历就能知道培训机构现在在教什么，比如 Java 现在的培训项目肯定是云笔记。另外，据说很多机构会引导求职者简历造假。有意思的是，我曾经看到一份简历，他简历中写的一个项目，是我从头到尾一直跟着的，所有参与过这个项目的人我都知道，可是我根本不认识这个人。</li>
-<li>有些已经有两三年工作经验的人，一直在一家公司做一件事，也没有自己另外多学些东西做些东西，导致他的实际技术水平并不高，但被自己的工作年限蒙蔽了双眼，觉得自己很厉害了。他们肯定也能找到不错的工作，但我的团队是不需要的，未来的路也不会宽广吧。</li>
-</ol>
-<p>我希望我的团队成员，是真正有技术感的人，而不是为了生存、为了薪水所以才做技术的人。如果你真正希望一起提高技术，做最好的产品，那就联系我吧！</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-02-26T07:05:34.000Z"><a href="/2016/02/26/apple-wwdr-intermediate-certificate-expired/">Feb 26 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/02/26/apple-wwdr-intermediate-certificate-expired/">苹果证书签发者过期</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>今天在向 App Store 提交程序包时，突然提示以下错误：<br><img src="http://stoneark.qiniudn.com/blogimg%2Fapple_wwdrca_expired_0.png" alt=""></p>
-<p>查看钥匙串访问，发现机器上所有的苹果开发者证书、发布证书，状态都变成了“此证书的签发者无效”：<br><img src="http://stoneark.qiniudn.com/blogimg%2Fapple_wwdrca_expired_1.png" alt=""></p>
-<p>搜索证书的签发者 Apple Worldwide Developer Relations Certification Authority，发现证书已于 2016 年 2 月 15 日过期。如果没有找到这个证书签发者，确保在左下方种类中选择了“所有项目”，并在菜单中找到“显示-&gt;显示已过期的证书”。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fapple_wwdrca_expired_2.png" alt=""></p>
-<p>苹果开发者网站上也已经做了<a href="https://developer.apple.com/support/certificates/expiration/" target="_blank" rel="external">证书过期声明</a> ，在其中可以找到证书下载链接：<a href="https://developer.apple.com/certificationauthority/AppleWWDRCA.cer" target="_blank" rel="external">https://developer.apple.com/certificationauthority/AppleWWDRCA.cer</a>。下载并导入新的证书，并把旧证书删掉即可，这一次证书的有效期直到北京时间 2023 年 2 月 8 日。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fapple_wwdrca_expired_3.png" alt=""></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-01-29T03:12:46.000Z"><a href="/2016/01/29/NSAttributedString-image-vertically-center-alignment/">Jan 29 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/01/29/NSAttributedString-image-vertically-center-alignment/">NSAttributedString 图片与文字垂直居中</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>在 NSAttributedString 加入图片后，发现图片默认是与文字底部对齐的，但很多情况下，我们都希望图片与文字垂直居中对齐。</p>
-<p>NSAttributedString 并没有提供垂直对齐的属性，但可以通过 Baseline 的方式解决。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[attributedStr addAttribute: <span class="built_in">NSBaselineOffsetAttributeName</span> value:@(-<span class="number">2.0</span>) range: <span class="built_in">NSMakeRange</span>(<span class="number">0</span>,<span class="number">1</span>)];</span><br></pre></td></tr></table></figure></p>
-<p>参考：<a href="https://discussions.apple.com/thread/2788687" target="_blank" rel="external">https://discussions.apple.com/thread/2788687</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-01-22T08:22:19.000Z"><a href="/2016/01/22/disable-screen-auto-rotate-in-android-developing/">Jan 22 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/01/22/disable-screen-auto-rotate-in-android-developing/">Android 开发中禁止屏幕自动旋转</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>在 iOS 开发中，可以在工程属性里设置全局支持的屏幕朝向。对于只需要支持竖屏显示的应用，在 Device Orientation 中只保留 Portrait，取消选择 Landscape Left, Landscape Right, Upside Down 即可。也可以单独针对某个 View Controller 设置屏幕朝向，实现 UIViewController 的 supportedInterfaceOrientations 方法即可。</p>
-<p>团队中的 Android Developer 没处理过这种问题，于是我顺便了解了一下。发现 Android 似乎没有方法全局进行设置，只能针对 Activity 进行设置。</p>
-<p>一种方法是在需要限制屏幕旋转的 Activity 的 onCreate 方法里，加入一句：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);</span><br></pre></td></tr></table></figure></p>
-<p>另外一种方法，是在 Androidmanifest.xml 中为需要限制屏幕旋转的 Activity 都添加属性：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:screenOrientation="portrait"</span><br></pre></td></tr></table></figure></p>
-<p>如果需要全局进行限制，自然是采取前一种方法较好。可以让工程中的所有 Activity 都继承于一个基类 BaseActivity，那只须在 BaseActivity 里调用 setRequestedOrientation 即可。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-01-14T08:17:24.000Z"><a href="/2016/01/14/pay-attention-to-casing-of-yyyy-in-date-format/">Jan 14 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/01/14/pay-attention-to-casing-of-yyyy-in-date-format/">小心时间格式里 yyyy 的大小写</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>团队里的测试工程师测试出一个 bug，表现是：在 Date Picker 选择了2015 年 12 月 27 日，但并显示到 Textfield 里时，变成了 2016-12-27。选择 12 月较早一些的日期，不会出现任何问题。</p>
-<p>刚开始感觉一定是测试看花眼了，但尝试之后发现的确可以复现，而且，是必现！</p>
-<p>检查了一下代码，发现此处的 NSDateFormatter 对象的 dateFormat 赋了 YYYY-MM-dd，总感觉哪里怪怪的。看了一下其他地方的代码，才意识到，年份一般都是写成小写的 yyyy 的。改成 yyyy-MM-dd 后，果然一切恢复正常了。</p>
-<p>但是这个 yyyy 和 YYYY 到底有何区别呢？</p>
-<p>查了一下资料，得知 YYYY 表示的是 Week Year，也就是当前日期所在周的年份。一周从周日开始，周六结束，只要本周跨年，就进入了下一年。所以 2015 年 12 月 27 日这一天，用 YYYY 得到的年份就是 2016。</p>
-<p>苹果的开发文档中，对日期时间格式的描述是在 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Cocoa/Conceptual/DataFormatting/DataFormatting.html" target="_blank" rel="external">Introduction to Data Formatting Programming Guide For Cocoa</a> 的 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Cocoa/Conceptual/DataFormatting/Articles/dfDateFormatting10_4.html#//apple_ref/doc/uid/TP40002369-SW1" target="_blank" rel="external">Date Formatters</a> 章节里。从文档中可以看到，苹果遵循的规范是 <a href="http://www.unicode.org/reports/tr35/tr35-dates.html#Contents" target="_blank" rel="external">UNICODE LOCALE DATA MARKUP LANGUAGE (LDML) PART 4: DATES</a>。这个规范的最后有一张表 Date Field Symbol Table，里面记载了所有的时间描述符，挺有意思的，准备有时间的时候仔细看看。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-11-19T09:00:08.000Z"><a href="/2015/11/19/UIControlEventTouchDown-event-response-delay/">Nov 19 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/11/19/UIControlEventTouchDown-event-response-delay/">UIControlEventTouchDown 延迟响应</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>一个 UIButton，其上绑定了 UIControlEventTouchDown 事件。在模拟器上一切正常，反应速度很快，但在真机上出现了很怪异的反应迟钝。通过观察发现，如果按下按钮的右半边，也就是屏幕右边一侧的部分，则不会有反应迟钝现象。如果按下按钮的左半边，也就是屏幕左边一侧的部分，只要按下之后手指不移动，则会一直无响应，直到手指在按钮上产生了位移，才会响应事件。</p>
-<p>经调查，这个问题自 iOS 7 开始出现，出现原因是由 iOS 7 开始引入的右滑返回。只需设置以下属性即可避免该问题的出现。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">self</span><span class="variable">.navigationController</span><span class="variable">.interactivePopGestureRecognizer</span> setDelaysTouchesBegan:<span class="literal">NO</span>];</span><br></pre></td></tr></table></figure></p>
-<p>而且，这样并不会影响正常的右滑返回。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>可以看到，Build Settings 中的 <code>Objective-C Bridging Header</code> 和 <code>Objective-C Generated Interface Header Name</code> 两项，是 Swift 与 Objective-C 混编的关键，分别为一种语言引用另一种语言提供了桥梁。</p>
 
       
     </div>
@@ -460,23 +482,23 @@
   <ul class="entry">
     
       <li>
-        <a href="/2016/06/04/ciji-release/">詞記 Release!</a>
+        <a href="/2016/07/05/changes-about-programming-thinking-in-swift/">Swift 编程思路的变化</a>
       </li>
     
       <li>
-        <a href="/2016/05/26/itunes-connect-error-itms-90475/">iTunes Connect Error ITMS-90475</a>
+        <a href="/2016/07/03/iap-take-effect-later-than-app-release/">应用上线后 IAP 商品不会立即生效</a>
       </li>
     
       <li>
-        <a href="/2016/05/25/application-localization-in-ios-development/">Application localization in iOS development</a>
+        <a href="/2016/06/30/the-strict-sapprft/">管理宽广而严格的广电总局</a>
       </li>
     
       <li>
-        <a href="/2016/05/19/bug-about-launchscreen-storyboard/">Bug about launchscreen storyboard</a>
+        <a href="/2016/06/18/battery-drainer-gpsd/">Battery drainer gpsd</a>
       </li>
     
       <li>
-        <a href="/2016/05/18/sketch-keep-transparent-pixels-when-export/">Sketch 导出时保留透明像素</a>
+        <a href="/2016/06/17/imei-missing-after-downgrade-samsung-s4/">IMEI missing after downgrade Samsung S4</a>
       </li>
     
   </ul>
@@ -487,7 +509,7 @@
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 14px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 12px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
   </div>
 </div>
 

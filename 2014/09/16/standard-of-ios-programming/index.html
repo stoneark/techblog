@@ -57,7 +57,8 @@
   </ul>
   <div class="clearfix"></div>
 </nav>
-<div class="clearfix"></div></header>
+<div class="clearfix"></div>
+</header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
   
@@ -76,7 +77,7 @@
     <div class="entry">
       
         <p>这是我为团队制定的 iOS 代码规范，供大家参考。</p>
-<h2 id="文档说明">文档说明</h2><table>
+<h2 id="文档说明"><a href="#文档说明" class="headerlink" title="文档说明"></a>文档说明</h2><table>
 <thead>
 <tr>
 <th>Version</th>
@@ -107,9 +108,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="基本原则">基本原则</h2><p>求同存异。</p>
+<h2 id="基本原则"><a href="#基本原则" class="headerlink" title="基本原则"></a>基本原则</h2><p>求同存异。</p>
 <p>合理的编码风格不只一个，尊重每位开发人员的编码习惯。但不合理的编码习惯必须避免。</p>
-<h2 id="命名规则">命名规则</h2><ul>
+<h2 id="命名规则"><a href="#命名规则" class="headerlink" title="命名规则"></a>命名规则</h2><ul>
 <li>命名规则</li>
 </ul>
 <table>
@@ -208,30 +209,30 @@
 </ol>
 </li>
 </ul>
-<h2 id="代码缩进">代码缩进</h2><h4 id="基本要求">基本要求</h4><p>所有代码必须有符合其层次结构的缩进，缩进使用 <strong>4 个空格符</strong>。</p>
-<h4 id="大括号的处理">大括号的处理</h4><p>（1）允许的形式有 K&amp;R、Allman Style、1TBS。 </p>
+<h2 id="代码缩进"><a href="#代码缩进" class="headerlink" title="代码缩进"></a>代码缩进</h2><h4 id="基本要求"><a href="#基本要求" class="headerlink" title="基本要求"></a>基本要求</h4><p>所有代码必须有符合其层次结构的缩进，缩进使用 <strong>4 个空格符</strong>。</p>
+<h4 id="大括号的处理"><a href="#大括号的处理" class="headerlink" title="大括号的处理"></a>大括号的处理</h4><p>（1）允许的形式有 K&amp;R、Allman Style、1TBS。 </p>
 <p>示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">// K&#38;R&#10;- (void)functionExample&#10;&#123;&#10;    if (YES)&#123;&#10;        ...&#10;    &#125; else &#123;&#10;        ...&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">// Allman Style&#10;- (void)functionExample&#10;&#123;&#10;    if (YES)&#10;    &#123;&#10;        ...&#10;    &#125;&#10;    else&#10;    &#123;&#10;        ...&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// K&amp;R</div><div class="line">- (void)functionExample</div><div class="line">&#123;</div><div class="line">    if (YES)&#123;</div><div class="line">        ...</div><div class="line">    &#125; else &#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">// Allman Style</div><div class="line">- (void)functionExample</div><div class="line">&#123;</div><div class="line">    if (YES)</div><div class="line">    &#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">    else</div><div class="line">    &#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>主要注意点：</p>
 <p>a. 对于函数</p>
 <pre><code>开括号应在下一行中独占一行，并与开头行有相同的缩进。括号内的语句应该缩进。闭括号应单独占一行，并与开头行有相同的缩进。
 </code></pre><p>b. 对于函数内的控制语句块</p>
-<pre><code>（K&amp;R, <span class="number">1</span>TBS）开括号应与控制语句在同一行中，闭括号单独占一行（除非有 <span class="preprocessor">else</span> 或 <span class="preprocessor">while</span> 关键字），并与开头行有相同的缩进。&lt;<span class="keyword">br </span>/&gt; 
+<pre><code>（K&amp;R, 1TBS）开括号应与控制语句在同一行中，闭括号单独占一行（除非有 else 或 while 关键字），并与开头行有相同的缩进。&lt;br /&gt; 
 （Allman Style）与函数一致，开括号也应独占一行。
 </code></pre><p>c. 如果控制语句块内只有一条语句</p>
-<pre><code>（<span class="number">1</span>TBS）不能省略括号。&lt;<span class="keyword">br </span>/&gt;
-（K&amp;R）可以省略括号（强烈不推荐，很容易产生逻辑错误，如著名的苹果 gotofail <span class="keyword">bug）。&lt;br </span>/&gt;
+<pre><code>（1TBS）不能省略括号。&lt;br /&gt;
+（K&amp;R）可以省略括号（强烈不推荐，很容易产生逻辑错误，如著名的苹果 gotofail bug）。&lt;br /&gt;
 </code></pre><p>（2）<strong>不允许</strong> 的大括号缩进方式</p>
 <p>a.闭括号不独占一行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)functionExample&#123;&#10;&#9;if (YES)&#123;...&#125;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">- (void)functionExample&#123;</div><div class="line">	if (YES)&#123;...&#125;&#125;</div></pre></td></tr></table></figure>
 <p>b.括号层次对应关系不正确</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)functionExample&#10;&#123;&#10;    if (YES)&#10;    &#123;&#10;        ...&#10;  &#125;&#10;  &#125;</span><br></pre></td></tr></table></figure>
-<h4 id="自动化工具">自动化工具</h4><ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (void)functionExample</div><div class="line">&#123;</div><div class="line">    if (YES)</div><div class="line">    &#123;</div><div class="line">        ...</div><div class="line">  &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<h4 id="自动化工具"><a href="#自动化工具" class="headerlink" title="自动化工具"></a>自动化工具</h4><ol>
 <li>简单地调整代码缩进，可运用 Xcode 的 Re-Indent，快捷键 ⌃I。</li>
 <li>更复杂地调整代码格式，可使用 <a href="http://uncrustify.sourceforge.net/" target="_blank" rel="external">Uncrustify</a> 等工具进行自动化调整。</li>
 </ol>
-<h2 id="注释规范">注释规范</h2><h4 id="注释范围及内容">注释范围及内容</h4><ol>
+<h2 id="注释规范"><a href="#注释规范" class="headerlink" title="注释规范"></a>注释规范</h2><h4 id="注释范围及内容"><a href="#注释范围及内容" class="headerlink" title="注释范围及内容"></a>注释范围及内容</h4><ol>
 <li>对于每一个类，<strong>必须</strong> 在头文件中为其添加类注释。</li>
 <li>对于类的公有属性，<strong>必须</strong> 在头文件中为其添加属性注释。</li>
 <li>对于类的公有方法，<strong>必须</strong> 在头文件中为其添加方法注释。</li>
@@ -240,65 +241,65 @@
 <li>对于需要暂时屏蔽的代码（段），可通过注释的形式进行屏蔽。</li>
 <li>对于确定无用或已废弃的代码（段），不应以注释的形式存在于工程中。</li>
 </ol>
-<h3 id="注意事项">注意事项</h3><ol>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
 <li>注释要用正确、清晰、符合语法的中文或英文书写。</li>
 <li>注释怕短不怕长。注释要详尽地反映代码（段）的业务意义或逻辑意义。</li>
 <li>注释不是对语法的解释，千万不要写这种注释，这种注释是无效且无用的：</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">// &#23558;x&#21152;&#19968;&#10;x = x+1;</span><br></pre></td></tr></table></figure>
-<h4 id="一般注释形式">一般注释形式</h4><ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 将x加一</div><div class="line">x = x+1;</div></pre></td></tr></table></figure>
+<h4 id="一般注释形式"><a href="#一般注释形式" class="headerlink" title="一般注释形式"></a>一般注释形式</h4><ul>
 <li>单行注释</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">// &#27880;&#37322;&#20869;&#23481;&#10;sum=a+b;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 注释内容</div><div class="line">sum=a+b;</div></pre></td></tr></table></figure>
 <p>通常，超过 5 行的注释不应采用单行注释，应采用多行注释。</p>
 <ul>
 <li>多行注释</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/*&#10;  &#27880;&#37322;&#20869;&#23481;1&#10;  &#27880;&#37322;&#20869;&#23481;2&#10;*/</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line">  注释内容1</div><div class="line">  注释内容2</div><div class="line">*/</div></pre></td></tr></table></figure>
 <p>或</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/*&#10; * &#27880;&#37322;&#20869;&#23481;1&#10; * &#27880;&#37322;&#20869;&#23481;2&#10; */</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/*</div><div class="line"> * 注释内容1</div><div class="line"> * 注释内容2</div><div class="line"> */</div></pre></td></tr></table></figure>
 <ul>
 <li>较长代码段的注释</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">// Start: &#20195;&#30721;&#27573;&#31616;&#20171;&#10;firstLine;&#10;...&#10;lastLine;&#10;// End: &#20195;&#30721;&#27573;&#31616;&#20171;</span><br></pre></td></tr></table></figure>
-<h4 id="关键注释形式">关键注释形式</h4><p>按照 <a href="https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual/HeaderDoc/intro/intro.html#//apple_ref/doc/uid/TP40001215-CH345-SW1" target="_blank" rel="external">HeaderDoc</a> 标签规范书写。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// Start: 代码段简介</div><div class="line">firstLine;</div><div class="line">...</div><div class="line">lastLine;</div><div class="line">// End: 代码段简介</div></pre></td></tr></table></figure>
+<h4 id="关键注释形式"><a href="#关键注释形式" class="headerlink" title="关键注释形式"></a>关键注释形式</h4><p>按照 <a href="https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual/HeaderDoc/intro/intro.html#//apple_ref/doc/uid/TP40001215-CH345-SW1" target="_blank" rel="external">HeaderDoc</a> 标签规范书写。</p>
 <ul>
 <li>类注释</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/*!&#10; * &#31867;&#25551;&#36848;&#10; */&#10;@interface ExampleClass : NSObject &#123;&#10;&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/// &#31867;&#25551;&#36848;&#10;@interface ExampleClass : NSObject &#123;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/*!</div><div class="line"> * 类描述</div><div class="line"> */</div><div class="line">@interface ExampleClass : NSObject &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/// 类描述</div><div class="line">@interface ExampleClass : NSObject &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>属性注释</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/*!&#10; * @brief &#23646;&#24615;&#31616;&#20171;&#10; * @discussion &#23646;&#24615;&#35814;&#32454;&#25551;&#36848;&#10; */&#10;@property (strong, nonatomic) NSString *strExample;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/// &#23646;&#24615;&#31616;&#20171;&#10;@property (strong, nonatomic) NSString *strExample;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/*!</div><div class="line"> * @brief 属性简介</div><div class="line"> * @discussion 属性详细描述</div><div class="line"> */</div><div class="line">@property (strong, nonatomic) NSString *strExample;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/// 属性简介</div><div class="line">@property (strong, nonatomic) NSString *strExample;</div></pre></td></tr></table></figure>
 <p>其中，@discussion 标签为可选项。</p>
 <ul>
 <li>方法注释</li>
 </ul>
 <p>简单方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/*!&#10; *  @brief &#26041;&#27861;&#31616;&#20171;&#10; */&#10;- (void)simpleMethod;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/// &#26041;&#27861;&#31616;&#20171;&#10;- (void)simpleMethod;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/*!</div><div class="line"> *  @brief 方法简介</div><div class="line"> */</div><div class="line">- (void)simpleMethod;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/// 方法简介</div><div class="line">- (void)simpleMethod;</div></pre></td></tr></table></figure>
 <p>含有参数和返回值的方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/*!&#10; *  @brief &#26041;&#27861;&#31616;&#20171;&#10; *&#10; *  @param para1 &#21442;&#25968;&#19968;&#25551;&#36848;&#10; *  @param para2 &#21442;&#25968;&#20108;&#25551;&#36848;&#10; * &#10; *  @return &#36820;&#22238;&#32467;&#26524;&#25551;&#36848;&#10; */&#10;- (BOOL)exampleMethodWithPara:(NSString*)para1 anotherPara:(NSString*)para2;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/*!</div><div class="line"> *  @brief 方法简介</div><div class="line"> *</div><div class="line"> *  @param para1 参数一描述</div><div class="line"> *  @param para2 参数二描述</div><div class="line"> * </div><div class="line"> *  @return 返回结果描述</div><div class="line"> */</div><div class="line">- (BOOL)exampleMethodWithPara:(NSString*)para1 anotherPara:(NSString*)para2;</div></pre></td></tr></table></figure>
 <p>更为复杂的方式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/*!&#10; *  @brief &#26041;&#27861;&#31616;&#20171;&#10; *  @discussion &#26041;&#27861;&#20855;&#20307;&#25551;&#36848;&#10; *  @param para1 &#21442;&#25968;&#19968;&#25551;&#36848;&#10; *  @param para2 &#21442;&#25968;&#20108;&#25551;&#36848;&#10; *  @return &#36820;&#22238;&#32467;&#26524;&#25551;&#36848;&#10; *  @warning &#27880;&#24847;&#20107;&#39033;&#10; */&#10;- (BOOL)exampleMethodWithPara:(NSString*)para1 anotherPara:(NSString*)para2;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/*!</div><div class="line"> *  @brief 方法简介</div><div class="line"> *  @discussion 方法具体描述</div><div class="line"> *  @param para1 参数一描述</div><div class="line"> *  @param para2 参数二描述</div><div class="line"> *  @return 返回结果描述</div><div class="line"> *  @warning 注意事项</div><div class="line"> */</div><div class="line">- (BOOL)exampleMethodWithPara:(NSString*)para1 anotherPara:(NSString*)para2;</div></pre></td></tr></table></figure>
 <ul>
 <li>头文件注释</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/*!&#10; * @header Const.h&#10; * @brief &#24120;&#37327;&#34920;&#10; * @author &#32534;&#20889;&#20154;&#10; */</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/*!</div><div class="line"> * @header Const.h</div><div class="line"> * @brief 常量表</div><div class="line"> * @author 编写人</div><div class="line"> */</div></pre></td></tr></table></figure>
 <ul>
 <li>枚举类型注释</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/*!&#10; * @typedef FruitType&#10; * @brief &#26522;&#20030;&#31867;&#22411;&#31616;&#20171;&#10; * @constant FruitTypeApple FruitTypeApple&#31616;&#20171;&#10; * @constant FruitTypeBanana FruitTypeBanana&#31616;&#20171;&#10; */&#10;typedef NS_ENUM(NSInteger, FruitType)&#123;&#10;    /// FruitTypeApple&#31616;&#20171;&#10;    FruitTypeApple,&#10;    /// FruitTypeBanana&#31616;&#20171;&#10;    FruitTypeBanana&#10;&#125;;</span><br></pre></td></tr></table></figure>
-<h4 id="自动化工具-1">自动化工具</h4><p><a href="https://github.com/onevcat/VVDocumenter-Xcode" target="_blank" rel="external">VVDocumenter-Xcode</a>，可方便地添加符合规范的注释。</p>
-<h2 id="注意事项-1">注意事项</h2><ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/*!</div><div class="line"> * @typedef FruitType</div><div class="line"> * @brief 枚举类型简介</div><div class="line"> * @constant FruitTypeApple FruitTypeApple简介</div><div class="line"> * @constant FruitTypeBanana FruitTypeBanana简介</div><div class="line"> */</div><div class="line">typedef NS_ENUM(NSInteger, FruitType)&#123;</div><div class="line">    /// FruitTypeApple简介</div><div class="line">    FruitTypeApple,</div><div class="line">    /// FruitTypeBanana简介</div><div class="line">    FruitTypeBanana</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h4 id="自动化工具-1"><a href="#自动化工具-1" class="headerlink" title="自动化工具"></a>自动化工具</h4><p><a href="https://github.com/onevcat/VVDocumenter-Xcode" target="_blank" rel="external">VVDocumenter-Xcode</a>，可方便地添加符合规范的注释。</p>
+<h2 id="注意事项-1"><a href="#注意事项-1" class="headerlink" title="注意事项"></a>注意事项</h2><ul>
 <li><p>NSLog 语句输出的内容应有意义。</p>
 </li>
 <li><p>NSLog 语句只能出现在 Debug Target，在 Release Target 不应存在任何不必要的 NSLog 语句。可使用预编译宏来进行控制：</p>
 </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#if DEBUG&#10;    NSLog(@&#34;something&#34;);&#10;#endif</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#if DEBUG</div><div class="line">    NSLog(@&quot;something&quot;);</div><div class="line">#endif</div></pre></td></tr></table></figure>
 <ul>
 <li><p>工程应采用 ARC，并采用 strong 和 weak 替代传统的 retain, copy, assign。</p>
 </li>
@@ -306,27 +307,27 @@
 </li>
 </ul>
 <p>过度紧凑的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">task1Step1;&#10;task1Step2;&#10;task1Step3;&#10;task2Step1;&#10;task2Step2;&#10;task2Step3;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)functionA&#10;&#123;&#10;&#125;&#10;- (void)functionB&#10;&#123;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">task1Step1;</div><div class="line">task1Step2;</div><div class="line">task1Step3;</div><div class="line">task2Step1;</div><div class="line">task2Step2;</div><div class="line">task2Step3;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (void)functionA</div><div class="line">&#123;</div><div class="line">&#125;</div><div class="line">- (void)functionB</div><div class="line">&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>过度宽松的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">task1Step1;&#10;&#10;task1Step2;&#10;&#10;task1Step3;&#10;&#10;task2Step1;&#10;&#10;task2Step2;&#10;&#10;task2Step3;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">task1Step1;</div><div class="line"></div><div class="line">task1Step2;</div><div class="line"></div><div class="line">task1Step3;</div><div class="line"></div><div class="line">task2Step1;</div><div class="line"></div><div class="line">task2Step2;</div><div class="line"></div><div class="line">task2Step3;</div></pre></td></tr></table></figure>
 <p>松紧适度的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">// Task1&#10;task1Step1;&#10;task1Step2;&#10;task1Step3;&#10;&#10;// Task2&#10;task2Step1;&#10;task2Step2;&#10;task2Step3;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// Task1</div><div class="line">task1Step1;</div><div class="line">task1Step2;</div><div class="line">task1Step3;</div><div class="line"></div><div class="line">// Task2</div><div class="line">task2Step1;</div><div class="line">task2Step2;</div><div class="line">task2Step3;</div></pre></td></tr></table></figure>
 <ul>
 <li>应使用多条简单的代码，避免使用单条复杂的代码，以提高代码可读性。如应避免这样的代码：</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section&#10;&#123;&#10;    return (section == 0)?55:(section==2?30:20);&#10;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section</div><div class="line">&#123;</div><div class="line">    return (section == 0)?55:(section==2?30:20);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>应更改为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section&#10;&#123;&#10;    if (section == 0)&#10;    &#123;&#10;        return 55;&#10;    &#125;&#10;    else if (section == 2)&#10;    &#123;&#10;        return 30;&#10;    &#125;&#10;    else&#10;    &#123;&#10;        return 20;&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section</div><div class="line">&#123;</div><div class="line">    if (section == 0)</div><div class="line">    &#123;</div><div class="line">        return 55;</div><div class="line">    &#125;</div><div class="line">    else if (section == 2)</div><div class="line">    &#123;</div><div class="line">        return 30;</div><div class="line">    &#125;</div><div class="line">    else</div><div class="line">    &#123;</div><div class="line">        return 20;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>应避免在循环体中处理边界，如</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for (int i=0;i&#60;10;i++)&#10;&#123;&#10;    if (i==0)&#10;    &#123;&#10;        ...&#10;    &#125;&#10;    ...&#10;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">for (int i=0;i&lt;10;i++)</div><div class="line">&#123;</div><div class="line">    if (i==0)</div><div class="line">    &#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>对于参数很多的函数，参数各占一行，并以冒号对齐，如：</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)exampleFunctionWithPara:(int)para1&#10;                    anotherPara:(int)para2&#10;                   theThirdPara:(int)para3&#10;                  theFourthPara:(int)para4&#10;&#123;&#10;    ...&#10;&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self exampleFunctionWithPara:1&#10;                  anotherPara:2&#10;                 theThirdPara:3&#10;                theFourthPara:4&#10;                 theFifthPara:5];</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (void)exampleFunctionWithPara:(int)para1</div><div class="line">                    anotherPara:(int)para2</div><div class="line">                   theThirdPara:(int)para3</div><div class="line">                  theFourthPara:(int)para4</div><div class="line">&#123;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[self exampleFunctionWithPara:1</div><div class="line">                  anotherPara:2</div><div class="line">                 theThirdPara:3</div><div class="line">                theFourthPara:4</div><div class="line">                 theFifthPara:5];</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -336,7 +337,7 @@
         
   
   <div class="tags">
-    <a href="/tags/Document/">Document</a>, <a href="/tags/iOS/">iOS</a>, <a href="/tags/program/">program</a>
+    <a href="/tags/iOS/">iOS</a>, <a href="/tags/program/">program</a>, <a href="/tags/Document/">Document</a>
   </div>
 
         
@@ -389,23 +390,23 @@
   <ul class="entry">
     
       <li>
-        <a href="/2016/06/04/ciji-release/">詞記 Release!</a>
+        <a href="/2016/07/05/changes-about-programming-thinking-in-swift/">Swift 编程思路的变化</a>
       </li>
     
       <li>
-        <a href="/2016/05/26/itunes-connect-error-itms-90475/">iTunes Connect Error ITMS-90475</a>
+        <a href="/2016/07/03/iap-take-effect-later-than-app-release/">应用上线后 IAP 商品不会立即生效</a>
       </li>
     
       <li>
-        <a href="/2016/05/25/application-localization-in-ios-development/">Application localization in iOS development</a>
+        <a href="/2016/06/30/the-strict-sapprft/">管理宽广而严格的广电总局</a>
       </li>
     
       <li>
-        <a href="/2016/05/19/bug-about-launchscreen-storyboard/">Bug about launchscreen storyboard</a>
+        <a href="/2016/06/18/battery-drainer-gpsd/">Battery drainer gpsd</a>
       </li>
     
       <li>
-        <a href="/2016/05/18/sketch-keep-transparent-pixels-when-export/">Sketch 导出时保留透明像素</a>
+        <a href="/2016/06/17/imei-missing-after-downgrade-samsung-s4/">IMEI missing after downgrade Samsung S4</a>
       </li>
     
   </ul>
@@ -416,7 +417,7 @@
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 14px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 12px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
   </div>
 </div>
 

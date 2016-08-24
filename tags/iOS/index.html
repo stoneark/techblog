@@ -57,10 +57,47 @@
   </ul>
   <div class="clearfix"></div>
 </nav>
-<div class="clearfix"></div></header>
+<div class="clearfix"></div>
+</header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
 <h2 class="archive-title tag">iOS</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-07-03T08:19:33.000Z"><a href="/2016/07/03/iap-take-effect-later-than-app-release/">Jul 3 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/07/03/iap-take-effect-later-than-app-release/">应用上线后 IAP 商品不会立即生效</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>应用和 IAP 项目均在 App Store 审核通过后，发现从 App Store 内下载的版本，无法正常获取到 IAP 商品信息，通过 product ID 获取 product 时，未能返回相应的 product。</p>
+<p>测试环境（Sandbox）下一切正常，可根据 product ID 获取到 product，完成支付。</p>
+<p>推测应该是由于 IAP 审核通过后并没有同步及时的上线，所以导致无法正常获取到 product，等待一段时间即可。（我等待了约 7 个小时就正常了，也有人等待了一两天）</p>
+<p>所以在程序中要注意，如果获取不到 product 做相应的处理，防止程序崩溃。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
 
 
   
@@ -119,33 +156,33 @@
     <div class="entry">
       
         <p>iOS 对国际化的支持是相对比较完善的。</p>
-<h2 id="应用的国际化支持">应用的国际化支持</h2><p>在 Project 属性中，有 Localizations 一项，在其中可以管理支持的语言列表，还可以选择是否开启 Base 语言。</p>
+<h2 id="应用的国际化支持"><a href="#应用的国际化支持" class="headerlink" title="应用的国际化支持"></a>应用的国际化支持</h2><p>在 Project 属性中，有 Localizations 一项，在其中可以管理支持的语言列表，还可以选择是否开启 Base 语言。</p>
 <p><img src="http://stoneark.qiniudn.com/blogimg/application_localization_in_ios_development_1.png" width="457"></p>
-<h2 id="为资源文件开启国际化">为资源文件开启国际化</h2><p>在资源文件（如 strings/xib/storyboard）的文件属性中，可以在 Localization 项中进行国际化语言的管理。如果尚未国际化，会有一个长长的 Localization 按钮，点击后开启这个文件的国际化。如果已国际化，会显示并可管理当前文件已支持的语言。</p>
+<h2 id="为资源文件开启国际化"><a href="#为资源文件开启国际化" class="headerlink" title="为资源文件开启国际化"></a>为资源文件开启国际化</h2><p>在资源文件（如 strings/xib/storyboard）的文件属性中，可以在 Localization 项中进行国际化语言的管理。如果尚未国际化，会有一个长长的 Localization 按钮，点击后开启这个文件的国际化。如果已国际化，会显示并可管理当前文件已支持的语言。</p>
 <p><img src="http://stoneark.qiniudn.com/blogimg/application_localization_in_ios_development_2.png" width="259"></p>
 <p>如果想取消对这个文件的国际化，在 Xcode 里做不到。唯一的办法是，去 Finder 里把各个语言的 .lproj 目录下的这个资源文件删掉，只留一份放到工程目录的最外层（而不从属与任何 .lproj 目录）。</p>
-<h2 id="字符串的国际化：">字符串的国际化：</h2><p>自己新建一个 String 文件到工程里，名为 <code>Localizable.strings</code> 即可。（这是默认的文件名，调用 <code>NSLocalizedString</code> 方法默认取这个文件，如果用了其他的文件名，则每次调用方法时，需要指定文件名）</p>
+<h2 id="字符串的国际化："><a href="#字符串的国际化：" class="headerlink" title="字符串的国际化："></a>字符串的国际化：</h2><p>自己新建一个 String 文件到工程里，名为 <code>Localizable.strings</code> 即可。（这是默认的文件名，调用 <code>NSLocalizedString</code> 方法默认取这个文件，如果用了其他的文件名，则每次调用方法时，需要指定文件名）</p>
 <p>例如，Localizable.strings 内容为：</p>
-<figure class="highlight xml"><figcaption><span>Localizable.strings(Chinese (Simplified))</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">"Today" = "今天";</span><br><span class="line">"Yesterday" = "昨天";</span><br><span class="line">"%d days ago" = "%d天前";</span><br><span class="line">/* &#123;User First Name&#125;'s Profile */</span><br><span class="line">"%@'s Profile"="%@'s Profile";</span><br></pre></td></tr></table></figure>
-<figure class="highlight xml"><figcaption><span>Localizable.strings(English)</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">"Today" = "Today";</span><br><span class="line">"Yesterday" = "Yesterday";</span><br><span class="line">"%d days ago" = "%d days ago";</span><br><span class="line">/* &#123;User First Name&#125;'s Profile */</span><br><span class="line">"%@'s Profile"="%@的个人资料";</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><figcaption><span>Localizable.strings(Chinese (Simplified))</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">"Today" = "今天";</div><div class="line">"Yesterday" = "昨天";</div><div class="line">"%d days ago" = "%d天前";</div><div class="line">/* &#123;User First Name&#125;'s Profile */</div><div class="line">"%@'s Profile"="%@'s Profile";</div></pre></td></tr></table></figure>
+<figure class="highlight xml"><figcaption><span>Localizable.strings(English)</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">"Today" = "Today";</div><div class="line">"Yesterday" = "Yesterday";</div><div class="line">"%d days ago" = "%d days ago";</div><div class="line">/* &#123;User First Name&#125;'s Profile */</div><div class="line">"%@'s Profile"="%@的个人资料";</div></pre></td></tr></table></figure>
 <p>获取时：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span> *str;</span><br><span class="line">str = <span class="built_in">NSLocalizedString</span>(<span class="string">@"Today"</span>, <span class="literal">nil</span>);</span><br><span class="line"><span class="keyword">int</span> temp = <span class="number">3</span>;</span><br><span class="line">str = [<span class="built_in">NSString</span> stringWithFormat:<span class="built_in">NSLocalizedString</span>(<span class="string">@"%d days ago"</span>, <span class="literal">nil</span>), temp];</span><br><span class="line">str = [<span class="built_in">NSString</span> stringWithFormat:<span class="built_in">NSLocalizedString</span>(<span class="string">@"%@'s Profile"</span>, <span class="string">@"&#123;User First Name&#125;'s Profile"</span>), user<span class="variable">.name</span>];</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSString</span> *str;</div><div class="line">str = <span class="built_in">NSLocalizedString</span>(<span class="string">@"Today"</span>, <span class="literal">nil</span>);</div><div class="line"><span class="keyword">int</span> temp = <span class="number">3</span>;</div><div class="line">str = [<span class="built_in">NSString</span> stringWithFormat:<span class="built_in">NSLocalizedString</span>(<span class="string">@"%d days ago"</span>, <span class="literal">nil</span>), temp];</div><div class="line">str = [<span class="built_in">NSString</span> stringWithFormat:<span class="built_in">NSLocalizedString</span>(<span class="string">@"%@'s Profile"</span>, <span class="string">@"&#123;User First Name&#125;'s Profile"</span>), user.name];</div></pre></td></tr></table></figure>
 <p>上面是常用的情况。还有一种复杂的情况，是在有些语言里，某两个参数的位置可能会颠倒，这时需要使用转义符：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#34;%@ Error! %@ failed!&#34; = &#34;%2$@ &#22833;&#36133;&#20102;&#65281;&#65285;1$@ &#38169;&#35823;&#20102;&#65281;&#34;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&quot;%@ Error! %@ failed!&quot; = &quot;%2$@ 失败了！％1$@ 错误了！&quot;;</div></pre></td></tr></table></figure>
 <p>更为详细的可参照：<br><a href="http://nshipster.com/nslocalizedstring/" target="_blank" rel="external">http://nshipster.com/nslocalizedstring/</a><br><a href="https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/LoadingResources/Strings/Strings.html" target="_blank" rel="external">https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/LoadingResources/Strings/Strings.html</a><br><a href="https://developer.apple.com/library/ios/documentation/MacOSX/Conceptual/BPInternational/InternationalizingYourCode/InternationalizingYourCode.html" target="_blank" rel="external">https://developer.apple.com/library/ios/documentation/MacOSX/Conceptual/BPInternational/InternationalizingYourCode/InternationalizingYourCode.html</a></p>
-<h2 id="xib/storyboard_的国际化">xib/storyboard 的国际化</h2><p>除了借助 localizable strings 文件进行界面国际化之外，对于 xib/storyboard 可以直接进行国际化。虽然看上去很方便、很直观，但其实并不是特别好用。</p>
+<h2 id="xib-storyboard-的国际化"><a href="#xib-storyboard-的国际化" class="headerlink" title="xib/storyboard 的国际化"></a>xib/storyboard 的国际化</h2><p>除了借助 localizable strings 文件进行界面国际化之外，对于 xib/storyboard 可以直接进行国际化。虽然看上去很方便、很直观，但其实并不是特别好用。</p>
 <p>它的原理其实还是 localizable strings，只不过这个 strings 文件是 Xcode 自动创建的。创建的时机是在你对这个界面开启 localization 时，而且它并不会监控 xib/storyboard 的变化。如果你在 localization 之后又改变了这个 xib/storyboard，主要是增加了新的控件，那么这个新控件并不会自动出现在 strings 文件中。</p>
 <p>那你就没办法了，Xcode 也没有提供同步的手段，你唯一能做的是查看 xib 的源代码，从中找到新建控件的 ID，然后自己写到那个 strings 文件里－－噢，这一点都不方便。</p>
-<h2 id="Bundle_Display_Name_的国际化">Bundle Display Name 的国际化</h2><p>显然，需要对不同语言设定不同的应用名称，也就是 Bundle Display Name，我们都知道它在 Info.plist 里。</p>
+<h2 id="Bundle-Display-Name-的国际化"><a href="#Bundle-Display-Name-的国际化" class="headerlink" title="Bundle Display Name 的国际化"></a>Bundle Display Name 的国际化</h2><p>显然，需要对不同语言设定不同的应用名称，也就是 Bundle Display Name，我们都知道它在 Info.plist 里。</p>
 <p>但注意，不是把 Info.plist 进行 Localization，如果对 Info.plist 进行了 Localization，会编译报错 the file Info.plist does not exist.</p>
 <p>正确的方式是在工程里新建一个名为 <code>InfoPlist.strings</code> 的文件，然后对这个 strings 文件进行国际化，在里面写入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#34;CFBundleDisplayName&#34; = &#34;&#21517;&#31216;&#34;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&quot;CFBundleDisplayName&quot; = &quot;名称&quot;;</div></pre></td></tr></table></figure>
 <p>即可。</p>
 <p>注意，需要把 InfoPlist.strings 文件加到工程属性里的 Copy Bundle Resources 里（默认应该就给加上了，如果有问题可以检查一下）。但不要把 Info.plist 文件加到 Copy Bundle Resources 里，否则出现编译警告。</p>
-<h2 id="Base_语言的问题">Base 语言的问题</h2><p>测试发现，将 iOS 设备设置为并没有支持的语言时，应用并没有正确地显示为 Base 中的字符串（英语），而是显示成了简体中文。</p>
+<h2 id="Base-语言的问题"><a href="#Base-语言的问题" class="headerlink" title="Base 语言的问题"></a>Base 语言的问题</h2><p>测试发现，将 iOS 设备设置为并没有支持的语言时，应用并没有正确地显示为 Base 中的字符串（英语），而是显示成了简体中文。</p>
 <p>Stackoverflow 上有很多国内外开发者遇到了这个问题，但都未找到原因和解决方法。</p>
 <p><a href="http://stackoverflow.com/questions/20241256/ios-app-default-language-en-is-not-applied" target="_blank" rel="external">http://stackoverflow.com/questions/20241256/ios-app-default-language-en-is-not-applied</a><br><a href="http://stackoverflow.com/questions/20241256/ios-app-default-language-en-is-not-applied" target="_blank" rel="external">http://stackoverflow.com/questions/20584984/ios-set-a-default-language-in-xcode-for-my-app</a><br><a href="http://stackoverflow.com/questions/18114994/does-my-base-internationalization-storyboard-have-to-correspond-to-a-fallback-la" target="_blank" rel="external">http://stackoverflow.com/questions/18114994/does-my-base-internationalization-storyboard-have-to-correspond-to-a-fallback-la</a></p>
-<h2 id="App_Store_应用名称及简介的国际化">App Store 应用名称及简介的国际化</h2><p>希望让应用在不同国家的 App Store 中显示不同语言的名称，在 iTunes Connect 里新建应用时先用一个主要语言新建，如简体中文，新建成功后在 App 信息里可以看到“可本地化的信息”，可以在右侧选择语言，并且填入相对应的信息。另外，在版本中对应用简介、关键字、截图等也都须进行国际化。</p>
+<h2 id="App-Store-应用名称及简介的国际化"><a href="#App-Store-应用名称及简介的国际化" class="headerlink" title="App Store 应用名称及简介的国际化"></a>App Store 应用名称及简介的国际化</h2><p>希望让应用在不同国家的 App Store 中显示不同语言的名称，在 iTunes Connect 里新建应用时先用一个主要语言新建，如简体中文，新建成功后在 App 信息里可以看到“可本地化的信息”，可以在右侧选择语言，并且填入相对应的信息。另外，在版本中对应用简介、关键字、截图等也都须进行国际化。</p>
 <p>如果未做本地化，则按照选择的主要语言显示。</p>
 <p><img src="http://stoneark.qiniudn.com/blogimg/application_localization_in_ios_development.png" width="871"></p>
 
@@ -223,15 +260,15 @@
       
         <p>大多数 iOS 开发者应该知道，在 iOS 8 的时候推送通知的开发有了些变化。主要体现在一些命名的变化（Remote 改为 User），另外相对之前只需要一句代码就能解决，现在需要多一些步骤。但总的来说改变并不大，实现原理并未改变。</p>
 <p>如 iOS 7:</p>
-<figure class="highlight objc"><figcaption><span>iOS 7</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerForRemoteNotificationTypes:(</span><br><span class="line">	<span class="built_in">UIRemoteNotificationTypeAlert</span> |</span><br><span class="line">	<span class="built_in">UIRemoteNotificationTypeBadge</span> | </span><br><span class="line">	<span class="built_in">UIRemoteNotificationTypeSound</span> )];</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><figcaption><span>iOS 7</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerForRemoteNotificationTypes:(</div><div class="line">	<span class="built_in">UIRemoteNotificationTypeAlert</span> |</div><div class="line">	<span class="built_in">UIRemoteNotificationTypeBadge</span> | </div><div class="line">	<span class="built_in">UIRemoteNotificationTypeSound</span> )];</div></pre></td></tr></table></figure>
 <p>iOS 8:</p>
-<figure class="highlight objc"><figcaption><span>iOS 8</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIUserNotificationType</span> notificationTypes = <span class="built_in">UIUserNotificationTypeBadge</span> | <span class="built_in">UIUserNotificationTypeSound</span> | <span class="built_in">UIUserNotificationTypeAlert</span>;</span><br><span class="line"><span class="built_in">UIUserNotificationSettings</span> *notificationSettings = [<span class="built_in">UIUserNotificationSettings</span> settingsForTypes:notificationTypes categories:<span class="literal">nil</span>];</span><br><span class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerUserNotificationSettings:notificationSettings];</span><br><span class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerForRemoteNotifications];</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><figcaption><span>iOS 8</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">UIUserNotificationType</span> notificationTypes = <span class="built_in">UIUserNotificationTypeBadge</span> | <span class="built_in">UIUserNotificationTypeSound</span> | <span class="built_in">UIUserNotificationTypeAlert</span>;</div><div class="line"><span class="built_in">UIUserNotificationSettings</span> *notificationSettings = [<span class="built_in">UIUserNotificationSettings</span> settingsForTypes:notificationTypes categories:<span class="literal">nil</span>];</div><div class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerUserNotificationSettings:notificationSettings];</div><div class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerForRemoteNotifications];</div></pre></td></tr></table></figure>
 <p>虽然很多人早就已经知道并在实践中作出了改变，但可能依然有些人并不知道 iOS 做出这种改变的原因。</p>
 <p>原因是要对本地通知进行规范，并与远程推送通知进行统一。</p>
 <p>之前对于本地通知，是无需取得用户授权的，只有远程推送类型的通知需要申请用户授权。上面的那些代码也只是针对远程通知来说的（所以它们之前的命名中都带有”Remote”字眼），本地通知根本无须注册，直接发送通知就好了。但其实这并不合理。</p>
 <p>进行改变之后，本地通知跟远程推送通知的概念进行了统一，它们唯一的不同只是消息来源的不同。所以本地通知也需要进行授权。</p>
 <p>在代码上，它们的注册也只有一句代码的差距：如果只需要本地通知，则不书写最后的一句：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerForRemoteNotifications];</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerForRemoteNotifications];</div></pre></td></tr></table></figure>
 <p>即可。</p>
 
       
@@ -307,16 +344,16 @@
         <p>Swift 这门新兴的编程语言，自从 WWDC 2014 被发布以来不断被完善，并获得了越来越多苹果开发者的认可。WWDC 2015 时 2.0 版本的发布以及开源，让我们看到了 Swift 的不断成熟，苹果也在提倡开发者们向 Swift 转移。</p>
 <p>我很早就阅读了 Swift 的相关内容，并且感觉它是一个很不错的开发语言。它具有一些现代脚本语言的特征，更重要的是跟我早先常用的 Pascal 语言在很多地方十分相近，感觉很亲切。虽然如此，实际在工作中还并未引进 Swift，我和我的团队依然在用 Objective-C 进行 iOS 软件的开发。</p>
 <p>今天突然想在开发新功能时试一把 Swift，于是研究了一下 Swift 和 Objective-C 的混编，在原有 Objective-C 工程中引入了 Swift。</p>
-<h3 id="Swift_代码调用_Objective-C_代码">Swift 代码调用 Objective-C 代码</h3><p>在现有 Objective-C 工程中，新建一个 Cocoa Touch Class，新建时选择 Language 为 Swift，会弹出对话框提示是否需要创建 Bridging Header:<br><img src="http://stoneark.qiniudn.com/blogimg%2Fswift_objc_bridge0.jpg" alt="Create Bridging Header"></p>
+<h3 id="Swift-代码调用-Objective-C-代码"><a href="#Swift-代码调用-Objective-C-代码" class="headerlink" title="Swift 代码调用 Objective-C 代码"></a>Swift 代码调用 Objective-C 代码</h3><p>在现有 Objective-C 工程中，新建一个 Cocoa Touch Class，新建时选择 Language 为 Swift，会弹出对话框提示是否需要创建 Bridging Header:<br><img src="http://stoneark.qiniudn.com/blogimg%2Fswift_objc_bridge0.jpg" alt="Create Bridging Header"></p>
 <p>创建后工程中会新建一个名为 <code>ProjectName-Bridging-Header.h</code> 的头文件。编辑这个头文件，Swift 代码需要调用的 Objective-C 头文件，都在这个文件中 import 即可：</p>
-<figure class="highlight objc"><figcaption><span>ProjectName-Bridging-Header.h</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Use this file to import your target's public headers that you would like to expose to Swift.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="preprocessor">#import <span class="title">"BaseViewController.h"</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">"APIHandler.h"</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;YYModel.h&gt;</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="title">&lt;MJRefresh.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><figcaption><span>ProjectName-Bridging-Header.h</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  Use this file to import your target's public headers that you would like to expose to Swift.</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="meta">#import <span class="meta-string">"BaseViewController.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"APIHandler.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;YYModel.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;MJRefresh.h&gt;</span></span></div></pre></td></tr></table></figure>
 <p>另外，可以在工程属性的 Build Settings 中，可以找到 <code>Objective-C Bridging Header</code> 项，其中已自动填入了这个 ProjectName-Bridging-Header.h 的路径。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fswift_objc_bridge1.png" alt=""></p>
-<h3 id="Objective-C_代码调用_Swift_代码">Objective-C 代码调用 Swift 代码</h3><p>在需要调用 Swift 代码的 Objective-C 文件头部，写入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#import &#8220;ProductModuleName-Swift.h&#8221;</span><br></pre></td></tr></table></figure>
+<h3 id="Objective-C-代码调用-Swift-代码"><a href="#Objective-C-代码调用-Swift-代码" class="headerlink" title="Objective-C 代码调用 Swift 代码"></a>Objective-C 代码调用 Swift 代码</h3><p>在需要调用 Swift 代码的 Objective-C 文件头部，写入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#import “ProductModuleName-Swift.h”</div></pre></td></tr></table></figure>
 <p>即可，然后就能调用工程中 <strong>所有</strong> 的 Swift 源码，并不需要单独指定需要调用哪一个。<br>这个 ProductModuleName，默认就是工程名称，如”YouYouYuEr-Swift.h”。可以在工程属性的 Build Settings 中，找到 <code>Product Module Name</code> 项查看。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fswift_objc_bridge2.png" alt=""></p>
 <p>这个头文件的全名，也可在工程属性的 Build Settings 中，找到 <code>Objective-C Generated Interface Header Name</code> 项查看，可以看到它的值为 <code>$(SWIFT_MODULE_NAME)-Swift.h</code>。（可见上一小节第 2 张图）</p>
 <p>但注意，这个文件在工程中 <strong>并不</strong> 实际存在。因为就像刚才所说，import 这个文件后能调用工程中 <strong>所有</strong> 的 swift 源码，所以就不需要由开发者再去编辑这个文件，来告知编译器需要引用哪些 .swift 文件。而反过来则不同，Swift 调用 Objective-C 需要告知编译器需要调用哪些 Obejctive-C 文件，所以需要一个 ProjectName-Bridging-Header.h 供开发者去编辑。</p>
-<h3 id="总结">总结</h3><p>可以看到，Build Settings 中的 <code>Objective-C Bridging Header</code> 和 <code>Objective-C Generated Interface Header Name</code> 两项，是 Swift 与 Objective-C 混编的关键，分别为一种语言引用另一种语言提供了桥梁。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>可以看到，Build Settings 中的 <code>Objective-C Bridging Header</code> 和 <code>Objective-C Generated Interface Header Name</code> 两项，是 Swift 与 Objective-C 混编的关键，分别为一种语言引用另一种语言提供了桥梁。</p>
 
       
     </div>
@@ -351,11 +388,11 @@
       
         <p>在 <a href="../../../2015/06/29/limit-max-input-length-of-uitextview/">这篇博客</a> 中提到的限制 UITextView 最大输入字符数的方法，依然是有问题的。问题出现于用拼音输入法输入中文的时候，比如键入“你好世界”，对应的拼音为“nihaoshijie”。限制最大长度为 5，则虽然“你好世界”为四个字，但在输入拼音字符的时候，会超过 5 个字符，导致无法输入进去。</p>
 <p><a href="http://blog.sina.com.cn/s/blog_60f977e70101g4gj.html" target="_blank" rel="external">iOS:UITextField中文输入法输入时对字符长度的限制</a> 这篇文章中提出了一个方法，经尝试是可以正确处理这种情形的。基本方法如下：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)textViewDidChange:(<span class="built_in">UITextView</span> *)textView &#123;</span><br><span class="line">    <span class="built_in">NSString</span> *lang = [[textView textInputMode] primaryLanguage];</span><br><span class="line">    <span class="comment">// 对简体中文输入进行特殊处理</span></span><br><span class="line">    <span class="keyword">if</span> ([lang isEqualToString:<span class="string">@"zh-Hans"</span>]) &#123;</span><br><span class="line">        <span class="built_in">UITextRange</span> *selectedRange = [textView markedTextRange];</span><br><span class="line">        <span class="comment">// 获取高亮部分</span></span><br><span class="line">        <span class="built_in">UITextPosition</span> *position = [textView positionFromPosition:selectedRange<span class="variable">.start</span> offset:<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">if</span> (!position) &#123;</span><br><span class="line">            <span class="comment">// 没有高亮选择的字，则进行字数限制</span></span><br><span class="line">            <span class="keyword">if</span> (textView<span class="variable">.text</span><span class="variable">.length</span> &gt; LENGTH_LIMIT) &#123;</span><br><span class="line">                textView<span class="variable">.text</span> = [textView<span class="variable">.text</span> substringToIndex:LENGTH_LIMIT];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="comment">// 有高亮选择的字，认为现在正在拼音输入状态，暂不进行限制</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 简体中文以外的直接限制，暂不考虑其他语言</span></span><br><span class="line">        <span class="keyword">if</span> (textView<span class="variable">.text</span><span class="variable">.length</span> &gt; LENGTH_LIMIT) &#123;</span><br><span class="line">            textView<span class="variable">.text</span> = [textView<span class="variable">.text</span> substringToIndex:LENGTH_LIMIT];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)textViewDidChange:(<span class="built_in">UITextView</span> *)textView &#123;</div><div class="line">    <span class="built_in">NSString</span> *lang = [[textView textInputMode] primaryLanguage];</div><div class="line">    <span class="comment">// 对简体中文输入进行特殊处理</span></div><div class="line">    <span class="keyword">if</span> ([lang isEqualToString:<span class="string">@"zh-Hans"</span>]) &#123;</div><div class="line">        <span class="built_in">UITextRange</span> *selectedRange = [textView markedTextRange];</div><div class="line">        <span class="comment">// 获取高亮部分</span></div><div class="line">        <span class="built_in">UITextPosition</span> *position = [textView positionFromPosition:selectedRange.start offset:<span class="number">0</span>];</div><div class="line">        <span class="keyword">if</span> (!position) &#123;</div><div class="line">            <span class="comment">// 没有高亮选择的字，则进行字数限制</span></div><div class="line">            <span class="keyword">if</span> (textView.text.length &gt; LENGTH_LIMIT) &#123;</div><div class="line">                textView.text = [textView.text substringToIndex:LENGTH_LIMIT];</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">else</span>&#123;</div><div class="line">            <span class="comment">// 有高亮选择的字，认为现在正在拼音输入状态，暂不进行限制</span></div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// 简体中文以外的直接限制，暂不考虑其他语言</span></div><div class="line">        <span class="keyword">if</span> (textView.text.length &gt; LENGTH_LIMIT) &#123;</div><div class="line">            textView.text = [textView.text substringToIndex:LENGTH_LIMIT];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>同时，在上面这篇文章中还受到一点启示，UITextField 是没有类似 textViewDidChange 这样的代理方法的，所以对于 UITextField 我们该怎么办？可以通过监听 <code>UITextFieldTextDidChangeNotification</code> 通知来达到一样的目的。</p>
-<p>在初始化时添加监听：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(textFieldDidChanged:) name:<span class="string">@"UITextFieldTextDidChangeNotification"</span> object:_textField];</span><br></pre></td></tr></table></figure></p>
-<p>实现监听方法：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)textFieldDidChanged:(<span class="built_in">NSNotification</span> *)notification &#123;</span><br><span class="line">	<span class="built_in">UITextField</span> *textField = (<span class="built_in">UITextField</span>*)notification<span class="variable">.object</span>;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>别忘了在 dealloc 时移除监听：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] removeObserver:<span class="keyword">self</span> name:<span class="string">@"UITextFieldTextDidChangeNotification"</span> object:_textField];</span><br></pre></td></tr></table></figure></p>
+<p>在初始化时添加监听：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(textFieldDidChanged:) name:<span class="string">@"UITextFieldTextDidChangeNotification"</span> object:_textField];</div></pre></td></tr></table></figure></p>
+<p>实现监听方法：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-(<span class="keyword">void</span>)textFieldDidChanged:(<span class="built_in">NSNotification</span> *)notification &#123;</div><div class="line">	<span class="built_in">UITextField</span> *textField = (<span class="built_in">UITextField</span>*)notification.object;</div><div class="line">	...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>别忘了在 dealloc 时移除监听：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] removeObserver:<span class="keyword">self</span> name:<span class="string">@"UITextFieldTextDidChangeNotification"</span> object:_textField];</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -390,10 +427,10 @@
       
         <p>UIAlertView 是支持无标题的。如果传空字符串，即为没有标题，只显示内容；如果传 nil，则会把内容放到标题上。</p>
 <p>1、title 传空字符串，即：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@&#34;&#34; message:@&#34;&#24744;&#30830;&#23450;&#35201;&#36864;&#20986;&#27492;&#24080;&#21495;&#21527;&#65311;&#34; delegate:self cancelButtonTitle:@&#34;&#21462;&#28040;&#34; otherButtonTitles:@&#34;&#30830;&#35748;&#34;, nil];</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@&quot;&quot; message:@&quot;您确定要退出此帐号吗？&quot; delegate:self cancelButtonTitle:@&quot;取消&quot; otherButtonTitles:@&quot;确认&quot;, nil];</div></pre></td></tr></table></figure>
 <p><img src="http://stoneark.qiniudn.com/blogimg/uialertview_without_title_1.png" alt=""></p>
 <p>2、title 传 nil，即：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@&#34;&#24744;&#30830;&#23450;&#35201;&#36864;&#20986;&#27492;&#24080;&#21495;&#21527;&#65311;&#34; delegate:self cancelButtonTitle:@&#34;&#21462;&#28040;&#34; otherButtonTitles:@&#34;&#30830;&#35748;&#34;, nil];</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@&quot;您确定要退出此帐号吗？&quot; delegate:self cancelButtonTitle:@&quot;取消&quot; otherButtonTitles:@&quot;确认&quot;, nil];</div></pre></td></tr></table></figure>
 <p><img src="http://stoneark.qiniudn.com/blogimg/uialertview_without_title_2.png" alt=""></p>
 <p>另外，如果需要自定义 AlertView 的样式，可以采用开源的 <a href="https://github.com/Friend-LGA/LGAlertView" target="_blank" rel="external">LGAlertView</a>。</p>
 
@@ -455,43 +492,6 @@
 
 
   
-    <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-06-29T07:47:49.000Z"><a href="/2015/06/29/limit-max-input-length-of-uitextview/">Jun 29 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/06/29/limit-max-input-length-of-uitextview/">限制 UITextView 最大输入字符数</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>实现以下两个 UITextView 的代理方法即可：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#define LENGTH_LIMIT 10</span></span><br><span class="line">- (<span class="built_in">BOOL</span>)textView:(<span class="built_in">UITextView</span> *)textView shouldChangeTextInRange:(<span class="built_in">NSRange</span>)range replacementText:(<span class="built_in">NSString</span> *)text &#123;</span><br><span class="line">    <span class="keyword">if</span> (textView<span class="variable">.text</span><span class="variable">.length</span> &gt;= LENGTH_LIMIT &amp;&amp; text<span class="variable">.length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(<span class="keyword">void</span>)textViewDidChange:(<span class="built_in">UITextView</span> *)textView &#123;</span><br><span class="line">    <span class="keyword">if</span> (textView<span class="variable">.text</span><span class="variable">.length</span> &gt; LENGTH_LIMIT) &#123;</span><br><span class="line">        textView<span class="variable">.text</span> = [textView<span class="variable">.text</span> substringToIndex:LENGTH_LIMIT];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意，这两个代理方法必须都实现。</p>
-<p>如果只实现第一个代理方法，则会出现一个问题：到达字数限制时，用键盘的确已无法输入进去，但可以通过点击键盘上方的联想字词继续输入进去，导致超过限制。通过实现第二个代理方法，可把通过联想或其他方式输入进去的多余字符截掉。这也是之前我没有注意到的一点。</p>
-<p>如果只实现第二个代理方法，虽然长度不会超过限制，但实际相当于先输入进去，后再截掉，导致按下键盘后虽然没有输入进去字符，但键盘上方的联想字词在不断地根据你的按键而联想。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-  
 
   <nav id="pagination">
   
@@ -515,23 +515,23 @@
   <ul class="entry">
     
       <li>
-        <a href="/2016/06/04/ciji-release/">詞記 Release!</a>
+        <a href="/2016/07/05/changes-about-programming-thinking-in-swift/">Swift 编程思路的变化</a>
       </li>
     
       <li>
-        <a href="/2016/05/26/itunes-connect-error-itms-90475/">iTunes Connect Error ITMS-90475</a>
+        <a href="/2016/07/03/iap-take-effect-later-than-app-release/">应用上线后 IAP 商品不会立即生效</a>
       </li>
     
       <li>
-        <a href="/2016/05/25/application-localization-in-ios-development/">Application localization in iOS development</a>
+        <a href="/2016/06/30/the-strict-sapprft/">管理宽广而严格的广电总局</a>
       </li>
     
       <li>
-        <a href="/2016/05/19/bug-about-launchscreen-storyboard/">Bug about launchscreen storyboard</a>
+        <a href="/2016/06/18/battery-drainer-gpsd/">Battery drainer gpsd</a>
       </li>
     
       <li>
-        <a href="/2016/05/18/sketch-keep-transparent-pixels-when-export/">Sketch 导出时保留透明像素</a>
+        <a href="/2016/06/17/imei-missing-after-downgrade-samsung-s4/">IMEI missing after downgrade Samsung S4</a>
       </li>
     
   </ul>
@@ -542,7 +542,7 @@
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 14px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 12px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
   </div>
 </div>
 

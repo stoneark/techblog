@@ -57,9 +57,232 @@
   </ul>
   <div class="clearfix"></div>
 </nav>
-<div class="clearfix"></div></header>
+<div class="clearfix"></div>
+</header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-07-05T08:46:19.000Z"><a href="/2016/07/05/changes-about-programming-thinking-in-swift/">Jul 5 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/07/05/changes-about-programming-thinking-in-swift/">Swift 编程思路的变化</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天看到<a href="http://alisoftware.github.io/swift/2015/09/06/thinking-in-swift-1/">这篇文章</a>，才发现之前那次尝试着用 Swift 写代码时犯了一个多大的错误。</p>
+<p>上次是在做优优育儿时，有一个新功能非常简单，就是一个单纯的列表页，所以尝试着用 Swift 进行了实现。而我当时正是像文章中写的那样，只是把之前 Objective-C 的写法按照 Swift 的语法进行了变化，然后相信了 Xcode 的代码更正提示，结果虽然可以正常运行，但代码里全是 exclamation mark。</p>
+<p>阅读了这个系列的文章，发现 Swift 的确是个现代化的语言。虽然凭借传统语言的知识可以很容易地入手，但它所带来的不仅仅是语法的改变，更多的是编程思路的变化。</p>
+<p>下面我将分别展示三段代码，功能是从 JSON 串中得到一个 Article 对象的数组。第一段是用 Objective-C 编写的代码，这也是我写这种功能的标准形式。第二段是按照传统思路编写的 Swift 代码，是应该避免的。第三段是用正确的思路编写的 Swift 代码。</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/07/05/changes-about-programming-thinking-in-swift/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-07-03T08:19:33.000Z"><a href="/2016/07/03/iap-take-effect-later-than-app-release/">Jul 3 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/07/03/iap-take-effect-later-than-app-release/">应用上线后 IAP 商品不会立即生效</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>应用和 IAP 项目均在 App Store 审核通过后，发现从 App Store 内下载的版本，无法正常获取到 IAP 商品信息，通过 product ID 获取 product 时，未能返回相应的 product。</p>
+<p>测试环境（Sandbox）下一切正常，可根据 product ID 获取到 product，完成支付。</p>
+<p>推测应该是由于 IAP 审核通过后并没有同步及时的上线，所以导致无法正常获取到 product，等待一段时间即可。（我等待了约 7 个小时就正常了，也有人等待了一两天）</p>
+<p>所以在程序中要注意，如果获取不到 product 做相应的处理，防止程序崩溃。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-30T07:49:54.000Z"><a href="/2016/06/30/the-strict-sapprft/">Jun 30 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/30/the-strict-sapprft/">管理宽广而严格的广电总局</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="广电总局状告苹果-App-Store"><a href="#广电总局状告苹果-App-Store" class="headerlink" title="广电总局状告苹果 App Store"></a>广电总局状告苹果 App Store</h3><p>因为广电总局电影卫星频道节目制作中心具有电影《血搏敌枭》的独家网络传播权，而优酷侵权播放了这部电影，所以广电总局状告了苹果公司。</p>
+<p>是不是很奇怪？优酷的错为什么状告苹果？</p>
+<p>因为优酷的应用是通过苹果 App Store 下载的，所以，苹果，自然要怪你喽。</p>
+<h3 id="广电总局要求审核国内游戏"><a href="#广电总局要求审核国内游戏" class="headerlink" title="广电总局要求审核国内游戏"></a>广电总局要求审核国内游戏</h3><p>苹果最终还是拿它没有任何办法，在最后一刻公布了这个决定。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/sapprft_will_review_game_in_appstore.png" alt=""></p>
+<p>游戏个人开发者可以放弃了。但愿不要插手其他类型的应用。我们并不是怕审核，怕的是没有具体审核规则，怕的是自由裁量，怕的是复杂的审核流程、漫长的审核周期、徒增的审核成本，怕的是会应运而生的各种代理。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-18T07:20:52.000Z"><a href="/2016/06/18/battery-drainer-gpsd/">Jun 18 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/18/battery-drainer-gpsd/">Battery drainer gpsd</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>降级到 Kitkat 依然掉电凶猛，刷 MIUI 也是一样。查看电池记录，发现一个叫 gpsd 的进程耗费了大量的电量，但即使把 GPS 关掉也无济于事。在网上搜索，发现有很多 S4 用户都遭遇这个问题，有人说到空旷的地方用 GPS 定位一下就好了，但实测无效。用 Better battery life 查看，系统始终不会进入 Deep Sleep 状态，所以一直在唤醒。</p>
+<p>找了很多方法，最后终于找到了一个管用的－－把 3G 网络禁用，只允许 2G 网络。不知道是什么原因，但事实证明的确只跟这个有关。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-17T03:11:09.000Z"><a href="/2016/06/17/imei-missing-after-downgrade-samsung-s4/">Jun 17 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/17/imei-missing-after-downgrade-samsung-s4/">IMEI missing after downgrade Samsung S4</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>最近手机耗电严重 (Samsung S4 I9502)，充满后放一边不用，半天就电量告急了。恢复所有设置也不奏效，想降级到 Android Kitkat 试试。</p>
+<p>从网上下载了 4.4.2 的官方五件套，然后按照网上的方法用 Odin 工具刷入。过程很顺利，重启后变成了 Kitkat 的风格，进入首次设置页面。但马上发现，右上角的信号位置，变成了 ⦸ 这样的符号。查看系统设置，或者拨号键盘输入 *#06#，发现 IMEI 丢失。</p>
+<p>上网搜索，发现 Samsung 的机器有个叫 efs 的东西，其中保存了包括 IMEI 在内的一些信息。如果降级前没有备份的话，可能会丢失！绝望了好一阵儿，发现把 SIM 卡放到另一个卡槽里可以用，只不过另一个卡槽只支持 2G 网络。可是这让我越想越觉得奇怪，于是又下载了 5.0.1 的固件刷进去，发现 IMEI 回来了，这说明 efs 并没有丢失。马上 ROOT 之后备份 efs，继续折腾。</p>
+<p>再次降级，依然没有信号。ROOT 后查看文件，发现 /efs 目录有个叫 <code>.nv_data.bak</code> 的文件，用这个文件替换这个目录下的 <code>nv_data.bin</code> 文件，然后删掉 <code>nv_data.bin.md5</code> 文件，重新手机，IMEI 恢复。</p>
+<p>另外，如果只是把原有的 <code>nv_data.bin</code> 文件删掉，也能恢复信号，但是查看 IMEI，发现是一个不正确的 IMEI（一大串 0，后面是 0049）。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-06-06T10:03:31.000Z"><a href="/2016/06/06/travel-in-2016/">Jun 6 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/06/06/travel-in-2016/">Travel in 2016</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>趁着最近空闲，分两次去了重庆、成都、青岛、日照、上海游玩。</p>
+<h3 id="重庆"><a href="#重庆" class="headerlink" title="重庆"></a>重庆</h3><p>2016.3.30。山城。一个 3D 的城市。既有文化底蕴，又有现代繁华。夜晚的江景非常美。<br><img src="http://stoneark.qiniudn.com/blogimg/travel_2016_cq0.jpg" alt=""><br><img src="http://stoneark.qiniudn.com/blogimg/travel_2016_cq1.jpg" alt=""></p>
+<h3 id="成都"><a href="#成都" class="headerlink" title="成都"></a>成都</h3>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/06/06/travel-in-2016/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -79,7 +302,7 @@
         <p><em>Dear friends,</em></p>
 <p>我的最新作品，词记，已正式上线 App Store 啦！</p>
 <p><img src="http://stoneark.qiniudn.com/appimg/ciji/brief.png" width="450"></p>
-<h3 id="应用简介_(Description)">应用简介 (Description)</h3><p>你一定写过日记。或许是小学语文老师布置的家庭作业，或许是青春期时懵懵懂懂的情感记忆，或许是长大后日记本里给自己的加油打气，或许是旅行在外每天晚上写下的旅途随笔。</p>
+<h3 id="应用简介-Description"><a href="#应用简介-Description" class="headerlink" title="应用简介 (Description)"></a>应用简介 (Description)</h3><p>你一定写过日记。或许是小学语文老师布置的家庭作业，或许是青春期时懵懵懂懂的情感记忆，或许是长大后日记本里给自己的加油打气，或许是旅行在外每天晚上写下的旅途随笔。</p>
 <p>词记，让你用一个独特的方式写日记。把今天所有的点点滴滴，在思绪中整理、精心挑选，然后只用一个词来概括。</p>
 <p>或许随着时间流逝，再看到这些词时，早已想不起这词背后的故事。但这些故事给自己留下的感觉，却依然明晰：惊喜、开心、阳光明媚、意外收获，亦或失落、无聊、阴雨绵绵、心情好糟。</p>
 <p>是的，这就是我们的生活。</p>
@@ -89,7 +312,7 @@
 <p>Time flies, maybe you cannot remember the things happened behind these words, but the feelings are clear: surprise, happy, sunshine, windfall, or disappointed, boring, rainy, restless, etc.</p>
 <p>Yeah, it is our life.</p>
 <p>Ciji (詞記), use one word to record today.<br>A word a day, keep the sadness away~</p>
-<h3 id="应用下载_(Download)">应用下载 (Download)</h3><p><a href="https://itunes.apple.com/cn/app/ci-ji-yong-yi-ge-ci-ji-lu-jin-tian/id1113379853?l=zh&amp;ls=1&amp;mt=8" target="_blank" rel="external"><img src="http://stoneark.qiniudn.com/appimg/appstore.png" width="150"></a></p>
+<h3 id="应用下载-Download"><a href="#应用下载-Download" class="headerlink" title="应用下载 (Download)"></a>应用下载 (Download)</h3><p><a href="https://itunes.apple.com/cn/app/ci-ji-yong-yi-ge-ci-ji-lu-jin-tian/id1113379853?l=zh&amp;ls=1&amp;mt=8" target="_blank" rel="external"><img src="http://stoneark.qiniudn.com/appimg/appstore.png" width="150"></a></p>
 <p>喜欢请五星好评哦！</p>
 
       
@@ -162,33 +385,33 @@
     <div class="entry">
       
         <p>iOS 对国际化的支持是相对比较完善的。</p>
-<h2 id="应用的国际化支持">应用的国际化支持</h2><p>在 Project 属性中，有 Localizations 一项，在其中可以管理支持的语言列表，还可以选择是否开启 Base 语言。</p>
+<h2 id="应用的国际化支持"><a href="#应用的国际化支持" class="headerlink" title="应用的国际化支持"></a>应用的国际化支持</h2><p>在 Project 属性中，有 Localizations 一项，在其中可以管理支持的语言列表，还可以选择是否开启 Base 语言。</p>
 <p><img src="http://stoneark.qiniudn.com/blogimg/application_localization_in_ios_development_1.png" width="457"></p>
-<h2 id="为资源文件开启国际化">为资源文件开启国际化</h2><p>在资源文件（如 strings/xib/storyboard）的文件属性中，可以在 Localization 项中进行国际化语言的管理。如果尚未国际化，会有一个长长的 Localization 按钮，点击后开启这个文件的国际化。如果已国际化，会显示并可管理当前文件已支持的语言。</p>
+<h2 id="为资源文件开启国际化"><a href="#为资源文件开启国际化" class="headerlink" title="为资源文件开启国际化"></a>为资源文件开启国际化</h2><p>在资源文件（如 strings/xib/storyboard）的文件属性中，可以在 Localization 项中进行国际化语言的管理。如果尚未国际化，会有一个长长的 Localization 按钮，点击后开启这个文件的国际化。如果已国际化，会显示并可管理当前文件已支持的语言。</p>
 <p><img src="http://stoneark.qiniudn.com/blogimg/application_localization_in_ios_development_2.png" width="259"></p>
 <p>如果想取消对这个文件的国际化，在 Xcode 里做不到。唯一的办法是，去 Finder 里把各个语言的 .lproj 目录下的这个资源文件删掉，只留一份放到工程目录的最外层（而不从属与任何 .lproj 目录）。</p>
-<h2 id="字符串的国际化：">字符串的国际化：</h2><p>自己新建一个 String 文件到工程里，名为 <code>Localizable.strings</code> 即可。（这是默认的文件名，调用 <code>NSLocalizedString</code> 方法默认取这个文件，如果用了其他的文件名，则每次调用方法时，需要指定文件名）</p>
+<h2 id="字符串的国际化："><a href="#字符串的国际化：" class="headerlink" title="字符串的国际化："></a>字符串的国际化：</h2><p>自己新建一个 String 文件到工程里，名为 <code>Localizable.strings</code> 即可。（这是默认的文件名，调用 <code>NSLocalizedString</code> 方法默认取这个文件，如果用了其他的文件名，则每次调用方法时，需要指定文件名）</p>
 <p>例如，Localizable.strings 内容为：</p>
-<figure class="highlight xml"><figcaption><span>Localizable.strings(Chinese (Simplified))</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">"Today" = "今天";</span><br><span class="line">"Yesterday" = "昨天";</span><br><span class="line">"%d days ago" = "%d天前";</span><br><span class="line">/* &#123;User First Name&#125;'s Profile */</span><br><span class="line">"%@'s Profile"="%@'s Profile";</span><br></pre></td></tr></table></figure>
-<figure class="highlight xml"><figcaption><span>Localizable.strings(English)</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">"Today" = "Today";</span><br><span class="line">"Yesterday" = "Yesterday";</span><br><span class="line">"%d days ago" = "%d days ago";</span><br><span class="line">/* &#123;User First Name&#125;'s Profile */</span><br><span class="line">"%@'s Profile"="%@的个人资料";</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><figcaption><span>Localizable.strings(Chinese (Simplified))</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">"Today" = "今天";</div><div class="line">"Yesterday" = "昨天";</div><div class="line">"%d days ago" = "%d天前";</div><div class="line">/* &#123;User First Name&#125;'s Profile */</div><div class="line">"%@'s Profile"="%@'s Profile";</div></pre></td></tr></table></figure>
+<figure class="highlight xml"><figcaption><span>Localizable.strings(English)</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">"Today" = "Today";</div><div class="line">"Yesterday" = "Yesterday";</div><div class="line">"%d days ago" = "%d days ago";</div><div class="line">/* &#123;User First Name&#125;'s Profile */</div><div class="line">"%@'s Profile"="%@的个人资料";</div></pre></td></tr></table></figure>
 <p>获取时：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span> *str;</span><br><span class="line">str = <span class="built_in">NSLocalizedString</span>(<span class="string">@"Today"</span>, <span class="literal">nil</span>);</span><br><span class="line"><span class="keyword">int</span> temp = <span class="number">3</span>;</span><br><span class="line">str = [<span class="built_in">NSString</span> stringWithFormat:<span class="built_in">NSLocalizedString</span>(<span class="string">@"%d days ago"</span>, <span class="literal">nil</span>), temp];</span><br><span class="line">str = [<span class="built_in">NSString</span> stringWithFormat:<span class="built_in">NSLocalizedString</span>(<span class="string">@"%@'s Profile"</span>, <span class="string">@"&#123;User First Name&#125;'s Profile"</span>), user<span class="variable">.name</span>];</span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSString</span> *str;</div><div class="line">str = <span class="built_in">NSLocalizedString</span>(<span class="string">@"Today"</span>, <span class="literal">nil</span>);</div><div class="line"><span class="keyword">int</span> temp = <span class="number">3</span>;</div><div class="line">str = [<span class="built_in">NSString</span> stringWithFormat:<span class="built_in">NSLocalizedString</span>(<span class="string">@"%d days ago"</span>, <span class="literal">nil</span>), temp];</div><div class="line">str = [<span class="built_in">NSString</span> stringWithFormat:<span class="built_in">NSLocalizedString</span>(<span class="string">@"%@'s Profile"</span>, <span class="string">@"&#123;User First Name&#125;'s Profile"</span>), user.name];</div></pre></td></tr></table></figure>
 <p>上面是常用的情况。还有一种复杂的情况，是在有些语言里，某两个参数的位置可能会颠倒，这时需要使用转义符：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#34;%@ Error! %@ failed!&#34; = &#34;%2$@ &#22833;&#36133;&#20102;&#65281;&#65285;1$@ &#38169;&#35823;&#20102;&#65281;&#34;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&quot;%@ Error! %@ failed!&quot; = &quot;%2$@ 失败了！％1$@ 错误了！&quot;;</div></pre></td></tr></table></figure>
 <p>更为详细的可参照：<br><a href="http://nshipster.com/nslocalizedstring/" target="_blank" rel="external">http://nshipster.com/nslocalizedstring/</a><br><a href="https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/LoadingResources/Strings/Strings.html" target="_blank" rel="external">https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/LoadingResources/Strings/Strings.html</a><br><a href="https://developer.apple.com/library/ios/documentation/MacOSX/Conceptual/BPInternational/InternationalizingYourCode/InternationalizingYourCode.html" target="_blank" rel="external">https://developer.apple.com/library/ios/documentation/MacOSX/Conceptual/BPInternational/InternationalizingYourCode/InternationalizingYourCode.html</a></p>
-<h2 id="xib/storyboard_的国际化">xib/storyboard 的国际化</h2><p>除了借助 localizable strings 文件进行界面国际化之外，对于 xib/storyboard 可以直接进行国际化。虽然看上去很方便、很直观，但其实并不是特别好用。</p>
+<h2 id="xib-storyboard-的国际化"><a href="#xib-storyboard-的国际化" class="headerlink" title="xib/storyboard 的国际化"></a>xib/storyboard 的国际化</h2><p>除了借助 localizable strings 文件进行界面国际化之外，对于 xib/storyboard 可以直接进行国际化。虽然看上去很方便、很直观，但其实并不是特别好用。</p>
 <p>它的原理其实还是 localizable strings，只不过这个 strings 文件是 Xcode 自动创建的。创建的时机是在你对这个界面开启 localization 时，而且它并不会监控 xib/storyboard 的变化。如果你在 localization 之后又改变了这个 xib/storyboard，主要是增加了新的控件，那么这个新控件并不会自动出现在 strings 文件中。</p>
 <p>那你就没办法了，Xcode 也没有提供同步的手段，你唯一能做的是查看 xib 的源代码，从中找到新建控件的 ID，然后自己写到那个 strings 文件里－－噢，这一点都不方便。</p>
-<h2 id="Bundle_Display_Name_的国际化">Bundle Display Name 的国际化</h2><p>显然，需要对不同语言设定不同的应用名称，也就是 Bundle Display Name，我们都知道它在 Info.plist 里。</p>
+<h2 id="Bundle-Display-Name-的国际化"><a href="#Bundle-Display-Name-的国际化" class="headerlink" title="Bundle Display Name 的国际化"></a>Bundle Display Name 的国际化</h2><p>显然，需要对不同语言设定不同的应用名称，也就是 Bundle Display Name，我们都知道它在 Info.plist 里。</p>
 <p>但注意，不是把 Info.plist 进行 Localization，如果对 Info.plist 进行了 Localization，会编译报错 the file Info.plist does not exist.</p>
 <p>正确的方式是在工程里新建一个名为 <code>InfoPlist.strings</code> 的文件，然后对这个 strings 文件进行国际化，在里面写入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#34;CFBundleDisplayName&#34; = &#34;&#21517;&#31216;&#34;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&quot;CFBundleDisplayName&quot; = &quot;名称&quot;;</div></pre></td></tr></table></figure>
 <p>即可。</p>
 <p>注意，需要把 InfoPlist.strings 文件加到工程属性里的 Copy Bundle Resources 里（默认应该就给加上了，如果有问题可以检查一下）。但不要把 Info.plist 文件加到 Copy Bundle Resources 里，否则出现编译警告。</p>
-<h2 id="Base_语言的问题">Base 语言的问题</h2><p>测试发现，将 iOS 设备设置为并没有支持的语言时，应用并没有正确地显示为 Base 中的字符串（英语），而是显示成了简体中文。</p>
+<h2 id="Base-语言的问题"><a href="#Base-语言的问题" class="headerlink" title="Base 语言的问题"></a>Base 语言的问题</h2><p>测试发现，将 iOS 设备设置为并没有支持的语言时，应用并没有正确地显示为 Base 中的字符串（英语），而是显示成了简体中文。</p>
 <p>Stackoverflow 上有很多国内外开发者遇到了这个问题，但都未找到原因和解决方法。</p>
 <p><a href="http://stackoverflow.com/questions/20241256/ios-app-default-language-en-is-not-applied" target="_blank" rel="external">http://stackoverflow.com/questions/20241256/ios-app-default-language-en-is-not-applied</a><br><a href="http://stackoverflow.com/questions/20241256/ios-app-default-language-en-is-not-applied" target="_blank" rel="external">http://stackoverflow.com/questions/20584984/ios-set-a-default-language-in-xcode-for-my-app</a><br><a href="http://stackoverflow.com/questions/18114994/does-my-base-internationalization-storyboard-have-to-correspond-to-a-fallback-la" target="_blank" rel="external">http://stackoverflow.com/questions/18114994/does-my-base-internationalization-storyboard-have-to-correspond-to-a-fallback-la</a></p>
-<h2 id="App_Store_应用名称及简介的国际化">App Store 应用名称及简介的国际化</h2><p>希望让应用在不同国家的 App Store 中显示不同语言的名称，在 iTunes Connect 里新建应用时先用一个主要语言新建，如简体中文，新建成功后在 App 信息里可以看到“可本地化的信息”，可以在右侧选择语言，并且填入相对应的信息。另外，在版本中对应用简介、关键字、截图等也都须进行国际化。</p>
+<h2 id="App-Store-应用名称及简介的国际化"><a href="#App-Store-应用名称及简介的国际化" class="headerlink" title="App Store 应用名称及简介的国际化"></a>App Store 应用名称及简介的国际化</h2><p>希望让应用在不同国家的 App Store 中显示不同语言的名称，在 iTunes Connect 里新建应用时先用一个主要语言新建，如简体中文，新建成功后在 App 信息里可以看到“可本地化的信息”，可以在右侧选择语言，并且填入相对应的信息。另外，在版本中对应用简介、关键字、截图等也都须进行国际化。</p>
 <p>如果未做本地化，则按照选择的主要语言显示。</p>
 <p><img src="http://stoneark.qiniudn.com/blogimg/application_localization_in_ios_development.png" width="871"></p>
 
@@ -248,252 +471,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-18T07:18:19.000Z"><a href="/2016/05/18/sketch-keep-transparent-pixels-when-export/">May 18 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/18/sketch-keep-transparent-pixels-when-export/">Sketch 导出时保留透明像素</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>有些图标我们希望它的边缘要有一定的透明像素。</p>
-<p>比如有一组图标作为 TableView 列表左侧的图标，如果这些图标的宽度不相同的话，会造成文字的左侧起点不能对齐。所以这一组图标的宽度必须都相同。</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/sketch_keep_transparent_pixels.jpg" width="240"></p>
-<p>假设统一宽度为 20px，但是有的图标的实际尺寸可能不足 20px，所以一般我们会将这些图标的左右两边，填充透明像素，来使它达到宽度 20px。<em>但是 Sketch 在导出 slice 时总是自作聪明地把透明像素裁切掉。</em></p>
-<p><strong>解决方法：</strong></p>
-<p>默认情况下，我们对一个 Symbol 点击 Make Exportable 后，会变成这个样子，Symbol 标志的右下角加了一个切片标志。这时候我们是不能改变 <strong>Export 的各种属性</strong>的。<br><img src="http://stoneark.qiniudn.com/blogimg/sketch_keep_transparent_pixels_1.png" width="116"></p>
-<p>在右侧 Export 区域，点击小刀图标：<br><img src="http://stoneark.qiniudn.com/blogimg/sketch_keep_transparent_pixels_2.png" width="211"></p>
-<p>就会变成这样的两个层：<br><img src="http://stoneark.qiniudn.com/blogimg/sketch_keep_transparent_pixels_3.png" width="108"></p>
-<p>然后我们就可以点击上面那个切片层，设置所有的 <strong>Export 属性</strong>，确保 Trim Transparent Pixels 未选中即可，并且调节 Size 和 Position，让切片左右两侧有透明区域。<br><img src="http://stoneark.qiniudn.com/blogimg/sketch_keep_transparent_pixels_4.png" width="212"></p>
-<p>注意的是，这时切片层和 Symbol 已经没有任何联系了，而是一个普普通通的切片，所以可以任意调节位置、大小等。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-17T07:39:12.000Z"><a href="/2016/05/17/local-notification-changes-after-iOS-8/">May 17 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/17/local-notification-changes-after-iOS-8/">Local notification changes after iOS 8</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>大多数 iOS 开发者应该知道，在 iOS 8 的时候推送通知的开发有了些变化。主要体现在一些命名的变化（Remote 改为 User），另外相对之前只需要一句代码就能解决，现在需要多一些步骤。但总的来说改变并不大，实现原理并未改变。</p>
-<p>如 iOS 7:</p>
-<figure class="highlight objc"><figcaption><span>iOS 7</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerForRemoteNotificationTypes:(</span><br><span class="line">	<span class="built_in">UIRemoteNotificationTypeAlert</span> |</span><br><span class="line">	<span class="built_in">UIRemoteNotificationTypeBadge</span> | </span><br><span class="line">	<span class="built_in">UIRemoteNotificationTypeSound</span> )];</span><br></pre></td></tr></table></figure>
-<p>iOS 8:</p>
-<figure class="highlight objc"><figcaption><span>iOS 8</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIUserNotificationType</span> notificationTypes = <span class="built_in">UIUserNotificationTypeBadge</span> | <span class="built_in">UIUserNotificationTypeSound</span> | <span class="built_in">UIUserNotificationTypeAlert</span>;</span><br><span class="line"><span class="built_in">UIUserNotificationSettings</span> *notificationSettings = [<span class="built_in">UIUserNotificationSettings</span> settingsForTypes:notificationTypes categories:<span class="literal">nil</span>];</span><br><span class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerUserNotificationSettings:notificationSettings];</span><br><span class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerForRemoteNotifications];</span><br></pre></td></tr></table></figure>
-<p>虽然很多人早就已经知道并在实践中作出了改变，但可能依然有些人并不知道 iOS 做出这种改变的原因。</p>
-<p>原因是要对本地通知进行规范，并与远程推送通知进行统一。</p>
-<p>之前对于本地通知，是无需取得用户授权的，只有远程推送类型的通知需要申请用户授权。上面的那些代码也只是针对远程通知来说的（所以它们之前的命名中都带有”Remote”字眼），本地通知根本无须注册，直接发送通知就好了。但其实这并不合理。</p>
-<p>进行改变之后，本地通知跟远程推送通知的概念进行了统一，它们唯一的不同只是消息来源的不同。所以本地通知也需要进行授权。</p>
-<p>在代码上，它们的注册也只有一句代码的差距：如果只需要本地通知，则不书写最后的一句：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerForRemoteNotifications];</span><br></pre></td></tr></table></figure>
-<p>即可。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-14T07:31:04.000Z"><a href="/2016/05/14/iCloud-development/">May 14 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/14/iCloud-development/">iCloud development</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>iCloud 开发的几种模式：</p>
-<ol>
-<li>Key-value Storage，在 iCloud 上保存一些简单数据，类似 NSUserDefault 的 iCloud 端实现。每用户最多 1MB 存储。</li>
-<li>iCloud Document，在 iCloud Drive 上以文件方式保存的数据。</li>
-<li>CloudKit，后端云存储。与上面两个不同，上面是用户自己的 iCloud 存储，只有用户自己可以读取自己的数据。而 CloudKit 是开发者的 iCloud，是与用户无关的，所有用户都可访问。类似 LeanCloud、Bmob 之类的服务。目前可以认为对开发者是免费的（因为免费额度绝对足够大），除了 iOS 外还提供了 JS 的访问方式。</li>
-</ol>
-<p>具体可参考 <a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/iCloudDesignGuide/Chapters/Introduction.html" target="_blank" rel="external">About Incorporating iCloud into Your App</a>。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-13T07:21:14.000Z"><a href="/2016/05/13/get-how-many-days-in-the-month/">May 13 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/13/get-how-many-days-in-the-month/">得到某月有几天</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>获取某月有几天，经典算法是按月份和是否闰年进行判断。</p>
-<p>对于 iOS，可以直接用 NSCalendar：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSDate</span> *today = [<span class="built_in">NSDate</span> date];</span><br><span class="line"><span class="built_in">NSCalendar</span> *c = [<span class="built_in">NSCalendar</span> currentCalendar];</span><br><span class="line"><span class="built_in">NSRange</span> days = [c rangeOfUnit:<span class="built_in">NSDayCalendarUnit</span> inUnit:<span class="built_in">NSMonthCalendarUnit</span> forDate:today];</span><br></pre></td></tr></table></figure>
-<p>对于 js，也有一个巧妙的方法。js 里 Date 的构造方法 <code>new Date(&quot;yyyy/MM/dd&quot;)</code> ，当你传入的是 “yyyy/MM/0”，也就是日为 0 的话，得到的会是 yyyy/MM 月的上一个月的最后一天，这样就能通过它来得到上个月有几天了。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getDaysInMonth</span>(<span class="params">year,month</span>)</span>&#123;</span><br><span class="line">    month = <span class="built_in">parseInt</span>(month,<span class="number">10</span>) + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">var</span> tempDate = <span class="keyword">new</span> <span class="built_in">Date</span>(year + <span class="string">"/"</span> + month + <span class="string">"/0"</span>);</span><br><span class="line">    <span class="keyword">return</span> tempDate.getDay();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-04-29T06:34:43.000Z"><a href="/2016/04/29/Android-app-store-in-China-not-friendly-to-personal-developer/">Apr 29 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/04/29/Android-app-store-in-China-not-friendly-to-personal-developer/">国内 Android 应用市场对个人开发者并不友好</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>根据以往的经验，把一个 Android 应用在国内的应用市场上架简直容易得很－－审核？他们真的会审核吗？看一眼就会点击”审核通过“按钮吧！只是国内的应用市场太多，对各种资料的要求不尽相同，所以会很繁琐。但通过审核从来都不会是什么问题。</p>
-<p>所以我从来都不担心 Android 应用的上架。</p>
-<p>但这次还真就通不过了，原因是－－这次是个人开发者身份。国内这些 Android 应用市场对个人开发者并不友好。</p>
-<p>在申请个人开发者账号时，就遇到了一些麻烦，有个市场要求必填固定电话，还有一个要求提供网络文化经营许可证，这直接就是把个人开发者拒之门外的意思。</p>
-<p>提交应用后，被应用宝拒绝，理由：该应用内容包含支付功能，暂不支持个人开发商提交，请修改企业资质或删除支付相关功能后重新提交。</p>
-<p>被 360 开放平台拒绝，理由：亲爱的开发者您好，应用名称（内容）体现为公司性质，名称：XX集团，请注册为企业开发者，并提供著作权或该公司授权证明后提交。</p>
-<p>应用宝不允许个人开发者的应用带有支付功能，不知道这是出于什么考虑。但无法理解的是，提交的这个应用里并没有在线支付功能。360 提出的理由，这个应用的内容的确有公司性质，但是，好吧我也没什么好说的。</p>
-<p>再次尝试依然得到了同样的结果，可能与相关的管理政策有关吧。还是不得不说，苹果对个人开发者非常友好，这可能也是 App Store 如此有生命力，诞生了这么多优秀作品的原因之一。</p>
-<p>最后决定放弃在市场上线，直接发布 apk。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-04-28T08:07:08.000Z"><a href="/2016/04/28/Android-shrink-code/">Apr 28 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/04/28/Android-shrink-code/">Android 代码混淆</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>Android Studio 工程中，默认就创建了 <code>proguard-rules.pro</code> 文件，可以在其中编写 Proguard 的混淆规则。</p>
-<p>但是，默认是不打开混淆的，需要在 <code>build.gradle</code> 文件中，找到这一段：</p>
-<figure class="highlight xml"><figcaption><span>build.gradle</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">buildTypes &#123;</span><br><span class="line">   release &#123;</span><br><span class="line">       minifyEnabled false</span><br><span class="line">       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>把 <code>minifyEnabled</code> 从 false 改为 true，即可开启在 release 打包时进行混淆。</p>
-<p>为什么混淆开关的名字是 minify enabled ？所谓的”混淆“，其实也就是用无意义的符号（如 a,b,c）去代替代码中有意义的符号（如 title, imagePath, url 等），那么代码即使被反编译后，依然很难直接看懂其含义。从另一个角度看，其实也是让代码精简化的过程。（另外，混淆代码的英文是 Shrink Code）</p>
-<p>打开混淆后，在 proguard-rules.pro 文件中编辑混淆规则即可。这个文件其实就是之前用 Eclipse 时的 proguard.cfg，混淆规则的写法是一样的，需要在其中写明哪些类不要进行混淆。</p>
-<p>具体可参考 Android 文档 <a href="http://developer.android.com/tools/help/proguard.html">Shrink Your Code and Resources</a>。</p>
-<p>需要注意的是，不要对第三方库进行混淆，否则调用第三方库的地方，将找不到对应方法，应该不难理解。LeanCloud 给出了一个混淆规则，可以参考：</p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2016/04/28/Android-shrink-code/#more" class="more-link">Read More</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -516,23 +493,23 @@
   <ul class="entry">
     
       <li>
-        <a href="/2016/06/04/ciji-release/">詞記 Release!</a>
+        <a href="/2016/07/05/changes-about-programming-thinking-in-swift/">Swift 编程思路的变化</a>
       </li>
     
       <li>
-        <a href="/2016/05/26/itunes-connect-error-itms-90475/">iTunes Connect Error ITMS-90475</a>
+        <a href="/2016/07/03/iap-take-effect-later-than-app-release/">应用上线后 IAP 商品不会立即生效</a>
       </li>
     
       <li>
-        <a href="/2016/05/25/application-localization-in-ios-development/">Application localization in iOS development</a>
+        <a href="/2016/06/30/the-strict-sapprft/">管理宽广而严格的广电总局</a>
       </li>
     
       <li>
-        <a href="/2016/05/19/bug-about-launchscreen-storyboard/">Bug about launchscreen storyboard</a>
+        <a href="/2016/06/18/battery-drainer-gpsd/">Battery drainer gpsd</a>
       </li>
     
       <li>
-        <a href="/2016/05/18/sketch-keep-transparent-pixels-when-export/">Sketch 导出时保留透明像素</a>
+        <a href="/2016/06/17/imei-missing-after-downgrade-samsung-s4/">IMEI missing after downgrade Samsung S4</a>
       </li>
     
   </ul>
@@ -543,7 +520,7 @@
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 14px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 12px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
   </div>
 </div>
 

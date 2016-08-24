@@ -57,7 +57,8 @@
   </ul>
   <div class="clearfix"></div>
 </nav>
-<div class="clearfix"></div></header>
+<div class="clearfix"></div>
+</header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
 <h2 class="archive-title tag">hexo</h2>
@@ -82,9 +83,9 @@
       
         <p>首先，找到现在正在使用的主题所在目录，如：<code>themes/light/</code>。如果不确定，可查看 <code>_config.yml</code> 中 theme 的值。</p>
 <p>在主题目录的 <code>layout/_widget</code> 下，放着所有右边栏的小工具。在这个目录下新建文件 <code>adsense.ejs</code>，并在其中填入：</p>
-<figure class="highlight"><figcaption><span>adsense.ejs</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;div class=&#34;widget tag&#34;&#62;&#10;&#25226;&#20174; AdSense &#37324;&#33719;&#24471;&#30340;&#20195;&#30721;&#20840;&#37096;&#22797;&#21046;&#21040;&#36825;&#37324;&#10;&#60;/div&#62;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><figcaption><span>adsense.ejs</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;div class=&quot;widget tag&quot;&gt;</div><div class="line">把从 AdSense 里获得的代码全部复制到这里</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
 <p>最后，在主题根目录的 _config.yml 里，在 widgets 里面加入一项 <code>- adsense</code> 即可，如：</p>
-<figure class="highlight"><figcaption><span>_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">widgets:&#10;- search&#10;- recent_posts&#10;- adsense&#10;- tagcloud</span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><figcaption><span>_config.yml</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="attr">widgets:</span></div><div class="line"><span class="bullet">-</span> search</div><div class="line"><span class="bullet">-</span> recent_posts</div><div class="line"><span class="bullet">-</span> adsense</div><div class="line"><span class="bullet">-</span> tagcloud</div></pre></td></tr></table></figure>
 <p>这样就可以在右侧边栏里显示 Adsense 广告了。</p>
 <p>原理：</p>
       
@@ -126,8 +127,8 @@
 <p>有一个地方文档中并未提及，需要格外注意：除了安装 hexo-cli 之外的步骤，都应该在你的 blog 根目录下进行。这也反映出了新版本最大的变化：模块分离。</p>
 <p>首先可以看到，新版本多了一个 <code>hexo-cli</code>，也就是 Hexo command line interface，这也是新版本中唯一需要安装到系统全局的模块。把 CLI 从主模块中分离，可以让 CLI 加载更快，同时能够允许你在不同的目录下维护着不同版本的 hexo blog。</p>
 <p>而其他所有模块，包括 hexo, hexo-server, hexo-deployer, hexo-generator, hexo-renderer 等，都被安装在某一个 blog 的 node_modules 目录下，仅应用于这一个 blog。</p>
-<p>模块分离有利有弊，但大多数情形下是利大于弊的。对于 hexo 来讲，带来最大的利就是，blog 目录下包含着所有需要的内容和程序，受系统环境的限制就能做到尽可能的小。而先前版本的 hexo，blog 目录中仅包含所有的内容，而并不包含程序 — 程序需要调用系统中安装的。设想一下，Alice 在 Bob 家度假，突然想用 Bob 的个人电脑写个博客（假设 Alice 没有带自己的笔记本）。Alice 平常用的是 2.x 版本的 hexo，并把 blog 目录同步到了 Dropbox。而 Bob 用的是 2.y 版本的 hexo，2.x 和 2.y 版本是不完全兼容的。于是，当 Alice 在自己的 blog 目录下执行 hexo 的命令时，可能会出现一些意想不到的错误 — 内容是 2.x 版本的，而程序是 2.y 版本的。</p>
-<p>而如果它们都用了现在模块分离程度更高的版本，那么在 Alice 的 blog 目录中，就同时包含了 3.x 版本的内容和 3.x 版本的程序，虽然 Bob 的电脑上是 3.y 版本，但这并不影响什么 — 因为唯一需要依赖系统的是 hexo-cli，而这个 hexo-cli 只是一个 driver，具体的功能实现都将由 blog 目录中的程序接管。而由于这个 hexo-cli 功能非常简单，所以可以做到非常稳定，不同的版本基本上可以完全兼容。</p>
+<p>模块分离有利有弊，但大多数情形下是利大于弊的。对于 hexo 来讲，带来最大的利就是，blog 目录下包含着所有需要的内容和程序，受系统环境的限制就能做到尽可能的小。而先前版本的 hexo，blog 目录中仅包含所有的内容，而并不包含程序 – 程序需要调用系统中安装的。设想一下，Alice 在 Bob 家度假，突然想用 Bob 的个人电脑写个博客（假设 Alice 没有带自己的笔记本）。Alice 平常用的是 2.x 版本的 hexo，并把 blog 目录同步到了 Dropbox。而 Bob 用的是 2.y 版本的 hexo，2.x 和 2.y 版本是不完全兼容的。于是，当 Alice 在自己的 blog 目录下执行 hexo 的命令时，可能会出现一些意想不到的错误 – 内容是 2.x 版本的，而程序是 2.y 版本的。</p>
+<p>而如果它们都用了现在模块分离程度更高的版本，那么在 Alice 的 blog 目录中，就同时包含了 3.x 版本的内容和 3.x 版本的程序，虽然 Bob 的电脑上是 3.y 版本，但这并不影响什么 – 因为唯一需要依赖系统的是 hexo-cli，而这个 hexo-cli 只是一个 driver，具体的功能实现都将由 blog 目录中的程序接管。而由于这个 hexo-cli 功能非常简单，所以可以做到非常稳定，不同的版本基本上可以完全兼容。</p>
 <p>这样的大版本更新也是有些副作用的，比如由于 hexo-deployer-git 模块也改变了，之前的 git 提交历史都没有了…</p>
 
       
@@ -273,23 +274,23 @@
   <ul class="entry">
     
       <li>
-        <a href="/2016/06/04/ciji-release/">詞記 Release!</a>
+        <a href="/2016/07/05/changes-about-programming-thinking-in-swift/">Swift 编程思路的变化</a>
       </li>
     
       <li>
-        <a href="/2016/05/26/itunes-connect-error-itms-90475/">iTunes Connect Error ITMS-90475</a>
+        <a href="/2016/07/03/iap-take-effect-later-than-app-release/">应用上线后 IAP 商品不会立即生效</a>
       </li>
     
       <li>
-        <a href="/2016/05/25/application-localization-in-ios-development/">Application localization in iOS development</a>
+        <a href="/2016/06/30/the-strict-sapprft/">管理宽广而严格的广电总局</a>
       </li>
     
       <li>
-        <a href="/2016/05/19/bug-about-launchscreen-storyboard/">Bug about launchscreen storyboard</a>
+        <a href="/2016/06/18/battery-drainer-gpsd/">Battery drainer gpsd</a>
       </li>
     
       <li>
-        <a href="/2016/05/18/sketch-keep-transparent-pixels-when-export/">Sketch 导出时保留透明像素</a>
+        <a href="/2016/06/17/imei-missing-after-downgrade-samsung-s4/">IMEI missing after downgrade Samsung S4</a>
       </li>
     
   </ul>
@@ -300,7 +301,7 @@
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 14px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 12px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
   </div>
 </div>
 

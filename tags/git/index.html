@@ -57,7 +57,8 @@
   </ul>
   <div class="clearfix"></div>
 </nav>
-<div class="clearfix"></div></header>
+<div class="clearfix"></div>
+</header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
 <h2 class="archive-title tag">git</h2>
@@ -84,13 +85,13 @@
 <p>在 Git 分支模型的阐述上，Vincent Driessen 的 <a href="http://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a> 是一篇很多人认为不错的文章，译文也已经有好几篇了：<a href="http://www.oschina.net/translate/a-successful-git-branching-model">介绍一个成功的 Git 分支模型</a>，<a href="http://jiongks.name/blog/a-successful-git-branching-model/">Git 分支的最佳实践</a>，<a href="http://www.juvenxu.com/2010/11/28/a-successful-git-branching-model/">一个成功的Git分支模型</a>。</p>
 <p>个人认为，这篇文章阐述的分支模型是非常不错的，但遣词造句上实在有些繁琐，读起来很费劲，不过绝对值得一读。</p>
 <p>下面是我对分支策略的总结。</p>
-<h3 id="Subversion_和_Git">Subversion 和 Git</h3><ol>
+<h3 id="Subversion-和-Git"><a href="#Subversion-和-Git" class="headerlink" title="Subversion 和 Git"></a>Subversion 和 Git</h3><ol>
 <li>Git 是分布式的版本控制系统，所有人都拥有一个仓库，而不仅仅是一个 working copy。但依然要有一个远端的中心，称为 origin。相对的，Subversion 是集中式的版本控制系统，仓库只在远端。</li>
 <li>Subversion 的三大部分是 trunk、branches、tags，即主干、分支、标记。相对的，Git 没有 trunk 的概念，主干可以认为是 master 分支，也是分支之一。</li>
 <li>Git 的分支才是真正意义上的分支。相对的，Subversion 在本质上不存在分支，所谓分支只是目录的拷贝。</li>
 <li>Git 在分支与合并方面是简单易行的。相对的，Subversion 的分支与合并总是让人恐惧。</li>
 </ol>
-<h3 id="分支模式一（Git_风格）">分支模式一（Git 风格）</h3><ol>
+<h3 id="分支模式一（Git-风格）"><a href="#分支模式一（Git-风格）" class="headerlink" title="分支模式一（Git 风格）"></a>分支模式一（Git 风格）</h3><ol>
 <li>长期分支有主分支（master）和开发分支（develop），短期分支有特性分支（feature）、预发布分支（release）、补丁分支（hotfix）。</li>
 <li>master 分支，始终 <strong>仅</strong> 保存每次发布的版本，HEAD 则指向当前发布的最新版本。日常的开发工作不直接在主分支进行。</li>
 <li>develop 分支，其中为 <strong>下一次</strong> 要发布的版本（而不包含下次的下次发布应包含的功能）。</li>
@@ -98,13 +99,13 @@
 <li>release 分支，在某一版本准备发布时使用。在 develop 分支已经可以进入发布前的测试时，从 develop 分支出，命名为 <code>release-1.0</code>。测试过程中的 bug 修复，应提交到该分支。测试结束可以发布时，将该分支合并回 master 分支和 develop 分支，并给 master 分支打一个 tag（如 1.0）。然后，将这个 release 分支删除。需要注意的是，合并回 master，是因为这将成为一个新的发布版本；合并回 develop，是为了将 release 分支中对 bug 的修复也合并回 develop 分支，更好的方式是随着测试而不断地将 bug 修复合并回 develop，避免最后才一次性合并。</li>
 <li>hotfix 分支，在线上版本出现 bug 需要紧急修复时使用。在 master 分支出，命名为 <code>hotfix-1.0.1</code>。在完成修复代码并通过测试后，合并回 master 和 develop，并对 master 打一个 tag（如 1.0.1）。然后，将这个 hotfix 分支删除。</li>
 </ol>
-<h3 id="分支模式二（Subversion_风格）">分支模式二（Subversion 风格）</h3><ol>
+<h3 id="分支模式二（Subversion-风格）"><a href="#分支模式二（Subversion-风格）" class="headerlink" title="分支模式二（Subversion 风格）"></a>分支模式二（Subversion 风格）</h3><ol>
 <li>trunk 主干，日常的开发工作直接在 trunk 进行。</li>
 <li>长期分支有发布分支（release），短期分支有特性分支（feature）。</li>
 <li>release 分支，在某一版本准备发布时使用。在 trunk 中的开发已经可以进入发布前的测试时，从 trunk 分支出，命名为 <code>release-1.0</code>。测试过程中的 bug 修复，应提交到该分支。测试结束可以发布时，将该分支合并回 trunk，并给该 release 分支打一个 tag（如 1.0）。注意，这个 release 分支将 <strong>永久保留</strong> ，之后的 hotfix 也将在此分支进行。</li>
 <li>feature 分支，开发某项新特性时使用。这与分支模式一里的 feature 分支完全相同，唯一不同的是，它从 trunk 分支出，并最终合并回 trunk 或直接丢弃，最后被删除。</li>
 </ol>
-<h3 id="Then_which_one?">Then which one?</h3>
+<h3 id="Then-which-one"><a href="#Then-which-one" class="headerlink" title="Then which one?"></a>Then which one?</h3>
       
     </div>
     <footer>
@@ -145,23 +146,23 @@
   <ul class="entry">
     
       <li>
-        <a href="/2016/06/04/ciji-release/">詞記 Release!</a>
+        <a href="/2016/07/05/changes-about-programming-thinking-in-swift/">Swift 编程思路的变化</a>
       </li>
     
       <li>
-        <a href="/2016/05/26/itunes-connect-error-itms-90475/">iTunes Connect Error ITMS-90475</a>
+        <a href="/2016/07/03/iap-take-effect-later-than-app-release/">应用上线后 IAP 商品不会立即生效</a>
       </li>
     
       <li>
-        <a href="/2016/05/25/application-localization-in-ios-development/">Application localization in iOS development</a>
+        <a href="/2016/06/30/the-strict-sapprft/">管理宽广而严格的广电总局</a>
       </li>
     
       <li>
-        <a href="/2016/05/19/bug-about-launchscreen-storyboard/">Bug about launchscreen storyboard</a>
+        <a href="/2016/06/18/battery-drainer-gpsd/">Battery drainer gpsd</a>
       </li>
     
       <li>
-        <a href="/2016/05/18/sketch-keep-transparent-pixels-when-export/">Sketch 导出时保留透明像素</a>
+        <a href="/2016/06/17/imei-missing-after-downgrade-samsung-s4/">IMEI missing after downgrade Samsung S4</a>
       </li>
     
   </ul>
@@ -172,7 +173,7 @@
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 10px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iOS8/" style="font-size: 14px;">iOS8</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 12px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
   </div>
 </div>
 

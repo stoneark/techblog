@@ -291,6 +291,25 @@ article .entry h6,
 article .entry .video-container {
   margin-top: 15px;
 }
+article .entry table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  empty-cells: show;
+  border: 1px solid #e2e2e2;
+  width: 100%;
+}
+article .entry table th {
+  white-space: nowrap;
+  color: #444;
+  font-weight: 600;
+  background: #eee;
+}
+article .entry table td,
+article .entry table th {
+  border: 1px solid #e2e2e2;
+  padding: 8px 16px;
+  text-align: left;
+}
 article .entry blockquote {
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
@@ -323,7 +342,6 @@ article .entry code {
   margin: 0 2px;
   font-size: 0.9em;
   border: 1px solid #ddd;
-  -webkit-border-radius: 3px;
   border-radius: 3px;
 }
 article .entry pre {
@@ -332,7 +350,6 @@ article .entry pre {
   margin-top: 15px;
   overflow: auto;
   padding: 7px 15px;
-  -webkit-border-radius: 2px;
   border-radius: 2px;
 }
 article .entry pre code {
@@ -340,7 +357,6 @@ article .entry pre code {
   padding: 0;
   margin: 0;
   border: none;
-  -webkit-border-radius: 0;
   border-radius: 0;
 }
 article .entry ul,
@@ -649,7 +665,6 @@ article footer .addthis iframe {
   border: 1px solid #ddd;
   margin-top: 15px;
   padding: 7px 15px;
-  -webkit-border-radius: 2px;
   border-radius: 2px;
   text-shadow: 0 0 1px #fff;
   line-height: 1.6;
@@ -689,7 +704,6 @@ figure.highlight {
   border: 1px solid #ddd;
   margin-top: 15px;
   padding: 7px 15px;
-  -webkit-border-radius: 2px;
   border-radius: 2px;
   text-shadow: 0 0 1px #fff;
   line-height: 1.6;
@@ -728,6 +742,9 @@ figure.highlight .code {
 }
 figure.highlight .line {
   height: 20px;
+}
+figure.highlight .line.marked {
+  background: #d6d6d6;
 }
 pre .comment,
 pre .template_comment,
