@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.stoneark.org/"/>
-  <updated>2016-08-24T07:15:24.000Z</updated>
+  <updated>2016-08-26T06:17:59.000Z</updated>
   <id>http://blog.stoneark.org/</id>
   
   <author>
@@ -14,6 +14,352 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Image of &quot;Download on the App Store&quot;</title>
+    <link href="http://blog.stoneark.org/2016/08/14/download-on-the-app-store-image/"/>
+    <id>http://blog.stoneark.org/2016/08/14/download-on-the-app-store-image/</id>
+    <published>2016-08-14T07:12:47.000Z</published>
+    <updated>2016-08-26T06:17:59.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>之前做 App 的下载页面时，都是只需要简体中文就够了，所以“从 App Store 下载”的图片是在网上随便找了一个用的。这次还需要繁体中文和英文的图片，刚想搜索一下，突然意识到这种图片苹果官方肯定是提供的。</p>
+<p>于是很轻松就找到了 <a href="https://developer.apple.com/app-store/marketing/guidelines/" target="_blank" rel="external">App Store Marketing Guidelines</a>，里面给出了所有可能用到的图片资源，包括所有语言的 Download on the App Store 按钮图片、所有苹果设备的图片等。以及在宣传品中使用这些图片时的规范要求。</p>
+<a id="more"></a>
+<ul>
+<li><p>Download one the App Store Badge<br><img src="http://stoneark.qiniudn.com/blogimg/download_on_the_app_store_image_3.png" alt="Download on the App Store Badge"></p>
+</li>
+<li><p>Apple Product Images<br><img src="http://stoneark.qiniudn.com/blogimg/download_on_the_app_store_image_4.png" alt="Apple Product Images"></p>
+</li>
+</ul>
+<p>看了一下，国内按照苹果这个标准来的不多，违反规定的一抓一大把。比如<a href="http://d.xiaojukeji.com/c/70205" target="_blank" rel="external">滴滴出行的下载页面</a>，就错误地使用了 Apple 的 Logo：</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/download_on_the_app_store_image_1.png" alt="Didichuxing"></p>
+<p>这在 <code>1.6 Avoid mistakes</code> 里有专门的说明。<br><img src="http://stoneark.qiniudn.com/blogimg/download_on_the_app_store_image.png" alt="Avoid mistakes"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;之前做 App 的下载页面时，都是只需要简体中文就够了，所以“从 App Store 下载”的图片是在网上随便找了一个用的。这次还需要繁体中文和英文的图片，刚想搜索一下，突然意识到这种图片苹果官方肯定是提供的。&lt;/p&gt;
+&lt;p&gt;于是很轻松就找到了 &lt;a href=&quot;https://developer.apple.com/app-store/marketing/guidelines/&quot;&gt;App Store Marketing Guidelines&lt;/a&gt;，里面给出了所有可能用到的图片资源，包括所有语言的 Download on the App Store 按钮图片、所有苹果设备的图片等。以及在宣传品中使用这些图片时的规范要求。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="iOS" scheme="http://blog.stoneark.org/tags/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>The new Media Manager on iTunes Connect</title>
+    <link href="http://blog.stoneark.org/2016/08/10/the-new-media-manager-on-itunes-connect/"/>
+    <id>http://blog.stoneark.org/2016/08/10/the-new-media-manager-on-itunes-connect/</id>
+    <published>2016-08-10T03:29:16.000Z</published>
+    <updated>2016-08-26T06:18:17.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>收到一封来自苹果的邮件，说是最新的 Media Manager 已经上线 iTunes Connect 了。</p>
+<p>管理屏幕截图差不多是 iTunes Connect 里最麻烦的。最初只有一两种屏幕尺寸时还好，现在 iPhone 有四种尺寸，iPad 有两种尺寸，如果再需要支持多种语言，那上传图片的人基本就要疯了。比如词记提供 4 张截图，每种设备都有对应的截图，目前支持 3 种语言，那么总共就有 4 × (4+2) × 3 = 72 张图片。截图、压缩、上传，还是很磨性子的。相信我，这个数量不算多。</p>
+<a id="more"></a>
+<p>今年的 WWDC 上苹果提出了 Media Manager 来专门解决这个问题，但今天实际一看，并没有那么神奇。它的原理是让你可以只上传最大尺寸、主要语言的图片，其他屏幕尺寸的都显示最大尺寸的图片，其他语言的都显示主要语言的图片－－是的，它并没有神奇地帮我们把图片处理成对应的情况，只是缩放和能凑合看而已。如果你是完美主义者，照样需要为每一种屏幕尺寸、每一种语言都上传对应的图片。</p>
+<ul>
+<li>默认只显示最大尺寸：<br><img src="http://stoneark.qiniudn.com/blogimg/itc_media_manager_0.png" alt=""></li>
+</ul>
+<ul>
+<li>其他语言可以勾选使用主要语言的图片：<br><img src="http://stoneark.qiniudn.com/blogimg/itc_media_manager_1.png" alt=""></li>
+</ul>
+<ul>
+<li>Media Manager 里依然需要管理各个尺寸和各个语言的截图：<br><img src="http://stoneark.qiniudn.com/blogimg/itc_media_manager_2.png" alt=""></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;收到一封来自苹果的邮件，说是最新的 Media Manager 已经上线 iTunes Connect 了。&lt;/p&gt;
+&lt;p&gt;管理屏幕截图差不多是 iTunes Connect 里最麻烦的。最初只有一两种屏幕尺寸时还好，现在 iPhone 有四种尺寸，iPad 有两种尺寸，如果再需要支持多种语言，那上传图片的人基本就要疯了。比如词记提供 4 张截图，每种设备都有对应的截图，目前支持 3 种语言，那么总共就有 4 × (4+2) × 3 = 72 张图片。截图、压缩、上传，还是很磨性子的。相信我，这个数量不算多。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="iOS" scheme="http://blog.stoneark.org/tags/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>UIActivityViewController</title>
+    <link href="http://blog.stoneark.org/2016/08/08/ui-activity-view-controller/"/>
+    <id>http://blog.stoneark.org/2016/08/08/ui-activity-view-controller/</id>
+    <published>2016-08-08T08:03:19.000Z</published>
+    <updated>2016-08-26T06:18:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>做社会化分享，经典的做法就是在各个社会化平台申请 App Key，然后集成各个平台的 SDK，并分别进行开发。更简单的方式是用类似友盟分享 SDK、ShareSDK 之类的集成化 SDK，让多平台分享的开发更加容易。之前我和团队就是采用这种方式。</p>
+<p>其实 iOS 本身提供了一种分享的方式，App Store 里的分享就是一个实现的例子：<br><img src="http://stoneark.qiniudn.com/blogimg/uiactivityviewcontroller.png" alt="UIActivityViewController"></p>
+<p>这个弹出的分享框，叫做 UIActivityViewController。通过它来实现分享，好处是样式统一、实现简单，更重要的是它直接使用系统中设置的平台账号，并且不需要对应用进行授权。这一点降低了用户分享的心理负担。同时，开发者不需要去平台为应用申请 App Key，也一定程度上降低了开发的门槛。<br><a id="more"></a></p>
+<p>但正是因为这种分享不依附于应用，所以也会带来一些缺点。比如分享出去的东西会显示“来自 iOS” 而不是你的应用，也导致了不能进行用户统计。而且通过这个只能做分享，不能用做 SSO 登录。对于只需要分享的简单场景下，用 UIActivityViewController 完全足够并且更加合适，所以我在词记里尝试了一下。</p>
+<p>基本的实现非常简单，把需要分享的内容，可以是文字、图片、链接，传入初始化方法即可：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSString</span> *str = <span class="string">@"Hello"</span>;</div><div class="line"><span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://www.stoneark.org"</span>];</div><div class="line"><span class="built_in">UIActivityViewController</span> *activityViewController = [[<span class="built_in">UIActivityViewController</span> alloc] initWithActivityItems:@[str, url] applicationActivities:<span class="literal">nil</span>];</div><div class="line">[<span class="keyword">self</span> presentViewController:activityViewController animated:<span class="literal">YES</span> completion:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
+<p>如果需要为不同平台提供不同的分享内容，或者生成某个分享内容的过程较复杂，可以为这个内容创建一个 UIActivityItemProvider 的子类，并实现方法 <code>-(id)activityViewController: itemForActivityType:</code>，如：</p>
+<figure class="highlight objc"><figcaption><span>ShareTextProvider</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MonthViewShareTextProvider</span> : <span class="title">UIActivityItemProvider</span></span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> *shareText;</div><div class="line"><span class="keyword">@end</span></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">MonthViewShareTextProvider</span></span></div><div class="line">- (<span class="keyword">id</span>)activityViewController:(<span class="built_in">UIActivityViewController</span> *)activityViewController itemForActivityType:(<span class="built_in">NSString</span> *)activityType &#123;</div><div class="line">    <span class="keyword">if</span> ([activityType isEqualToString:<span class="built_in">UIActivityTypeSaveToCameraRoll</span>] ||</div><div class="line">        [activityType isEqualToString:<span class="built_in">UIActivityTypePrint</span>] ||</div><div class="line">        [activityType isEqualToString:<span class="built_in">UIActivityTypeCopyToPasteboard</span>] ||</div><div class="line">        [activityType isEqualToString:<span class="string">@"com.tencent.xin.sharetimeline"</span>] ) &#123;</div><div class="line">        <span class="comment">// 保存到相册、打印、复制、分享到微信，不提供文字</span></div><div class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> _shareText;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>利用它去初始化 UIActivityViewController 时：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ShareTextProvider *textProvider = [[ShareTextProvider alloc]initWithPlaceholderItem:<span class="string">@"Hello"</span>];</div><div class="line">[textProvider setShareText:<span class="string">@"Hello"</span>];    </div><div class="line"><span class="built_in">UIActivityViewController</span> *activityViewController = [[<span class="built_in">UIActivityViewController</span> alloc]initWithActivityItems:@[textProvider] applicationActivities:<span class="literal">nil</span>];    </div><div class="line">[<span class="keyword">self</span> presentViewController:activityViewController animated:<span class="literal">YES</span> completion:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
+<p>注意初始化方法里的 PlaceholderItem，它应该是能够正确反应内容数据类型的简单数据。在弹出的 UIActivityViewController 里，会根据这些 PlaceholderItem 的类型，来决定显示哪些选项，此时并不会去调用 ItemProvider 里的方法。比如有两个 UIImage，则会显示“存储 2 张图片”；如果没有 UIImage，则不会显示存储图片这一个按钮。当你真正点击某一项分享渠道时，才会调用其 itemForActivityType 方法来得到真正的内容。</p>
+<p>你可能注意到了，上面微信的 activity type 用了字符串 @”com.tencent.xin.sharetimeline”。而关于 UIActivityType，查看 <code>UIActivityType.h</code>，可以看到这些：</p>
+<figure class="highlight objc"><figcaption><span>UIActivity.h</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIActivityTypePostToFacebook</span>     <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">6</span>_0) __TVOS_PROHIBITED;</div><div class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIActivityTypePostToTwitter</span>      <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">6</span>_0) __TVOS_PROHIBITED;</div><div class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIActivityTypePostToWeibo</span>        <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">6</span>_0) __TVOS_PROHIBITED;    <span class="comment">// SinaWeibo</span></div><div class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIActivityTypeMessage</span>            <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">6</span>_0) __TVOS_PROHIBITED;</div><div class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIActivityTypeMail</span>               <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">6</span>_0) __TVOS_PROHIBITED;</div><div class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIActivityTypePrint</span>              <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">6</span>_0) __TVOS_PROHIBITED;</div><div class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIActivityTypeCopyToPasteboard</span>   <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">6</span>_0) __TVOS_PROHIBITED;</div><div class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIActivityTypeAssignToContact</span>    <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">6</span>_0) __TVOS_PROHIBITED;</div><div class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIActivityTypeSaveToCameraRoll</span>   <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">6</span>_0) __TVOS_PROHIBITED;</div><div class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIActivityTypeAddToReadingList</span>   <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">7</span>_0) __TVOS_PROHIBITED;</div><div class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIActivityTypePostToFlickr</span>       <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">7</span>_0) __TVOS_PROHIBITED;</div><div class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIActivityTypePostToVimeo</span>        <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">7</span>_0) __TVOS_PROHIBITED;</div><div class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIActivityTypePostToTencentWeibo</span> <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">7</span>_0) __TVOS_PROHIBITED;</div><div class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIActivityTypeAirDrop</span>            <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">7</span>_0) __TVOS_PROHIBITED;</div><div class="line"><span class="built_in">UIKIT_EXTERN</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> <span class="built_in">UIActivityTypeOpenInIBooks</span>       <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">9</span>_0) __TVOS_PROHIBITED;</div></pre></td></tr></table></figure>
+<p>里面并没有发现微信。通过运行时打印，可以整理出如下的表格：</p>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>字符串常量</th>
+<th>字符串内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AirDrop</td>
+<td>UIActivityTypeAirDrop</td>
+<td>com.apple.UIKit.activity.AirDrop</td>
+</tr>
+<tr>
+<td>SMS</td>
+<td>UIActivityTypeMessage</td>
+<td>com.apple.UIKit.activity.Message</td>
+</tr>
+<tr>
+<td>Mail</td>
+<td>UIActivityTypeMail</td>
+<td>com.apple.UIKit.activity.Mail</td>
+</tr>
+<tr>
+<td>备忘录</td>
+<td>N/A</td>
+<td>com.apple.mobilenotes.SharingExtension</td>
+</tr>
+<tr>
+<td>新浪微博</td>
+<td>UIActivityTypePostToWeibo</td>
+<td>com.apple.UIKit.activity.PostToWeibo</td>
+</tr>
+<tr>
+<td>iBooks</td>
+<td>UIActivityTypeOpenInIBooks</td>
+<td>com.apple.UIKit.activity.OpenInIBooks</td>
+</tr>
+<tr>
+<td>QQ</td>
+<td>N/A</td>
+<td>com.tencent.mqq.ShareExtension</td>
+</tr>
+<tr>
+<td>微信</td>
+<td>N/A</td>
+<td>com.tencent.xin.sharetimeline</td>
+</tr>
+<tr>
+<td>Twitter</td>
+<td>UIActivityTypePostToTwitter</td>
+<td>com.apple.UIKit.activity.PostToTwitter</td>
+</tr>
+<tr>
+<td>Facebook</td>
+<td>UIActivityTypePostToFacebook</td>
+<td>com.apple.UIKit.activity.PostToFacebook</td>
+</tr>
+<tr>
+<td>Flicker</td>
+<td>UIActivityTypePostToFlickr</td>
+<td>com.apple.UIKit.activity.PostToFlickr</td>
+</tr>
+<tr>
+<td>Vimeo</td>
+<td>UIActivityTypePostToVimeo</td>
+<td>com.apple.UIKit.activity.PostToVimeo</td>
+</tr>
+<tr>
+<td>腾讯微博</td>
+<td>UIActivityTypePostToTencentWeibo</td>
+<td>com.apple.UIKit.activity.TencentWeibo</td>
+</tr>
+<tr>
+<td>提醒事项</td>
+<td>N/A</td>
+<td>com.apple.reminders.RemindersEditorExtension</td>
+</tr>
+<tr>
+<td>保存到相册</td>
+<td>UIActivityTypeSaveToCameraRoll</td>
+<td>com.apple.UIKit.activity.SaveToCameraRoll</td>
+</tr>
+<tr>
+<td>指定到联系人</td>
+<td>UIActivityTypeAssignToContact</td>
+<td>com.apple.UIKit.activity.AssignToContact</td>
+</tr>
+<tr>
+<td>复制到剪贴板</td>
+<td>UIActivityTypeCopyToPasteboard</td>
+<td>com.apple.UIKit.activity.CopyToPasteboard</td>
+</tr>
+<tr>
+<td>打印</td>
+<td>UIActivityTypePrint</td>
+<td>com.apple.UIKit.activity.Print</td>
+</tr>
+<tr>
+<td>添加到阅读列表</td>
+<td>UIActivityTypeAddToReadingList</td>
+<td>com.apple.UIKit.activity.AddToReadingList</td>
+</tr>
+</tbody>
+</table>
+<p>可以查阅 <a href="http://nshipster.com/uiactivityviewcontroller/" target="_blank" rel="external">NSHipster上的这篇文章</a>了解有关 UIActivityViewController 的更多信息。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;做社会化分享，经典的做法就是在各个社会化平台申请 App Key，然后集成各个平台的 SDK，并分别进行开发。更简单的方式是用类似友盟分享 SDK、ShareSDK 之类的集成化 SDK，让多平台分享的开发更加容易。之前我和团队就是采用这种方式。&lt;/p&gt;
+&lt;p&gt;其实 iOS 本身提供了一种分享的方式，App Store 里的分享就是一个实现的例子：&lt;br&gt;&lt;img src=&quot;http://stoneark.qiniudn.com/blogimg/uiactivityviewcontroller.png&quot; alt=&quot;UIActivityViewController&quot;&gt;&lt;/p&gt;
+&lt;p&gt;这个弹出的分享框，叫做 UIActivityViewController。通过它来实现分享，好处是样式统一、实现简单，更重要的是它直接使用系统中设置的平台账号，并且不需要对应用进行授权。这一点降低了用户分享的心理负担。同时，开发者不需要去平台为应用申请 App Key，也一定程度上降低了开发的门槛。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="iOS" scheme="http://blog.stoneark.org/tags/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Input character by hex unicode on mac</title>
+    <link href="http://blog.stoneark.org/2016/08/01/input-char-by-hex-unicode-on-mac/"/>
+    <id>http://blog.stoneark.org/2016/08/01/input-char-by-hex-unicode-on-mac/</id>
+    <published>2016-08-01T09:35:05.000Z</published>
+    <updated>2016-08-25T09:42:42.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>有时需要通过十六进制 Unicode 来输入特殊字符，Mac OS X 提供了一个专门的输入法。在键盘偏好设置中，添加输入源，在其他中有一项“Unicode 十六进制输入”，添加它即可。<br><img src="http://stoneark.qiniudn.com/blogimg/input_hex_unicode.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;有时需要通过十六进制 Unicode 来输入特殊字符，Mac OS X 提供了一个专门的输入法。在键盘偏好设置中，添加输入源，在其他中有一项“Unicode 十六进制输入”，添加它即可。&lt;br&gt;&lt;img src=&quot;http://stoneark.qiniudn.com/bl
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Emoji bug of Ciji</title>
+    <link href="http://blog.stoneark.org/2016/07/30/emoji-bug-of-ciji/"/>
+    <id>http://blog.stoneark.org/2016/07/30/emoji-bug-of-ciji/</id>
+    <published>2016-07-30T07:49:06.000Z</published>
+    <updated>2016-08-26T06:15:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>前几天，Dawncold 捉到一个词记的 bug：</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/emoji_bug_0.jpeg" alt=""></p>
+<p>是下暴雨的那天，输入的是下雨的 emoji 表情：☔️。</p>
+<p>试了一下，在 TextField 编辑状态还是正常的，退出编辑状态后就成这样子了。另外，除了这个下雨的表情外，还有几个经典的 emoji 也显示成了黑白颜色的，但好在还是一个字符，没有出现后面的 VS16。基本可以锁定是字体的原因。</p>
+<a id="more"></a>
+<p>先查看了下雨的编码，在表情与符号里拷贝字符简介：<br><img src="http://stoneark.qiniudn.com/blogimg/emoji_bug_1.png" alt=""></p>
+<p>粘贴出来可以看到这个 emoji 编码是 U+2614 U+FE0F：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">☔️</div><div class="line">有雨</div><div class="line">Unicode: U+2614 U+FE0F，UTF-8: E2 98 94 EF B8 8F</div></pre></td></tr></table></figure>
+<p>为了营造回忆的气氛，词记选用了花园明朝体，打开 ttf 文件后查看 U+2614 和 U+FE0F 位置的字符：</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/emoji_bug_2.png" alt="U+2614"></p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/emoji_bug_3.png" alt="U+FE0F"></p>
+<p>果然没错，就是字体里面覆盖了一部分的 emoji 表情导致的，还能找到其他一些 emoji 表情：<br><img src="http://stoneark.qiniudn.com/blogimg/emoji_bug_4.png" alt="emojis"></p>
+<p>可能是花园明朝体在开始制作的时候，主流操作系统对 emoji 表情的支持还不到位，所以在字体文件里加入了一些 emoji 符号。当你输入这些表情时，因为字体里有这些符号，所以会显示字体里面的符号，而不会显示系统默认的彩色 emoji 字体。</p>
+<p>但是，下雨表情里后面那个 VS16 是什么鬼？为什么这个下雨表情，由两个 Unicode 组成？</p>
+<p>表示下雨的字符就是前面的 U+2614，而后面的 VS16 表示第 16 号字形变体(Variation Selector)。用 iOS 的表情键盘输入的下雨表情，默认就是第 16 号变体，在苹果的 emoji 字体里，就是一把蓝色的雨伞，上面五个雨滴。一个表情允许有多种不同的展示形式，比如苹果系统中有关人物的 emoji 表情都可以选择不同的肤色，就是采用了这种字形变体的方式。</p>
+<p>于是这个 bug 就容易解决了，删掉所有的表情就好了，这样就会用系统的 emoji 字体进行显示。</p>
+<p>另外，在浏览这个 ttf 文件时，发现了 Unicode 标准中很多有意思的符号，比如：<br><img src="http://stoneark.qiniudn.com/blogimg/emoji_bug_5.png" alt=""></p>
+<p>各种奇怪的性别：<br><img src="http://stoneark.qiniudn.com/blogimg/emoji_bug_6.png" alt=""></p>
+<p>还专门定义了各种单位：<br><img src="http://stoneark.qiniudn.com/blogimg/emoji_bug_7.png" alt=""></p>
+<p>音乐符号：<br><img src="http://stoneark.qiniudn.com/blogimg/emoji_bug_8.png" alt=""></p>
+<p>回收标记：<br><img src="http://stoneark.qiniudn.com/blogimg/emoji_bug_9.png" alt=""></p>
+<p>镰刀和锄头：<br><img src="http://stoneark.qiniudn.com/blogimg/emoji_bug_10.png" alt=""></p>
+<p>麻将牌：<br><img src="http://stoneark.qiniudn.com/blogimg/emoji_bug_11.png" alt=""></p>
+<p>扑克牌：<br><img src="http://stoneark.qiniudn.com/blogimg/emoji_bug_12.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前几天，Dawncold 捉到一个词记的 bug：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://stoneark.qiniudn.com/blogimg/emoji_bug_0.jpeg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;是下暴雨的那天，输入的是下雨的 emoji 表情：☔️。&lt;/p&gt;
+&lt;p&gt;试了一下，在 TextField 编辑状态还是正常的，退出编辑状态后就成这样子了。另外，除了这个下雨的表情外，还有几个经典的 emoji 也显示成了黑白颜色的，但好在还是一个字符，没有出现后面的 VS16。基本可以锁定是字体的原因。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="font" scheme="http://blog.stoneark.org/tags/font/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Retina image in markdown</title>
+    <link href="http://blog.stoneark.org/2016/07/26/retina-image-in-markdown/"/>
+    <id>http://blog.stoneark.org/2016/07/26/retina-image-in-markdown/</id>
+    <published>2016-07-26T06:23:35.000Z</published>
+    <updated>2016-08-25T09:57:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近写的带图片的博客越看越觉得不顺眼，感觉很乱。今天想了想终于知道了原因，原因在于这些图片是在 Retina 屏幕上截的图，图片尺寸都比正常大了一倍。而把它放到 markdown 文档里，会被按照通常的一倍尺寸进行显示，图片过大就显得很乱。</p>
+<p>可惜的是，markdown 的图片标签并没有提供设置图片宽高的方法（有些方言增加了支持）。但好在 markdown 里可以随意插入 html，所以对于之前截的图片，用 html 的 <img> 标签进行了替换，里面直接指定了图片宽高为实际的一半，就感觉舒服多了。以后写博客再需要截图时，要先缩小图片尺寸再上传。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近写的带图片的博客越看越觉得不顺眼，感觉很乱。今天想了想终于知道了原因，原因在于这些图片是在 Retina 屏幕上截的图，图片尺寸都比正常大了一倍。而把它放到 markdown 文档里，会被按照通常的一倍尺寸进行显示，图片过大就显得很乱。&lt;/p&gt;
+&lt;p&gt;可惜的是，mark
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>乌云停摆/回家吃饭 app 前途堪忧</title>
+    <link href="http://blog.stoneark.org/2016/07/25/wooyun-closed-and-home-cook-app-policy/"/>
+    <id>http://blog.stoneark.org/2016/07/25/wooyun-closed-and-home-cook-app-policy/</id>
+    <published>2016-07-25T05:59:47.000Z</published>
+    <updated>2016-08-25T06:22:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="http://www.wooyun.org" target="_blank" rel="external">乌云</a>关闭了，最大的漏洞报告平台。希望是暂时的。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/wooyun_closed.png" alt="Wooyun"></p>
+<p><a href="http://www.jiashuangkuaizi.com" target="_blank" rel="external">回家吃饭</a>，又一个很好的互联网尝试，但是貌似也要面临很大的政策风险。食品安全相当重要，固然需要监管。不过貌似即使处于监管之下，卫生状况也不一定怎么样。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;http://www.wooyun.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;乌云&lt;/a&gt;关闭了，最大的漏洞报告平台。希望是暂时的。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://stoneark.qiniudn.com/b
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>盲目爱国主义</title>
+    <link href="http://blog.stoneark.org/2016/07/20/blind-patriotism/"/>
+    <id>http://blog.stoneark.org/2016/07/20/blind-patriotism/</id>
+    <published>2016-07-20T09:14:55.000Z</published>
+    <updated>2016-08-26T04:56:21.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近由于南海事件，网民们的爱国情绪空前高涨。但朋友圈中蔓延的盲目爱国主义，让人看到了网络舆论的可怕。</p>
+<p>首先是前年 CCTV 的一则针对 iPhone 的新闻报道，内容是指责 iPhone 会不断对手机进行定位并记录下来。抛开内容是否足够公正不谈，这则“新闻”也早就不是新闻了。如果去核对左下角的日期和星期几，可以很容易地发现这是前年播出的新闻，但巧合的是这则新闻播出时正好也是 7 月份。大多数网民也根本是看个热闹，积极转发，吓坏了手里拿着 iPhone 的小伙伴们。</p>
+<a id="more"></a>
+<p>然后又出现了关于 iPhone 输入法的舆论，说是在 iPhone 上输入“击沉”后，输入法会出现提示“中国”。这可是了不起的证据，这下看你苹果怎么解释。很多网友试都不试也就友情转发了。</p>
+<p>再接下来就是各种禁售 iPhone 的假新闻了。有 CCTV 版，有天安门前 LED 版，仔细看看稍微思考一下就知道是假的，但依然在祖国大地的朋友圈传播得有模有样。</p>
+<p>这一系列针对 iPhone 的网络舆论，第一个是苹果为了提供更个人化的服务，进行的常去地点统计，可以推测出你的家庭住址、工作地点、每天的交通规律等，提前为你查询交通状况并预测出行所需时间，展示在通知栏里。如果你并不需要这个功能，也可以很容易地把它关掉。苹果有没有妥善地加密这些信息，有没有把这些信息上传或泄漏，甚至会不会影响到国家安全，我不能做出保证。但在 Apple 和 CCTV 中间，我选择相信 Apple。</p>
+<p>第二个，是现在所有输入法都具有的功能，就是个人词库和云词库嘛。所以，这事儿不应该怪 Apple，应该怪频繁输入这些词语的国人。第三个，现在好多人动不动就吆喝着抵制、禁售，这都是没知识的表现。不只苹果，就连肯德基麦当劳这次都躺枪了。</p>
+<p>更让人可惜的是，竟然有很多高学历知识分子、很多年轻人热情地转发这些舆论，并热血地评论要抵制。可笑的是后面还带了个“来自 iPhone”的小尾巴，你倒是扔了啊…</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近由于南海事件，网民们的爱国情绪空前高涨。但朋友圈中蔓延的盲目爱国主义，让人看到了网络舆论的可怕。&lt;/p&gt;
+&lt;p&gt;首先是前年 CCTV 的一则针对 iPhone 的新闻报道，内容是指责 iPhone 会不断对手机进行定位并记录下来。抛开内容是否足够公正不谈，这则“新闻”也早就不是新闻了。如果去核对左下角的日期和星期几，可以很容易地发现这是前年播出的新闻，但巧合的是这则新闻播出时正好也是 7 月份。大多数网民也根本是看个热闹，积极转发，吓坏了手里拿着 iPhone 的小伙伴们。&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Swift 编程思路的变化</title>
@@ -380,274 +726,6 @@
     
     
       <category term="iOS" scheme="http://blog.stoneark.org/tags/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iCloud development</title>
-    <link href="http://blog.stoneark.org/2016/05/14/iCloud-development/"/>
-    <id>http://blog.stoneark.org/2016/05/14/iCloud-development/</id>
-    <published>2016-05-14T07:31:04.000Z</published>
-    <updated>2016-07-20T07:34:42.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>iCloud 开发的几种模式：</p>
-<ol>
-<li>Key-value Storage，在 iCloud 上保存一些简单数据，类似 NSUserDefault 的 iCloud 端实现。每用户最多 1MB 存储。</li>
-<li>iCloud Document，在 iCloud Drive 上以文件方式保存的数据。</li>
-<li>CloudKit，后端云存储。与上面两个不同，上面是用户自己的 iCloud 存储，只有用户自己可以读取自己的数据。而 CloudKit 是开发者的 iCloud，是与用户无关的，所有用户都可访问。类似 LeanCloud、Bmob 之类的服务。目前可以认为对开发者是免费的（因为免费额度绝对足够大），除了 iOS 外还提供了 JS 的访问方式。</li>
-</ol>
-<p>具体可参考 <a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/iCloudDesignGuide/Chapters/Introduction.html" target="_blank" rel="external">About Incorporating iCloud into Your App</a>。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;iCloud 开发的几种模式：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Key-value Storage，在 iCloud 上保存一些简单数据，类似 NSUserDefault 的 iCloud 端实现。每用户最多 1MB 存储。&lt;/li&gt;
-&lt;li&gt;iCloud Document，在 
-    
-    </summary>
-    
-    
-      <category term="iOS" scheme="http://blog.stoneark.org/tags/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>得到某月有几天</title>
-    <link href="http://blog.stoneark.org/2016/05/13/get-how-many-days-in-the-month/"/>
-    <id>http://blog.stoneark.org/2016/05/13/get-how-many-days-in-the-month/</id>
-    <published>2016-05-13T07:21:14.000Z</published>
-    <updated>2016-07-20T07:29:37.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>获取某月有几天，经典算法是按月份和是否闰年进行判断。</p>
-<p>对于 iOS，可以直接用 NSCalendar：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSDate</span> *today = [<span class="built_in">NSDate</span> date];</div><div class="line"><span class="built_in">NSCalendar</span> *c = [<span class="built_in">NSCalendar</span> currentCalendar];</div><div class="line"><span class="built_in">NSRange</span> days = [c rangeOfUnit:<span class="built_in">NSDayCalendarUnit</span> inUnit:<span class="built_in">NSMonthCalendarUnit</span> forDate:today];</div></pre></td></tr></table></figure>
-<p>对于 js，也有一个巧妙的方法。js 里 Date 的构造方法 <code>new Date(&quot;yyyy/MM/dd&quot;)</code> ，当你传入的是 “yyyy/MM/0”，也就是日为 0 的话，得到的会是 yyyy/MM 月的上一个月的最后一天，这样就能通过它来得到上个月有几天了。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getDaysInMonth</span>(<span class="params">year,month</span>)</span>&#123;</div><div class="line">    month = <span class="built_in">parseInt</span>(month,<span class="number">10</span>) + <span class="number">1</span>;</div><div class="line">    <span class="keyword">var</span> tempDate = <span class="keyword">new</span> <span class="built_in">Date</span>(year + <span class="string">"/"</span> + month + <span class="string">"/0"</span>);</div><div class="line">    <span class="keyword">return</span> tempDate.getDay();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;获取某月有几天，经典算法是按月份和是否闰年进行判断。&lt;/p&gt;
-&lt;p&gt;对于 iOS，可以直接用 NSCalendar：&lt;/p&gt;
-&lt;figure class=&quot;highlight objc&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div cla
-    
-    </summary>
-    
-    
-      <category term="Algorithm" scheme="http://blog.stoneark.org/tags/Algorithm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>国内 Android 应用市场对个人开发者并不友好</title>
-    <link href="http://blog.stoneark.org/2016/04/29/Android-app-store-in-China-not-friendly-to-personal-developer/"/>
-    <id>http://blog.stoneark.org/2016/04/29/Android-app-store-in-China-not-friendly-to-personal-developer/</id>
-    <published>2016-04-29T06:34:43.000Z</published>
-    <updated>2016-07-20T07:10:30.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>根据以往的经验，把一个 Android 应用在国内的应用市场上架简直容易得很－－审核？他们真的会审核吗？看一眼就会点击”审核通过“按钮吧！只是国内的应用市场太多，对各种资料的要求不尽相同，所以会很繁琐。但通过审核从来都不会是什么问题。</p>
-<p>所以我从来都不担心 Android 应用的上架。</p>
-<p>但这次还真就通不过了，原因是－－这次是个人开发者身份。国内这些 Android 应用市场对个人开发者并不友好。</p>
-<p>在申请个人开发者账号时，就遇到了一些麻烦，有个市场要求必填固定电话，还有一个要求提供网络文化经营许可证，这直接就是把个人开发者拒之门外的意思。</p>
-<p>提交应用后，被应用宝拒绝，理由：该应用内容包含支付功能，暂不支持个人开发商提交，请修改企业资质或删除支付相关功能后重新提交。</p>
-<p>被 360 开放平台拒绝，理由：亲爱的开发者您好，应用名称（内容）体现为公司性质，名称：XX集团，请注册为企业开发者，并提供著作权或该公司授权证明后提交。</p>
-<p>应用宝不允许个人开发者的应用带有支付功能，不知道这是出于什么考虑。但无法理解的是，提交的这个应用里并没有在线支付功能。360 提出的理由，这个应用的内容的确有公司性质，但是，好吧我也没什么好说的。</p>
-<p>再次尝试依然得到了同样的结果，可能与相关的管理政策有关吧。还是不得不说，苹果对个人开发者非常友好，这可能也是 App Store 如此有生命力，诞生了这么多优秀作品的原因之一。</p>
-<p>最后决定放弃在市场上线，直接发布 apk。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;根据以往的经验，把一个 Android 应用在国内的应用市场上架简直容易得很－－审核？他们真的会审核吗？看一眼就会点击”审核通过“按钮吧！只是国内的应用市场太多，对各种资料的要求不尽相同，所以会很繁琐。但通过审核从来都不会是什么问题。&lt;/p&gt;
-&lt;p&gt;所以我从来都不担心 An
-    
-    </summary>
-    
-    
-      <category term="Android" scheme="http://blog.stoneark.org/tags/Android/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Android 代码混淆</title>
-    <link href="http://blog.stoneark.org/2016/04/28/Android-shrink-code/"/>
-    <id>http://blog.stoneark.org/2016/04/28/Android-shrink-code/</id>
-    <published>2016-04-28T08:07:08.000Z</published>
-    <updated>2016-07-19T08:46:14.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Android Studio 工程中，默认就创建了 <code>proguard-rules.pro</code> 文件，可以在其中编写 Proguard 的混淆规则。</p>
-<p>但是，默认是不打开混淆的，需要在 <code>build.gradle</code> 文件中，找到这一段：</p>
-<figure class="highlight xml"><figcaption><span>build.gradle</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">buildTypes &#123;</div><div class="line">   release &#123;</div><div class="line">       minifyEnabled false</div><div class="line">       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>把 <code>minifyEnabled</code> 从 false 改为 true，即可开启在 release 打包时进行混淆。</p>
-<p>为什么混淆开关的名字是 minify enabled ？所谓的”混淆“，其实也就是用无意义的符号（如 a,b,c）去代替代码中有意义的符号（如 title, imagePath, url 等），那么代码即使被反编译后，依然很难直接看懂其含义。从另一个角度看，其实也是让代码精简化的过程。（另外，混淆代码的英文是 Shrink Code）</p>
-<p>打开混淆后，在 proguard-rules.pro 文件中编辑混淆规则即可。这个文件其实就是之前用 Eclipse 时的 proguard.cfg，混淆规则的写法是一样的，需要在其中写明哪些类不要进行混淆。</p>
-<p>具体可参考 Android 文档 <a href="http://developer.android.com/tools/help/proguard.html" target="_blank" rel="external">Shrink Your Code and Resources</a>。</p>
-<p>需要注意的是，不要对第三方库进行混淆，否则调用第三方库的地方，将找不到对应方法，应该不难理解。LeanCloud 给出了一个混淆规则，可以参考：</p>
-<a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">-keepattributes Signature</div><div class="line">-dontwarn com.jcraft.jzlib.**</div><div class="line">-keep class com.jcraft.jzlib.**  &#123; *;&#125;</div><div class="line"></div><div class="line">-dontwarn sun.misc.**</div><div class="line">-keep class sun.misc.** &#123; *;&#125;</div><div class="line"></div><div class="line">-dontwarn com.alibaba.fastjson.**</div><div class="line">-keep class com.alibaba.fastjson.** &#123; *;&#125;</div><div class="line"></div><div class="line">-dontwarn sun.security.**</div><div class="line">-keep class sun.security.** &#123; *; &#125;</div><div class="line"></div><div class="line">-dontwarn com.google.**</div><div class="line">-keep class com.google.** &#123; *;&#125;</div><div class="line"></div><div class="line">-dontwarn com.avos.**</div><div class="line">-keep class com.avos.** &#123; *;&#125;</div><div class="line"></div><div class="line">-keep public class android.net.http.SslError</div><div class="line">-keep public class android.webkit.WebViewClient</div><div class="line"></div><div class="line">-dontwarn android.webkit.WebView</div><div class="line">-dontwarn android.net.http.SslError</div><div class="line">-dontwarn android.webkit.WebViewClient</div><div class="line"></div><div class="line">-dontwarn android.support.**</div><div class="line"></div><div class="line">-dontwarn org.apache.**</div><div class="line">-keep class org.apache.** &#123; *;&#125;</div><div class="line"></div><div class="line">-dontwarn org.jivesoftware.smack.**</div><div class="line">-keep class org.jivesoftware.smack.** &#123; *;&#125;</div><div class="line"></div><div class="line">-dontwarn com.loopj.**</div><div class="line">-keep class com.loopj.** &#123; *;&#125;</div><div class="line"></div><div class="line">-dontwarn com.squareup.okhttp.**</div><div class="line">-keep class com.squareup.okhttp.** &#123; *;&#125;</div><div class="line">-keep interface com.squareup.okhttp.** &#123; *; &#125;</div><div class="line"></div><div class="line">-dontwarn okio.**</div><div class="line"></div><div class="line">-dontwarn org.xbill.**</div><div class="line">-keep class org.xbill.** &#123; *;&#125;</div><div class="line"></div><div class="line">-keepattributes *Annotation*</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Android Studio 工程中，默认就创建了 &lt;code&gt;proguard-rules.pro&lt;/code&gt; 文件，可以在其中编写 Proguard 的混淆规则。&lt;/p&gt;
-&lt;p&gt;但是，默认是不打开混淆的，需要在 &lt;code&gt;build.gradle&lt;/code&gt; 文件中，找到这一段：&lt;/p&gt;
-&lt;figure class=&quot;highlight xml&quot;&gt;&lt;figcaption&gt;&lt;span&gt;build.gradle&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;buildTypes &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   release &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       minifyEnabled false&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       proguardFiles getDefaultProguardFile(&#39;proguard-android.txt&#39;), &#39;proguard-rules.pro&#39;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;把 &lt;code&gt;minifyEnabled&lt;/code&gt; 从 false 改为 true，即可开启在 release 打包时进行混淆。&lt;/p&gt;
-&lt;p&gt;为什么混淆开关的名字是 minify enabled ？所谓的”混淆“，其实也就是用无意义的符号（如 a,b,c）去代替代码中有意义的符号（如 title, imagePath, url 等），那么代码即使被反编译后，依然很难直接看懂其含义。从另一个角度看，其实也是让代码精简化的过程。（另外，混淆代码的英文是 Shrink Code）&lt;/p&gt;
-&lt;p&gt;打开混淆后，在 proguard-rules.pro 文件中编辑混淆规则即可。这个文件其实就是之前用 Eclipse 时的 proguard.cfg，混淆规则的写法是一样的，需要在其中写明哪些类不要进行混淆。&lt;/p&gt;
-&lt;p&gt;具体可参考 Android 文档 &lt;a href=&quot;http://developer.android.com/tools/help/proguard.html&quot;&gt;Shrink Your Code and Resources&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;需要注意的是，不要对第三方库进行混淆，否则调用第三方库的地方，将找不到对应方法，应该不难理解。LeanCloud 给出了一个混淆规则，可以参考：&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Android" scheme="http://blog.stoneark.org/tags/Android/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Add adsense in hexo blog</title>
-    <link href="http://blog.stoneark.org/2016/04/26/add-adsense-in-hexo-blog/"/>
-    <id>http://blog.stoneark.org/2016/04/26/add-adsense-in-hexo-blog/</id>
-    <published>2016-04-26T07:44:31.000Z</published>
-    <updated>2016-07-19T08:05:51.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>首先，找到现在正在使用的主题所在目录，如：<code>themes/light/</code>。如果不确定，可查看 <code>_config.yml</code> 中 theme 的值。</p>
-<p>在主题目录的 <code>layout/_widget</code> 下，放着所有右边栏的小工具。在这个目录下新建文件 <code>adsense.ejs</code>，并在其中填入：</p>
-<figure class="highlight plain"><figcaption><span>adsense.ejs</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;div class=&quot;widget tag&quot;&gt;</div><div class="line">把从 AdSense 里获得的代码全部复制到这里</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
-<p>最后，在主题根目录的 _config.yml 里，在 widgets 里面加入一项 <code>- adsense</code> 即可，如：</p>
-<figure class="highlight yml"><figcaption><span>_config.yml</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="attr">widgets:</span></div><div class="line"><span class="bullet">-</span> search</div><div class="line"><span class="bullet">-</span> recent_posts</div><div class="line"><span class="bullet">-</span> adsense</div><div class="line"><span class="bullet">-</span> tagcloud</div></pre></td></tr></table></figure>
-<p>这样就可以在右侧边栏里显示 Adsense 广告了。</p>
-<p>原理：</p>
-<a id="more"></a>
-<p>可以看到 <code>/layout/_partial/sidebar.ejs</code> 里的内容：</p>
-<figure class="highlight plain"><figcaption><span>sidebar.ejs</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;% theme.widgets.forEach(function(widget)&#123; %&gt;</div><div class="line">  &lt;%- partial(&apos;../_widget/&apos; + widget) %&gt;</div><div class="line">&lt;% &#125;); %&gt;</div></pre></td></tr></table></figure>
-<p>也就是从配置文件里，把 widget 里所有的东西渲染出来，放到 sidebar 上。</p>
-<p>如果不想放到右边栏里，也可以放到其他想放的地方，原理是类似的。可以在 /layout/_partial/ 中新建一个 ejs 文件，如 adsense.ejs，然后在其中粘贴上 Adsense 的代码。然后在需要显示广告的 layout 的 ejs 里，加入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;%- partial(&apos;_partial/adsense&apos;) %&gt;</div></pre></td></tr></table></figure>
-<p>即可。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;首先，找到现在正在使用的主题所在目录，如：&lt;code&gt;themes/light/&lt;/code&gt;。如果不确定，可查看 &lt;code&gt;_config.yml&lt;/code&gt; 中 theme 的值。&lt;/p&gt;
-&lt;p&gt;在主题目录的 &lt;code&gt;layout/_widget&lt;/code&gt; 下，放着所有右边栏的小工具。在这个目录下新建文件 &lt;code&gt;adsense.ejs&lt;/code&gt;，并在其中填入：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;figcaption&gt;&lt;span&gt;adsense.ejs&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;div class=&amp;quot;widget tag&amp;quot;&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;把从 AdSense 里获得的代码全部复制到这里&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;/div&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;最后，在主题根目录的 _config.yml 里，在 widgets 里面加入一项 &lt;code&gt;- adsense&lt;/code&gt; 即可，如：&lt;/p&gt;
-&lt;figure class=&quot;highlight yml&quot;&gt;&lt;figcaption&gt;&lt;span&gt;_config.yml&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;widgets:&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;bullet&quot;&gt;-&lt;/span&gt; search&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;bullet&quot;&gt;-&lt;/span&gt; recent_posts&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;bullet&quot;&gt;-&lt;/span&gt; adsense&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;bullet&quot;&gt;-&lt;/span&gt; tagcloud&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;这样就可以在右侧边栏里显示 Adsense 广告了。&lt;/p&gt;
-&lt;p&gt;原理：&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="hexo" scheme="http://blog.stoneark.org/tags/hexo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Blank activity and Empty activity in Android Studio</title>
-    <link href="http://blog.stoneark.org/2016/04/21/blank-activity-and-empty-activity-in-android-studio/"/>
-    <id>http://blog.stoneark.org/2016/04/21/blank-activity-and-empty-activity-in-android-studio/</id>
-    <published>2016-04-21T09:31:18.000Z</published>
-    <updated>2016-07-19T07:25:15.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Android Studio 新建 Activity 的模板里，有一个 <code>Blank Activity</code>，还有一个 <code>Empty Activity</code>。这两个是不同的。</p>
-<p>Blank Activity，会为你新建这样一个 Activity：含有导航栏，导航栏上有返回按钮，并设置了导航栏标题，右下角有一个浮动按钮。</p>
-<p>可以发现工程中新建了一个 NewActivity.java 的类，同时新建了两个布局文件，一个是 activity_new.xml，另一个是 content_new.xml。activity_new.xml 中是一个 CoordinatorLayout，并且 include 了 content_new.xml。这个 Activity 显示的内容实际在 content_new.xml 中，它是一个 RelativeLayout。</p>
-<p>Empty Activity，会为你新建这样一个 Activity：含有导航栏，没有返回按钮，导航栏标题没有设置，其他都是空白。</p>
-<p>工程中新建了 NewActivity.java 和 activity_new.xml，里面是一个 RelativeLayout。</p>
-<p>要想实现 Blank Activity 的效果，并希望不要有多余的东西，在一个 xml 布局中实现，可以按照以下框架（下面以 EditPasswordActivity 为例）:</p>
-<a id="more"></a>
-<figure class="highlight xml"><figcaption><span>activity_edit_password.xml</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">android.support.design.widget.CoordinatorLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></div><div class="line">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:fitsSystemWindows</span>=<span class="string">"true"</span></div><div class="line">    <span class="attr">tools:context</span>=<span class="string">"org.stoneark.doorsbylin.EditPasswordActivity"</span>&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">android.support.design.widget.AppBarLayout</span></span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:theme</span>=<span class="string">"@style/AppTheme.AppBarOverlay"</span>&gt;</div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">android.support.v7.widget.Toolbar</span></span></div><div class="line">            <span class="attr">android:id</span>=<span class="string">"@+id/toolbar"</span></div><div class="line">            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">            <span class="attr">android:layout_height</span>=<span class="string">"?attr/actionBarSize"</span></div><div class="line">            <span class="attr">android:background</span>=<span class="string">"?attr/colorPrimary"</span></div><div class="line">            <span class="attr">app:popupTheme</span>=<span class="string">"@style/AppTheme.PopupOverlay"</span> /&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;/<span class="name">android.support.design.widget.AppBarLayout</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">RelativeLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">        <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:paddingBottom</span>=<span class="string">"@dimen/activity_vertical_margin"</span></div><div class="line">        <span class="attr">android:paddingLeft</span>=<span class="string">"@dimen/activity_horizontal_margin"</span></div><div class="line">        <span class="attr">android:paddingRight</span>=<span class="string">"@dimen/activity_horizontal_margin"</span></div><div class="line">        <span class="attr">android:paddingTop</span>=<span class="string">"@dimen/activity_vertical_margin"</span></div><div class="line">        <span class="attr">app:layout_behavior</span>=<span class="string">"@string/appbar_scrolling_view_behavior"</span></div><div class="line">        <span class="attr">tools:context</span>=<span class="string">"org.stoneark.doorsbylin.EditPasswordActivity"</span> &gt;</div><div class="line">    <span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">android.support.design.widget.CoordinatorLayout</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>中间的这个 RelativeLayout，就是这个 Activity 实际承载的内容，替换成自己的布局即可。但请注意！！一定要为这个布局添加这个属性：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">app:layout_behavior="@string/appbar_scrolling_view_behavior"</div></pre></td></tr></table></figure>
-<p>这样的话，这个布局将会在顶部导航栏的下方开始显示。如果不加这个属性，它将从屏幕顶端开始显示，会跟顶部的导航栏重叠在一起。在有的手机上会被导航栏遮盖，有的手机上会显示在导航栏上方。</p>
-<blockquote>
-<p>附注：@string/appbar_scrolling_view_behavior 是 Android SDK 里定义的一个字符串，直接使用即可，内容为：<br>  <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string></p>
-</blockquote>
-<p>然后在 Activity 的 onCreate() 里添加以下代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);</div><div class="line">setSupportActionBar(toolbar);</div><div class="line">getSupportActionBar().setDisplayHomeAsUpEnabled(<span class="keyword">true</span>);</div></pre></td></tr></table></figure>
-<p>并且在 AndroidManifest.xml 里给这个 Activity 添加属性：</p>
-<figure class="highlight xml"><figcaption><span>AndroidManifest.xml</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">activity</span></span></div><div class="line">  <span class="attr">android:name</span>=<span class="string">“.EditPasswordActivity</span>"</div><div class="line">  <span class="attr">android:label</span>=<span class="string">"@string/title_activity_edit_password"</span></div><div class="line">  <span class="attr">android:theme</span>=<span class="string">"@style/AppTheme.NoActionBar"</span>&gt;</div><div class="line">  <span class="tag">&lt;<span class="name">meta-data</span></span></div><div class="line">      <span class="attr">android:name</span>=<span class="string">"android.support.PARENT_ACTIVITY"</span></div><div class="line">      <span class="attr">android:value</span>=<span class="string">"org.stoneark.doorsbylin.UserCenterActivity"</span> /&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Android Studio 新建 Activity 的模板里，有一个 &lt;code&gt;Blank Activity&lt;/code&gt;，还有一个 &lt;code&gt;Empty Activity&lt;/code&gt;。这两个是不同的。&lt;/p&gt;
-&lt;p&gt;Blank Activity，会为你新建这样一个 Activity：含有导航栏，导航栏上有返回按钮，并设置了导航栏标题，右下角有一个浮动按钮。&lt;/p&gt;
-&lt;p&gt;可以发现工程中新建了一个 NewActivity.java 的类，同时新建了两个布局文件，一个是 activity_new.xml，另一个是 content_new.xml。activity_new.xml 中是一个 CoordinatorLayout，并且 include 了 content_new.xml。这个 Activity 显示的内容实际在 content_new.xml 中，它是一个 RelativeLayout。&lt;/p&gt;
-&lt;p&gt;Empty Activity，会为你新建这样一个 Activity：含有导航栏，没有返回按钮，导航栏标题没有设置，其他都是空白。&lt;/p&gt;
-&lt;p&gt;工程中新建了 NewActivity.java 和 activity_new.xml，里面是一个 RelativeLayout。&lt;/p&gt;
-&lt;p&gt;要想实现 Blank Activity 的效果，并希望不要有多余的东西，在一个 xml 布局中实现，可以按照以下框架（下面以 EditPasswordActivity 为例）:&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Android" scheme="http://blog.stoneark.org/tags/Android/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Android layout 背景图片不显示的奇怪问题</title>
-    <link href="http://blog.stoneark.org/2016/04/21/Android-layout-background-image-not-show/"/>
-    <id>http://blog.stoneark.org/2016/04/21/Android-layout-background-image-not-show/</id>
-    <published>2016-04-21T07:31:12.000Z</published>
-    <updated>2016-07-19T07:43:54.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>遇到一个奇怪问题。给一个 Activity 设置了全屏的背景图片，方法是给这个 Activity 最父层的 layout 设置 background 属性为这个图片的 drawable。运行后发现图片没有显示，背景全部是白色。</p>
-<p>但是在 Android Studio 的 xml 布局渲染调试器里，是正常显示的，在模拟器（API23）里运行，也是正常显示的。</p>
-<p>更奇怪的是，把 background 属性换成一个颜色值，可以正常显示。换成另外的一张图，也可以正常显示。</p>
-<p>在 <a href="http://www.tc5u.com/android/1371608.htm" target="_blank" rel="external">http://www.tc5u.com/android/1371608.htm</a> 问题中，有人提到：</p>
-<blockquote>
-<p>如果楼主出现的是有的图片可以，有些图片不可以，请检查：<br>1、图片格式必须为png和jpg，也就是文件名称扩展名必须为.png或者.jpg<br>2、图片的分辨率宽度和高度都要控制在1000像素以内；<br>3、用Photoshop打开不能显示的图片，看是否为RGB格式，如果是CYMK格式的图片是不能显示的；<br>4、图片文件名称必须全部小写，不能有大写的文件名称。 </p>
-</blockquote>
-<p>发现是由于图片尺寸过大（宽、高超过了1000像素），缩小尺寸后就可以正常显示出来了。</p>
-<p>还没调查清楚这是不是 Android 的约束，如果真的有这样的约束，那实在理解不能－－现在的手机 1080p 的屏幕满大街都是，还动不动就上 2K，1000px 实在是不够啊。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;遇到一个奇怪问题。给一个 Activity 设置了全屏的背景图片，方法是给这个 Activity 最父层的 layout 设置 background 属性为这个图片的 drawable。运行后发现图片没有显示，背景全部是白色。&lt;/p&gt;
-&lt;p&gt;但是在 Android Stud
-    
-    </summary>
-    
-    
-      <category term="Android" scheme="http://blog.stoneark.org/tags/Android/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Android application display name</title>
-    <link href="http://blog.stoneark.org/2016/04/19/Android-application-display-name/"/>
-    <id>http://blog.stoneark.org/2016/04/19/Android-application-display-name/</id>
-    <published>2016-04-19T08:30:25.000Z</published>
-    <updated>2016-07-18T09:45:06.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Android 应用的显示名称，在 <code>AndroidManifest.xml</code> 中进行修改。</p>
-<figure class="highlight"><figcaption><span>AndroidManifest.xml</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;application</div><div class="line">   android:allowBackup="true"</div><div class="line">   android:icon="@mipmap/ic_launcher"</div><div class="line">   android:label="@string/app_name"</div><div class="line">   android:supportsRtl="true"</div><div class="line">   android:theme="@style/AppTheme"&gt;</div><div class="line">   &lt;activity</div><div class="line">       android:name=".LoginActivity"</div><div class="line">       android:label="@string/title_activity_login"&gt;</div><div class="line">       &lt;intent-filter&gt;</div><div class="line">           &lt;action android:name="android.intent.action.MAIN" /&gt;</div><div class="line">           &lt;category android:name="android.intent.category.LAUNCHER" /&gt;</div><div class="line">       &lt;/intent-filter&gt;</div><div class="line">   &lt;/activity&gt;</div><div class="line">   &lt;activity</div><div class="line">      ...</div><div class="line">   &lt;/activity&gt;</div><div class="line">&lt;/application&gt;</div></pre></td></tr></table></figure>
-<p>我们会很显然的认为，修改最外层的 <code>android:label</code> 即可，也就是修改 <code>@string/app_name</code> 的值。但经过实践会发现并不是这样的，Launcher 里显示的竟然是 <code>@string/title_activity_login</code>，也就是 Login Activity 的标题。</p>
-<p>实际上，在 Launcher 中显示的应用名称，是被标记为首页面的 Activity 的标题。也就是被标记为：</p>
-<figure class="highlight xml"><figcaption><span>AndroidManifest.xml</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>的 Activity。</p>
-<p>那 application 标签的 android:label 属性是用来做什么的？它的确如它的名字一样，代表了应用的名称。在应用程序管理器中看到的名称，就是这个名称。但是这个名称并不是 Launcher 用的名称，所以用户在手机的桌面（应用程序列表）中，看到的不是这个名称。</p>
-<p>这着实让人感到不可理解。自认为还是 iOS 的处理方式更科学－－在 info.plist 文件中有一个属性 Bundle display name，在这里面存储了应用的显示名称，这是一个应用全局的设置。</p>
-<p>那如果首页面 Activity 的标题，跟应用的显示名称不能保持一致，怎么办？那就在 AndroidManifest.xml 里，把首页面 Activity 的 label 设置成应用名称，然后在首页面 Activity 的 onCreate 里，用 setTitle 方法再把标题改掉就好了，如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">   <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">   setTitle(<span class="string">"登录"</span>);</div><div class="line">   setContentView(R.layout.activity_login);</div><div class="line">   ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Android 应用的显示名称，在 &lt;code&gt;AndroidManifest.xml&lt;/code&gt; 中进行修改。&lt;/p&gt;
-&lt;figure class=&quot;highlight&quot;&gt;&lt;figcaption&gt;&lt;span&gt;AndroidManifest.xml&lt;/span&gt;&lt;/fig
-    
-    </summary>
-    
-    
-      <category term="Android" scheme="http://blog.stoneark.org/tags/Android/"/>
     
   </entry>
   

@@ -1,0 +1,465 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 10 页 | SABlog</title>
+  <meta name="author" content="StoneArk">
+  
+  <meta name="description" content="方舟的技术博客">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="SABlog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="SABlog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-57166172-1', 'auto');
+	ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">SABlog</a></h1>
+  <h2><a href="/">StoneArk&#39;s Blog</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+      <li><a href="/atom.xml">RSS</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-11-14T00:43:36.000Z"><a href="/2013/11/14/ios-7-ui-transition-guide-before-you-start/">Nov 14 2013</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/11/14/ios-7-ui-transition-guide-before-you-start/">iOS 7 UI 过渡指南 - 开始之前</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <blockquote>
+<p>本文翻译自苹果开发者中心文档<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/index.html#//apple_ref/doc/uid/TP40013174-CH6-SW1" target="_blank" rel="external"> iOS 7 UI Transition Guide (Preparing for Transition - Before You Start) </a></p>
+</blockquote>
+<h2 id="开始之前"><a href="#开始之前" class="headerlink" title="开始之前"></a>开始之前</h2><p>iOS 7 引入了许多用户界面的新变化，例如无边框的按钮、半透明的控制条（bars）、全屏布局的视图控制器。使用 Xcode 5，你可以创建一个 iOS 7 的工程并且在 iOS 7 模拟器上运行，来看一眼采用 iOS 7 用户界面的应用程序是什么样子的。</p>
+<p>例如，下面的图片展示了一个示例工程 <em>TheElements</em> 在不同版本 iOS 模拟器上的区别。</p>
+<table>
+<thead>
+<tr>
+<th>iOS 7 模拟器上的示例程序</th>
+<th>iOS 6 模拟器上的示例程序</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="http://stoneark.qiniudn.com/blogimg/iOS7TransitionGuide/first_look_7_2x.png" alt="iOS7"></td>
+<td><img src="http://stoneark.qiniudn.com/blogimg/iOS7TransitionGuide/first_look_6_2x.png" alt="iOS6"></td>
+</tr>
+</tbody>
+</table>
+<p>看到这个对比，你肯定急切地想要投入到更新自己的应用以适配 iOS 7 的工作中，不过在你开始之前有些事情需要考虑。</p>
+<p>当你与内建程序交互时，iOS 7 变化的既细微又巨大之处就变得更加清晰。熟悉的 UI 元素非常易于辨认，但看起来已经与以往有很大不同。真实的虚拟触摸更加优雅，动作的真实性得到增强。</p>
+<blockquote>
+<p>注意：虽然所有 UI 元素的样子在 iOS 7 中都有了很大变化，而且有很多元素有了新的功能，但 UIKit API 几乎与之前保持一致。</p>
+</blockquote>
+<p>当你继续探索时，你会开始觉察到 iOS 7 的主题。</p>
+<ul>
+<li>遵从。用户界面会帮助用户理解并了解其内容，而从不争夺用户的眼球。</li>
+<li>清晰。文字在所有尺寸下都能清晰显示，图标清晰易懂，装饰优雅适宜，对实用性更多的关注促进了这样的设计。</li>
+<li>深度。虚拟的层次和具真实感的运动给用户带来使用上的乐趣，并更加易于理解。</li>
+</ul>
+<p>通过在 iOS 体验上引入这些根本而广泛的变化，iOS 7 提供了一个难得的机会让我们重新审视自己的应用程序核心目的是什么，该为用户提供什么功能。虽然你可能还没准备好抓住这个机会，但当你更新你的程序以适配 iOS 7 时请别忘了这一点。（如果你已经准备好重新审视你的应用程序设计，或者你正打算开启一个新的工程，请阅读《Designing for iOS 7》作为参考。）</p>
+<h3 id="应用程序的特性"><a href="#应用程序的特性" class="headerlink" title="应用程序的特性"></a>应用程序的特性</h3><p>不论你决定重新设计一个应用程序还是更新当前的设计，你需要了解应用程序的特性如何影响这个设计的过程。首先，回答一下几个问题来帮助你明确下一步应该怎么做：</p>
+<ul>
+<li><p>你采用了 Auto Layout 来设计app吗？</p>
+<p>  如果你的 app 采用了 Auto Layout，你的工作就变得容易多了。在 Xcode 5 中，Auto Layout 可以帮助 app 适应新的 UI 元素度量，并能对字号动态调整。Auto Layout 对你从 iOS 6 过渡到 iOS 7，以及同时支持两个版本很有帮助。<br>  如果你没有采用 Auto Layout，现在是开始采用它的好时候了，尤其是如果你需要同时支持多个 app 版本时。如果你采用手动布局或程序化布局技术，你应该确认当文字大小改变时布局能合适地调整。</p>
+</li>
+<li><p>应用需要支持 iOS 6 吗？<br>  记住，iOS 的用户会非常快地更新他们的设备，并且期望他们最喜爱的 app 能够跟随潮流。<br>  如果由于商业原因要求必须支持 iOS 6，开始更新你当前的 app 来适应 iOS 7 依然是最好的选择。然后如果有可能的话，对 iOS 6 版本的 app 运用一些设计上的变化。详情可以参见“Supporting iOS 6”（原文第11页）。</p>
+</li>
+</ul>
+<p>下一步是确定 app 定制的方式。定制的数量，以及你采用的自定义技术，决定了你所需要做的工作的类型。</p>
+<p>按照以下三种类型来将你的 app 分类：</p>
+<ul>
+<li>标准型。app 只包含了标准的、未经自定义的、由 UIKit 提供的 UI 元素。</li>
+<li>自定义型。app 呈现了一个完全自定义的 UI，不包含任何 UIKit 中的 UI 元素。</li>
+<li>混合型。app 同时包含了标准的和自定义的 UI 元素，包括那些你通过调用 UIKit 中的色彩和外观设置 API 来自定义的标准元素。、</li>
+</ul>
+<p>对于标准型 app，你需要确定你的设计和用户体验设计在 iOS 7 环境下是否依然有效。如果你决定保持现在的布局和交互模式，大部分的工作只是进行微调，来确保 app 可以正确处理系统全局的手势。</p>
+<p>对于自定义型 app，也就是没有采用 UIKit 中的 UI 元素的app，在方法上就有些细微差别了。举例来说，如果你感觉当前的 UI 和体验依然合适，可能需要做的工作就很少。另一方面，如果你感觉 app 的风格和用户体验应该进行一些修改，来满足 iOS 7 用户的要求，你可能需要做比较多的工作。</p>
+<p>对于混合型 app，需要做的工作量是不一定的，取决于你所做的自定义更改，以及你将自定义内容与标准元素结合的方法。重新审视一个混合型 app 的整体设计时，你需要确保你的自定义内容与新的标准元素集成在一起依然正常并且显示效果不错。</p>
+<blockquote>
+<p>注意：如果你采用了完全自定义的方法来模拟标准 iOS 6 的 UI，可能会需要大量改动的工作，因为它会看起来非常过时。</p>
+</blockquote>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-11-06T07:17:28.000Z"><a href="/2013/11/06/migrate-to-hexo/">Nov 6 2013</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/11/06/migrate-to-hexo/">博客迁移到了 Hexo</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>越来越多的人希望建立自己的独立博客，独立博客框架也越来越多，比如大名鼎鼎的 Wordpress，我之前也在用它。Wordpress 是个动态的博客框架，基于 PHP+MySQL，功能非常强大但也越来越臃肿，有丰富的的插件、主题、社区资源，不仅可以做个人博客，还被很多企业作为了企业网站的框架。</p>
+<p>由于 Wordpress 是个动态框架，必须部署在一台支持 PHP 和 MySQL 的主机上，意味着至少需要租用一台虚拟主机。我之前就是租用了一台虚拟主机，里面仅仅是我访问量极低的博客，感觉有点浪费。更重要的是，对于一个 geek，Wordpress 不够酷，所以我决心换掉它。</p>
+<p>调查了一下其他的博客框架，比较有意思的有 <a href="http://typecho.org/" target="_blank" rel="external">Typecho</a>, <a href="http://jekyllrb.com/" target="_blank" rel="external">Jekyll</a>, <a href="http://octopress.org/" target="_blank" rel="external">Octopress</a>, <a href="http://zespia.tw/hexo" target="_blank" rel="external">Hexo</a></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Slogan</th>
+<th>Technical</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Typecho</td>
+<td>轻击键盘，静候回音</td>
+<td>PHP5+MySQL/PostgreSQL/SQLite</td>
+</tr>
+<tr>
+<td>Jekyll</td>
+<td>Transform your plain text into static websites and blogs.</td>
+<td>Ruby</td>
+</tr>
+<tr>
+<td>Octopress</td>
+<td>A blogging framework for hackers.</td>
+<td>Ruby</td>
+</tr>
+<tr>
+<td>Hexo</td>
+<td>A fast, simple &amp; powerful blog framework, powered by Node.js.</td>
+<td>Node.js﻿</td>
+</tr>
+</tbody>
+</table>
+<p>其中，后面三个都是静态博客框架，原理是把博客内容生成静态的 HTML 网页，最终会是一个全静态的网站，所以只需要放到任意一个支持 HTML 的主机就可以了。而 Github pages 就是一个，这样就得到了一个免费的独立博客。更酷的是，写作博客要用 Markdown 文法，配置博客、发布博客都需要用命令行来完成，对于 programmer 来讲效率和灵活性都更好（主要是看上去也更高端…）。</p>
+<p>最终我迁移到了 Hexo，感觉还不错。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-04-19T08:09:29.000Z"><a href="/2012/04/19/create-d-setup-package-with-dot-net-framework-35-using-vs2010/">Apr 19 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/04/19/create-d-setup-package-with-dot-net-framework-35-using-vs2010/">用Visual Studio 2010创建集成.Net Framework3.5 SP1的安装包</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>由于windows7集成的是.Net Framework3.5SP1，还没有集成.Net Framework4，所以我在给别人做东西的时候还是更倾向于基于3.5 SP1。而又要考虑到目前还仍有不少的XP用户，所以即使是采用3.5 SP1，也需要考虑客户机上是不是安装了.Net Framework。</p>
+<p>所以在制作安装包的时候，需要将.Net的安装包也集成进去。而Visual Studio2010默认只包含了.Net 4的安装包，所以在生成集成有3.5SP1的安装包时，遇到了一些麻烦。</p>
+<p>首先，想要制作一个带有.Net Framework的安装包，需要如下：<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2012/04/19/create-d-setup-package-with-dot-net-framework-35-using-vs2010/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-03-08T08:02:36.000Z"><a href="/2012/03/08/oracle-10g-change-host-name/">Mar 8 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/03/08/oracle-10g-change-host-name/">Oracle10g更改HOST名的办法</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在安装目录的如下位置，找到如下两个文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">product\10.2.0\db_1\network\ADMIN\listener.ora</div><div class="line">product\10.2.0\db_1\network\ADMIN\tnsnames.ora</div></pre></td></tr></table></figure>
+<p>将文件中的HOST值改为想要更改的主机名或IP地址即可</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-03-01T07:58:18.000Z"><a href="/2012/03/01/oracle-10g-installation-on-win7/">Mar 1 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/03/01/oracle-10g-installation-on-win7/">在Win7下安装Oracle 10g</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Oracle 10g默认是不支持win7的，会在安装环境检测中出错。官方网站只提供了for windows vista/2008的安装包，但完全可以在win7环境下运行。方法如下：</p>
+<ol>
+<li>在<a href="http://www.oracle.com/technetwork/cn/database/10203vista-088351-zhs.html" target="_blank" rel="external">http://www.oracle.com/technetwork/cn/database/10203vista-088351-zhs.html</a>可下载到Oracle 10g 10.2.0.3 for Vista/2k8的企业版</li>
+<li>将下载到的文件（10203_vista_w2k8_x86_production_db.zip）解压，由于10g没有对win7的版本号提供支持，故需要修改以下两个文件：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">db\Disk1\stage\prereq\db\refhost.xml</div><div class="line">db\Disk1\stage\prereq\db_prereqs\db\refhost.xml</div></pre></td></tr></table></figure>
+<p>修改方法相同，均为：<br>找到以下段落：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;!--Microsoft Windows Vista--&gt;</div><div class="line">&lt;OPERATING_SYSTEM&gt;</div><div class="line">  &lt;VERSION VALUE=&quot;6.0&quot;/&gt;</div><div class="line">&lt;/OPERATING_SYSTEM&gt;</div></pre></td></tr></table></figure>
+<p>并在其后增加如下段落：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;!--Microsoft Windows 7--&gt;</div><div class="line">&lt;OPERATING_SYSTEM&gt;</div><div class="line">  &lt;VERSION VALUE=&quot;6.1&quot;/&gt;</div><div class="line">&lt;/OPERATING_SYSTEM&gt;</div></pre></td></tr></table></figure>
+<p>保存即可</p>
+<ol>
+<li>直接运行setup进行安装即可</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-07-10T07:33:35.000Z"><a href="/2009/07/10/davici-code-website-problem/">Jul 10 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/07/10/davici-code-website-problem/">达芬奇密码中文站的入口谜题解法</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>（注：该文章成文于2009年，如今达芬奇密码中文网站已经无法访问）</p>
+<p>前几天从表姐那儿借到一本《达芬奇密码》，见其最后印着达芬奇密码中文版官方网站：<a href="http://www.davincicode.com.cn" title="官网地址">http://www.davincicode.com.cn</a>，在电脑上敲入网址，却发现摆在面前的竟是一道谜题，想进入网站，须先把谜题破解。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/davici0.jpeg" alt="网站首页"></p>
+<p>进入网站的第三个方式就不用考虑了，我们完全可以自己解决。对于数学或信息学学得比较好的朋友们来说，这个谜题应该很简单。不过肯定也有很多朋友对这个谜题无从下手，感觉很困难，乱点一气也总是赢不了布朗。</p>
+<p>大家可以先自己尝试一下，两种方式都不是很难，第二种需要的方法更简单一些。如果不耐烦了或者不想费脑子了，可以往下看。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/07/10/davici-code-website-problem/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/9/" class="alignleft prev">上一页</a>
+  
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:blog.stoneark.org">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2016/08/14/download-on-the-app-store-image/">Image of &quot;Download on the App Store&quot;</a>
+      </li>
+    
+      <li>
+        <a href="/2016/08/10/the-new-media-manager-on-itunes-connect/">The new Media Manager on iTunes Connect</a>
+      </li>
+    
+      <li>
+        <a href="/2016/08/08/ui-activity-view-controller/">UIActivityViewController</a>
+      </li>
+    
+      <li>
+        <a href="/2016/08/01/input-char-by-hex-unicode-on-mac/">Input character by hex unicode on mac</a>
+      </li>
+    
+      <li>
+        <a href="/2016/07/30/emoji-bug-of-ciji/">Emoji bug of Ciji</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 12px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 12px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 StoneArk
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'stoneark';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

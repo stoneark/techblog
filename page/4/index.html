@@ -67,6 +67,315 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-03-27T09:17:46.000Z"><a href="/2016/03/27/Android-hide-soft-keyboard/">Mar 27 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/03/27/Android-hide-soft-keyboard/">Android 收回软键盘</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在 iOS 里，如果要收回软键盘，只需要调用当前持有焦点的 TextField 的 resignFirstResponder 方法即可。所以很自然的，在 Android 里，就会想到调用 EditText 的 <code>clearFocus()</code> 方法。但发现这样并没有让键盘收回，这与 iOS 不同。</p>
+<p>在 Android 中，应借助 <code>InputMethodManager</code> 可隐藏键盘，方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">hideKeyboard</span><span class="params">()</span> </span>&#123;</div><div class="line">    View viewFocus = <span class="keyword">this</span>.getCurrentFocus();</div><div class="line">    <span class="keyword">if</span> (viewFocus != <span class="keyword">null</span>) &#123;</div><div class="line">        InputMethodManager imManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);</div><div class="line">        imManager.hideSoftInputFromWindow(viewFocus.getWindowToken(), <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>要注意，就像刚才所说，虽然有 viewFocus.clearFocus() 这个方法，但调用它是无法让软键盘收回的。</p>
+<p>另外，用上面这个方法能够收回键盘，但输入框依然持有着焦点。也就是说，焦点与软键盘是否显示，并无关系。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-03-27T08:03:37.000Z"><a href="/2016/03/27/Android-radiobutton/">Mar 27 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/03/27/Android-radiobutton/">Android 单选框</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>与 iOS 不同，Android 提供了单选框，含有两个组件：<code>RadioButton</code> 和 <code>RadioGroup</code>。</p>
+<p>把若干个 RadioButton 放到一个 RadioGroup 内，则这个 RadioGroup 内的 RadioButton 自动完成只能选择一个的功能。</p>
+<p>但是需要注意，如果想要提供默认值，如默认选择第一个 RadioButton，不能在布局文件中把第一个 RadioButton 的 checked 属性设为 true，否则它会一直处于被选中状态。如果要实现默认值，在 java 代码中实现，如可以在 onCreate 时调用 RadioGroup 的 check 方法，传入第一个 RadioButton 的 id 即可，如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">radioGroup.check(R.id.radioButtonFirst);</div></pre></td></tr></table></figure>
+<p>另外，如果要取得 RadioGroup 中被选择的项，可通过 RadioGroup 的 getCheckedRadioButtonId 方法得到被选择的 RadioButton 的 id。然后可通过 findViewById 得到这个 RadioButton，再以此得到它的 tag 确定选择了第几项。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-03-26T07:04:56.000Z"><a href="/2016/03/26/Android-pop-to-parent-activity-with-status-preserving/">Mar 26 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/03/26/Android-pop-to-parent-activity-with-status-preserving/">Android pop to parent activity with status preserving</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>用 Android Studio 创建的 Blank Activity，在新建向导里会问你它是否有上级页面，可以在里面填上它上一级的 Activity，那么生成的 Activity 顶部的导航栏左侧就有返回按钮，并且点击后可以返回上一级页面。</p>
+<p>但是这个返回按钮是有问题的。正常情况下，点击返回应该直接返回到之前创建的上层 Activity，也就是直接 pop 到上一层。但是这个返回按钮，是把上一层 Activity 重新创建了一遍显示出来的，导致无法显示之前的状态。</p>
+<p>比如上层 Activity 有一个 ViewPager，里面有两个 Fragment。在第二个 Fragment 里点击进入了详情的 Activity，然后点击返回按钮，发现返回到了上层 Activity 的初始状态-默认选择的第一个 Fragment。</p>
+<p>可以在 <code>AndroidManifest.xml</code> 中看到，实现方式是定义了一个 PARMENT_ACTIVITY:</p>
+<figure class="highlight xml"><figcaption><span>AndroidManifest.xml</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".ProductListActivity"</span></span></div><div class="line">    <span class="attr">android:label</span>=<span class="string">"@string/title_activity_product_list"</span></div><div class="line">    <span class="attr">android:parentActivityName</span>=<span class="string">".MainActivity"</span></div><div class="line">    <span class="attr">android:theme</span>=<span class="string">"@style/AppTheme.NoActionBar"</span> &gt;</div><div class="line">    <span class="tag">&lt;<span class="name">meta-data</span></span></div><div class="line">        <span class="attr">android:name</span>=<span class="string">"android.support.PARENT_ACTIVITY"</span></div><div class="line">        <span class="attr">android:value</span>=<span class="string">"org.stoneark.doorsbylin.MainActivity"</span> /&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>解决方法也很简单，在 <code>AndroidManifest.xml</code> 中把上一层 Activity 的属性 <code>android:launchMode</code> 改为 <code>singleTop</code> 即可，即：</p>
+<figure class="highlight xml"><figcaption><span>AndroidManifest.xml</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">activity</span></span></div><div class="line">    <span class="attr">android:name</span>=<span class="string">".MainActivity"</span></div><div class="line">    <span class="attr">android:label</span>=<span class="string">"@string/title_activity_main"</span></div><div class="line">    <span class="attr">android:theme</span>=<span class="string">"@style/AppTheme.NoActionBar"</span></div><div class="line">    <span class="attr">android:launchMode</span>=<span class="string">"singleTop"</span> &gt;</div><div class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>launchMode 的默认值是 standard，每次都会强制重新创建一个 activity 的实例，所以导致了问题。根据 <a href="https://developer.android.com/guide/topics/manifest/activity-element.html#lmode" target="_blank" rel="external">Android 文档</a>中的描述，<br>android:launchMode 的取值有：<code>standard</code> 、<code>singleTop</code> 、<code>singleTask</code>、<code>singleInstance</code>，默认值是 standard：</p>
+<ul>
+<li><code>standard</code> 允许该 activity 有多个实例，并且每当显示这个 activity 时就总是重新创建一个。</li>
+<li><code>singleTop</code> 允许该 activity 有多个实例，但如果它当前在栈顶，则不重新创建。</li>
+<li><code>singleTask</code> 只允许该 activity 有一个实例，并且它只能存在于栈底。</li>
+<li><code>singleInstance</code> 与 singleTask 相同，另外还要求栈中只能有它自己，而不能再启动另外任何 activity。</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-03-24T06:21:02.000Z"><a href="/2016/03/24/Android-find-view-by-id-string/">Mar 24 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/03/24/Android-find-view-by-id-string/">Android 用 ID 字符串取到对应的 View</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>我们经常会需要在一个 for 循环中，取到多个 View，这时就需要用拼接得到的字符串作为 ID 来取 View。<br>但 findViewById 的参数是一个 Int 类型，一般用 R.id.xxx 来直接得到这个 Int 值。但如何用字符串来取 View 呢？</p>
+<p>这时需要先用 getResources().getIdentifier 由 String 得到对应的 Int，比如下面将会获取 btnItem0 到 btnItem5 这六个按钮：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=<span class="number">5</span>;i++) &#123;</div><div class="line">    String strButtonID = <span class="string">"btnItem"</span> + i;</div><div class="line">    <span class="keyword">int</span> buttonID = getResources().getIdentifier(strButtonID,<span class="string">"id"</span>,<span class="string">"org.stoneark.packagename"</span>);</div><div class="line">    Button btnItem = (Button) findViewById(buttonID);</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-03-23T08:30:25.000Z"><a href="/2016/03/23/Android-Button-with-both-text-and-image/">Mar 23 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/03/23/Android-Button-with-both-text-and-image/">Android Button with both text and image</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>最近帮朋友做一个不大不小的项目，开发上需要完成 iOS、Android、后台管理三部分。Android 和后台管理的开发虽然之前也都了解一些，但一直没有真正做过什么东西。于是决定把 iOS 交给 Ran，Android 和后台管理也不再找别人做了，自己尝试一下。</p>
+<p>Android 的开发在有些地方还是比 iOS 更加方便的。比如实现一个同时有文字和图片的按钮，在 Android 上，Button 有这样四个属性：<br><code>drawableLeft</code>, <code>drawableRight</code>, <code>drawableTop</code>, <code>drawableBottom</code>，<br>分别可以在文字的左侧、右侧、顶部、下部放置图片，简直不能再简单。</p>
+<p>当然，还是那句话，不存在 iOS 开发更简单或者 Android 开发更简单这样的说法。它们各自都有实现起来相对另一个更方便的地方。所谓简单与难，其实只是精通与知道的差别。永远不要说别人的工作比自己的简单－－只是别人比你知道的更多。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-03-21T07:03:52.000Z"><a href="/2016/03/21/Android-Ripple-Button-with-Background-color/">Mar 21 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/03/21/Android-Ripple-Button-with-Background-color/">Android Ripple Button with Background color</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>自从引入了 Meterial design，Android 变得漂亮了许多，比如从 Lollipop 开始 Button 默认就带有了 Ripple 效果。但如果给这个 Button 赋了 background 属性，改变了它的背景色，则会发现 Ripple 效果消失了。</p>
+<p>如果要改变它的背景色，还想要有 Ripple 效果，那么不要改它的 background 属性，而是将它的 style 属性设置为 @style/Widget.AppCompat.Button.Colored，然后在 Colors.xml 中更改 colorAccent 的颜色值即可。但是要注意，这种方式类似改变“主题”，程序中所有的按钮、单选框等控件的颜色都会一同改变。</p>
+<p>除了 colorAccent，还有 colorPrimary, colorPrimaryDark 等可以改变的主题颜色。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-03-06T08:50:00.000Z"><a href="/2016/03/06/software-companies-which-have-been-famous/">Mar 6 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/03/06/software-companies-which-have-been-famous/">曾经十分出名的软件公司</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天看到一则新闻：<a href="http://tech.sina.com.cn/it/2016-02-29/doc-ifxpvysx1743029.shtml" target="_blank" rel="external">瑞星也冲刺新三板了 还记得曾经的小狮子吗</a>，我是一个怀旧的人，就突然想看看之前那些十分出名的软件公司，现在都变成什么样了。</p>
+<p><a href="http://www.rising.com.cn" target="_blank" rel="external">瑞星</a>，国内非常有名的杀毒软件，我自己从来没用过，给人留下印象最深的就是那个小狮子。我对它的感觉是没感觉，没有特别喜欢也没有特别不喜欢。但自从东方微点案被爆出后，对它就变得特别不喜欢了。</p>
+<p><a href="http://www.jiangmin.com" target="_blank" rel="external">江民</a>，DOS 时代杀毒绝对的王者，没有之一。现在我脑海里还能回忆起 KV300 的包装，白色、软质的包装，里面是一个 3.5 寸的软盘：<br><img src="http://stoneark.qiniudn.com/blogimg/jiangmin_kv300.jpg" width="350" alt="KV300"></p>
+<p><a href="http://www.kingsoft.com" target="_blank" rel="external">金山</a>，这是一家很厉害的公司，至今如此。当年 DOS 平台下 WPS 是中文文字处理绝对的王者，记得上小学的时候计算机课程很主要的一个内容就是 WPS。后来的 WPS Office、金山词霸、金山快译、金山毒霸，以及西山居游戏、猎豹移动，金山一直没有退出公众的视野。其创始人求伯君也是中国软件行业神话一般的存在。<br><img src="http://stoneark.qiniudn.com/blogimg/kingsoft_wps.png" alt="WPS"></p>
+<p><a href="http://www.hongen.com" target="_blank" rel="external">洪恩</a>，当年计算机教育软件绝对的老大，在电脑刚刚开始在中国普及的时候，可以说洪恩让国人学会了使用电脑。没经历过那个年代的可能感受不到，但只要在九十年代末二十一世纪初接触了电脑的人来说，很多人会记得洪恩。开天辟地、万事无忧、畅通无阻这三个系列软件，成为了电脑学习三部曲，尤其是开天辟地的知名度非常高。另外还有从零开始学英语、天问等等一系列的教育软件。我最早买的正版软件都是出自洪恩之手。另外，洪恩还有一个叫做“洪恩在线”的 BBS，当年人气也非常旺。可惜的是随着计算机的普及，计算机教育软件的需求就不再旺盛了。洪恩经历几次调整，如今已经转型做幼教了。话说 MacTalk 的池老也是出自洪恩。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fhongen_kaitianpidi.jpg" width="450" alt="开天辟地（图片来自网络）"></p>
+<p><a href="http://herosoft.com" target="_blank" rel="external">豪杰</a>，跟洪恩一样，经历过那个年代的人肯定知道，没经历过的也就没经历过了。曾经，没有暴风影音，没有迅雷看看，有的是豪杰超级解霸：<br><img src="http://stoneark.qiniudn.com/blogimg%2Fherosoft_chaojijieba.jpg" alt="超级解霸2001"></p>
+<p>这绝对是播放 VCD 的一霸，当年的装机必备。软件分两个窗口，一个是这个控制窗口，另一个是正在播放的视频。后来其他全能播放软件出现，豪杰虽然也不断推陈出新，推出了 3000、V8 等版本，但颓势终究不可避免。今天再一次打开它的网站，发现已写着 Close Off，可惜。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fherosoft_closeoff.png" width="478" alt="Herosoft close off"></p>
+<p>千千静听，从 Winamp 和 Foobar 统治的音乐播放软件中突围，取长补短，更符合中国人的习惯，很快变得家喻户晓。但随着网速越来越快，人们的习惯从之前的下载到本地听歌，逐渐转变为了在线听歌。千千静听逐渐被酷狗、酷我等赶超，之后被百度收购，现在千千静听这个品牌已不复存在。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fttplayer.jpg" alt="千千静听"></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-03-02T07:59:32.000Z"><a href="/2016/03/02/swift-mixed-with-objective-c/">Mar 2 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/03/02/swift-mixed-with-objective-c/">Swift 与 Objective-C 混编</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Swift 这门新兴的编程语言，自从 WWDC 2014 被发布以来不断被完善，并获得了越来越多苹果开发者的认可。WWDC 2015 时 2.0 版本的发布以及开源，让我们看到了 Swift 的不断成熟，苹果也在提倡开发者们向 Swift 转移。</p>
+<p>我很早就阅读了 Swift 的相关内容，并且感觉它是一个很不错的开发语言。它具有一些现代脚本语言的特征，更重要的是跟我早先常用的 Pascal 语言在很多地方十分相近，感觉很亲切。虽然如此，实际在工作中还并未引进 Swift，我和我的团队依然在用 Objective-C 进行 iOS 软件的开发。</p>
+<p>今天突然想在开发新功能时试一把 Swift，于是研究了一下 Swift 和 Objective-C 的混编，在原有 Objective-C 工程中引入了 Swift。</p>
+<h3 id="Swift-代码调用-Objective-C-代码"><a href="#Swift-代码调用-Objective-C-代码" class="headerlink" title="Swift 代码调用 Objective-C 代码"></a>Swift 代码调用 Objective-C 代码</h3><p>在现有 Objective-C 工程中，新建一个 Cocoa Touch Class，新建时选择 Language 为 Swift，会弹出对话框提示是否需要创建 Bridging Header:<br><img src="http://stoneark.qiniudn.com/blogimg%2Fswift_objc_bridge0.jpg" alt="Create Bridging Header"></p>
+<p>创建后工程中会新建一个名为 <code>ProjectName-Bridging-Header.h</code> 的头文件。编辑这个头文件，Swift 代码需要调用的 Objective-C 头文件，都在这个文件中 import 即可：</p>
+<figure class="highlight objc"><figcaption><span>ProjectName-Bridging-Header.h</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//  Use this file to import your target's public headers that you would like to expose to Swift.</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="meta">#import <span class="meta-string">"BaseViewController.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"APIHandler.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;YYModel.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;MJRefresh.h&gt;</span></span></div></pre></td></tr></table></figure>
+<p>另外，可以在工程属性的 Build Settings 中，可以找到 <code>Objective-C Bridging Header</code> 项，其中已自动填入了这个 ProjectName-Bridging-Header.h 的路径。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fswift_objc_bridge1.png" alt=""></p>
+<h3 id="Objective-C-代码调用-Swift-代码"><a href="#Objective-C-代码调用-Swift-代码" class="headerlink" title="Objective-C 代码调用 Swift 代码"></a>Objective-C 代码调用 Swift 代码</h3><p>在需要调用 Swift 代码的 Objective-C 文件头部，写入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#import “ProductModuleName-Swift.h”</div></pre></td></tr></table></figure>
+<p>即可，然后就能调用工程中 <strong>所有</strong> 的 Swift 源码，并不需要单独指定需要调用哪一个。<br>这个 ProductModuleName，默认就是工程名称，如”YouYouYuEr-Swift.h”。可以在工程属性的 Build Settings 中，找到 <code>Product Module Name</code> 项查看。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fswift_objc_bridge2.png" alt=""></p>
+<p>这个头文件的全名，也可在工程属性的 Build Settings 中，找到 <code>Objective-C Generated Interface Header Name</code> 项查看，可以看到它的值为 <code>$(SWIFT_MODULE_NAME)-Swift.h</code>。（可见上一小节第 2 张图）</p>
+<p>但注意，这个文件在工程中 <strong>并不</strong> 实际存在。因为就像刚才所说，import 这个文件后能调用工程中 <strong>所有</strong> 的 swift 源码，所以就不需要由开发者再去编辑这个文件，来告知编译器需要引用哪些 .swift 文件。而反过来则不同，Swift 调用 Objective-C 需要告知编译器需要调用哪些 Obejctive-C 文件，所以需要一个 ProjectName-Bridging-Header.h 供开发者去编辑。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>可以看到，Build Settings 中的 <code>Objective-C Bridging Header</code> 和 <code>Objective-C Generated Interface Header Name</code> 两项，是 Swift 与 Objective-C 混编的关键，分别为一种语言引用另一种语言提供了桥梁。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-02-29T08:52:47.000Z"><a href="/2016/02/29/recent-developer-interviews/">Feb 29 2016</a></time>
       
       
@@ -137,299 +446,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-01-29T03:12:46.000Z"><a href="/2016/01/29/NSAttributedString-image-vertically-center-alignment/">Jan 29 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/01/29/NSAttributedString-image-vertically-center-alignment/">NSAttributedString 图片与文字垂直居中</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>在 NSAttributedString 加入图片后，发现图片默认是与文字底部对齐的，但很多情况下，我们都希望图片与文字垂直居中对齐。</p>
-<p>NSAttributedString 并没有提供垂直对齐的属性，但可以通过 Baseline 的方式解决。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[attributedStr addAttribute: <span class="built_in">NSBaselineOffsetAttributeName</span> value:@(<span class="number">-2.0</span>) range: <span class="built_in">NSMakeRange</span>(<span class="number">0</span>,<span class="number">1</span>)];</div></pre></td></tr></table></figure></p>
-<p>参考：<a href="https://discussions.apple.com/thread/2788687" target="_blank" rel="external">https://discussions.apple.com/thread/2788687</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-01-22T08:22:19.000Z"><a href="/2016/01/22/disable-screen-auto-rotate-in-android-developing/">Jan 22 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/01/22/disable-screen-auto-rotate-in-android-developing/">Android 开发中禁止屏幕自动旋转</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>在 iOS 开发中，可以在工程属性里设置全局支持的屏幕朝向。对于只需要支持竖屏显示的应用，在 Device Orientation 中只保留 Portrait，取消选择 Landscape Left, Landscape Right, Upside Down 即可。也可以单独针对某个 View Controller 设置屏幕朝向，实现 UIViewController 的 supportedInterfaceOrientations 方法即可。</p>
-<p>团队中的 Android Developer 没处理过这种问题，于是我顺便了解了一下。发现 Android 似乎没有方法全局进行设置，只能针对 Activity 进行设置。</p>
-<p>一种方法是在需要限制屏幕旋转的 Activity 的 onCreate 方法里，加入一句：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);</div></pre></td></tr></table></figure></p>
-<p>另外一种方法，是在 Androidmanifest.xml 中为需要限制屏幕旋转的 Activity 都添加属性：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android:screenOrientation="portrait"</div></pre></td></tr></table></figure></p>
-<p>如果需要全局进行限制，自然是采取前一种方法较好。可以让工程中的所有 Activity 都继承于一个基类 BaseActivity，那只须在 BaseActivity 里调用 setRequestedOrientation 即可。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-01-14T08:17:24.000Z"><a href="/2016/01/14/pay-attention-to-casing-of-yyyy-in-date-format/">Jan 14 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/01/14/pay-attention-to-casing-of-yyyy-in-date-format/">小心时间格式里 yyyy 的大小写</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>团队里的测试工程师测试出一个 bug，表现是：在 Date Picker 选择了2015 年 12 月 27 日，但并显示到 Textfield 里时，变成了 2016-12-27。选择 12 月较早一些的日期，不会出现任何问题。</p>
-<p>刚开始感觉一定是测试看花眼了，但尝试之后发现的确可以复现，而且，是必现！</p>
-<p>检查了一下代码，发现此处的 NSDateFormatter 对象的 dateFormat 赋了 YYYY-MM-dd，总感觉哪里怪怪的。看了一下其他地方的代码，才意识到，年份一般都是写成小写的 yyyy 的。改成 yyyy-MM-dd 后，果然一切恢复正常了。</p>
-<p>但是这个 yyyy 和 YYYY 到底有何区别呢？</p>
-<p>查了一下资料，得知 YYYY 表示的是 Week Year，也就是当前日期所在周的年份。一周从周日开始，周六结束，只要本周跨年，就进入了下一年。所以 2015 年 12 月 27 日这一天，用 YYYY 得到的年份就是 2016。</p>
-<p>苹果的开发文档中，对日期时间格式的描述是在 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Cocoa/Conceptual/DataFormatting/DataFormatting.html" target="_blank" rel="external">Introduction to Data Formatting Programming Guide For Cocoa</a> 的 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Cocoa/Conceptual/DataFormatting/Articles/dfDateFormatting10_4.html#//apple_ref/doc/uid/TP40002369-SW1" target="_blank" rel="external">Date Formatters</a> 章节里。从文档中可以看到，苹果遵循的规范是 <a href="http://www.unicode.org/reports/tr35/tr35-dates.html#Contents" target="_blank" rel="external">UNICODE LOCALE DATA MARKUP LANGUAGE (LDML) PART 4: DATES</a>。这个规范的最后有一张表 Date Field Symbol Table，里面记载了所有的时间描述符，挺有意思的，准备有时间的时候仔细看看。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-11-19T09:00:08.000Z"><a href="/2015/11/19/UIControlEventTouchDown-event-response-delay/">Nov 19 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/11/19/UIControlEventTouchDown-event-response-delay/">UIControlEventTouchDown 延迟响应</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>一个 UIButton，其上绑定了 UIControlEventTouchDown 事件。在模拟器上一切正常，反应速度很快，但在真机上出现了很怪异的反应迟钝。通过观察发现，如果按下按钮的右半边，也就是屏幕右边一侧的部分，则不会有反应迟钝现象。如果按下按钮的左半边，也就是屏幕左边一侧的部分，只要按下之后手指不移动，则会一直无响应，直到手指在按钮上产生了位移，才会响应事件。</p>
-<p>经调查，这个问题自 iOS 7 开始出现，出现原因是由 iOS 7 开始引入的右滑返回。只需设置以下属性即可避免该问题的出现。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="keyword">self</span>.navigationController.interactivePopGestureRecognizer setDelaysTouchesBegan:<span class="literal">NO</span>];</div></pre></td></tr></table></figure></p>
-<p>而且，这样并不会影响正常的右滑返回。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-11-13T08:51:45.000Z"><a href="/2015/11/13/uiview-animation-with-auto-layout/">Nov 13 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/11/13/uiview-animation-with-auto-layout/">在 Auto layout 下应用 UIView 动画</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>在之前不使用 Autolayout 时，如果需要做简单的 UIView 动画，只需要：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[<span class="built_in">UIView</span> animateWithDuration:<span class="number">0.25</span> animations:^&#123;</div><div class="line">  [_topView setFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">100</span>,<span class="number">35</span>)];</div><div class="line">&#125;];</div></pre></td></tr></table></figure></p>
-<p>但是使用 Autolayout，不能再手动去更改 frame。而且我们会发现，如果按照之前的做法直接改写成：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[<span class="built_in">UIView</span> animateWithDuration:<span class="number">0.25</span> animations:^&#123;</div><div class="line">  [_constraintTopViewHeight setConstant:<span class="number">35</span>];</div><div class="line">&#125;];</div></pre></td></tr></table></figure></p>
-<p>是没有动画效果的，依然会瞬间改变它的约束。</p>
-<p>正确的方法是：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[_constraintTopViewHeight setConstant:<span class="number">35</span>];</div><div class="line">[<span class="built_in">UIView</span> animateWithDuration:<span class="number">0.25</span> animations:^&#123;</div><div class="line">  [<span class="keyword">self</span>.view layoutIfNeeded];</div><div class="line">&#125;];</div></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-11-04T05:58:11.000Z"><a href="/2015/11/04/ei-capitan-brings-the-missing-hex-color-picker/">Nov 4 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/11/04/ei-capitan-brings-the-missing-hex-color-picker/">EI Capitan brings the missing Hex color picker</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>OS X 里的颜色选取器一直没有集成十六进制的功能，这给程序员和设计师带来了诸多不便，于是有开发者制作了对系统 Color Picker 的增强插件，如我一直在用的 <a href="http://wafflesoftware.net/hexpicker/" target="_blank" rel="external">Hex Color Picker</a>，在系统的 Color Picker 中增加了一栏，专门用来输入十六进制的颜色值，系统全局都能用，很是方便。</p>
-<p>但是它在 EI Capitan 上不再好用了，因为系统加入了一项新的安全技术，称作<a href="https://support.apple.com/en-us/HT204899" target="_blank" rel="external">系统完整性保护</a>，即使 root 账户也不允许修改系统主要程序的内容。相应的，像 XtraFinder、HexColorPicker 之类的系统增强类软件，在 EI Capitan 上都只能歇菜了。</p>
-<p>不过，好在 Apple 已经发觉到了我们的诉求，在系统的 Color Picker 里增加了十六进制的功能，虽然有些隐蔽：</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/ei_capitan_hex_color_picker.png" alt=""></p>
-<p>在第二个选项卡 (Color Slider) 中的 RGB Sliders 里面，下方有个 Hex Color 文本框。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-10-29T07:22:50.000Z"><a href="/2015/10/29/limit-max-input-length-update/">Oct 29 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/10/29/limit-max-input-length-update/">限制最大输入字符数(更新)</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>在 <a href="../../../2015/06/29/limit-max-input-length-of-uitextview/">这篇博客</a> 中提到的限制 UITextView 最大输入字符数的方法，依然是有问题的。问题出现于用拼音输入法输入中文的时候，比如键入“你好世界”，对应的拼音为“nihaoshijie”。限制最大长度为 5，则虽然“你好世界”为四个字，但在输入拼音字符的时候，会超过 5 个字符，导致无法输入进去。</p>
-<p><a href="http://blog.sina.com.cn/s/blog_60f977e70101g4gj.html" target="_blank" rel="external">iOS:UITextField中文输入法输入时对字符长度的限制</a> 这篇文章中提出了一个方法，经尝试是可以正确处理这种情形的。基本方法如下：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)textViewDidChange:(<span class="built_in">UITextView</span> *)textView &#123;</div><div class="line">    <span class="built_in">NSString</span> *lang = [[textView textInputMode] primaryLanguage];</div><div class="line">    <span class="comment">// 对简体中文输入进行特殊处理</span></div><div class="line">    <span class="keyword">if</span> ([lang isEqualToString:<span class="string">@"zh-Hans"</span>]) &#123;</div><div class="line">        <span class="built_in">UITextRange</span> *selectedRange = [textView markedTextRange];</div><div class="line">        <span class="comment">// 获取高亮部分</span></div><div class="line">        <span class="built_in">UITextPosition</span> *position = [textView positionFromPosition:selectedRange.start offset:<span class="number">0</span>];</div><div class="line">        <span class="keyword">if</span> (!position) &#123;</div><div class="line">            <span class="comment">// 没有高亮选择的字，则进行字数限制</span></div><div class="line">            <span class="keyword">if</span> (textView.text.length &gt; LENGTH_LIMIT) &#123;</div><div class="line">                textView.text = [textView.text substringToIndex:LENGTH_LIMIT];</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">else</span>&#123;</div><div class="line">            <span class="comment">// 有高亮选择的字，认为现在正在拼音输入状态，暂不进行限制</span></div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// 简体中文以外的直接限制，暂不考虑其他语言</span></div><div class="line">        <span class="keyword">if</span> (textView.text.length &gt; LENGTH_LIMIT) &#123;</div><div class="line">            textView.text = [textView.text substringToIndex:LENGTH_LIMIT];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>同时，在上面这篇文章中还受到一点启示，UITextField 是没有类似 textViewDidChange 这样的代理方法的，所以对于 UITextField 我们该怎么办？可以通过监听 <code>UITextFieldTextDidChangeNotification</code> 通知来达到一样的目的。</p>
-<p>在初始化时添加监听：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(textFieldDidChanged:) name:<span class="string">@"UITextFieldTextDidChangeNotification"</span> object:_textField];</div></pre></td></tr></table></figure></p>
-<p>实现监听方法：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-(<span class="keyword">void</span>)textFieldDidChanged:(<span class="built_in">NSNotification</span> *)notification &#123;</div><div class="line">	<span class="built_in">UITextField</span> *textField = (<span class="built_in">UITextField</span>*)notification.object;</div><div class="line">	...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>别忘了在 dealloc 时移除监听：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] removeObserver:<span class="keyword">self</span> name:<span class="string">@"UITextFieldTextDidChangeNotification"</span> object:_textField];</div></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-10-21T08:47:11.000Z"><a href="/2015/10/21/library-unbound-when-import-project-to-eclipse/">Oct 21 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/10/21/library-unbound-when-import-project-to-eclipse/">向 Eclipse 中导入项目提示 JRE unbound</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>在 Eclipse 中导入 Java 项目后，常会出现编译报错，一个很常见的原因是工程属性中所定义的某些 Library 在本地找不到。又经常是本地安装的版本与工程属性中指定的版本不一致，比如本地安装了 JRE 8，但工程属性中定义的是使用 JRE 7。</p>
-<p>在左侧的对应工程上点右键 -&gt; Build Path -&gt; Configure Build Path，在弹出的对话框中，右侧顶部点选 Libraries，下方的列表中会发现有几项后面有 “(unbound)” 后缀。此时就代表，项目属性中定义的版本，在本地找不到，所以无法编译。</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/library_unbound_in_eclipse.jpg" alt=""></p>
-<p>解决方法也很简单，如果本地没有安装所需要的 Library，安装上就好。如果本地安装了，只是版本不一致，而且可以用本地版本替代的情况，可以选择 unbound 的条目，再点击右侧 Edit 按钮，在列表中选择本地有的版本，或者直接选择 Workspace default JRE，即可解决。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -454,23 +470,23 @@
   <ul class="entry">
     
       <li>
-        <a href="/2016/07/05/changes-about-programming-thinking-in-swift/">Swift 编程思路的变化</a>
+        <a href="/2016/08/14/download-on-the-app-store-image/">Image of &quot;Download on the App Store&quot;</a>
       </li>
     
       <li>
-        <a href="/2016/07/03/iap-take-effect-later-than-app-release/">应用上线后 IAP 商品不会立即生效</a>
+        <a href="/2016/08/10/the-new-media-manager-on-itunes-connect/">The new Media Manager on iTunes Connect</a>
       </li>
     
       <li>
-        <a href="/2016/06/30/the-strict-sapprft/">管理宽广而严格的广电总局</a>
+        <a href="/2016/08/08/ui-activity-view-controller/">UIActivityViewController</a>
       </li>
     
       <li>
-        <a href="/2016/06/18/battery-drainer-gpsd/">Battery drainer gpsd</a>
+        <a href="/2016/08/01/input-char-by-hex-unicode-on-mac/">Input character by hex unicode on mac</a>
       </li>
     
       <li>
-        <a href="/2016/06/17/imei-missing-after-downgrade-samsung-s4/">IMEI missing after downgrade Samsung S4</a>
+        <a href="/2016/07/30/emoji-bug-of-ciji/">Emoji bug of Ciji</a>
       </li>
     
   </ul>
@@ -481,7 +497,7 @@
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 12px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 12px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 12px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
   </div>
 </div>
 

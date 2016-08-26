@@ -67,6 +67,299 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-01-29T03:12:46.000Z"><a href="/2016/01/29/NSAttributedString-image-vertically-center-alignment/">Jan 29 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/01/29/NSAttributedString-image-vertically-center-alignment/">NSAttributedString 图片与文字垂直居中</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在 NSAttributedString 加入图片后，发现图片默认是与文字底部对齐的，但很多情况下，我们都希望图片与文字垂直居中对齐。</p>
+<p>NSAttributedString 并没有提供垂直对齐的属性，但可以通过 Baseline 的方式解决。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[attributedStr addAttribute: <span class="built_in">NSBaselineOffsetAttributeName</span> value:@(<span class="number">-2.0</span>) range: <span class="built_in">NSMakeRange</span>(<span class="number">0</span>,<span class="number">1</span>)];</div></pre></td></tr></table></figure></p>
+<p>参考：<a href="https://discussions.apple.com/thread/2788687" target="_blank" rel="external">https://discussions.apple.com/thread/2788687</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-01-22T08:22:19.000Z"><a href="/2016/01/22/disable-screen-auto-rotate-in-android-developing/">Jan 22 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/01/22/disable-screen-auto-rotate-in-android-developing/">Android 开发中禁止屏幕自动旋转</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在 iOS 开发中，可以在工程属性里设置全局支持的屏幕朝向。对于只需要支持竖屏显示的应用，在 Device Orientation 中只保留 Portrait，取消选择 Landscape Left, Landscape Right, Upside Down 即可。也可以单独针对某个 View Controller 设置屏幕朝向，实现 UIViewController 的 supportedInterfaceOrientations 方法即可。</p>
+<p>团队中的 Android Developer 没处理过这种问题，于是我顺便了解了一下。发现 Android 似乎没有方法全局进行设置，只能针对 Activity 进行设置。</p>
+<p>一种方法是在需要限制屏幕旋转的 Activity 的 onCreate 方法里，加入一句：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);</div></pre></td></tr></table></figure></p>
+<p>另外一种方法，是在 Androidmanifest.xml 中为需要限制屏幕旋转的 Activity 都添加属性：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android:screenOrientation="portrait"</div></pre></td></tr></table></figure></p>
+<p>如果需要全局进行限制，自然是采取前一种方法较好。可以让工程中的所有 Activity 都继承于一个基类 BaseActivity，那只须在 BaseActivity 里调用 setRequestedOrientation 即可。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-01-14T08:17:24.000Z"><a href="/2016/01/14/pay-attention-to-casing-of-yyyy-in-date-format/">Jan 14 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/01/14/pay-attention-to-casing-of-yyyy-in-date-format/">小心时间格式里 yyyy 的大小写</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>团队里的测试工程师测试出一个 bug，表现是：在 Date Picker 选择了2015 年 12 月 27 日，但并显示到 Textfield 里时，变成了 2016-12-27。选择 12 月较早一些的日期，不会出现任何问题。</p>
+<p>刚开始感觉一定是测试看花眼了，但尝试之后发现的确可以复现，而且，是必现！</p>
+<p>检查了一下代码，发现此处的 NSDateFormatter 对象的 dateFormat 赋了 YYYY-MM-dd，总感觉哪里怪怪的。看了一下其他地方的代码，才意识到，年份一般都是写成小写的 yyyy 的。改成 yyyy-MM-dd 后，果然一切恢复正常了。</p>
+<p>但是这个 yyyy 和 YYYY 到底有何区别呢？</p>
+<p>查了一下资料，得知 YYYY 表示的是 Week Year，也就是当前日期所在周的年份。一周从周日开始，周六结束，只要本周跨年，就进入了下一年。所以 2015 年 12 月 27 日这一天，用 YYYY 得到的年份就是 2016。</p>
+<p>苹果的开发文档中，对日期时间格式的描述是在 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Cocoa/Conceptual/DataFormatting/DataFormatting.html" target="_blank" rel="external">Introduction to Data Formatting Programming Guide For Cocoa</a> 的 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Cocoa/Conceptual/DataFormatting/Articles/dfDateFormatting10_4.html#//apple_ref/doc/uid/TP40002369-SW1" target="_blank" rel="external">Date Formatters</a> 章节里。从文档中可以看到，苹果遵循的规范是 <a href="http://www.unicode.org/reports/tr35/tr35-dates.html#Contents" target="_blank" rel="external">UNICODE LOCALE DATA MARKUP LANGUAGE (LDML) PART 4: DATES</a>。这个规范的最后有一张表 Date Field Symbol Table，里面记载了所有的时间描述符，挺有意思的，准备有时间的时候仔细看看。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-11-19T09:00:08.000Z"><a href="/2015/11/19/UIControlEventTouchDown-event-response-delay/">Nov 19 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/11/19/UIControlEventTouchDown-event-response-delay/">UIControlEventTouchDown 延迟响应</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>一个 UIButton，其上绑定了 UIControlEventTouchDown 事件。在模拟器上一切正常，反应速度很快，但在真机上出现了很怪异的反应迟钝。通过观察发现，如果按下按钮的右半边，也就是屏幕右边一侧的部分，则不会有反应迟钝现象。如果按下按钮的左半边，也就是屏幕左边一侧的部分，只要按下之后手指不移动，则会一直无响应，直到手指在按钮上产生了位移，才会响应事件。</p>
+<p>经调查，这个问题自 iOS 7 开始出现，出现原因是由 iOS 7 开始引入的右滑返回。只需设置以下属性即可避免该问题的出现。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="keyword">self</span>.navigationController.interactivePopGestureRecognizer setDelaysTouchesBegan:<span class="literal">NO</span>];</div></pre></td></tr></table></figure></p>
+<p>而且，这样并不会影响正常的右滑返回。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-11-13T08:51:45.000Z"><a href="/2015/11/13/uiview-animation-with-auto-layout/">Nov 13 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/11/13/uiview-animation-with-auto-layout/">在 Auto layout 下应用 UIView 动画</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在之前不使用 Autolayout 时，如果需要做简单的 UIView 动画，只需要：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[<span class="built_in">UIView</span> animateWithDuration:<span class="number">0.25</span> animations:^&#123;</div><div class="line">  [_topView setFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">100</span>,<span class="number">35</span>)];</div><div class="line">&#125;];</div></pre></td></tr></table></figure></p>
+<p>但是使用 Autolayout，不能再手动去更改 frame。而且我们会发现，如果按照之前的做法直接改写成：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[<span class="built_in">UIView</span> animateWithDuration:<span class="number">0.25</span> animations:^&#123;</div><div class="line">  [_constraintTopViewHeight setConstant:<span class="number">35</span>];</div><div class="line">&#125;];</div></pre></td></tr></table></figure></p>
+<p>是没有动画效果的，依然会瞬间改变它的约束。</p>
+<p>正确的方法是：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[_constraintTopViewHeight setConstant:<span class="number">35</span>];</div><div class="line">[<span class="built_in">UIView</span> animateWithDuration:<span class="number">0.25</span> animations:^&#123;</div><div class="line">  [<span class="keyword">self</span>.view layoutIfNeeded];</div><div class="line">&#125;];</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-11-04T05:58:11.000Z"><a href="/2015/11/04/ei-capitan-brings-the-missing-hex-color-picker/">Nov 4 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/11/04/ei-capitan-brings-the-missing-hex-color-picker/">EI Capitan brings the missing Hex color picker</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>OS X 里的颜色选取器一直没有集成十六进制的功能，这给程序员和设计师带来了诸多不便，于是有开发者制作了对系统 Color Picker 的增强插件，如我一直在用的 <a href="http://wafflesoftware.net/hexpicker/" target="_blank" rel="external">Hex Color Picker</a>，在系统的 Color Picker 中增加了一栏，专门用来输入十六进制的颜色值，系统全局都能用，很是方便。</p>
+<p>但是它在 EI Capitan 上不再好用了，因为系统加入了一项新的安全技术，称作<a href="https://support.apple.com/en-us/HT204899" target="_blank" rel="external">系统完整性保护</a>，即使 root 账户也不允许修改系统主要程序的内容。相应的，像 XtraFinder、HexColorPicker 之类的系统增强类软件，在 EI Capitan 上都只能歇菜了。</p>
+<p>不过，好在 Apple 已经发觉到了我们的诉求，在系统的 Color Picker 里增加了十六进制的功能，虽然有些隐蔽：</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/ei_capitan_hex_color_picker.png" alt=""></p>
+<p>在第二个选项卡 (Color Slider) 中的 RGB Sliders 里面，下方有个 Hex Color 文本框。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-10-29T07:22:50.000Z"><a href="/2015/10/29/limit-max-input-length-update/">Oct 29 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/10/29/limit-max-input-length-update/">限制最大输入字符数(更新)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在 <a href="../../../2015/06/29/limit-max-input-length-of-uitextview/">这篇博客</a> 中提到的限制 UITextView 最大输入字符数的方法，依然是有问题的。问题出现于用拼音输入法输入中文的时候，比如键入“你好世界”，对应的拼音为“nihaoshijie”。限制最大长度为 5，则虽然“你好世界”为四个字，但在输入拼音字符的时候，会超过 5 个字符，导致无法输入进去。</p>
+<p><a href="http://blog.sina.com.cn/s/blog_60f977e70101g4gj.html" target="_blank" rel="external">iOS:UITextField中文输入法输入时对字符长度的限制</a> 这篇文章中提出了一个方法，经尝试是可以正确处理这种情形的。基本方法如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)textViewDidChange:(<span class="built_in">UITextView</span> *)textView &#123;</div><div class="line">    <span class="built_in">NSString</span> *lang = [[textView textInputMode] primaryLanguage];</div><div class="line">    <span class="comment">// 对简体中文输入进行特殊处理</span></div><div class="line">    <span class="keyword">if</span> ([lang isEqualToString:<span class="string">@"zh-Hans"</span>]) &#123;</div><div class="line">        <span class="built_in">UITextRange</span> *selectedRange = [textView markedTextRange];</div><div class="line">        <span class="comment">// 获取高亮部分</span></div><div class="line">        <span class="built_in">UITextPosition</span> *position = [textView positionFromPosition:selectedRange.start offset:<span class="number">0</span>];</div><div class="line">        <span class="keyword">if</span> (!position) &#123;</div><div class="line">            <span class="comment">// 没有高亮选择的字，则进行字数限制</span></div><div class="line">            <span class="keyword">if</span> (textView.text.length &gt; LENGTH_LIMIT) &#123;</div><div class="line">                textView.text = [textView.text substringToIndex:LENGTH_LIMIT];</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">else</span>&#123;</div><div class="line">            <span class="comment">// 有高亮选择的字，认为现在正在拼音输入状态，暂不进行限制</span></div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// 简体中文以外的直接限制，暂不考虑其他语言</span></div><div class="line">        <span class="keyword">if</span> (textView.text.length &gt; LENGTH_LIMIT) &#123;</div><div class="line">            textView.text = [textView.text substringToIndex:LENGTH_LIMIT];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>同时，在上面这篇文章中还受到一点启示，UITextField 是没有类似 textViewDidChange 这样的代理方法的，所以对于 UITextField 我们该怎么办？可以通过监听 <code>UITextFieldTextDidChangeNotification</code> 通知来达到一样的目的。</p>
+<p>在初始化时添加监听：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(textFieldDidChanged:) name:<span class="string">@"UITextFieldTextDidChangeNotification"</span> object:_textField];</div></pre></td></tr></table></figure></p>
+<p>实现监听方法：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-(<span class="keyword">void</span>)textFieldDidChanged:(<span class="built_in">NSNotification</span> *)notification &#123;</div><div class="line">	<span class="built_in">UITextField</span> *textField = (<span class="built_in">UITextField</span>*)notification.object;</div><div class="line">	...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>别忘了在 dealloc 时移除监听：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] removeObserver:<span class="keyword">self</span> name:<span class="string">@"UITextFieldTextDidChangeNotification"</span> object:_textField];</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-10-21T08:47:11.000Z"><a href="/2015/10/21/library-unbound-when-import-project-to-eclipse/">Oct 21 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/10/21/library-unbound-when-import-project-to-eclipse/">向 Eclipse 中导入项目提示 JRE unbound</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在 Eclipse 中导入 Java 项目后，常会出现编译报错，一个很常见的原因是工程属性中所定义的某些 Library 在本地找不到。又经常是本地安装的版本与工程属性中指定的版本不一致，比如本地安装了 JRE 8，但工程属性中定义的是使用 JRE 7。</p>
+<p>在左侧的对应工程上点右键 -&gt; Build Path -&gt; Configure Build Path，在弹出的对话框中，右侧顶部点选 Libraries，下方的列表中会发现有几项后面有 “(unbound)” 后缀。此时就代表，项目属性中定义的版本，在本地找不到，所以无法编译。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/library_unbound_in_eclipse.jpg" alt=""></p>
+<p>解决方法也很简单，如果本地没有安装所需要的 Library，安装上就好。如果本地安装了，只是版本不一致，而且可以用本地版本替代的情况，可以选择 unbound 的条目，再点击右侧 Edit 按钮，在列表中选择本地有的版本，或者直接选择 Workspace default JRE，即可解决。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-10-19T08:45:16.000Z"><a href="/2015/10/19/instant-message-services/">Oct 19 2015</a></time>
       
       
@@ -139,331 +432,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-07-06T02:42:42.000Z"><a href="/2015/07/06/MBProgressHUD-and-UITableView-section-header/">Jul 6 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/07/06/MBProgressHUD-and-UITableView-section-header/">MBProgressHUD and UITableView section header</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>在一个 UITableView 上添加一个 MBProgressHUD，很有可能会遇到这种情况，HUD 被 TableView 的 section header 挡住了：</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/hud_and_tableview_section_header.jpg" alt=""></p>
-<p>同样的，如果你用了 UITableViewController，则 self.view 就是一个 UITableView，则当向 self.view 添加一个 HUD 为 subview 时，就会遇到这个问题。</p>
-<p>在 github 上的 issue：<br><a href="https://github.com/jdg/MBProgressHUD/issues/242" target="_blank" rel="external">https://github.com/jdg/MBProgressHUD/issues/242</a></p>
-<p>在 stackoverflow 上的讨论：<br><a href="http://stackoverflow.com/questions/7199700/uitableview-headings-shown-on-top-of-mbprogresshud" target="_blank" rel="external">http://stackoverflow.com/questions/7199700/uitableview-headings-shown-on-top-of-mbprogresshud</a></p>
-<p>可以根据情况考虑，选择下面的方法：</p>
-<ol>
-<li>不用 UITableViewController，改用 UIViewController + TableView，并把 hud 添加到 self.view 上。</li>
-<li>把 hud 添加到 self.navigationController.view 上，这样会带来一个副作用，hud 显示的时候不能点击返回按钮，不推荐。</li>
-<li>调整 hud 的 z 值，hud.layer.zPosition = MAXFLOAT; （z 值越大越在上方），推荐采用。</li>
-</ol>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-06-29T07:47:49.000Z"><a href="/2015/06/29/limit-max-input-length-of-uitextview/">Jun 29 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/06/29/limit-max-input-length-of-uitextview/">限制 UITextView 最大输入字符数</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>实现以下两个 UITextView 的代理方法即可：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#define LENGTH_LIMIT 10</span></div><div class="line">- (<span class="built_in">BOOL</span>)textView:(<span class="built_in">UITextView</span> *)textView shouldChangeTextInRange:(<span class="built_in">NSRange</span>)range replacementText:(<span class="built_in">NSString</span> *)text &#123;</div><div class="line">    <span class="keyword">if</span> (textView.text.length &gt;= LENGTH_LIMIT &amp;&amp; text.length &gt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">NO</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(<span class="keyword">void</span>)textViewDidChange:(<span class="built_in">UITextView</span> *)textView &#123;</div><div class="line">    <span class="keyword">if</span> (textView.text.length &gt; LENGTH_LIMIT) &#123;</div><div class="line">        textView.text = [textView.text substringToIndex:LENGTH_LIMIT];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>注意，这两个代理方法必须都实现。</p>
-<p>如果只实现第一个代理方法，则会出现一个问题：到达字数限制时，用键盘的确已无法输入进去，但可以通过点击键盘上方的联想字词继续输入进去，导致超过限制。通过实现第二个代理方法，可把通过联想或其他方式输入进去的多余字符截掉。这也是之前我没有注意到的一点。</p>
-<p>如果只实现第二个代理方法，虽然长度不会超过限制，但实际相当于先输入进去，后再截掉，导致按下键盘后虽然没有输入进去字符，但键盘上方的联想字词在不断地根据你的按键而联想。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-06-25T02:37:27.000Z"><a href="/2015/06/25/ios-8-2-tableview-cell-height-bug/">Jun 25 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/06/25/ios-8-2-tableview-cell-height-bug/">iOS 8.2 UITableView 的默认行高 bug</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><img src="http://stoneark.qiniudn.com/blogimg/ios82_tableview_cell_height_bug.png" alt="Cell高度错误"></p>
-<p>很简单的一个登录页面，用 Storyboard 的 Static Cell 来实现。开发时没有发现任何问题，交予测试时反馈输入框太小了，就是上面截图的样子，现象 100% 出现。而且发现，从该页面 Push 到下一层页面再 Pop 回该页面后，高度即可恢复正常。</p>
-<p>检查程序没发现任何问题，Cell Height 都采用了默认高度。在我的模拟器上和其他测试设备上也无法重现这个问题。</p>
-<p>检查那台出问题的测试机，发现系统版本为 iOS 8.2，而我的模拟器和测试机上都运行着 iOS 8.3 或 iOS 7.1。于是安装 iOS 8.2 模拟器，问题在 8.2 版本的模拟器上重现了！</p>
-<p>经研究，推测为 iOS 8.2 的系统 bug，只要是采用了 TableView 的默认行高，就会出现行高不正确的问题。这个 bug 已经在 iOS 8.3 上得到修复。若要确保 iOS 8.2 系统下也不会出现显示异常，可以采用以下任意一种方式：</p>
-<ol>
-<li>把 TableView 的 Row Height 属性设置为不是默认 44 的值。</li>
-<li>把 TableView 中的 TableViewCell 的 Row Height 属性，选中 Custom。</li>
-</ol>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-06-24T07:41:21.000Z"><a href="/2015/06/24/updated-to-hexo-3-from-2/">Jun 24 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/06/24/updated-to-hexo-3-from-2/">Updated to Hexo 3 from 2</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>我一直在用的静态博客框架 Hexo，在今年 3 月份大版本<a href="https://hexo.io/news/2015/03/05/hexo-3-0-released/" target="_blank" rel="external">升级到了 3.0 版</a>。一直没有从 2.x 升级到 3.x，今天升级并迁移到了最新的 3.1.1，了解了一下 3.x 的变化。<br>官方提供了<a href="https://github.com/hexojs/hexo/wiki/Migrating-from-2.x-to-3.0" target="_blank" rel="external">迁移文档</a>，升级过程很顺畅，安装 hexo-cli 时果然如文档所说 “error occurred”，把老版本的 hexo 先删掉就好。</p>
-<p>有一个地方文档中并未提及，需要格外注意：除了安装 hexo-cli 之外的步骤，都应该在你的 blog 根目录下进行。这也反映出了新版本最大的变化：模块分离。</p>
-<p>首先可以看到，新版本多了一个 <code>hexo-cli</code>，也就是 Hexo command line interface，这也是新版本中唯一需要安装到系统全局的模块。把 CLI 从主模块中分离，可以让 CLI 加载更快，同时能够允许你在不同的目录下维护着不同版本的 hexo blog。</p>
-<p>而其他所有模块，包括 hexo, hexo-server, hexo-deployer, hexo-generator, hexo-renderer 等，都被安装在某一个 blog 的 node_modules 目录下，仅应用于这一个 blog。</p>
-<p>模块分离有利有弊，但大多数情形下是利大于弊的。对于 hexo 来讲，带来最大的利就是，blog 目录下包含着所有需要的内容和程序，受系统环境的限制就能做到尽可能的小。而先前版本的 hexo，blog 目录中仅包含所有的内容，而并不包含程序 – 程序需要调用系统中安装的。设想一下，Alice 在 Bob 家度假，突然想用 Bob 的个人电脑写个博客（假设 Alice 没有带自己的笔记本）。Alice 平常用的是 2.x 版本的 hexo，并把 blog 目录同步到了 Dropbox。而 Bob 用的是 2.y 版本的 hexo，2.x 和 2.y 版本是不完全兼容的。于是，当 Alice 在自己的 blog 目录下执行 hexo 的命令时，可能会出现一些意想不到的错误 – 内容是 2.x 版本的，而程序是 2.y 版本的。</p>
-<p>而如果它们都用了现在模块分离程度更高的版本，那么在 Alice 的 blog 目录中，就同时包含了 3.x 版本的内容和 3.x 版本的程序，虽然 Bob 的电脑上是 3.y 版本，但这并不影响什么 – 因为唯一需要依赖系统的是 hexo-cli，而这个 hexo-cli 只是一个 driver，具体的功能实现都将由 blog 目录中的程序接管。而由于这个 hexo-cli 功能非常简单，所以可以做到非常稳定，不同的版本基本上可以完全兼容。</p>
-<p>这样的大版本更新也是有些副作用的，比如由于 hexo-deployer-git 模块也改变了，之前的 git 提交历史都没有了…</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-06-10T08:27:02.000Z"><a href="/2015/06/10/WWDC-2015/">Jun 10 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/06/10/WWDC-2015/">WWDC 2015</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>今年的 WWDC 没有什么让人兴奋的看点，没有硬件新品，没有突破性改变的软件新品，所带来的都是些稳定性的提高、细节的完善、功能的增强。但其实这也正是苹果目前最应该做的，步子大容易扯着蛋，这句话在 OS X Yosemite 和 iOS 8 上得到了验证。</p>
-<h3 id="New-OS"><a href="#New-OS" class="headerlink" title="New OS"></a>New OS</h3><p>iOS 9，OS X EI Capitan, watch OS 2.</p>
-<p>iOS 9，最让人没想到的是，它竟然还支持 iPhone 4s 和 iPad 2。按照以往的规则，iPhone 4s 和 iPad 2 今年应该被最新版的系统抛弃了。据说苹果对 iOS 9 从底层进行了大量的改造，大幅提高了系统的流畅度和稳定性，所以可以让老设备焕发第二春。可能是因为老设备运行 iOS 8 实在是太不堪入目，苹果想挽回一点儿面子？我迫不及待地把手中已经卡成翔的 iPhone 4s 升级到了 iOS 9 Developer Preview，用了两天，果断降回来了–频繁死机、卡顿，完全没法用，现阶段大家就不要尝试了。放张图给大家看看吧。<br><img src="http://7ktrjm.com1.z0.glb.clouddn.com/blogimg/ios9_devprev_scrshot.jpg" alt="iOS 9 Developer Preview"></p>
-<p>iOS 9 在功能上最大的革新，是 iPad 上支持了多任务分屏，有 Slide Over、Split View、画中画三种模式。再就是 Siri 的搜索更加智能，会根据使用习惯给出建议。其他的都是些小变化了，比如地图支持公交、备忘录变成了个富文本编辑器、Passbook 变成了 Wallet。增加了两个新应用：News 和 Apple Music，估计在国内也没什么用。</p>
-<p>对了，观感上的变化就是换了新的默认字体，英文新字体 San Francisco，中文新字体苹方，看上去还蛮不适应。</p>
-<p>EI Capitan 没给我留下什么印象，还是好好改 bug 吧，把 bug 改好就挺好了…watch OS 2 也没啥说的，好好支持原生应用吧…</p>
-<h3 id="New-tools"><a href="#New-tools" class="headerlink" title="New tools"></a>New tools</h3><p>Xcode 7, Swift 2, New developer program.</p>
-<p>Xcode 7，竟然对在设备上调试不再做限制了，不再需要开发者身份就能直接将程序在任意设备上运行。这着实降低了开发者的入门门槛，但我比较担心这样会不会有空子可钻，毕竟 iOS 平台的应用安全就是靠着层层限制所保证的，一旦 Xcode 这种毫无限制的 Adhoc 被钻了空子，还是很棘手的。</p>
-<p><img src="http://7ktrjm.com1.z0.glb.clouddn.com/blogimg/xcode7_run_on_device.jpg" alt="Xcode 7 run on device"></p>
-<p>Swift 发布了 2.0 版，已经日臻成熟了。</p>
-<p>一个令人兴奋的消息是，Developer Program 以后不再区分 iOS 和 Mac，之前购买的也将升级为新的 Apple Developer Program。以后只需要一个 99 美金就可以同时上架 iOS App Store 和 Mac App Store 了。</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/new_apple_developer_program.jpg" alt="New Apple Developer Program"></p>
-<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>今天看到篇文章，抨击之前 OS X 的中文默认字体，看着还有点意思：<a href="https://qdan.me/list/VXl0z-WpwObF_83e" target="_blank" rel="external">OS X / iOS 六年字体战争</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-30T01:26:28.000Z"><a href="/2015/05/30/Google-I-O-2015/">May 30 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/30/Google-I-O-2015/">Google I/O 2015</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>Google I/O 2015 召开了，虽说今年的 Google I/O 没有像去年一样带来很多新东西，但这次大会不乏让人眼前一亮的内容。</p>
-<p>首先是 Android M，终于把之前粗放的权限管理进行了重新设计，不再像之前那样只是在安装应用的时候通知你一下，而是借鉴了 iOS 更为科学的权限管理方式。Android 最大的问题之一就是权限，希望这次可以真正得到解决。Android M 原生支持了指纹识别，支持了 64 位架构，别的好像也没什么。</p>
-<p>新推出的 Google Photos 看起来蛮不错，自然语言搜索貌似很强大。可以存储无限容量的照片，重要的是免费。当然有些人说之所以免费，是为了要搜集更大量的信息，以提高数据分析的能力。</p>
-<p>还有个很有意思的东西，Cardboard，一个很接地气的 VR 装置，不得不佩服 Google 工程师们在 20% 时间里发挥出的聪明才智。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-29T07:05:11.000Z"><a href="/2015/05/29/gem-install-failed-cannot-load-such-file-openssl/">May 29 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/29/gem-install-failed-cannot-load-such-file-openssl/">“cannot load such file -- openssl” while “gem install”</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>工作用的 iMac 上一直没有安装 CocoaPods，因为曾经安装时遇到了一个错误，然后比较忙就搁置了，以至于搁置到了现在，今天终于把这遗留问题解决了。</p>
-<p><a href="https://cocoapods.org/" target="_blank" rel="external">CocoaPods</a> 是应用于 Xcode 工程的第三方库依赖管理工具，可以非常方便地管理工程所需要引用的第三方库。由于它是用 ruby 开发的，所以在 Mac 上安装它是一个非常简单的事情：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo gem install cocoapods</div></pre></td></tr></table></figure>
-<p>但是当我执行这个命令时，却得到了错误的反馈：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ERROR:  Loading <span class="built_in">command</span>: install (LoadError)</div><div class="line">	cannot load such file -- openssl</div><div class="line">ERROR:  While executing gem ... (NoMethodError)</div><div class="line">    undefined method `invoke_with_build_args<span class="string">' for nil:NilClass</span></div></pre></td></tr></table></figure>
-<p>其实此时不只是安装 CocoaPods，安装其他大部分的 gem 都会是这个结局，因为找不到 openssl，无法建立加密连接，也就无法开始下载。</p>
-<p>系统中是有 openssl 的，而且 openssl 可以正常工作，只是 ruby 找不到它。至于为什么突然找不到了，那就不太清楚了，推测可能是更新 OS X 时引发的问题吧。试了很多方法，各种不奏效，最后通过以下的方法解决了。大体思路是用 rvm 重新安装 openssl，然后重新安装 ruby，并指定 openssl 的路径。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rvm pkg install openssl</div><div class="line">rvm reinstall ruby-2.1 --with-openssl-dir=<span class="variable">$rvm_path</span>/usr</div></pre></td></tr></table></figure>
-<p>都安装完成之后，就可以正常 <code>gem install</code> 啦。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-05-22T08:40:57.000Z"><a href="/2015/05/22/baidumap-memory-not-be-freed/">May 22 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/05/22/baidumap-memory-not-be-freed/">百度地图 (iOS SDK) 内存不回收</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>情景：有一个列表，点击列表中的某一条目后，进入详情页面，详情页面是一个地图。</p>
-<p>环境：百度地图 iOS SDK v2.7.0</p>
-<p>测试人员发现，从列表反复多次进入详情（push, pop, push, pop, …），五六次后程序崩溃。查看日志，发现是 Received Memory Warning。</p>
-<p>通过 Xcode 的 Debug Navigator 监测，发现每进入一次地图页面，内存即增加占用约 20MB，但返回后内存并不回收。于是内存占用逐渐增多，直至被 kill。</p>
-<p>继续监测程序的运行，发现地图页面在 pop 时，dealloc 方法并没有被执行，所以整个详情页面，包括地图，一直没有从内存中被 dealloc。</p>
-<p>最终发现，除了百度地图的 mapView，在 self.view 上还有另一个 subview，而正因为这个 subview 没有 removeFromSuperView，导致了内存一直不能被回收。</p>
-<p>含有百度地图的 viewWillDisappear 里一般是这样写的：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)viewWillDisappear:(<span class="built_in">BOOL</span>)animated &#123;</div><div class="line">    [_bmkMapView viewWillDisappear];</div><div class="line">    [_bmkMapView setDelegate:<span class="literal">nil</span>];</div><div class="line">    [<span class="keyword">super</span> viewWillDisappear:animated];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>但此时需要这样写：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)viewWillDisappear:(<span class="built_in">BOOL</span>)animated &#123;</div><div class="line">    [_bmkMapView viewWillDisappear];</div><div class="line">    [_bmkMapView setDelegate:<span class="literal">nil</span>];</div><div class="line">    <span class="keyword">for</span> (<span class="built_in">UIView</span> *view <span class="keyword">in</span> [<span class="keyword">self</span>.view subviews]) &#123;</div><div class="line">        [view removeFromSuperview];</div><div class="line">    &#125;</div><div class="line">    [<span class="keyword">super</span> viewWillDisappear:animated];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>另外，还有一些其他的情形也可能造成此类问题，基本原理是一致的，都是因为还有某个对象被引用着。内存的管理还是得加小心啊。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -488,23 +456,23 @@
   <ul class="entry">
     
       <li>
-        <a href="/2016/07/05/changes-about-programming-thinking-in-swift/">Swift 编程思路的变化</a>
+        <a href="/2016/08/14/download-on-the-app-store-image/">Image of &quot;Download on the App Store&quot;</a>
       </li>
     
       <li>
-        <a href="/2016/07/03/iap-take-effect-later-than-app-release/">应用上线后 IAP 商品不会立即生效</a>
+        <a href="/2016/08/10/the-new-media-manager-on-itunes-connect/">The new Media Manager on iTunes Connect</a>
       </li>
     
       <li>
-        <a href="/2016/06/30/the-strict-sapprft/">管理宽广而严格的广电总局</a>
+        <a href="/2016/08/08/ui-activity-view-controller/">UIActivityViewController</a>
       </li>
     
       <li>
-        <a href="/2016/06/18/battery-drainer-gpsd/">Battery drainer gpsd</a>
+        <a href="/2016/08/01/input-char-by-hex-unicode-on-mac/">Input character by hex unicode on mac</a>
       </li>
     
       <li>
-        <a href="/2016/06/17/imei-missing-after-downgrade-samsung-s4/">IMEI missing after downgrade Samsung S4</a>
+        <a href="/2016/07/30/emoji-bug-of-ciji/">Emoji bug of Ciji</a>
       </li>
     
   </ul>
@@ -515,7 +483,7 @@
 <div class="widget tagcloud">
   <h3 class="title">标签云</h3>
   <div class="entry">
-    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 12px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 10px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
+    <a href="/tags/Net/" style="font-size: 10px;">.Net</a> <a href="/tags/Algorithm/" style="font-size: 12px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 18px;">Android</a> <a href="/tags/App/" style="font-size: 10px;">App</a> <a href="/tags/Apple/" style="font-size: 12px;">Apple</a> <a href="/tags/Autolayout/" style="font-size: 10px;">Autolayout</a> <a href="/tags/BaiduMap/" style="font-size: 10px;">BaiduMap</a> <a href="/tags/Bluetooth/" style="font-size: 10px;">Bluetooth</a> <a href="/tags/CoreLocation/" style="font-size: 10px;">CoreLocation</a> <a href="/tags/DDOS/" style="font-size: 10px;">DDOS</a> <a href="/tags/Debug/" style="font-size: 10px;">Debug</a> <a href="/tags/Design/" style="font-size: 10px;">Design</a> <a href="/tags/Document/" style="font-size: 10px;">Document</a> <a href="/tags/Eclipse/" style="font-size: 10px;">Eclipse</a> <a href="/tags/Evernote/" style="font-size: 10px;">Evernote</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/History/" style="font-size: 10px;">History</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Launchpad/" style="font-size: 10px;">Launchpad</a> <a href="/tags/Mac/" style="font-size: 12px;">Mac</a> <a href="/tags/Mac-OS-X/" style="font-size: 16px;">Mac OS X</a> <a href="/tags/Memory/" style="font-size: 10px;">Memory</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NOIP/" style="font-size: 10px;">NOIP</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/Quartz/" style="font-size: 10px;">Quartz</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Server/" style="font-size: 10px;">Server</a> <a href="/tags/Swift/" style="font-size: 12px;">Swift</a> <a href="/tags/TableView/" style="font-size: 12px;">TableView</a> <a href="/tags/Translation/" style="font-size: 12px;">Translation</a> <a href="/tags/UI/" style="font-size: 12px;">UI</a> <a href="/tags/UIFont/" style="font-size: 10px;">UIFont</a> <a href="/tags/UINavigationController/" style="font-size: 10px;">UINavigationController</a> <a href="/tags/View-Hierarchy/" style="font-size: 10px;">View Hierarchy</a> <a href="/tags/Virus/" style="font-size: 10px;">Virus</a> <a href="/tags/Visual-Studio/" style="font-size: 10px;">Visual Studio</a> <a href="/tags/WWDC/" style="font-size: 10px;">WWDC</a> <a href="/tags/Web/" style="font-size: 12px;">Web</a> <a href="/tags/Windows-server/" style="font-size: 10px;">Windows server</a> <a href="/tags/WireLurker/" style="font-size: 10px;">WireLurker</a> <a href="/tags/Xcode/" style="font-size: 10px;">Xcode</a> <a href="/tags/Xcode6/" style="font-size: 14px;">Xcode6</a> <a href="/tags/computer/" style="font-size: 10px;">computer</a> <a href="/tags/font/" style="font-size: 12px;">font</a> <a href="/tags/gem/" style="font-size: 10px;">gem</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/gmail/" style="font-size: 10px;">gmail</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/hexo/" style="font-size: 16px;">hexo</a> <a href="/tags/iBeacon/" style="font-size: 10px;">iBeacon</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/iTunes-Connect/" style="font-size: 12px;">iTunes Connect</a> <a href="/tags/jailbreak/" style="font-size: 10px;">jailbreak</a> <a href="/tags/lpk-dll/" style="font-size: 10px;">lpk.dll</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/program/" style="font-size: 10px;">program</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/谜题/" style="font-size: 10px;">谜题</a> <a href="/tags/递归/" style="font-size: 10px;">递归</a>
   </div>
 </div>
 
