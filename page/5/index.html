@@ -67,6 +67,42 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-02-26T07:05:34.000Z"><a href="/2016/02/26/apple-wwdr-intermediate-certificate-expired/">Feb 26 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/02/26/apple-wwdr-intermediate-certificate-expired/">苹果证书签发者过期</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天在向 App Store 提交程序包时，突然提示以下错误：<br><img src="http://stoneark.qiniudn.com/blogimg%2Fapple_wwdrca_expired_0.png" alt=""></p>
+<p>查看钥匙串访问，发现机器上所有的苹果开发者证书、发布证书，状态都变成了“此证书的签发者无效”：<br><img src="http://stoneark.qiniudn.com/blogimg%2Fapple_wwdrca_expired_1.png" alt=""></p>
+<p>搜索证书的签发者 Apple Worldwide Developer Relations Certification Authority，发现证书已于 2016 年 2 月 15 日过期。如果没有找到这个证书签发者，确保在左下方种类中选择了“所有项目”，并在菜单中找到“显示-&gt;显示已过期的证书”。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fapple_wwdrca_expired_2.png" alt=""></p>
+<p>苹果开发者网站上也已经做了<a href="https://developer.apple.com/support/certificates/expiration/" target="_blank" rel="external">证书过期声明</a> ，在其中可以找到证书下载链接：<a href="https://developer.apple.com/certificationauthority/AppleWWDRCA.cer" target="_blank" rel="external">https://developer.apple.com/certificationauthority/AppleWWDRCA.cer</a>。下载并导入新的证书，并把旧证书删掉即可，这一次证书的有效期直到北京时间 2023 年 2 月 8 日。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fapple_wwdrca_expired_3.png" alt=""></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-01-29T03:12:46.000Z"><a href="/2016/01/29/NSAttributedString-image-vertically-center-alignment/">Jan 29 2016</a></time>
       
       
@@ -392,46 +428,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-09-18T06:02:09.000Z"><a href="/2015/09/18/UIAlertView-without-title/">Sep 18 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/09/18/UIAlertView-without-title/">UIAlertView without title</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>UIAlertView 是支持无标题的。如果传空字符串，即为没有标题，只显示内容；如果传 nil，则会把内容放到标题上。</p>
-<p>1、title 传空字符串，即：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@&quot;&quot; message:@&quot;您确定要退出此帐号吗？&quot; delegate:self cancelButtonTitle:@&quot;取消&quot; otherButtonTitles:@&quot;确认&quot;, nil];</div></pre></td></tr></table></figure>
-<p><img src="http://stoneark.qiniudn.com/blogimg/uialertview_without_title_1.png" alt=""></p>
-<p>2、title 传 nil，即：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@&quot;您确定要退出此帐号吗？&quot; delegate:self cancelButtonTitle:@&quot;取消&quot; otherButtonTitles:@&quot;确认&quot;, nil];</div></pre></td></tr></table></figure>
-<p><img src="http://stoneark.qiniudn.com/blogimg/uialertview_without_title_2.png" alt=""></p>
-<p>另外，如果需要自定义 AlertView 的样式，可以采用开源的 <a href="https://github.com/Friend-LGA/LGAlertView" target="_blank" rel="external">LGAlertView</a>。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -456,6 +452,10 @@
   <ul class="entry">
     
       <li>
+        <a href="/2016/09/21/macos-sierra-comes/">macOS Sierra comes</a>
+      </li>
+    
+      <li>
         <a href="/2016/08/14/download-on-the-app-store-image/">Image of &quot;Download on the App Store&quot;</a>
       </li>
     
@@ -469,10 +469,6 @@
     
       <li>
         <a href="/2016/08/01/input-char-by-hex-unicode-on-mac/">Input character by hex unicode on mac</a>
-      </li>
-    
-      <li>
-        <a href="/2016/07/30/emoji-bug-of-ciji/">Emoji bug of Ciji</a>
       </li>
     
   </ul>

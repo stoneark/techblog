@@ -67,6 +67,46 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-09-18T06:02:09.000Z"><a href="/2015/09/18/UIAlertView-without-title/">Sep 18 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/09/18/UIAlertView-without-title/">UIAlertView without title</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>UIAlertView 是支持无标题的。如果传空字符串，即为没有标题，只显示内容；如果传 nil，则会把内容放到标题上。</p>
+<p>1、title 传空字符串，即：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@&quot;&quot; message:@&quot;您确定要退出此帐号吗？&quot; delegate:self cancelButtonTitle:@&quot;取消&quot; otherButtonTitles:@&quot;确认&quot;, nil];</div></pre></td></tr></table></figure>
+<p><img src="http://stoneark.qiniudn.com/blogimg/uialertview_without_title_1.png" alt=""></p>
+<p>2、title 传 nil，即：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@&quot;您确定要退出此帐号吗？&quot; delegate:self cancelButtonTitle:@&quot;取消&quot; otherButtonTitles:@&quot;确认&quot;, nil];</div></pre></td></tr></table></figure>
+<p><img src="http://stoneark.qiniudn.com/blogimg/uialertview_without_title_2.png" alt=""></p>
+<p>另外，如果需要自定义 AlertView 的样式，可以采用开源的 <a href="https://github.com/Friend-LGA/LGAlertView" target="_blank" rel="external">LGAlertView</a>。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-07-06T02:42:42.000Z"><a href="/2015/07/06/MBProgressHUD-and-UITableView-section-header/">Jul 6 2015</a></time>
       
       
@@ -422,66 +462,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-02-11T08:52:49.000Z"><a href="/2015/02/11/branching-model-summary/">Feb 11 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/02/11/branching-model-summary/">分支策略总结</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>前几日在发布新版本时，发现 SVN 的分支策略有问题，然后读了 <a href="../../../../2015/02/03/common-branching-patterns-translation-part-one">SVN 的常见分支模式</a>，依照文章里的模式改变了分支策略，貌似解决了问题。但我对之前用的策略还是念念不忘，经过调查和思考，得出结论：之前用的策略也没有问题，and what’s more，那是 Git 更常用的分支模式，但更适合于开发流程规范、并严格遵循的项目。</p>
-<p>在 Git 分支模型的阐述上，Vincent Driessen 的 <a href="http://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a> 是一篇很多人认为不错的文章，译文也已经有好几篇了：<a href="http://www.oschina.net/translate/a-successful-git-branching-model">介绍一个成功的 Git 分支模型</a>，<a href="http://jiongks.name/blog/a-successful-git-branching-model/">Git 分支的最佳实践</a>，<a href="http://www.juvenxu.com/2010/11/28/a-successful-git-branching-model/">一个成功的Git分支模型</a>。</p>
-<p>个人认为，这篇文章阐述的分支模型是非常不错的，但遣词造句上实在有些繁琐，读起来很费劲，不过绝对值得一读。</p>
-<p>下面是我对分支策略的总结。</p>
-<h3 id="Subversion-和-Git"><a href="#Subversion-和-Git" class="headerlink" title="Subversion 和 Git"></a>Subversion 和 Git</h3><ol>
-<li>Git 是分布式的版本控制系统，所有人都拥有一个仓库，而不仅仅是一个 working copy。但依然要有一个远端的中心，称为 origin。相对的，Subversion 是集中式的版本控制系统，仓库只在远端。</li>
-<li>Subversion 的三大部分是 trunk、branches、tags，即主干、分支、标记。相对的，Git 没有 trunk 的概念，主干可以认为是 master 分支，也是分支之一。</li>
-<li>Git 的分支才是真正意义上的分支。相对的，Subversion 在本质上不存在分支，所谓分支只是目录的拷贝。</li>
-<li>Git 在分支与合并方面是简单易行的。相对的，Subversion 的分支与合并总是让人恐惧。</li>
-</ol>
-<h3 id="分支模式一（Git-风格）"><a href="#分支模式一（Git-风格）" class="headerlink" title="分支模式一（Git 风格）"></a>分支模式一（Git 风格）</h3><ol>
-<li>长期分支有主分支（master）和开发分支（develop），短期分支有特性分支（feature）、预发布分支（release）、补丁分支（hotfix）。</li>
-<li>master 分支，始终 <strong>仅</strong> 保存每次发布的版本，HEAD 则指向当前发布的最新版本。日常的开发工作不直接在主分支进行。</li>
-<li>develop 分支，其中为 <strong>下一次</strong> 要发布的版本（而不包含下次的下次发布应包含的功能）。</li>
-<li>feature 分支，开发某项新特性时使用。这项特性可能在下一次发布时加入软件，也可能在下次的下次发布时才加入软件。也有可能是实验性质的特性，最终可能得以加入软件，也可能效果不好直接抛弃。它应从 develop 分支出，开发完毕后合并回 develop 或直接丢弃。注意并回的时机，是要在 <strong>下次发布的版本</strong> 中引入这个特性时，而 <strong>不是</strong> 下次的下次发布时。合并完毕后，应将这个 feature 分支删除。</li>
-<li>release 分支，在某一版本准备发布时使用。在 develop 分支已经可以进入发布前的测试时，从 develop 分支出，命名为 <code>release-1.0</code>。测试过程中的 bug 修复，应提交到该分支。测试结束可以发布时，将该分支合并回 master 分支和 develop 分支，并给 master 分支打一个 tag（如 1.0）。然后，将这个 release 分支删除。需要注意的是，合并回 master，是因为这将成为一个新的发布版本；合并回 develop，是为了将 release 分支中对 bug 的修复也合并回 develop 分支，更好的方式是随着测试而不断地将 bug 修复合并回 develop，避免最后才一次性合并。</li>
-<li>hotfix 分支，在线上版本出现 bug 需要紧急修复时使用。在 master 分支出，命名为 <code>hotfix-1.0.1</code>。在完成修复代码并通过测试后，合并回 master 和 develop，并对 master 打一个 tag（如 1.0.1）。然后，将这个 hotfix 分支删除。</li>
-</ol>
-<h3 id="分支模式二（Subversion-风格）"><a href="#分支模式二（Subversion-风格）" class="headerlink" title="分支模式二（Subversion 风格）"></a>分支模式二（Subversion 风格）</h3><ol>
-<li>trunk 主干，日常的开发工作直接在 trunk 进行。</li>
-<li>长期分支有发布分支（release），短期分支有特性分支（feature）。</li>
-<li>release 分支，在某一版本准备发布时使用。在 trunk 中的开发已经可以进入发布前的测试时，从 trunk 分支出，命名为 <code>release-1.0</code>。测试过程中的 bug 修复，应提交到该分支。测试结束可以发布时，将该分支合并回 trunk，并给该 release 分支打一个 tag（如 1.0）。注意，这个 release 分支将 <strong>永久保留</strong> ，之后的 hotfix 也将在此分支进行。</li>
-<li>feature 分支，开发某项新特性时使用。这与分支模式一里的 feature 分支完全相同，唯一不同的是，它从 trunk 分支出，并最终合并回 trunk 或直接丢弃，最后被删除。</li>
-</ol>
-<h3 id="Then-which-one"><a href="#Then-which-one" class="headerlink" title="Then which one?"></a>Then which one?</h3>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2015/02/11/branching-model-summary/#more" class="more-link">Read More</a>
-          </div>
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -506,6 +486,10 @@
   <ul class="entry">
     
       <li>
+        <a href="/2016/09/21/macos-sierra-comes/">macOS Sierra comes</a>
+      </li>
+    
+      <li>
         <a href="/2016/08/14/download-on-the-app-store-image/">Image of &quot;Download on the App Store&quot;</a>
       </li>
     
@@ -519,10 +503,6 @@
     
       <li>
         <a href="/2016/08/01/input-char-by-hex-unicode-on-mac/">Input character by hex unicode on mac</a>
-      </li>
-    
-      <li>
-        <a href="/2016/07/30/emoji-bug-of-ciji/">Emoji bug of Ciji</a>
       </li>
     
   </ul>

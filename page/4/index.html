@@ -67,6 +67,47 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-04-14T07:03:06.000Z"><a href="/2016/04/14/ejs-template/">Apr 14 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/04/14/ejs-template/">EJS template</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>与所有软件开发一样，Web 开发中也会面对着逻辑和数据。将逻辑和数据分开，是良好的工程结构必须做到的，否则代码会混乱不堪。而很不幸的是，用 JavaScript 去生成 HTML 时，往往就会都杂糅到一块儿。</p>
+<p><a href="http://www.embeddedjs.com" target="_blank" rel="external">EJS</a> 就是一个 JavaScript 的模版类，可以将逻辑写成一个 HTML 模版，并把数据分离出去。包括 hexo, Express.js 等框架中也都采用了 EJS。</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/ejs_template.png" alt="EJS"></p>
+<p>其最主要的是 <code>&lt;% js代码 %&gt;</code> 和 <code>&lt;%= 表达式 %&gt;</code> 两个语句。前者会执行里面的 js 代码，后者会将里面的表达式直接输出到 HTML 中。</p>
+<p>如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;% <span class="keyword">if</span> (gender==<span class="number">0</span>) &#123; %&gt;</div><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">%=</span> '<span class="attr">Male</span>' %&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">%</span> &#125; <span class="attr">else</span> <span class="attr">if</span> (<span class="attr">gender</span>==<span class="string">1)</span> &#123; %&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%=</span> '<span class="attr">Female</span>' %&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%</span> &#125; <span class="attr">else</span> &#123; %&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%=</span> '<span class="attr">Unknown</span>' %&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></div></pre></td></tr></table></figure>
+<p>简单的判断，也可用问号表达式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;%= a&gt;<span class="number">10</span> ? <span class="string">'Success'</span> : <span class="string">'Failed'</span> %&gt;</div></pre></td></tr></table></figure>
+<p>需要注意，开括号<code>&lt;%</code>的右侧和内容之间、闭括号<code>%&gt;</code>的左侧和内容之间，一定要留有空格，否则会报错。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-03-27T09:17:46.000Z"><a href="/2016/03/27/Android-hide-soft-keyboard/">Mar 27 2016</a></time>
       
       
@@ -410,42 +451,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-02-26T07:05:34.000Z"><a href="/2016/02/26/apple-wwdr-intermediate-certificate-expired/">Feb 26 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/02/26/apple-wwdr-intermediate-certificate-expired/">苹果证书签发者过期</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>今天在向 App Store 提交程序包时，突然提示以下错误：<br><img src="http://stoneark.qiniudn.com/blogimg%2Fapple_wwdrca_expired_0.png" alt=""></p>
-<p>查看钥匙串访问，发现机器上所有的苹果开发者证书、发布证书，状态都变成了“此证书的签发者无效”：<br><img src="http://stoneark.qiniudn.com/blogimg%2Fapple_wwdrca_expired_1.png" alt=""></p>
-<p>搜索证书的签发者 Apple Worldwide Developer Relations Certification Authority，发现证书已于 2016 年 2 月 15 日过期。如果没有找到这个证书签发者，确保在左下方种类中选择了“所有项目”，并在菜单中找到“显示-&gt;显示已过期的证书”。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fapple_wwdrca_expired_2.png" alt=""></p>
-<p>苹果开发者网站上也已经做了<a href="https://developer.apple.com/support/certificates/expiration/" target="_blank" rel="external">证书过期声明</a> ，在其中可以找到证书下载链接：<a href="https://developer.apple.com/certificationauthority/AppleWWDRCA.cer" target="_blank" rel="external">https://developer.apple.com/certificationauthority/AppleWWDRCA.cer</a>。下载并导入新的证书，并把旧证书删掉即可，这一次证书的有效期直到北京时间 2023 年 2 月 8 日。<br><img src="http://stoneark.qiniudn.com/blogimg%2Fapple_wwdrca_expired_3.png" alt=""></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -470,6 +475,10 @@
   <ul class="entry">
     
       <li>
+        <a href="/2016/09/21/macos-sierra-comes/">macOS Sierra comes</a>
+      </li>
+    
+      <li>
         <a href="/2016/08/14/download-on-the-app-store-image/">Image of &quot;Download on the App Store&quot;</a>
       </li>
     
@@ -483,10 +492,6 @@
     
       <li>
         <a href="/2016/08/01/input-char-by-hex-unicode-on-mac/">Input character by hex unicode on mac</a>
-      </li>
-    
-      <li>
-        <a href="/2016/07/30/emoji-bug-of-ciji/">Emoji bug of Ciji</a>
       </li>
     
   </ul>

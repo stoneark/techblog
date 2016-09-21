@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.stoneark.org/"/>
-  <updated>2016-08-26T06:17:59.000Z</updated>
+  <updated>2016-09-21T01:57:40.000Z</updated>
   <id>http://blog.stoneark.org/</id>
   
   <author>
@@ -14,6 +14,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>macOS Sierra comes</title>
+    <link href="http://blog.stoneark.org/2016/09/21/macos-sierra-comes/"/>
+    <id>http://blog.stoneark.org/2016/09/21/macos-sierra-comes/</id>
+    <published>2016-09-21T01:55:32.000Z</published>
+    <updated>2016-09-21T01:57:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>macOS Sierra 正式版已上架 Mac App Store！</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/macos_sierra_comes.png" alt="macOS Sierra"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;macOS Sierra 正式版已上架 Mac App Store！&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://stoneark.qiniudn.com/blogimg/macos_sierra_comes.png&quot; alt=&quot;macOS Sierra&quot;&gt;&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Image of &quot;Download on the App Store&quot;</title>
@@ -693,39 +715,6 @@
     
     
       <category term="Design" scheme="http://blog.stoneark.org/tags/Design/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Local notification changes after iOS 8</title>
-    <link href="http://blog.stoneark.org/2016/05/17/local-notification-changes-after-iOS-8/"/>
-    <id>http://blog.stoneark.org/2016/05/17/local-notification-changes-after-iOS-8/</id>
-    <published>2016-05-17T07:39:12.000Z</published>
-    <updated>2016-07-21T07:15:31.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>大多数 iOS 开发者应该知道，在 iOS 8 的时候推送通知的开发有了些变化。主要体现在一些命名的变化（Remote 改为 User），另外相对之前只需要一句代码就能解决，现在需要多一些步骤。但总的来说改变并不大，实现原理并未改变。</p>
-<p>如 iOS 7:</p>
-<figure class="highlight objc"><figcaption><span>iOS 7</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerForRemoteNotificationTypes:(</div><div class="line">	<span class="built_in">UIRemoteNotificationTypeAlert</span> |</div><div class="line">	<span class="built_in">UIRemoteNotificationTypeBadge</span> | </div><div class="line">	<span class="built_in">UIRemoteNotificationTypeSound</span> )];</div></pre></td></tr></table></figure>
-<p>iOS 8:</p>
-<figure class="highlight objc"><figcaption><span>iOS 8</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">UIUserNotificationType</span> notificationTypes = <span class="built_in">UIUserNotificationTypeBadge</span> | <span class="built_in">UIUserNotificationTypeSound</span> | <span class="built_in">UIUserNotificationTypeAlert</span>;</div><div class="line"><span class="built_in">UIUserNotificationSettings</span> *notificationSettings = [<span class="built_in">UIUserNotificationSettings</span> settingsForTypes:notificationTypes categories:<span class="literal">nil</span>];</div><div class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerUserNotificationSettings:notificationSettings];</div><div class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerForRemoteNotifications];</div></pre></td></tr></table></figure>
-<p>虽然很多人早就已经知道并在实践中作出了改变，但可能依然有些人并不知道 iOS 做出这种改变的原因。</p>
-<p>原因是要对本地通知进行规范，并与远程推送通知进行统一。</p>
-<p>之前对于本地通知，是无需取得用户授权的，只有远程推送类型的通知需要申请用户授权。上面的那些代码也只是针对远程通知来说的（所以它们之前的命名中都带有”Remote”字眼），本地通知根本无须注册，直接发送通知就好了。但其实这并不合理。</p>
-<p>进行改变之后，本地通知跟远程推送通知的概念进行了统一，它们唯一的不同只是消息来源的不同。所以本地通知也需要进行授权。</p>
-<p>在代码上，它们的注册也只有一句代码的差距：如果只需要本地通知，则不书写最后的一句：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerForRemoteNotifications];</div></pre></td></tr></table></figure>
-<p>即可。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;大多数 iOS 开发者应该知道，在 iOS 8 的时候推送通知的开发有了些变化。主要体现在一些命名的变化（Remote 改为 User），另外相对之前只需要一句代码就能解决，现在需要多一些步骤。但总的来说改变并不大，实现原理并未改变。&lt;/p&gt;
-&lt;p&gt;如 iOS 7:&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="iOS" scheme="http://blog.stoneark.org/tags/iOS/"/>
     
   </entry>
   

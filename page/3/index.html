@@ -67,6 +67,50 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-05-17T07:39:12.000Z"><a href="/2016/05/17/local-notification-changes-after-iOS-8/">May 17 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/05/17/local-notification-changes-after-iOS-8/">Local notification changes after iOS 8</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>大多数 iOS 开发者应该知道，在 iOS 8 的时候推送通知的开发有了些变化。主要体现在一些命名的变化（Remote 改为 User），另外相对之前只需要一句代码就能解决，现在需要多一些步骤。但总的来说改变并不大，实现原理并未改变。</p>
+<p>如 iOS 7:</p>
+<figure class="highlight objc"><figcaption><span>iOS 7</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerForRemoteNotificationTypes:(</div><div class="line">	<span class="built_in">UIRemoteNotificationTypeAlert</span> |</div><div class="line">	<span class="built_in">UIRemoteNotificationTypeBadge</span> | </div><div class="line">	<span class="built_in">UIRemoteNotificationTypeSound</span> )];</div></pre></td></tr></table></figure>
+<p>iOS 8:</p>
+<figure class="highlight objc"><figcaption><span>iOS 8</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">UIUserNotificationType</span> notificationTypes = <span class="built_in">UIUserNotificationTypeBadge</span> | <span class="built_in">UIUserNotificationTypeSound</span> | <span class="built_in">UIUserNotificationTypeAlert</span>;</div><div class="line"><span class="built_in">UIUserNotificationSettings</span> *notificationSettings = [<span class="built_in">UIUserNotificationSettings</span> settingsForTypes:notificationTypes categories:<span class="literal">nil</span>];</div><div class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerUserNotificationSettings:notificationSettings];</div><div class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerForRemoteNotifications];</div></pre></td></tr></table></figure>
+<p>虽然很多人早就已经知道并在实践中作出了改变，但可能依然有些人并不知道 iOS 做出这种改变的原因。</p>
+<p>原因是要对本地通知进行规范，并与远程推送通知进行统一。</p>
+<p>之前对于本地通知，是无需取得用户授权的，只有远程推送类型的通知需要申请用户授权。上面的那些代码也只是针对远程通知来说的（所以它们之前的命名中都带有”Remote”字眼），本地通知根本无须注册，直接发送通知就好了。但其实这并不合理。</p>
+<p>进行改变之后，本地通知跟远程推送通知的概念进行了统一，它们唯一的不同只是消息来源的不同。所以本地通知也需要进行授权。</p>
+<p>在代码上，它们的注册也只有一句代码的差距：如果只需要本地通知，则不书写最后的一句：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[<span class="built_in">UIApplication</span> sharedApplication] registerForRemoteNotifications];</div></pre></td></tr></table></figure>
+<p>即可。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-05-14T07:31:04.000Z"><a href="/2016/05/14/iCloud-development/">May 14 2016</a></time>
       
       
@@ -434,47 +478,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-04-14T07:03:06.000Z"><a href="/2016/04/14/ejs-template/">Apr 14 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/04/14/ejs-template/">EJS template</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>与所有软件开发一样，Web 开发中也会面对着逻辑和数据。将逻辑和数据分开，是良好的工程结构必须做到的，否则代码会混乱不堪。而很不幸的是，用 JavaScript 去生成 HTML 时，往往就会都杂糅到一块儿。</p>
-<p><a href="http://www.embeddedjs.com" target="_blank" rel="external">EJS</a> 就是一个 JavaScript 的模版类，可以将逻辑写成一个 HTML 模版，并把数据分离出去。包括 hexo, Express.js 等框架中也都采用了 EJS。</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/ejs_template.png" alt="EJS"></p>
-<p>其最主要的是 <code>&lt;% js代码 %&gt;</code> 和 <code>&lt;%= 表达式 %&gt;</code> 两个语句。前者会执行里面的 js 代码，后者会将里面的表达式直接输出到 HTML 中。</p>
-<p>如：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;% <span class="keyword">if</span> (gender==<span class="number">0</span>) &#123; %&gt;</div><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">%=</span> '<span class="attr">Male</span>' %&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">%</span> &#125; <span class="attr">else</span> <span class="attr">if</span> (<span class="attr">gender</span>==<span class="string">1)</span> &#123; %&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%=</span> '<span class="attr">Female</span>' %&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%</span> &#125; <span class="attr">else</span> &#123; %&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%=</span> '<span class="attr">Unknown</span>' %&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></div></pre></td></tr></table></figure>
-<p>简单的判断，也可用问号表达式：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;%= a&gt;<span class="number">10</span> ? <span class="string">'Success'</span> : <span class="string">'Failed'</span> %&gt;</div></pre></td></tr></table></figure>
-<p>需要注意，开括号<code>&lt;%</code>的右侧和内容之间、闭括号<code>%&gt;</code>的左侧和内容之间，一定要留有空格，否则会报错。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -499,6 +502,10 @@
   <ul class="entry">
     
       <li>
+        <a href="/2016/09/21/macos-sierra-comes/">macOS Sierra comes</a>
+      </li>
+    
+      <li>
         <a href="/2016/08/14/download-on-the-app-store-image/">Image of &quot;Download on the App Store&quot;</a>
       </li>
     
@@ -512,10 +519,6 @@
     
       <li>
         <a href="/2016/08/01/input-char-by-hex-unicode-on-mac/">Input character by hex unicode on mac</a>
-      </li>
-    
-      <li>
-        <a href="/2016/07/30/emoji-bug-of-ciji/">Emoji bug of Ciji</a>
       </li>
     
   </ul>
