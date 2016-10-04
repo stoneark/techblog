@@ -67,6 +67,46 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-02-29T08:52:47.000Z"><a href="/2016/02/29/recent-developer-interviews/">Feb 29 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/02/29/recent-developer-interviews/">最近开发人员招聘情况</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>作为整个技术团队的负责人，日常工作中十分重要的一项就是人才的引进，对于技术团队的发展来讲更是至关重要。</p>
+<p>年后算是一个跳槽的高峰时段，投简历和来公司面试的也不少，但是合适的并不多。现在的程序员市场有这么几个特点：</p>
+<ol>
+<li>培训热度持续走高，尤其是 iOS 培训。越来越多的人想通过培训进入软件行业，其教育背景也不再只是计算机相关专业。最近我看到的简历里，很多求职者之前的职业五花八门，如面点师、仓库管理员、销售人员、公关人员、建筑设计师。这足以说明程序员被越来越多的人认为是一个体面、高薪、有前途的职业。</li>
+<li>培训质量有所下降，出现简历造假现象。我并不排斥培训，我也见过刚培训完成后，理论知识和实践能力都蛮不错的求职者。但相当多数的求职者，虽然刚培训完，一些基本的问题都还回答不清楚，更别提自己学习一些培训以外的知识了。通过看简历就能知道培训机构现在在教什么，比如 Java 现在的培训项目肯定是云笔记。另外，据说很多机构会引导求职者简历造假。有意思的是，我曾经看到一份简历，他简历中写的一个项目，是我从头到尾一直跟着的，所有参与过这个项目的人我都知道，可是我根本不认识这个人。</li>
+<li>有些已经有两三年工作经验的人，一直在一家公司做一件事，也没有自己另外多学些东西做些东西，导致他的实际技术水平并不高，但被自己的工作年限蒙蔽了双眼，觉得自己很厉害了。他们肯定也能找到不错的工作，但我的团队是不需要的，未来的路也不会宽广吧。</li>
+</ol>
+<p>我希望我的团队成员，是真正有技术感的人，而不是为了生存、为了薪水所以才做技术的人。如果你真正希望一起提高技术，做最好的产品，那就联系我吧！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-02-26T07:05:34.000Z"><a href="/2016/02/26/apple-wwdr-intermediate-certificate-expired/">Feb 26 2016</a></time>
       
       
@@ -390,44 +430,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-10-19T08:45:16.000Z"><a href="/2015/10/19/instant-message-services/">Oct 19 2015</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/10/19/instant-message-services/">第三方即时通讯服务</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>越来越多的移动 App 加入了即时通讯功能，目前也有越来越多的第三方即时通讯服务供开发者选择。如 <a href="http://www.easemob.com/" target="_blank" rel="external">环信</a>、<a href="http://www.rongcloud.cn/" target="_blank" rel="external">融云</a>、<a href="https://imwukong.com" target="_blank" rel="external">阿里悟空</a>、<a href="http://www.yuntongxun.com/" target="_blank" rel="external">容联云通讯</a>、<a href="https://leancloud.cn/" target="_blank" rel="external">LeanCloud</a>、<a href="http://bmob.cn/" target="_blank" rel="external">Bmob</a> 等。</p>
-<p>环信，最早的专门做移动通讯服务的团队之一。其功能很丰富，具有完善的用户系统、群系统等，也是为数不多能提供视频通话的服务。Demo 完成度也很高，但是工程结构一般。其通讯核心部分封装为了环信 SDK，以 .a 文件的方式打包发布，同时提供 cocoapods 方式引入（但更新很不及时）。UI 部分并未进行很好的组织，仅是在 Demo 中以源代码的形式提供，且代码质量一般。如果要调整 UI，只能在 Demo 源代码的基础上修改，或者自己实现。</p>
-<p>融云，功能丰富、Demo 完成度高。迭代速度极快，每周更新一次。通讯核心部分和 UI 部分分别封装为了 IMLib 和 IMKit 两个库，工程结构良好。实现 UI 时，可以继承 IMKit 中的类，如有需要可在子类中进行调整。当然也可以只用 IMKit，自己实现 UI。与环信不同的是，它并没有用户系统，并不存储任何与用户相关的信息。这样设计的初衷在于，当一个应用需要集成即时通讯服务时，往往应用本身的服务器已经有一个用户系统了。所以对于应用的每一个注册用户，应用服务器不需要再申请注册一个新的融云用户，而只需要直接采用用户 ID 作为通讯的身份即可，用户信息全部都从自己的应用服务器中维护。</p>
-<p>阿里悟空为阿里来往所采用的即时通讯服务，2015 年将服务对外开放并开发了移动端 SDK。目前功能较简单，Demo 完整程度较低。仅提供了核心通讯功能的封装，Demo 中的 UI 部分很简陋，只能作为参考。其也不存在用户系统，OpenID 的方式与融云的用户管理方式相似。</p>
-<p>容联云通讯，包含短信验证码、即时通讯、音视频通话等，短信验证码的服务客户很多。腾讯云的音视频云通信 AVC，今年刚开放，主要优势在于音视频通讯。</p>
-<p>LeanCloud 和 Bmob，是集多种应用服务为一身的后端服务。包括数据存储服务、消息推送服务、实时通信服务等。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -452,6 +454,10 @@
   <ul class="entry">
     
       <li>
+        <a href="/2016/10/04/kanzhihu-closed/">Kanzhihu closed</a>
+      </li>
+    
+      <li>
         <a href="/2016/09/21/macos-sierra-comes/">macOS Sierra comes</a>
       </li>
     
@@ -465,10 +471,6 @@
     
       <li>
         <a href="/2016/08/08/ui-activity-view-controller/">UIActivityViewController</a>
-      </li>
-    
-      <li>
-        <a href="/2016/08/01/input-char-by-hex-unicode-on-mac/">Input character by hex unicode on mac</a>
       </li>
     
   </ul>

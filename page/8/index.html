@@ -67,6 +67,49 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-12-30T07:27:55.000Z"><a href="/2014/12/30/tricks-about-circumflex-of pinyin-in-osx/">Dec 30 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/12/30/tricks-about-circumflex-of pinyin-in-osx/">OS X 中有关拼音声调的 tricks</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="输入“hao”"><a href="#输入“hao”" class="headerlink" title="输入“hǎo”"></a>输入“hǎo”</h3><p>输入带声调的拼音字母，在 iOS 上是非常简单的，在拼音输入法里，长按一个韵母字母，即可弹出声调选择框。<br><img src="http://stoneark.qiniudn.com/blogimg/pinyin_circumflex_in_ios.png" alt="iOS上的拼音音调"></p>
+<p>但在 OS X 上，在拼音输入法下长按变成了连续输入，而不会弹出声调选择框。在英文输入法下长按虽然会弹出声调选择框，但不是汉语拼音标准的声调，最大的影响就是，里面找不到三声。<br><img src="http://stoneark.qiniudn.com/blogimg/pinyin_circumflex_in_osx.png" alt="英文输入法的音调"></p>
+<p>解决方法是，添加输入源“美国（扩展）”，选择这个输入源，然后：</p>
+<ul>
+<li>option + a，再按 a，可得到 ā。</li>
+<li>option + e，再按 a，可得到 á。</li>
+<li>option + v，再按 a，可得到 ǎ。</li>
+<li>option + `，再按 a，可得到 à。</li>
+</ul>
+<h3 id="拼音输入法按声调筛选"><a href="#拼音输入法按声调筛选" class="headerlink" title="拼音输入法按声调筛选"></a>拼音输入法按声调筛选</h3><p>输入全拼后，按 option + tab，可按声调筛选。<br><img src="http://stoneark.qiniudn.com/blogimg/pinyin_circumflex_filter.png" alt="按声调筛选"></p>
+<h3 id="输入“犇”"><a href="#输入“犇”" class="headerlink" title="输入“犇”"></a>输入“犇”</h3><p>复杂文字的输入可进行拆字输入，如犇，可输入 niuniuniu（三个牛），然后按 shift + space，还会贴心地告诉你这个字的读音。<br><img src="http://stoneark.qiniudn.com/blogimg/pinyin_circumflex_niuniuniu.png" alt="拆字输入"></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-12-29T03:24:08.000Z"><a href="/2014/12/29/gmail-be-blocked-entirely/">Dec 29 2014</a></time>
       
       
@@ -489,59 +532,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-10-23T08:54:21.000Z"><a href="/2014/10/23/changes-in-new-baidumap-250/">Oct 23 2014</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/10/23/changes-in-new-baidumap-250/">百度地图 iOS SDK 2.5.0版的变化</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>在 <a href="../../../../2014/11/24/cannot-locate-compiling-with-xcode6">这篇博客</a> 中，介绍了 iOS8 中定位的变化，百度地图等第三方地图 SDK 在 Xcode6 下均出现水土不服。在广大人民群众的热切期待和漫长等待后，百度地图终于释出了新版 iOS SDK，版本号 2.5.0。在官方的 Change Log 中，看到主要增加了对 arm64、iPhone6、iPhone 6P Plus、iOS8 的支持。解决了一些bug。</p>
-<p>在工程中替换为新版 SDK 并 Build 后，满眼都是 Error。研究下去，发现变动相当多（之前使用的 SDK 版本号为 2.2.1），完全不管向下兼容性。</p>
-<h3 id="地图搜索"><a href="#地图搜索" class="headerlink" title="地图搜索"></a>地图搜索</h3><p>(1) <code>BMKSearch</code> 分拆为 <code>BMKRouteSearch</code> 和 <code>BMKGeoCodeSearch</code>。</p>
-<p>(2) <code>BMKSearchDelegate</code> 分拆为 <code>BMKRouteSearchDelegate</code> 和 <code>BMKGeoCodeSearchDelegate</code>。</p>
-<p>(3) 新增类 <code>BMKTransitRoutePlanOption</code>、<code>BMKWalkingRoutePlanOption</code>、<code>BMKDrivingRoutePlanOption</code>，且 BMKRouteSearch（原 BMKSearch） 的方法 drivingSearch、transitSearch、walkingSearch 所需的参数变更为一个与之对应的 BMK…RoutePlanOption 类型的对象。</p>
-<p>原方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (BOOL)transitSearch:(NSString*)city startNode:(BMKPlanNode*)start endNode:(BMKPlanNode*)end;</div><div class="line">- (BOOL)drivingSearch:(NSString*)startCity startNode:(BMKPlanNode*)start endCity:(NSString*)endCity endNode:(BMKPlanNode*)end;</div><div class="line">- (BOOL)drivingSearch:(NSString*)startCity startNode:(BMKPlanNode*)start endCity:(NSString*)endCity endNode:(BMKPlanNode*)end throughWayPoints:(NSArray*)wayPointsArray;</div><div class="line">- (BOOL)walkingSearch:(NSString*)startCity startNode:(BMKPlanNode*)start endCity:(NSString*)endCity endNode:(BMKPlanNode*)end;</div></pre></td></tr></table></figure>
-<p>新方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (BOOL)transitSearch:(BMKTransitRoutePlanOption*)transitRoutePlanOption;</div><div class="line">- (BOOL)drivingSearch:(BMKDrivingRoutePlanOption*)drivingRoutePlanOption;</div><div class="line">- (BOOL)walkingSearch:(BMKWalkingRoutePlanOption*)walkingRoutePlanOption;</div></pre></td></tr></table></figure>
-<p>同时须注意，相比其他两种路径搜索，公交搜索必须指定城市名称，否则会直接不予检索，transitSearch 方法返回 NO。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">transitRouteSearchOption.city = <span class="string">@"济南市"</span>;</div></pre></td></tr></table></figure></p>
-<p>(4) <code>BMKPlanResult</code> 分拆为 <code>BMKWalkingRouteResult</code>、<code>BMKTransitRouteResult</code>、<code>BMKDrivingRouteResult</code>，同时 BMKRouteSearchDelegate（原 BMKSearchDelegate） 的代理方法变更，由：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)onGetWalkingRouteResult:(BMKSearch *)searcher result:(BMKPlanResult *)result errorCode:(<span class="keyword">int</span>)error;</div><div class="line">- (<span class="keyword">void</span>)onGetTransitRouteResult:(BMKSearch *)searcher result:(BMKPlanResult *)result errorCode:(<span class="keyword">int</span>)error;</div><div class="line">- (<span class="keyword">void</span>)onGetDrivingRouteResult:(BMKSearch *)searcher result:(BMKPlanResult *)result errorCode:(<span class="keyword">int</span>)error;</div></pre></td></tr></table></figure></p>
-<p>变更为：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)onGetWalkingRouteResult:(BMKRouteSearch*)searcher result:(BMKWalkingRouteResult*)result errorCode:(BMKSearchErrorCode)error;</div><div class="line">- (<span class="keyword">void</span>)onGetTransitRouteResult:(BMKRouteSearch*)searcher result:(BMKTransitRouteResult*)result errorCode:(BMKSearchErrorCode)error;</div><div class="line">- (<span class="keyword">void</span>)onGetDrivingRouteResult:(BMKRouteSearch*)searcher result:(BMKDrivingRouteResult*)result errorCode:(BMKSearchErrorCode)error;</div></pre></td></tr></table></figure></p>
-<h3 id="地图定位"><a href="#地图定位" class="headerlink" title="地图定位"></a>地图定位</h3><p>(1) 新增类 <code>BMKLocationService</code> 及代理 <code>BMKLocationServiceDelegate</code>。BMKMapView 不再管理定位功能，其属性 <code>location</code>，和代理方法：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)mapView:(BMKMapView *)mapView didUpdateUserLocation:(BMKUserLocation *)userLocation;</div></pre></td></tr></table></figure></p>
-<p>都不再存在，定位功能全部剥离到 BMKLocationService。</p>
-<p>(2) 如果地图需要定位，需要单独创建一个 BMKLocationService 对象，并实现代理 BMKLocationServiceDelegate，在代理方法中执行 mapView 新增的 <code>updateLocationData</code> 方法，大致如下：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)didUpdateUserLocation:(BMKUserLocation *)userLocation</div><div class="line">&#123;</div><div class="line">  [_bMapView updateLocationData:userLocation];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>(3) 含有定位的地图界面，pop 回上一层 ViewController ，再 push 到这个界面，会崩溃的问题。<br>如果你遇到这个问题，请<strong>用真机运行</strong>，如果依然崩溃，确保以下两条：</p>
-<ul>
-<li><code>viewWillDisappear</code> 中写了 <code>[_locService stopUserLocationService];</code>。</li>
-<li><code>[_locService startUserLocationService];</code> 在 <code>viewWillAppear</code> 中，而不是在 <code>viewDidLoad</code> 中。</li>
-</ul>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -566,6 +556,10 @@
   <ul class="entry">
     
       <li>
+        <a href="/2016/10/04/kanzhihu-closed/">Kanzhihu closed</a>
+      </li>
+    
+      <li>
         <a href="/2016/09/21/macos-sierra-comes/">macOS Sierra comes</a>
       </li>
     
@@ -579,10 +573,6 @@
     
       <li>
         <a href="/2016/08/08/ui-activity-view-controller/">UIActivityViewController</a>
-      </li>
-    
-      <li>
-        <a href="/2016/08/01/input-char-by-hex-unicode-on-mac/">Input character by hex unicode on mac</a>
       </li>
     
   </ul>

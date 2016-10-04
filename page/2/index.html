@@ -67,6 +67,45 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2016-07-05T08:46:19.000Z"><a href="/2016/07/05/changes-about-programming-thinking-in-swift/">Jul 5 2016</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2016/07/05/changes-about-programming-thinking-in-swift/">Swift 编程思路的变化</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天看到<a href="http://alisoftware.github.io/swift/2015/09/06/thinking-in-swift-1/">这篇文章</a>，才发现之前那次尝试着用 Swift 写代码时犯了一个多大的错误。</p>
+<p>上次是在做优优育儿时，有一个新功能非常简单，就是一个单纯的列表页，所以尝试着用 Swift 进行了实现。而我当时正是像文章中写的那样，只是把之前 Objective-C 的写法按照 Swift 的语法进行了变化，然后相信了 Xcode 的代码更正提示，结果虽然可以正常运行，但代码里全是 exclamation mark。</p>
+<p>阅读了这个系列的文章，发现 Swift 的确是个现代化的语言。虽然凭借传统语言的知识可以很容易地入手，但它所带来的不仅仅是语法的改变，更多的是编程思路的变化。</p>
+<p>下面我将分别展示三段代码，功能是从 JSON 串中得到一个 Article 对象的数组。第一段是用 Objective-C 编写的代码，这也是我写这种功能的标准形式。第二段是按照传统思路编写的 Swift 代码，是应该避免的。第三段是用正确的思路编写的 Swift 代码。</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2016/07/05/changes-about-programming-thinking-in-swift/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2016-07-03T08:19:33.000Z"><a href="/2016/07/03/iap-take-effect-later-than-app-release/">Jul 3 2016</a></time>
       
       
@@ -432,48 +471,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2016-05-18T07:18:19.000Z"><a href="/2016/05/18/sketch-keep-transparent-pixels-when-export/">May 18 2016</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2016/05/18/sketch-keep-transparent-pixels-when-export/">Sketch 导出时保留透明像素</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>有些图标我们希望它的边缘要有一定的透明像素。</p>
-<p>比如有一组图标作为 TableView 列表左侧的图标，如果这些图标的宽度不相同的话，会造成文字的左侧起点不能对齐。所以这一组图标的宽度必须都相同。</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/sketch_keep_transparent_pixels.jpg" width="240"></p>
-<p>假设统一宽度为 20px，但是有的图标的实际尺寸可能不足 20px，所以一般我们会将这些图标的左右两边，填充透明像素，来使它达到宽度 20px。<em>但是 Sketch 在导出 slice 时总是自作聪明地把透明像素裁切掉。</em></p>
-<p><strong>解决方法：</strong></p>
-<p>默认情况下，我们对一个 Symbol 点击 Make Exportable 后，会变成这个样子，Symbol 标志的右下角加了一个切片标志。这时候我们是不能改变 <strong>Export 的各种属性</strong>的。<br><img src="http://stoneark.qiniudn.com/blogimg/sketch_keep_transparent_pixels_1.png" width="116"></p>
-<p>在右侧 Export 区域，点击小刀图标：<br><img src="http://stoneark.qiniudn.com/blogimg/sketch_keep_transparent_pixels_2.png" width="211"></p>
-<p>就会变成这样的两个层：<br><img src="http://stoneark.qiniudn.com/blogimg/sketch_keep_transparent_pixels_3.png" width="108"></p>
-<p>然后我们就可以点击上面那个切片层，设置所有的 <strong>Export 属性</strong>，确保 Trim Transparent Pixels 未选中即可，并且调节 Size 和 Position，让切片左右两侧有透明区域。<br><img src="http://stoneark.qiniudn.com/blogimg/sketch_keep_transparent_pixels_4.png" width="212"></p>
-<p>注意的是，这时切片层和 Symbol 已经没有任何联系了，而是一个普普通通的切片，所以可以任意调节位置、大小等。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -498,6 +495,10 @@
   <ul class="entry">
     
       <li>
+        <a href="/2016/10/04/kanzhihu-closed/">Kanzhihu closed</a>
+      </li>
+    
+      <li>
         <a href="/2016/09/21/macos-sierra-comes/">macOS Sierra comes</a>
       </li>
     
@@ -511,10 +512,6 @@
     
       <li>
         <a href="/2016/08/08/ui-activity-view-controller/">UIActivityViewController</a>
-      </li>
-    
-      <li>
-        <a href="/2016/08/01/input-char-by-hex-unicode-on-mac/">Input character by hex unicode on mac</a>
       </li>
     
   </ul>

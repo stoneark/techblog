@@ -67,6 +67,59 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2014-10-23T08:54:21.000Z"><a href="/2014/10/23/changes-in-new-baidumap-250/">Oct 23 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/10/23/changes-in-new-baidumap-250/">百度地图 iOS SDK 2.5.0版的变化</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在 <a href="../../../../2014/11/24/cannot-locate-compiling-with-xcode6">这篇博客</a> 中，介绍了 iOS8 中定位的变化，百度地图等第三方地图 SDK 在 Xcode6 下均出现水土不服。在广大人民群众的热切期待和漫长等待后，百度地图终于释出了新版 iOS SDK，版本号 2.5.0。在官方的 Change Log 中，看到主要增加了对 arm64、iPhone6、iPhone 6P Plus、iOS8 的支持。解决了一些bug。</p>
+<p>在工程中替换为新版 SDK 并 Build 后，满眼都是 Error。研究下去，发现变动相当多（之前使用的 SDK 版本号为 2.2.1），完全不管向下兼容性。</p>
+<h3 id="地图搜索"><a href="#地图搜索" class="headerlink" title="地图搜索"></a>地图搜索</h3><p>(1) <code>BMKSearch</code> 分拆为 <code>BMKRouteSearch</code> 和 <code>BMKGeoCodeSearch</code>。</p>
+<p>(2) <code>BMKSearchDelegate</code> 分拆为 <code>BMKRouteSearchDelegate</code> 和 <code>BMKGeoCodeSearchDelegate</code>。</p>
+<p>(3) 新增类 <code>BMKTransitRoutePlanOption</code>、<code>BMKWalkingRoutePlanOption</code>、<code>BMKDrivingRoutePlanOption</code>，且 BMKRouteSearch（原 BMKSearch） 的方法 drivingSearch、transitSearch、walkingSearch 所需的参数变更为一个与之对应的 BMK…RoutePlanOption 类型的对象。</p>
+<p>原方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (BOOL)transitSearch:(NSString*)city startNode:(BMKPlanNode*)start endNode:(BMKPlanNode*)end;</div><div class="line">- (BOOL)drivingSearch:(NSString*)startCity startNode:(BMKPlanNode*)start endCity:(NSString*)endCity endNode:(BMKPlanNode*)end;</div><div class="line">- (BOOL)drivingSearch:(NSString*)startCity startNode:(BMKPlanNode*)start endCity:(NSString*)endCity endNode:(BMKPlanNode*)end throughWayPoints:(NSArray*)wayPointsArray;</div><div class="line">- (BOOL)walkingSearch:(NSString*)startCity startNode:(BMKPlanNode*)start endCity:(NSString*)endCity endNode:(BMKPlanNode*)end;</div></pre></td></tr></table></figure>
+<p>新方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (BOOL)transitSearch:(BMKTransitRoutePlanOption*)transitRoutePlanOption;</div><div class="line">- (BOOL)drivingSearch:(BMKDrivingRoutePlanOption*)drivingRoutePlanOption;</div><div class="line">- (BOOL)walkingSearch:(BMKWalkingRoutePlanOption*)walkingRoutePlanOption;</div></pre></td></tr></table></figure>
+<p>同时须注意，相比其他两种路径搜索，公交搜索必须指定城市名称，否则会直接不予检索，transitSearch 方法返回 NO。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">transitRouteSearchOption.city = <span class="string">@"济南市"</span>;</div></pre></td></tr></table></figure></p>
+<p>(4) <code>BMKPlanResult</code> 分拆为 <code>BMKWalkingRouteResult</code>、<code>BMKTransitRouteResult</code>、<code>BMKDrivingRouteResult</code>，同时 BMKRouteSearchDelegate（原 BMKSearchDelegate） 的代理方法变更，由：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)onGetWalkingRouteResult:(BMKSearch *)searcher result:(BMKPlanResult *)result errorCode:(<span class="keyword">int</span>)error;</div><div class="line">- (<span class="keyword">void</span>)onGetTransitRouteResult:(BMKSearch *)searcher result:(BMKPlanResult *)result errorCode:(<span class="keyword">int</span>)error;</div><div class="line">- (<span class="keyword">void</span>)onGetDrivingRouteResult:(BMKSearch *)searcher result:(BMKPlanResult *)result errorCode:(<span class="keyword">int</span>)error;</div></pre></td></tr></table></figure></p>
+<p>变更为：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)onGetWalkingRouteResult:(BMKRouteSearch*)searcher result:(BMKWalkingRouteResult*)result errorCode:(BMKSearchErrorCode)error;</div><div class="line">- (<span class="keyword">void</span>)onGetTransitRouteResult:(BMKRouteSearch*)searcher result:(BMKTransitRouteResult*)result errorCode:(BMKSearchErrorCode)error;</div><div class="line">- (<span class="keyword">void</span>)onGetDrivingRouteResult:(BMKRouteSearch*)searcher result:(BMKDrivingRouteResult*)result errorCode:(BMKSearchErrorCode)error;</div></pre></td></tr></table></figure></p>
+<h3 id="地图定位"><a href="#地图定位" class="headerlink" title="地图定位"></a>地图定位</h3><p>(1) 新增类 <code>BMKLocationService</code> 及代理 <code>BMKLocationServiceDelegate</code>。BMKMapView 不再管理定位功能，其属性 <code>location</code>，和代理方法：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)mapView:(BMKMapView *)mapView didUpdateUserLocation:(BMKUserLocation *)userLocation;</div></pre></td></tr></table></figure></p>
+<p>都不再存在，定位功能全部剥离到 BMKLocationService。</p>
+<p>(2) 如果地图需要定位，需要单独创建一个 BMKLocationService 对象，并实现代理 BMKLocationServiceDelegate，在代理方法中执行 mapView 新增的 <code>updateLocationData</code> 方法，大致如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)didUpdateUserLocation:(BMKUserLocation *)userLocation</div><div class="line">&#123;</div><div class="line">  [_bMapView updateLocationData:userLocation];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>(3) 含有定位的地图界面，pop 回上一层 ViewController ，再 push 到这个界面，会崩溃的问题。<br>如果你遇到这个问题，请<strong>用真机运行</strong>，如果依然崩溃，确保以下两条：</p>
+<ul>
+<li><code>viewWillDisappear</code> 中写了 <code>[_locService stopUserLocationService];</code>。</li>
+<li><code>[_locService startUserLocationService];</code> 在 <code>viewWillAppear</code> 中，而不是在 <code>viewDidLoad</code> 中。</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2014-09-16T08:50:29.000Z"><a href="/2014/09/16/standard-of-ios-programming/">Sep 16 2014</a></time>
       
       
@@ -513,77 +566,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-01-12T01:51:58.000Z"><a href="/2014/01/12/ios-7-ui-transition-guide-scoping-the-project/">Jan 12 2014</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/01/12/ios-7-ui-transition-guide-scoping-the-project/">iOS 7 UI 过渡指南 - 审视过渡工作的范围</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <blockquote>
-<p>本文翻译自苹果开发者中心文档<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/Scoping.html#//apple_ref/doc/uid/TP40013174-CH7-SW1" target="_blank" rel="external"> iOS 7 UI Transition Guide (Preparing for Transition - Scoping the Project) </a></p>
-</blockquote>
-<p>了解你的 app 特征及自定义的方式，能让你大致知道应该如何进⾏过渡。使用下面的清单填充上项目的细节，来审视整个过渡工作的范围。</p>
-<p>###每个 app 必须做的事情</p>
-<ul>
-<li><p>更新app的icon</p>
-<p>在iOS 7中，app 的图标尺寸在高分辨率的 iPhone 和 iPod touch 上是 120x120 像素，在高分辨率的 iPad 上是 152x152 像素。（了解更多图标大小的详情，请查阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/MobileHIG/IconMatrix.html#//apple_ref/doc/uid/TP40006556-CH27" target="_blank" rel="external">“Icon and Image Sizes”</a>）</p>
-<p>注意，iOS 7 不再对 app 的图标进行光照和阴影效果。并且，虽然 iOS 7 依然对 app 的图标加入圆角，但与之前版本的 iOS 采用的圆角相比，弧度发生了一些变化。</p>
-</li>
-<li><p>更新 app 的加载图像，如果原来的载⼊图像中不包含状态栏部分的话，补充上状态栏部分的图像。</p>
-</li>
-<li><p>如果你之前没有支持的话，现在应支持 Retina 屏幕和 iPhone 5 的屏幕尺寸。</p>
-</li>
-</ul>
-<p>###每个 app 应该做的事情</p>
-<ul>
-<li><p>确保 app 的内容在透明UI元素（比如透明的 bar 和透明键盘）和透明的系统状态栏下依然可辨识。在 iOS 7 中，视图控制器统一采⽤用了全屏视图（参阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/AppearanceCustomization.html#//apple_ref/doc/uid/TP40013174-CH15-SW2" target="_blank" rel="external">“Using View Controllers”</a>来了解更多）。</p>
-</li>
-<li><p>重新设计 bar 的自定义图标。在 iOS 7 上，bar 上的按钮图标更加轻巧，且有了不一样的风格。参阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/MobileHIG/BarIcons.html#//apple_ref/doc/uid/TP40006556-CH21" target="_blank" rel="external">“Bar Button Icons”</a>来了解一些设计指导。</p>
-</li>
-<li><p>准备采用无边框的按钮，去掉按钮的背景图⽚和边框曲线。</p>
-</li>
-<li><p>检查 app 中写死的 UI 数值，比如 size 和 position，用系统提供的动态数值替换它们。使用 Auto Layout 帮助你的 app 完成当布局变化时的响应。(如果你还不知道什么是 Auto Layout，请参阅 <a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/AutolayoutPG/Introduction/Introduction.html#//apple_ref/doc/uid/TP40010853" target="_blank" rel="external"><em>Auto Layout Guide</em></a>）</p>
-</li>
-<li><p>检查 app 中使⽤ UIKit 控件的地方，检查尺寸和风格发生变化的控制器和视图是否对布局和外观产生了影响。例如，开关（Switch）变得更宽了，组合式表格（grouped tables）不再是嵌入的样式，进度条变得比以前更细。想要了解更详细的 UI 元素变化，请参阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/Bars.html#//apple_ref/doc/uid/TP40013174-CH8-SW1" target="_blank" rel="external">Bars and Bar Buttons</a>，<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/ContentViews.html#//apple_ref/doc/uid/TP40013174-CH10-SW1" target="_blank" rel="external">Content Views</a>，<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/Controls.html#//apple_ref/doc/uid/TP40013174-CH9-SW1" target="_blank" rel="external">Controls</a>，<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/TempViews.html#//apple_ref/doc/uid/TP40013174-CH11-SW1" target="_blank" rel="external">Temporary Views</a>。</p>
-</li>
-<li><p>使用动态的字体类型。在 iOS 7 中，用户可以自由调整 app 中字体的大小。如果采⽤动态字体，当用户在系统中设定自定义字号的时候，app 的字体也会发⽣生相应的变化。更多信息请参阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/AppearanceCustomization.html#//apple_ref/doc/uid/TP40013174-CH15-SW4" target="_blank" rel="external">Using Fonts</a>。</p>
-</li>
-<li><p>考虑用户从屏幕底部上滑调出控制中心的情况。如果 iOS 检测到一次滑动从屏幕底部开始，那么就会调出控制中心，而不会将这个手势传递给现在运行中的 app。如果 iOS 判断这次触摸不应该调出控制中心，那这次的触摸可能会稍微延迟一会儿才能传递到 app 中。</p>
-</li>
-<li><p>检查所有用到的阴影、渐变、浮雕效果。由于 iOS 7 的设计重视平面化和层次感，所以应该尽量少的应用会让 UI 元素具有拟物化的视觉效果，你应该重新考虑一下这些效果。</p>
-</li>
-<li><p>必要的话，将 app 升级到 iOS 6 中的最佳实践⽅法，如 Auto Layout 和 Storyboard，并确保 app 不会用到已不建议使用的 API 。</p>
-</li>
-</ul>
-<p>现在你了解到需要做哪类事情了，了解更多关于视图控制器、着色、字体的变化，请参阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/AppearanceCustomization.html#//apple_ref/doc/uid/TP40013174-CH15-SW1" target="_blank" rel="external">Appearance and Behavior</a>。</p>
-<p>###如果你必须继续支持 iOS 6</p>
-<p>如果你必须同时支持 iOS 6 和 iOS 7 两个系统，你可以在 app 运行的时候检测操作系统的版本，并加载相对应的资源⽂件。更多信息请参阅<a href="https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/TransitionGuide/SupportingEarlieriOS.html#//apple_ref/doc/uid/TP40013174-CH14-SW1" target="_blank" rel="external">Supporting iOS 6</a>。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -608,6 +590,10 @@
   <ul class="entry">
     
       <li>
+        <a href="/2016/10/04/kanzhihu-closed/">Kanzhihu closed</a>
+      </li>
+    
+      <li>
         <a href="/2016/09/21/macos-sierra-comes/">macOS Sierra comes</a>
       </li>
     
@@ -621,10 +607,6 @@
     
       <li>
         <a href="/2016/08/08/ui-activity-view-controller/">UIActivityViewController</a>
-      </li>
-    
-      <li>
-        <a href="/2016/08/01/input-char-by-hex-unicode-on-mac/">Input character by hex unicode on mac</a>
       </li>
     
   </ul>

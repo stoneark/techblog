@@ -67,6 +67,42 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-05-19T08:29:12.000Z"><a href="/2015/05/19/pop-then-push-immediately-with-uinavigationcontroller-in-ios8/">May 19 2015</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/19/pop-then-push-immediately-with-uinavigationcontroller-in-ios8/">Pop then push immediately with UINavigationController in iOS 8</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在某些业务场景下，需要将一个 ViewController 从 NavigationController 里 pop 后，立即 push 进另一个 ViewController。在 iOS8 之前这不是什么问题，用以下代码即可轻松实现：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[navigationController popViewControllerAnimated:<span class="literal">NO</span>];</div><div class="line">[navigationController pushViewController:newViewController animated:<span class="literal">YES</span>];</div></pre></td></tr></table></figure>
+<p>但在 iOS8 上这样无法实现，pop 后不会 push 另一个 ViewController。可以用以下方法实现，思路是直接修改 navigationController 里栈的数据（暂时没有找到其他更好的方法）：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSMutableArray</span> *viewControllersInStack = [<span class="built_in">NSMutableArray</span> arrayWithArray:navigationController.viewControllers];</div><div class="line">[viewControllersInStack removeLastObject];</div><div class="line">[viewControllersInStack addObject:newViewController];</div><div class="line">[navController setViewControllers:viewControllersInStack animated:<span class="literal">YES</span>];</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-02-11T08:52:49.000Z"><a href="/2015/02/11/branching-model-summary/">Feb 11 2015</a></time>
       
       
@@ -451,49 +487,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-12-30T07:27:55.000Z"><a href="/2014/12/30/tricks-about-circumflex-of pinyin-in-osx/">Dec 30 2014</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/12/30/tricks-about-circumflex-of pinyin-in-osx/">OS X 中有关拼音声调的 tricks</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h3 id="输入“hao”"><a href="#输入“hao”" class="headerlink" title="输入“hǎo”"></a>输入“hǎo”</h3><p>输入带声调的拼音字母，在 iOS 上是非常简单的，在拼音输入法里，长按一个韵母字母，即可弹出声调选择框。<br><img src="http://stoneark.qiniudn.com/blogimg/pinyin_circumflex_in_ios.png" alt="iOS上的拼音音调"></p>
-<p>但在 OS X 上，在拼音输入法下长按变成了连续输入，而不会弹出声调选择框。在英文输入法下长按虽然会弹出声调选择框，但不是汉语拼音标准的声调，最大的影响就是，里面找不到三声。<br><img src="http://stoneark.qiniudn.com/blogimg/pinyin_circumflex_in_osx.png" alt="英文输入法的音调"></p>
-<p>解决方法是，添加输入源“美国（扩展）”，选择这个输入源，然后：</p>
-<ul>
-<li>option + a，再按 a，可得到 ā。</li>
-<li>option + e，再按 a，可得到 á。</li>
-<li>option + v，再按 a，可得到 ǎ。</li>
-<li>option + `，再按 a，可得到 à。</li>
-</ul>
-<h3 id="拼音输入法按声调筛选"><a href="#拼音输入法按声调筛选" class="headerlink" title="拼音输入法按声调筛选"></a>拼音输入法按声调筛选</h3><p>输入全拼后，按 option + tab，可按声调筛选。<br><img src="http://stoneark.qiniudn.com/blogimg/pinyin_circumflex_filter.png" alt="按声调筛选"></p>
-<h3 id="输入“犇”"><a href="#输入“犇”" class="headerlink" title="输入“犇”"></a>输入“犇”</h3><p>复杂文字的输入可进行拆字输入，如犇，可输入 niuniuniu（三个牛），然后按 shift + space，还会贴心地告诉你这个字的读音。<br><img src="http://stoneark.qiniudn.com/blogimg/pinyin_circumflex_niuniuniu.png" alt="拆字输入"></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -518,6 +511,10 @@
   <ul class="entry">
     
       <li>
+        <a href="/2016/10/04/kanzhihu-closed/">Kanzhihu closed</a>
+      </li>
+    
+      <li>
         <a href="/2016/09/21/macos-sierra-comes/">macOS Sierra comes</a>
       </li>
     
@@ -531,10 +528,6 @@
     
       <li>
         <a href="/2016/08/08/ui-activity-view-controller/">UIActivityViewController</a>
-      </li>
-    
-      <li>
-        <a href="/2016/08/01/input-char-by-hex-unicode-on-mac/">Input character by hex unicode on mac</a>
       </li>
     
   </ul>

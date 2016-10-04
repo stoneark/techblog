@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.stoneark.org/"/>
-  <updated>2016-09-21T01:57:40.000Z</updated>
+  <updated>2016-10-04T03:21:01.000Z</updated>
   <id>http://blog.stoneark.org/</id>
   
   <author>
@@ -14,6 +14,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kanzhihu closed</title>
+    <link href="http://blog.stoneark.org/2016/10/04/kanzhihu-closed/"/>
+    <id>http://blog.stoneark.org/2016/10/04/kanzhihu-closed/</id>
+    <published>2016-10-04T03:00:43.000Z</published>
+    <updated>2016-10-04T03:21:01.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天像之前一样打开<a href="http://www.kanzhihu.com" target="_blank" rel="external">看知乎</a>，出现的不再是“昨日最新”、“今日热门”、“历史精华”，而是一个“Good bye”：</p>
+<p><img src="http://stoneark.qiniudn.com/blogimg/kanzhihu_closed.png" alt=""></p>
+<p>看知乎已经成为了我的日常，自从发现了这个知乎精选站，它就成了我浏览知乎的流量入口。感觉它能比日报提供能丰富的内容。</p>
+<p>突然下线了，还真不适应。不过这种非官方的爬虫，能坚持这么久也是蛮不容易的。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天像之前一样打开&lt;a href=&quot;http://www.kanzhihu.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;看知乎&lt;/a&gt;，出现的不再是“昨日最新”、“今日热门”、“历史精华”，而是一个“Good bye”：&lt;/p&gt;
+&lt;p&gt;&lt;img 
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>macOS Sierra comes</title>
@@ -683,38 +706,6 @@
     
     
       <category term="iOS" scheme="http://blog.stoneark.org/tags/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Sketch 导出时保留透明像素</title>
-    <link href="http://blog.stoneark.org/2016/05/18/sketch-keep-transparent-pixels-when-export/"/>
-    <id>http://blog.stoneark.org/2016/05/18/sketch-keep-transparent-pixels-when-export/</id>
-    <published>2016-05-18T07:18:19.000Z</published>
-    <updated>2016-07-25T06:06:21.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>有些图标我们希望它的边缘要有一定的透明像素。</p>
-<p>比如有一组图标作为 TableView 列表左侧的图标，如果这些图标的宽度不相同的话，会造成文字的左侧起点不能对齐。所以这一组图标的宽度必须都相同。</p>
-<p><img src="http://stoneark.qiniudn.com/blogimg/sketch_keep_transparent_pixels.jpg" width="240"></p>
-<p>假设统一宽度为 20px，但是有的图标的实际尺寸可能不足 20px，所以一般我们会将这些图标的左右两边，填充透明像素，来使它达到宽度 20px。<em>但是 Sketch 在导出 slice 时总是自作聪明地把透明像素裁切掉。</em></p>
-<p><strong>解决方法：</strong></p>
-<p>默认情况下，我们对一个 Symbol 点击 Make Exportable 后，会变成这个样子，Symbol 标志的右下角加了一个切片标志。这时候我们是不能改变 <strong>Export 的各种属性</strong>的。<br><img src="http://stoneark.qiniudn.com/blogimg/sketch_keep_transparent_pixels_1.png" width="116"></p>
-<p>在右侧 Export 区域，点击小刀图标：<br><img src="http://stoneark.qiniudn.com/blogimg/sketch_keep_transparent_pixels_2.png" width="211"></p>
-<p>就会变成这样的两个层：<br><img src="http://stoneark.qiniudn.com/blogimg/sketch_keep_transparent_pixels_3.png" width="108"></p>
-<p>然后我们就可以点击上面那个切片层，设置所有的 <strong>Export 属性</strong>，确保 Trim Transparent Pixels 未选中即可，并且调节 Size 和 Position，让切片左右两侧有透明区域。<br><img src="http://stoneark.qiniudn.com/blogimg/sketch_keep_transparent_pixels_4.png" width="212"></p>
-<p>注意的是，这时切片层和 Symbol 已经没有任何联系了，而是一个普普通通的切片，所以可以任意调节位置、大小等。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;有些图标我们希望它的边缘要有一定的透明像素。&lt;/p&gt;
-&lt;p&gt;比如有一组图标作为 TableView 列表左侧的图标，如果这些图标的宽度不相同的话，会造成文字的左侧起点不能对齐。所以这一组图标的宽度必须都相同。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://stoneark
-    
-    </summary>
-    
-    
-      <category term="Design" scheme="http://blog.stoneark.org/tags/Design/"/>
     
   </entry>
   
